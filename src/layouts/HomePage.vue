@@ -11,12 +11,12 @@
             <hero-section></hero-section>
             <us-title-section></us-title-section>
             <us-content-section></us-content-section>
-            <blog-title-section></blog-title-section>
+            <!-- <blog-title-section></blog-title-section>
             <store-title-section></store-title-section>
             <store-content-section></store-content-section>
             <movingbeer-title-section></movingbeer-title-section>
             <faq-section></faq-section>
-            <contact-section></contact-section>
+            <contact-section></contact-section>-->
         </q-page-container>
     </q-layout>
 </template>
@@ -52,13 +52,59 @@ export default {
     color: #fff;
 }
 
+@font-face {
+    font-family: GilroyExtraBold;
+    src: url('../assets/Gilroy-ExtraBold.otf');
+}
+@font-face {
+    font-family: GilroyLight;
+    src: url('../assets/Gilroy-Light.otf');
+}
+
 body {
     background-color: #1f2120;
 }
 
-.patternBg {
+.pattern-bg {
     background-image: url('../assets/pattern.png');
     height: 910px;
+    background-position: center;
+}
+
+.us-bg {
+    background-image: url('../assets/us-bg.png');
+    background-position: center;
+    height: 1080px;
+}
+
+.us-bg h2 {
+    font-family: GilroyExtraBold;
+    text-transform: uppercase;
+}
+
+.us-bg a {
+    font-family: GilroyLight;
+    text-decoration: none;
+}
+
+.us-bg a:hover {
+    color: #27a3c3;
+}
+
+.us-content {
+    text-align: center;
+    font-family: GilroyLight;
+}
+
+.us-content p {
+    width: 100%;
+    font-size: 20px;
+}
+
+.us-partner-tile {
+    text-align: center;
+    font-family: GilroyExtraBold;
+    font-size: 25px;
 }
 >>>>>>> Landing sections created and hero on dev
 </style>
