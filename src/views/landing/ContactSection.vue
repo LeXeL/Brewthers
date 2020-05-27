@@ -44,6 +44,7 @@
                             filled
                             type="textarea"
                             label="Mensaje"
+                            rows="10"
                         />
                     </div>
                 </div>
@@ -56,7 +57,12 @@
 export default {
     data() {
         return {
-            options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
+            options: [
+                'Alquiler de equipo draft',
+                'Solicitar cotización de servicio',
+                'MovingBeer',
+                'Otros',
+            ],
         }
     },
 }
