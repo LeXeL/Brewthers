@@ -76,7 +76,7 @@
             <!-- <store-content-section></store-content-section> -->
             <movingbeer-title-section></movingbeer-title-section>
             <faq-section></faq-section>
-            <!-- <contact-section></contact-section> -->
+            <contact-section></contact-section>
         </q-page-container>
     </q-layout>
 </template>
@@ -221,6 +221,10 @@ body {
 
 .faq-section div {
     margin-bottom: 25px;
+}
+
+.contact-form {
+    padding: 20px 10%;
 }
 
 /* width */
