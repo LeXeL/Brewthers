@@ -12,11 +12,11 @@
             <us-title-section></us-title-section>
             <us-content-section></us-content-section>
             <blog-title-section></blog-title-section>
-            <!-- <store-title-section></store-title-section>
-            <store-content-section></store-content-section>
+            <!-- <store-title-section></store-title-section> -->
+            <!-- <store-content-section></store-content-section> -->
             <movingbeer-title-section></movingbeer-title-section>
-            <faq-section></faq-section>
-            <contact-section></contact-section>-->
+            <!-- <faq-section></faq-section> -->
+            <!-- <contact-section></contact-section> -->
         </q-page-container>
     </q-layout>
 </template>
@@ -111,6 +111,12 @@ body {
 
 .blog-bg {
     background-image: url('../assets/blog-bg.png');
+    background-position: center;
+    height: 1080px;
+}
+
+.movingbeer-bg {
+    background-image: url('../assets/movingbeer-bg.png');
     background-position: center;
     height: 1080px;
 }
