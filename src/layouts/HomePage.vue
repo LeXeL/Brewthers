@@ -11,8 +11,8 @@
             <hero-section></hero-section>
             <us-title-section></us-title-section>
             <us-content-section></us-content-section>
-            <!-- <blog-title-section></blog-title-section>
-            <store-title-section></store-title-section>
+            <blog-title-section></blog-title-section>
+            <!-- <store-title-section></store-title-section>
             <store-content-section></store-content-section>
             <movingbeer-title-section></movingbeer-title-section>
             <faq-section></faq-section>
@@ -77,17 +77,19 @@ body {
     height: 1080px;
 }
 
-.us-bg h2 {
+.title-section {
     font-family: GilroyExtraBold;
     text-transform: uppercase;
 }
 
-.us-bg a {
+.title-section-link {
     font-family: GilroyLight;
     text-decoration: none;
+    text-align: center;
+    font-size: 20px;
 }
 
-.us-bg a:hover {
+.title-section-link:hover {
     color: #27a3c3;
 }
 
@@ -106,5 +108,10 @@ body {
     font-family: GilroyExtraBold;
     font-size: 25px;
 }
->>>>>>> Landing sections created and hero on dev
+
+.blog-bg {
+    background-image: url('../assets/blog-bg.png');
+    background-position: center;
+    height: 1080px;
+}
 </style>
