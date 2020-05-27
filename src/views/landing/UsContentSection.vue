@@ -7,25 +7,16 @@
             </div>
         </div>
         <div class="row q-pb-xl">
-            <div class="col-lg-4 us-partner-tile q-pt-xl q-pl-xl q-pr-xl">
-                <img src="../../assets/photo_1.png" width="100%" />
+            <div
+                class="col-lg-4 us-partner-tile q-pt-xl q-pl-xl q-pr-xl"
+                v-for="(partner, i) in partners"
+                :key="i"
+            >
+                <img :src="partner.pic" width="100%" />
                 <p>
-                    Diego Gomez
-                    <br />Gerente Marketing
-                </p>
-            </div>
-            <div class="col-lg-4 us-partner-tile q-pt-xl q-pl-xl q-pr-xl">
-                <img src="../../assets/photo_2.png" width="100%" />
-                <p>
-                    Fanchesco Mosca
-                    <br />Gerente Comercial
-                </p>
-            </div>
-            <div class="col-lg-4 us-partner-tile q-pt-xl q-pl-xl q-pr-xl">
-                <img src="../../assets/photo_3.png" width="100%" />
-                <p>
-                    Plinio Samaniego
-                    <br />Gerente Operaciones
+                    {{ partner.name }}
+                    <br />
+                    {{ partner.rol }}
                 </p>
             </div>
         </div>
@@ -33,7 +24,29 @@
 </template>
 
 <script>
-export default {}
+export default {
+    data() {
+        return {
+            partners: [
+                {
+                    name: 'Diego Gomez',
+                    rol: 'Gerente Marketing',
+                    pic: '@/assets/photo_1.png',
+                },
+                {
+                    name: 'Francesco Mosca',
+                    rol: 'Gerente Comercial',
+                    pic: '@/assets/photo_2.png',
+                },
+                {
+                    name: 'Plinio Samaniego',
+                    rol: 'Gerente Operaciones',
+                    pic: '@/assets/photo_3.png',
+                },
+            ],
+        }
+    },
+}
 </script>
 
 <style></style>
