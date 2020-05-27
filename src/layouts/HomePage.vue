@@ -1,9 +1,29 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar>
-                <q-toolbar-title>Quasar App</q-toolbar-title>
-                <div>Quasar v{{ $q.version }}</div>
+            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
+                <q-avatar>
+                    <img src="../assets/brewthers-logo.png" />
+                </q-avatar>
+                <q-space />
+                <q-tabs class="brewthers-nav">
+                    <q-tab name="tab1" label="Inicio" />
+                    <q-tab name="tab2" label="Nosotros" />
+                    <q-tab name="tab4" label="Blog" />
+                    <q-tab name="tab5" label="Tiendita" />
+                    <q-tab name="tab6" label="Contactanos" />
+                    <q-tab name="tab7" label="MovingBeer" />
+                    <q-tab name="tab8" label="FAQ" />
+                    <q-tab name="tab9" label="FB" />
+                    <q-tab name="tab10" label="IG" />
+                </q-tabs>
+            </q-toolbar>
+            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
+                <q-avatar>
+                    <img src="../assets/brewthers-logo.png" />
+                </q-avatar>
+                <q-space />
+                <q-btn flat round dense icon="whatshot" />
             </q-toolbar>
         </q-header>
 
@@ -63,6 +83,14 @@ export default {
 
 body {
     background-color: #1f2120;
+}
+
+.brewthers-nav {
+    font-family: GilroyExtraBold !important;
+}
+
+.q-tab__indicator {
+    background-color: #27a3c3 !important;
 }
 
 .pattern-bg {
