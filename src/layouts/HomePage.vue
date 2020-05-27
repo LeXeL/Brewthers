@@ -75,7 +75,7 @@
             <!-- <store-title-section></store-title-section> -->
             <!-- <store-content-section></store-content-section> -->
             <movingbeer-title-section></movingbeer-title-section>
-            <!-- <faq-section></faq-section> -->
+            <faq-section></faq-section>
             <!-- <contact-section></contact-section> -->
         </q-page-container>
     </q-layout>
@@ -197,6 +197,30 @@ body {
     background-image: url('../assets/movingbeer-bg.png');
     background-position: center;
     height: 1080px;
+}
+
+.faq-section {
+    padding: 20px 10%;
+    font-family: GilroyExtraBold;
+}
+
+.faq-section h5 {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.faq-section h5:hover {
+    cursor: pointer;
+    color: #27a3c3;
+}
+
+.faq-section p {
+    font-family: GilroyLight;
+    font-size: 1.15rem;
+}
+
+.faq-section div {
+    margin-bottom: 25px;
 }
 
 /* width */
