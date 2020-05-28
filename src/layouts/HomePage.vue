@@ -147,12 +147,16 @@ body {
     background-image: url('../assets/pattern.png');
     height: 910px;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .us-bg {
     background-image: url('../assets/us-bg.png');
-    background-position: center;
+    background-position: center center;
     height: 1080px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .title-section {
@@ -191,12 +195,18 @@ body {
     background-image: url('../assets/blog-bg.png');
     background-position: center;
     height: 1080px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .movingbeer-bg {
     background-image: url('../assets/movingbeer-bg.png');
     background-position: center;
     height: 1080px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .faq-section {
