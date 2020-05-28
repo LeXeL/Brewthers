@@ -12,7 +12,7 @@
                 v-for="(partner, i) in partners"
                 :key="i"
             >
-                <img :src="partner.pic" width="100%" />
+                <img :src="require(`@/assets/${partner.pic}`)" width="100%" />
                 <p>
                     {{ partner.name }}
                     <br />
@@ -31,17 +31,17 @@ export default {
                 {
                     name: 'Diego Gomez',
                     rol: 'Gerente Marketing',
-                    pic: '@/assets/photo_1.png',
+                    pic: 'photo_1.png',
                 },
                 {
                     name: 'Francesco Mosca',
                     rol: 'Gerente Comercial',
-                    pic: '@/assets/photo_2.png',
+                    pic: 'photo_2.png',
                 },
                 {
                     name: 'Plinio Samaniego',
                     rol: 'Gerente Operaciones',
-                    pic: '@/assets/photo_3.png',
+                    pic: 'photo_3.png',
                 },
             ],
         }
