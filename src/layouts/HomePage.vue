@@ -41,13 +41,27 @@
                 </q-avatar>
                 <q-space />
                 <q-tabs class="brewthers-nav">
-                    <q-tab name="tab1" label="Inicio" />
-                    <q-tab name="tab2" label="Nosotros" />
-                    <q-tab name="tab4" label="Blog" />
-                    <q-tab name="tab5" label="Tiendita" />
-                    <q-tab name="tab6" label="Contactanos" />
-                    <q-tab name="tab7" label="MovingBeer" />
-                    <q-tab name="tab8" label="FAQ" />
+                    <q-tab name="tab1">
+                        <a href="#hero" v-smooth-scroll>Inicio</a>
+                    </q-tab>
+                    <q-tab name="tab2">
+                        <a href="#title" v-smooth-scroll>Nosotros</a>
+                    </q-tab>
+                    <q-tab name="tab4">
+                        <a href="#blog" v-smooth-scroll>Blog</a>
+                    </q-tab>
+                    <q-tab name="tab5">
+                        <a href="#" v-smooth-scroll>Tiendita</a>
+                    </q-tab>
+                    <q-tab name="tab6">
+                        <a href="#contact" v-smooth-scroll>Contactanos</a>
+                    </q-tab>
+                    <q-tab name="tab7">
+                        <a href="#movingbeer" v-smooth-scroll>MovingBeer</a>
+                    </q-tab>
+                    <q-tab name="tab8">
+                        <a href="#faq" v-smooth-scroll>FAQ</a>
+                    </q-tab>
                     <q-tab name="tab9">
                         <i class="fab fa-facebook"></i>
                     </q-tab>
