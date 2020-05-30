@@ -3,10 +3,10 @@
         <div class="q-pt-md" id="mobile-menu-overlay">
             <ul class="q-mt-xl q-mr-md">
                 <li>
-                    <a href="#">inicio</a>
+                    <a href="#hero" v-smooth-scroll>inicio</a>
                 </li>
                 <li>
-                    <a href="#">nosotros</a>
+                    <a href="#title" v-smooth-scroll>nosotros</a>
                 </li>
                 <li>
                     <a href="#">blog</a>
@@ -68,15 +68,15 @@
         </q-header>
 
         <q-page-container>
-            <hero-section></hero-section>
-            <us-title-section></us-title-section>
-            <us-content-section></us-content-section>
-            <blog-title-section></blog-title-section>
+            <hero-section id="hero"></hero-section>
+            <us-title-section id="title"></us-title-section>
+            <us-content-section id="uscontent"></us-content-section>
+            <blog-title-section id="blog"></blog-title-section>
             <!-- <store-title-section></store-title-section> -->
             <!-- <store-content-section></store-content-section> -->
-            <movingbeer-title-section></movingbeer-title-section>
-            <faq-section></faq-section>
-            <contact-section></contact-section>
+            <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
+            <faq-section id="faq"></faq-section>
+            <contact-section id="contact"></contact-section>
         </q-page-container>
     </q-layout>
 </template>

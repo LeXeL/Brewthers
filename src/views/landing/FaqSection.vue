@@ -6,7 +6,7 @@
             para ver si encuentras la información que estas buscando.
         </h4>
         <div v-for="(faq, i) in faqs" :key="i">
-            <h5 @click="faq.show = !faq.show">{{ faq.q }}</h5>
+            <h5 @click="hideAllQuestionExceptSelected(i)">{{ faq.q }}</h5>
             <q-slide-transition>
                 <div v-show="faq.show">
                     <p>{{ faq.a }}</p>
@@ -50,6 +50,17 @@ export default {
                 },
             ],
         }
+    },
+    methods: {
+        hideAllQuestionExceptSelected(index) {
+            this.faqs.forEach((faq, i) => {
+                if (i === index) {
+                    this.faqs[i].show = true
+                    return
+                }
+                this.faqs[i].show = false
+            })
+        },
     },
 }
 </script>
