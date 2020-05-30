@@ -1,7 +1,7 @@
 <template>
     <div>
         <transition>
-            <img src="../assets/blog-bg.png" alt />
+            <img src="../assets/blog-bg-min.png" alt />
         </transition>
     </div>
 </template>
