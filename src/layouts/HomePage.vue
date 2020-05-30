@@ -9,19 +9,19 @@
                     <a href="#title" v-smooth-scroll>nosotros</a>
                 </li>
                 <li>
-                    <a href="#">blog</a>
+                    <a href="#blog" v-smooth-scroll>blog</a>
                 </li>
                 <li>
-                    <a href="#">tiendita</a>
+                    <a href="#" v-smooth-scroll>tiendita</a>
                 </li>
                 <li>
-                    <a href="#">contactanos</a>
+                    <a href="#contact" v-smooth-scroll>contactanos</a>
                 </li>
                 <li>
-                    <a href="#">movingbeer</a>
+                    <a href="#movingbeer" v-smooth-scroll>movingbeer</a>
                 </li>
                 <li>
-                    <a href="#">faq</a>
+                    <a href="#faq">faq</a>
                 </li>
                 <li class="q-mt-xl">
                     <a href="#">
