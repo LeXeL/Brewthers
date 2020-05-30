@@ -32,7 +32,7 @@
                     </a>
                 </li>
             </ul>
-            <button @click="hideMobileMenu">Close</button>
+            <button @click="hideMobileMenu">Closes</button>
         </div>
         <q-header elevated>
             <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
