@@ -20,13 +20,13 @@
                     <a href="#" v-smooth-scroll @click="mobileMenu = false">tiendita</a>
                 </li>
                 <li>
-                    <a href="#contact" v-smooth-scroll @click="mobileMenu = false">contactanos</a>
-                </li>
-                <li>
                     <a href="#movingbeer" v-smooth-scroll @click="mobileMenu = false">movingbeer</a>
                 </li>
                 <li>
                     <a href="#faq" @click="mobileMenu = false">faq</a>
+                </li>
+                <li>
+                    <a href="#contact" v-smooth-scroll @click="mobileMenu = false">contactanos</a>
                 </li>
                 <li class="q-mt-xl">
                     <a href="#" @click="mobileMenu = false">
@@ -51,25 +51,25 @@
                     <q-tab name="tab2">
                         <a href="#title" v-smooth-scroll>Nosotros</a>
                     </q-tab>
-                    <q-tab name="tab4">
+                    <q-tab name="tab3">
                         <a href="#blog" v-smooth-scroll>Blog</a>
                     </q-tab>
-                    <q-tab name="tab5">
+                    <q-tab name="tab4">
                         <a href="#" v-smooth-scroll>Tiendita</a>
                     </q-tab>
-                    <q-tab name="tab6">
-                        <a href="#contact" v-smooth-scroll>Contactanos</a>
-                    </q-tab>
-                    <q-tab name="tab7">
+                    <q-tab name="tab5">
                         <a href="#movingbeer" v-smooth-scroll>MovingBeer</a>
                     </q-tab>
-                    <q-tab name="tab8">
+                    <q-tab name="tab6">
                         <a href="#faq" v-smooth-scroll>FAQ</a>
                     </q-tab>
-                    <q-tab name="tab9">
+                    <q-tab name="tab7">
+                        <a href="#contact" v-smooth-scroll>Contactanos</a>
+                    </q-tab>
+                    <q-tab name="tab8">
                         <i class="fab fa-facebook"></i>
                     </q-tab>
-                    <q-tab name="tab10">
+                    <q-tab name="tab9">
                         <i class="fab fa-instagram"></i>
                     </q-tab>
                 </q-tabs>
@@ -190,6 +190,14 @@ q-toolbar a {
     height: 910px;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.hero-stripes {
+    width: 20px;
+    height: 800px;
+    background-color: #27a3c3;
+    position: absolute;
+    bottom: 0;
 }
 
 .us-bg {

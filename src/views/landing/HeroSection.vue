@@ -1,9 +1,12 @@
 <template>
-    <div>
-        <div class="pattern-bg desktop-only" style="position: relative; background-size: cover;">
+    <div style="position: relative">
+        <div class="hero-stripes desktop-only" style="left: 50px;"></div>
+        <div class="hero-stripes desktop-only" style="left: 90px;"></div>
+        <div class="hero-stripes desktop-only" style="left: 130px;"></div>
+        <div class="pattern-bg desktop-only" style="background-size: cover; height: 930px;">
             <img class="absolute-center" src="@/assets/brewthers-logo.png" width="45%" />
         </div>
-        <div class="pattern-bg mobile-only" style="position: relative; height: 600px;">
+        <div class="pattern-bg mobile-only" style="height: 600px;">
             <img class="absolute-center" src="@/assets/brewthers-logo.png" width="45%" />
         </div>
     </div>
