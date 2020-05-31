@@ -30,6 +30,7 @@
                                 color="white"
                                 dark
                                 filled
+                                v-model="contactReazon"
                                 :options="options"
                                 label="Razon de contacto"
                             />
@@ -64,6 +65,7 @@
 export default {
     data() {
         return {
+            contactReazon: '',
             options: [
                 'Alquiler de equipo draft',
                 'Solicitar cotización de servicio',
