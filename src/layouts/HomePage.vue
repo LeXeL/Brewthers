@@ -1,43 +1,5 @@
 <template>
     <q-layout view="lHh Lpr lFf">
-        <div id="mobile-menu-overlay" @click="mobileMenu = false">
-            <ul class="q-mt-xl q-pt-xl q-mr-md">
-                <!-- <li class="q-pb-xl">
-                    <a href="#" @click="hideMobileMenu">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </li>-->
-                <li>
-                    <a href="#hero" v-smooth-scroll @click="mobileMenu = false">inicio</a>
-                </li>
-                <li>
-                    <a href="#title" v-smooth-scroll @click="mobileMenu = false">nosotros</a>
-                </li>
-                <li>
-                    <a href="#blog" v-smooth-scroll @click="mobileMenu = false">blog</a>
-                </li>
-                <li>
-                    <a href="#" v-smooth-scroll @click="mobileMenu = false">tiendita</a>
-                </li>
-                <li>
-                    <a href="#movingbeer" v-smooth-scroll @click="mobileMenu = false">movingbeer</a>
-                </li>
-                <li>
-                    <a href="#faq" @click="mobileMenu = false">faq</a>
-                </li>
-                <li>
-                    <a href="#contact" v-smooth-scroll @click="mobileMenu = false">contactanos</a>
-                </li>
-                <li class="q-mt-xl">
-                    <a href="#" @click="mobileMenu = false">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="#" class="on-right" @click="mobileMenu = false">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
         <q-header elevated>
             <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
                 <q-avatar>
@@ -79,11 +41,60 @@
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
                 <q-space />
-                <q-btn flat round dense @click="mobileMenu = !mobileMenu">
+                <q-btn flat round dense @click="dialog = true">
                     <i class="fas fa-bars" style="color: #27a3c3 "></i>
                 </q-btn>
             </q-toolbar>
         </q-header>
+
+        <q-dialog
+            v-model="dialog"
+            persistent
+            maximized
+            transition-show="slide-left"
+            transition-hide="slide-right"
+        >
+            <q-card dark class="text-white" style="background-color: #111">
+                <q-card-section class="mobile-menu-overlay">
+                    <ul class="q-mr-md">
+                        <li class="q-pb-lg">
+                            <a href="#" @click="dialog = false">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#hero" @click="dialog = false">inicio</a>
+                        </li>
+                        <li>
+                            <a href="#title" v-smooth-scroll @click="dialog = false">nosotros</a>
+                        </li>
+                        <li>
+                            <a href="#blog" v-smooth-scroll @click="dialog = false">blog</a>
+                        </li>
+                        <li>
+                            <a href="#" v-smooth-scroll @click="dialog = false">tiendita</a>
+                        </li>
+                        <li>
+                            <a href="#movingbeer" v-smooth-scroll @click="dialog = false">movingbeer</a>
+                        </li>
+                        <li>
+                            <a href="#faq" @click="dialog = false">faq</a>
+                        </li>
+                        <li>
+                            <a href="#contact" v-smooth-scroll @click="dialog = false">contactanos</a>
+                        </li>
+                        <li class="q-mt-xl">
+                            <a href="#" @click="dialog = false">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="on-right" @click="dialog = false">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </q-card-section>
+            </q-card>
+        </q-dialog>
 
         <q-page-container>
             <hero-section id="hero"></hero-section>
@@ -121,24 +132,8 @@ import ContactSection from '@/views/landing/ContactSection.vue'
 export default {
     data() {
         return {
-            mobileMenu: false,
+            dialog: false,
         }
-    },
-    methods: {
-        showMobileMenu() {
-            document.getElementById('mobile-menu-overlay').style.display =
-                'block'
-        },
-        hideMobileMenu() {
-            document.getElementById('mobile-menu-overlay').style.display =
-                'none'
-        },
-    },
-    watch: {
-        mobileMenu() {
-            if (this.mobileMenu) this.showMobileMenu()
-            else this.hideMobileMenu()
-        },
     },
     components: {
         'hero-section': HeroSection,
@@ -296,56 +291,24 @@ q-toolbar a {
     }
 }
 
-/* width */
-::-webkit-scrollbar {
-    width: 5px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #111;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #27a3c3;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #27a3c3;
-}
-
-#mobile-menu-overlay {
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.85); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
-}
-#mobile-menu-overlay a {
+.mobile-menu-overlay a {
     text-decoration: none;
     text-transform: uppercase;
     font-family: GilroyExtraBold;
 }
 
-#mobile-menu-overlay a:hover {
+.mobile-menu-overlay a:hover {
     color: #27a3c3;
 }
 
-#mobile-menu-overlay ul {
+.mobile-menu-overlay ul {
     list-style-type: none;
     text-align: right;
     font-size: 30px;
+    margin-top: 0;
 }
 
-#mobile-menu-overlay li {
+.mobile-menu-overlay li {
     margin-bottom: 10px;
 }
 
