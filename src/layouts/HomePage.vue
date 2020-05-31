@@ -7,27 +7,11 @@
                 </q-avatar>
                 <q-space />
                 <q-tabs class="brewthers-nav">
-                    <q-tab name="tab1">
-                        <a href="#hero" v-smooth-scroll>Inicio</a>
-                    </q-tab>
-                    <q-tab name="tab2">
-                        <a href="#title" v-smooth-scroll>Nosotros</a>
-                    </q-tab>
-                    <q-tab name="tab3">
-                        <a href="#blog" v-smooth-scroll>Blog</a>
-                    </q-tab>
-                    <q-tab name="tab4">
-                        <a href="#" v-smooth-scroll>Tiendita</a>
-                    </q-tab>
-                    <q-tab name="tab5">
-                        <a href="#movingbeer" v-smooth-scroll>MovingBeer</a>
-                    </q-tab>
-                    <q-tab name="tab6">
-                        <a href="#faq" v-smooth-scroll>FAQ</a>
-                    </q-tab>
-                    <q-tab name="tab7">
-                        <a href="#contact" v-smooth-scroll>Contactanos</a>
-                    </q-tab>
+                    <template v-for="(navlink, i) in navLinks">
+                        <q-tab :name="navlink.name" :key="i">
+                            <a :href="navlink.ref" v-smooth-scroll>{{ navlink.text }}</a>
+                        </q-tab>
+                    </template>
                     <q-tab name="tab8">
                         <i class="fab fa-facebook"></i>
                     </q-tab>
@@ -62,27 +46,11 @@
                                 <i class="fas fa-times"></i>
                             </a>
                         </li>
-                        <li>
-                            <a href="#hero" @click="dialog = false">inicio</a>
-                        </li>
-                        <li>
-                            <a href="#title" v-smooth-scroll @click="dialog = false">nosotros</a>
-                        </li>
-                        <li>
-                            <a href="#blog" v-smooth-scroll @click="dialog = false">blog</a>
-                        </li>
-                        <li>
-                            <a href="#" v-smooth-scroll @click="dialog = false">tiendita</a>
-                        </li>
-                        <li>
-                            <a href="#movingbeer" v-smooth-scroll @click="dialog = false">movingbeer</a>
-                        </li>
-                        <li>
-                            <a href="#faq" @click="dialog = false">faq</a>
-                        </li>
-                        <li>
-                            <a href="#contact" v-smooth-scroll @click="dialog = false">contactanos</a>
-                        </li>
+                        <template v-for="(navlink, i) in navLinks">
+                            <li :key="i">
+                                <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
+                            </li>
+                        </template>
                         <li class="q-mt-xl">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
@@ -133,6 +101,43 @@ export default {
     data() {
         return {
             dialog: false,
+            navLinks: [
+                {
+                    text: 'inicio',
+                    ref: '#hero',
+                    name: 'tab1',
+                },
+                {
+                    text: 'nosotros',
+                    ref: '#title',
+                    name: 'tab2',
+                },
+                {
+                    text: 'blog',
+                    ref: '#blog',
+                    name: 'tab3',
+                },
+                {
+                    text: 'tiendita',
+                    ref: '#',
+                    name: 'tab4',
+                },
+                {
+                    text: 'movingbeer',
+                    ref: '#movingbeer',
+                    name: 'tab5',
+                },
+                {
+                    text: 'faq',
+                    ref: '#faq',
+                    name: 'tab6',
+                },
+                {
+                    text: 'contactanos',
+                    ref: '#contact',
+                    name: 'tab7',
+                },
+            ],
         }
     },
     components: {
