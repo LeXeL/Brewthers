@@ -6,13 +6,22 @@
             para ver si encuentras la información que estas buscando.
         </h4>
         <div v-for="(faq, i) in faqs" :key="i">
-            <h5 @click="hideAllQuestionExceptSelected(i)">{{ faq.q }}</h5>
-            <q-slide-transition>
+            <h5 @click="hideAllQuestionExceptSelected(i)" class="desktop-only">{{ faq.q }}</h5>
+            <h5 @click="displayFaqPrompt(i)" class="mobile-only">{{ faq.q }}</h5>
+            <q-slide-transition class="desktop-only">
                 <div v-show="faq.show">
                     <p>{{ faq.a }}</p>
                 </div>
             </q-slide-transition>
         </div>
+        <q-dialog v-model="faqPrompt">
+            <q-card dark style="background-color: #111;">
+                <q-card-section>{{ faqs[promptAns].a }}</q-card-section>
+                <q-card-actions align="right">
+                    <q-btn flat label="¡Fino!" color="primary" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -20,6 +29,8 @@
 export default {
     data() {
         return {
+            faqPrompt: false,
+            promptAns: 0,
             faqs: [
                 {
                     q: '¿Cómo me contacto con Brewthers?',
@@ -60,6 +71,10 @@ export default {
                 }
                 this.faqs[i].show = false
             })
+        },
+        displayFaqPrompt(index) {
+            this.promptAns = index
+            this.faqPrompt = true
         },
     },
 }
