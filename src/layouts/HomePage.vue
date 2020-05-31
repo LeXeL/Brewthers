@@ -1,6 +1,6 @@
 <template>
     <q-layout view="lHh Lpr lFf">
-        <div id="mobile-menu-overlay">
+        <div id="mobile-menu-overlay" @click="mobileMenu = false">
             <ul class="q-mt-xl q-pt-xl q-mr-md">
                 <!-- <li class="q-pb-xl">
                     <a href="#" @click="hideMobileMenu">
@@ -187,7 +187,6 @@ q-toolbar a {
 
 .pattern-bg {
     background-image: url('../assets/pattern.png');
-    height: 910px;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -280,6 +279,14 @@ q-toolbar a {
     padding: 20px 10%;
 }
 
+@media only screen and (max-width: 600px) {
+    .us-bg,
+    .blog-bg,
+    .movingbeer-bg {
+        height: 650px;
+    }
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
@@ -309,7 +316,7 @@ q-toolbar a {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+    background-color: rgba(0, 0, 0, 0.85); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
 }
