@@ -7,11 +7,16 @@
                 </q-avatar>
                 <q-space />
                 <q-tabs class="brewthers-nav">
-                    <template v-for="(navlink, i) in navLinks">
-                        <q-tab :name="navlink.name" :key="i">
-                            <a :href="navlink.ref" v-smooth-scroll>{{ navlink.text }}</a>
+                    <a
+                        v-for="(navlink, i) in navLinks"
+                        :href="navlink.ref"
+                        :key="i"
+                        v-smooth-scroll
+                    >
+                        <q-tab :name="navlink.name">
+                            <span>{{ navlink.text }}</span>
                         </q-tab>
-                    </template>
+                    </a>
                     <q-tab name="tab8">
                         <i class="fab fa-facebook"></i>
                     </q-tab>
@@ -46,11 +51,9 @@
                                 <i class="fas fa-times"></i>
                             </a>
                         </li>
-                        <template v-for="(navlink, i) in navLinks">
-                            <li :key="i">
-                                <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
-                            </li>
-                        </template>
+                        <li v-for="(navlink, i) in navLinks" :key="i">
+                            <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
+                        </li>
                         <li class="q-mt-xl">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
@@ -327,5 +330,22 @@ footer {
 
 footer span {
     color: #27a3c3;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #111;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #27a3c3;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #27a3c3;
 }
 </style>
