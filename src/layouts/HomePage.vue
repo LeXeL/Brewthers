@@ -187,6 +187,7 @@ q-toolbar a {
 
 .pattern-bg {
     background-image: url('../assets/pattern.png');
+    height: 910px;
     background-position: center;
     background-repeat: no-repeat;
 }
