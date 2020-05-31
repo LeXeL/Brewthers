@@ -1,38 +1,42 @@
 <template>
     <q-layout view="lHh Lpr lFf">
-        <div class="q-pt-md" id="mobile-menu-overlay">
-            <ul class="q-mt-xl q-mr-md">
+        <div id="mobile-menu-overlay">
+            <ul class="q-mt-xl q-pt-xl q-mr-md">
+                <!-- <li class="q-pb-xl">
+                    <a href="#" @click="hideMobileMenu">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>-->
                 <li>
-                    <a href="#hero" v-smooth-scroll>inicio</a>
+                    <a href="#hero" v-smooth-scroll @click="mobileMenu = false">inicio</a>
                 </li>
                 <li>
-                    <a href="#title" v-smooth-scroll>nosotros</a>
+                    <a href="#title" v-smooth-scroll @click="mobileMenu = false">nosotros</a>
                 </li>
                 <li>
-                    <a href="#blog" v-smooth-scroll>blog</a>
+                    <a href="#blog" v-smooth-scroll @click="mobileMenu = false">blog</a>
                 </li>
                 <li>
-                    <a href="#" v-smooth-scroll>tiendita</a>
+                    <a href="#" v-smooth-scroll @click="mobileMenu = false">tiendita</a>
                 </li>
                 <li>
-                    <a href="#contact" v-smooth-scroll>contactanos</a>
+                    <a href="#contact" v-smooth-scroll @click="mobileMenu = false">contactanos</a>
                 </li>
                 <li>
-                    <a href="#movingbeer" v-smooth-scroll>movingbeer</a>
+                    <a href="#movingbeer" v-smooth-scroll @click="mobileMenu = false">movingbeer</a>
                 </li>
                 <li>
-                    <a href="#faq">faq</a>
+                    <a href="#faq" @click="mobileMenu = false">faq</a>
                 </li>
                 <li class="q-mt-xl">
-                    <a href="#">
+                    <a href="#" @click="mobileMenu = false">
                         <i class="fab fa-facebook"></i>
                     </a>
-                    <a href="#" class="on-right">
+                    <a href="#" class="on-right" @click="mobileMenu = false">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </li>
             </ul>
-            <button @click="hideMobileMenu">Closes</button>
         </div>
         <q-header elevated>
             <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
@@ -75,7 +79,7 @@
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
                 <q-space />
-                <q-btn flat round dense @click="showMobileMenu">
+                <q-btn flat round dense @click="mobileMenu = !mobileMenu">
                     <i class="fas fa-bars" style="color: #27a3c3 "></i>
                 </q-btn>
             </q-toolbar>
@@ -91,6 +95,14 @@
             <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
             <contact-section id="contact"></contact-section>
+            <footer>
+                Brewthers Co.
+                {{ new Date().getFullYear() }}
+                <span>&copy;</span> Desarrollado por
+                <a href="#" target="_blank">
+                    <span>BlueBalloon Inc.</span>
+                </a>
+            </footer>
         </q-page-container>
     </q-layout>
 </template>
@@ -107,6 +119,11 @@ import FaqSection from '@/views/landing/FaqSection.vue'
 import ContactSection from '@/views/landing/ContactSection.vue'
 
 export default {
+    data() {
+        return {
+            mobileMenu: false,
+        }
+    },
     methods: {
         showMobileMenu() {
             document.getElementById('mobile-menu-overlay').style.display =
@@ -115,6 +132,12 @@ export default {
         hideMobileMenu() {
             document.getElementById('mobile-menu-overlay').style.display =
                 'none'
+        },
+    },
+    watch: {
+        mobileMenu() {
+            if (this.mobileMenu) this.showMobileMenu()
+            else this.hideMobileMenu()
         },
     },
     components: {
@@ -134,6 +157,7 @@ export default {
 <style>
 * {
     color: #fff;
+    text-decoration: none;
 }
 
 @font-face {
@@ -147,6 +171,10 @@ export default {
 
 body {
     background-color: #1f2120;
+}
+
+q-toolbar a {
+    text-decoration: none !important;
 }
 
 .brewthers-nav {
@@ -176,6 +204,7 @@ body {
 .title-section {
     font-family: GilroyExtraBold;
     text-transform: uppercase;
+    font-size: 3rem;
 }
 
 .title-section-link {
@@ -302,5 +331,17 @@ body {
 
 #mobile-menu-overlay li {
     margin-bottom: 10px;
+}
+
+footer {
+    background-color: #111;
+    padding: 10px;
+    text-align: center;
+    font-family: GilroyLight;
+    font-size: 12px;
+}
+
+footer span {
+    color: #27a3c3;
 }
 </style>
