@@ -34,7 +34,7 @@ export default {
             faqs: [
                 {
                     q: '¿Cómo me contacto con Brewthers?',
-                    a: 'asdaf',
+                    a: 'R. Favor dirigirse a la sección de “Contáctenos”',
                     show: false,
                 },
                 {
@@ -46,7 +46,8 @@ export default {
                 {
                     q:
                         '¿Cómo puedo realizar cambios o cancelaciones en mis pedidos?',
-                    a: 'asdaf',
+                    a:
+                        'R. Al momento de realizar su pedido, tendrá la oportunidad de cancelar el mismo si no ha sido contactado por personal de Brewethers. En caso de no poder hacerlo y ser contactado, solo debe notificarnos y nosotros cancelaremos el pedido. De igual manera, se traté de hacer una corrección, quitar o añadir un producto a su pedido, una vez es contactado por personal de Brewthers se hará una revisión de su pedido, donde usted tendrá la oportunidad de indicarnos las modificaciones que se le deban hacer al mismo. Es importante señalar que tendrá opciones limitadas a 3 cambios por su número de orden.',
                     show: false,
                 },
                 {
