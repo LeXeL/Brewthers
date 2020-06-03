@@ -197,7 +197,7 @@ q-toolbar a {
 
 .hero-stripes {
     width: 20px;
-    height: 800px;
+    height: 930px;
     background-color: #27a3c3;
     position: absolute;
     bottom: 0;
