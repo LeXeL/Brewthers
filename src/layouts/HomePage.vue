@@ -1,10 +1,7 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar
-                class="text-white shadow-2 desktop-only"
-                style="background-color: #111"
-            >
+            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -27,10 +24,7 @@
                     </a>
                 </q-tabs>
             </q-toolbar>
-            <q-toolbar
-                class="text-white shadow-2 mobile-only"
-                style="background-color: #111"
-            >
+            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -57,24 +51,16 @@
                             </a>
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
-                            <a :href="navlink.ref" @click="dialog = false">
-                                {{ navlink.text }}
-                            </a>
+                            <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
                         </li>
                         <li>
-                            <a href="http://google.com" @click="dialog = false"
-                                >iniciar sesion</a
-                            >
+                            <a href="http://google.com" @click="dialog = false">iniciar sesion</a>
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a
-                                href="#"
-                                class="on-right"
-                                @click="dialog = false"
-                            >
+                            <a href="#" class="on-right" @click="dialog = false">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
@@ -85,10 +71,7 @@
 
         <q-page-container>
             <hero-section id="hero"></hero-section>
-            <us-title-section
-                id="title"
-                @openSection="toggleUsSection()"
-            ></us-title-section>
+            <us-title-section id="title" @openSection="toggleUsSection()"></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
                     <us-content-section id="uscontent"></us-content-section>
@@ -97,18 +80,56 @@
             <blog-title-section id="blog"></blog-title-section>
             <!-- <store-title-section></store-title-section> -->
             <!-- <store-content-section></store-content-section> -->
-            <movingbeer-title-section
-                id="movingbeer"
-            ></movingbeer-title-section>
+            <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
             <contact-section id="contact"></contact-section>
             <footer>
-                Brewthers Co.
-                {{ new Date().getFullYear() }}
-                <span>&copy;</span> Desarrollado por
-                <a href="#" target="_blank">
-                    <span>BlueBalloon Inc.</span>
-                </a>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 desktop-only">
+                        <img src="../assets/brewthers-logo.png" width="60%" />
+                    </div>
+                    <div class="col-lg-3 col-md-4 q-pr-md">
+                        <div class="text-h6" style="font-family: GilroyExtraBold">Navegacion</div>
+                        <ul>
+                            <li v-for="(link, i) in navLinks" :key="i">
+                                <a :href="link.ref" v-smooth-scroll>{{ link.text }}</a>
+                            </li>
+                            <li>
+                                <a href="#">terminos y condiciones</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-4 q-pr-md">
+                        <div class="text-h6" style="font-family: GilroyExtraBold">Contactanos</div>
+                        <p style="margin-top: 12px;">
+                            Panama, San Francisco, Calle 23 Sur, Torre Something
+                            Ofc. 3D
+                        </p>
+                        <p>(+507) 236-1111</p>
+                        <p>correo@brewthersco.com</p>
+                    </div>
+                    <div class="col-lg-3 col-md-4 q-pr-md">
+                        <div
+                            class="text-h6"
+                            style="font-family: GilroyExtraBold; margin-bottom: 12px;"
+                        >Conectate</div>
+                        <a href="#">
+                            <i class="fab fa-instagram" style="font-size: 40px;"></i>
+                        </a>
+                        <a href="#" class="on-right">
+                            <i class="fab fa-facebook" style="font-size: 40px;"></i>
+                        </a>
+                        <br />
+                        <br />
+                        <span>
+                            {{ new Date().getFullYear() }} &copy; Developed by.
+                            <a
+                                href="#"
+                                style="color: #27a3c3"
+                            >BlueBaloon Inc.</a>
+                        </span>
+                    </div>
+                </div>
             </footer>
         </q-page-container>
     </q-layout>
@@ -330,6 +351,10 @@ q-toolbar a {
     .movingbeer-bg {
         height: 650px;
     }
+    footer {
+        padding-left: 50px !important;
+        padding-right: 50px !important;
+    }
 }
 
 .mobile-menu-overlay a {
@@ -355,14 +380,31 @@ q-toolbar a {
 
 footer {
     background-color: #111;
-    padding: 10px;
-    text-align: center;
     font-family: GilroyLight;
     font-size: 12px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 200px;
+    padding-right: 200px;
 }
 
-footer span {
+footer ul {
+    padding: 0;
+}
+
+footer li {
+    list-style-type: none;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+
+footer a:hover,
+i:hover {
     color: #27a3c3;
+}
+
+footer p {
+    margin-bottom: 5px;
 }
 
 /* width */
