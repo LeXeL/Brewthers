@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 import * as firebase from 'firebase'
 import 'firebase/auth'
 
@@ -87,21 +88,7 @@ export default {
                 .then(async () => {
                     let user = await firebase.auth().currentUser
                     // await this.$store.dispatch('setCurrentUser', user)
-                    // var db = firebase.firestore()
-                    // db.collection('Users')
-                    //     .doc(user.uid)
-                    //     .set({
-                    //         userName: this.name,
-                    //         userEmail: this.email,
-                    //         isAdmin: false,
-                    //     })
-                    //     .then(() => {
-                    //         alert('Usuario creado con exito')
-                    //         this.$router.push('/')
-                    //     })
-                    //     .catch(error => {
-                    //         console.error('Error adding document: ', error)
-                    //     })
+                    api.updateuserwithinfo({uid: user.uid, obj: this.form})
                 })
                 .catch(error => {
                     // Handle Errors here.

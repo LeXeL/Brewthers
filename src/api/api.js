@@ -1,4 +1,3 @@
-import store from '@/store/store'
 import Request from './request'
 
 //Example
@@ -6,3 +5,9 @@ import Request from './request'
 //     Request.get('/allitems', {
 //         'Content-Type': 'application/json',
 //     })
+
+//Auth
+export const updateuserwithinfo = data =>
+    Request.post('/updateUserWithInfo', data, {
+        'Content-Type': 'application/json',
+    })
