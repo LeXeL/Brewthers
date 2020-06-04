@@ -9,6 +9,7 @@
                     filled
                     type="text"
                     label="Nombre"
+                    v-model="form.name"
                 />
                 <q-input
                     class="q-pb-md"
@@ -16,6 +17,7 @@
                     filled
                     type="text"
                     label="Apellido"
+                    v-model="form.lastName"
                 />
                 <q-input
                     class="q-pb-md"
@@ -23,6 +25,7 @@
                     filled
                     type="email"
                     label="Email"
+                    v-model="form.email"
                 />
                 <q-input
                     class="q-pb-md"
@@ -30,6 +33,7 @@
                     filled
                     type="text"
                     label="Nombre del restaurante"
+                    v-model="form.restaurantName"
                 />
                 <q-input
                     class="q-pb-md"
@@ -37,6 +41,7 @@
                     filled
                     type="text"
                     label="Celular de contacto"
+                    v-model="form.contactPhone"
                 />
                 <q-input
                     class="q-pb-md"
@@ -44,22 +49,70 @@
                     filled
                     type="password"
                     label="Contraseña"
+                    v-model="form.password"
                 />
-                <q-input
-                    class="q-pb-md"
-                    dark
-                    filled
-                    type="password"
-                    label="Confirmar contraseña"
-                />
-                <q-btn color="primary">Enviar</q-btn>
+                <q-input class="q-pb-md" dark filled type="password" label="Confirmar contraseña" />
+                <q-btn color="primary" @click="createuser">Enviar</q-btn>
             </q-form>
         </div>
     </q-page>
 </template>
 
 <script>
-export default {}
+import * as firebase from 'firebase'
+import 'firebase/auth'
+
+export default {
+    data() {
+        return {
+            form: {
+                name: 'Diego',
+                lastName: 'Rodriguez',
+                email: 'diego.r2892@gmail.com',
+                restaurantName: 'la papa caliente',
+                contactPhone: '666666666',
+                password: 'atletico',
+            },
+        }
+    },
+    methods: {
+        createuser() {
+            console.log('entro')
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                    this.form.email,
+                    this.form.password
+                )
+                .then(async () => {
+                    let user = await firebase.auth().currentUser
+                    // await this.$store.dispatch('setCurrentUser', user)
+                    // var db = firebase.firestore()
+                    // db.collection('Users')
+                    //     .doc(user.uid)
+                    //     .set({
+                    //         userName: this.name,
+                    //         userEmail: this.email,
+                    //         isAdmin: false,
+                    //     })
+                    //     .then(() => {
+                    //         alert('Usuario creado con exito')
+                    //         this.$router.push('/')
+                    //     })
+                    //     .catch(error => {
+                    //         console.error('Error adding document: ', error)
+                    //     })
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    this.dismissCountDown = this.dismissSecs
+                    this.errorCode = error.code
+                    this.errorMessage = error.message
+                    // ...
+                })
+        },
+    },
+}
 </script>
 
 <style lang="scss" scoped></style>
