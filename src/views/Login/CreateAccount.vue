@@ -1,5 +1,13 @@
 <template>
     <q-page>
+        <div class="q-pa-md q-gutter-sm" v-if="dismissCountDown > 0">
+            <q-banner inline-actions rounded class="bg-red text-white">
+                {{errorMessage}}
+                <template v-slot:action>
+                    <q-btn flat label="Dismiss" @click="dismissCountDown = 0" />
+                </template>
+            </q-banner>
+        </div>
         <div class="pattern-bg q-pa-xl" style="height: 100vh">
             <h2>Crea una cuenta</h2>
             <q-form>
@@ -74,6 +82,8 @@ export default {
                 contactPhone: '666666666',
                 password: 'atletico',
             },
+            dismissSecs: 15,
+            dismissCountDown: 0,
         }
     },
     methods: {
@@ -92,6 +102,7 @@ export default {
                 })
                 .catch(error => {
                     // Handle Errors here.
+                    console.log(error)
                     this.dismissCountDown = this.dismissSecs
                     this.errorCode = error.code
                     this.errorMessage = error.message

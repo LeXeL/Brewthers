@@ -1,5 +1,13 @@
 <template>
     <q-page class="pattern-bg window-height window-width row justify-center items-center">
+        <div class="q-pa-md q-gutter-sm" v-if="dismissCountDown > 0">
+            <q-banner inline-actions rounded class="bg-red text-white">
+                {{errorMessage}}
+                <template v-slot:action>
+                    <q-btn flat label="Dismiss" @click="dismissCountDown = 0" />
+                </template>
+            </q-banner>
+        </div>
         <div class="column">
             <div class="row">
                 <h5 class="text-h5 text-white q-my-md">Brewthers</h5>
@@ -58,6 +66,8 @@ export default {
         return {
             email: 'lexelEZ@gmail.com',
             password: 'Atletico123!',
+            dismissSecs: 15,
+            dismissCountDown: 0,
         }
     },
     methods: {
@@ -67,7 +77,6 @@ export default {
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(async () => {
                     let user = await firebase.auth().currentUser
-                    console.log(`user: ${JSON.stringify(user, null, 2)}`)
                     // await this.$store.dispatch('setCurrentUser', user)
                     // this.$router.push('/')
                 })
