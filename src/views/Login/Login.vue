@@ -33,6 +33,7 @@
                             size="lg"
                             class="full-width"
                             label="Login"
+                            @click="login"
                         />
                     </q-card-actions>
                     <q-card-section class="text-center q-pa-none">
@@ -48,33 +49,34 @@
 </template>
 
 <script>
+import * as firebase from 'firebase'
 import 'firebase/auth'
 
 export default {
     name: 'Login',
     data() {
         return {
-            email: '',
-            password: '',
+            email: 'lexelEZ@gmail.com',
+            password: 'Atletico123!',
         }
     },
     methods: {
-        submit() {
+        async login() {
             firebase
                 .auth()
-                .createUserWithEmailAndPassword(
-                    this.form.email,
-                    this.form.password
-                )
-                .then(data => {
-                    data.user
-                        .updateProfile({
-                            displayName: this.form.name,
-                        })
-                        .then(() => {})
+                .signInWithEmailAndPassword(this.email, this.password)
+                .then(async () => {
+                    let user = await firebase.auth().currentUser
+                    console.log(`user: ${JSON.stringify(user, null, 2)}`)
+                    // await this.$store.dispatch('setCurrentUser', user)
+                    // this.$router.push('/')
                 })
-                .catch(err => {
-                    this.error = err.message
+                .catch(error => {
+                    // Handle Errors here.
+                    this.dismissCountDown = this.dismissSecs
+                    this.errorCode = error.code
+                    this.errorMessage = error.message
+                    // ...
                 })
         },
     },
