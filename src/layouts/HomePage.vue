@@ -1,7 +1,10 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 desktop-only"
+                style="background-color: #111"
+            >
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -24,7 +27,10 @@
                     </a>
                 </q-tabs>
             </q-toolbar>
-            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 mobile-only"
+                style="background-color: #111"
+            >
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -51,16 +57,24 @@
                             </a>
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
-                            <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
+                            <a :href="navlink.ref" @click="dialog = false">{{
+                                navlink.text
+                            }}</a>
                         </li>
                         <li>
-                            <a href="http://google.com" @click="dialog = false">login</a>
+                            <a href="http://google.com" @click="dialog = false"
+                                >login</a
+                            >
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a href="#" class="on-right" @click="dialog = false">
+                            <a
+                                href="#"
+                                class="on-right"
+                                @click="dialog = false"
+                            >
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
@@ -72,11 +86,20 @@
         <q-page-container>
             <hero-section id="hero"></hero-section>
             <us-title-section id="title"></us-title-section>
-            <us-content-section id="uscontent"></us-content-section>
+            <q-slide-transition>
+                <div v-show="usSection">
+                    <us-content-section
+                        id="uscontent"
+                        v-on:openSection="toggleUsSection()"
+                    ></us-content-section>
+                </div>
+            </q-slide-transition>
             <blog-title-section id="blog"></blog-title-section>
             <!-- <store-title-section></store-title-section> -->
             <!-- <store-content-section></store-content-section> -->
-            <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
+            <movingbeer-title-section
+                id="movingbeer"
+            ></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
             <contact-section id="contact"></contact-section>
             <footer>
@@ -105,6 +128,7 @@ import ContactSection from '@/views/landing/ContactSection.vue'
 export default {
     data() {
         return {
+            usSection: false,
             dialog: false,
             navLinks: [
                 {
@@ -144,6 +168,12 @@ export default {
                 },
             ],
         }
+    },
+    methods: {
+        toggleUsSection() {
+            console.log('this')
+            this.usSection = !this.usSection
+        },
     },
     components: {
         'hero-section': HeroSection,
