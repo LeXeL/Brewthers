@@ -17,12 +17,11 @@
                             <span>{{ navlink.text }}</span>
                         </q-tab>
                     </a>
-                    <q-tab name="tab8">
-                        <i class="fab fa-facebook"></i>
-                    </q-tab>
-                    <q-tab name="tab9">
-                        <i class="fab fa-instagram"></i>
-                    </q-tab>
+                    <a href="http://www.google.com">
+                        <q-tab name="tab8">
+                            <span>login</span>
+                        </q-tab>
+                    </a>
                 </q-tabs>
             </q-toolbar>
             <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
@@ -54,7 +53,10 @@
                         <li v-for="(navlink, i) in navLinks" :key="i">
                             <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
                         </li>
-                        <li class="q-mt-xl">
+                        <li>
+                            <a href="http://google.com" @click="dialog = false">login</a>
+                        </li>
+                        <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
