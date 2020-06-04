@@ -1,7 +1,10 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 desktop-only"
+                style="background-color: #111"
+            >
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -19,12 +22,15 @@
                     </a>
                     <a href="http://www.google.com">
                         <q-tab name="tab8">
-                            <span>login</span>
+                            <span>iniciar sesion</span>
                         </q-tab>
                     </a>
                 </q-tabs>
             </q-toolbar>
-            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 mobile-only"
+                style="background-color: #111"
+            >
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -52,19 +58,23 @@
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
                             <a :href="navlink.ref" @click="dialog = false">
-                                {{
-                                navlink.text
-                                }}
+                                {{ navlink.text }}
                             </a>
                         </li>
                         <li>
-                            <a href="http://google.com" @click="dialog = false">login</a>
+                            <a href="http://google.com" @click="dialog = false"
+                                >iniciar sesion</a
+                            >
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a href="#" class="on-right" @click="dialog = false">
+                            <a
+                                href="#"
+                                class="on-right"
+                                @click="dialog = false"
+                            >
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
@@ -75,7 +85,10 @@
 
         <q-page-container>
             <hero-section id="hero"></hero-section>
-            <us-title-section id="title" @openSection="toggleUsSection()"></us-title-section>
+            <us-title-section
+                id="title"
+                @openSection="toggleUsSection()"
+            ></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
                     <us-content-section id="uscontent"></us-content-section>
@@ -84,7 +97,9 @@
             <blog-title-section id="blog"></blog-title-section>
             <!-- <store-title-section></store-title-section> -->
             <!-- <store-content-section></store-content-section> -->
-            <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
+            <movingbeer-title-section
+                id="movingbeer"
+            ></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
             <contact-section id="contact"></contact-section>
             <footer>
@@ -156,7 +171,6 @@ export default {
     },
     methods: {
         toggleUsSection() {
-            console.log('this')
             this.usSection = !this.usSection
         },
     },
@@ -233,6 +247,7 @@ q-toolbar a {
     font-family: GilroyExtraBold;
     text-transform: uppercase;
     font-size: 3rem;
+    text-align: center;
 }
 
 .title-section-link {
@@ -240,6 +255,7 @@ q-toolbar a {
     text-decoration: none;
     text-align: center;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .title-section-link:hover {
