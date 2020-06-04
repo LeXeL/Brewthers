@@ -1,9 +1,10 @@
 import axios from 'axios'
 let baseUrl
 if (process.env.NODE_ENV == 'production') {
-    baseUrl = 'https://us-central1-ultimate-fantasy-fe04f.cloudfunctions.net'
+    baseUrl =
+        'https://us-central1-brewthers-374c0.cloudfunctions.net/updateUserWithInfo'
 } else {
-    baseUrl = 'http://localhost:5000/ultimate-fantasy-fe04f/us-central1'
+    baseUrl = 'http://localhost:5001/brewthers-374c0/us-central1'
 }
 export default class Request {
     static post(url, data, headers) {
