@@ -68,7 +68,7 @@
 
 <script>
 import * as api from '@/api/api'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 
 export default {
@@ -88,7 +88,6 @@ export default {
     },
     methods: {
         createuser() {
-            console.log('entro')
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(
@@ -97,7 +96,7 @@ export default {
                 )
                 .then(async () => {
                     let user = await firebase.auth().currentUser
-                    // await this.$store.dispatch('setCurrentUser', user)
+                    await this.$store.dispatch('setCurrentUser', user)
                     api.updateuserwithinfo({uid: user.uid, obj: this.form})
                 })
                 .catch(error => {

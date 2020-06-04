@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 
 export default {
@@ -77,8 +77,8 @@ export default {
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(async () => {
                     let user = await firebase.auth().currentUser
-                    // await this.$store.dispatch('setCurrentUser', user)
-                    // this.$router.push('/')
+                    await this.$store.dispatch('setCurrentUser', user)
+                    this.$router.push('/admin')
                 })
                 .catch(error => {
                     // Handle Errors here.
