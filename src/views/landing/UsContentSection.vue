@@ -20,6 +20,11 @@
                 </p>
             </div>
         </div>
+        <div class="row">
+            <p class="title-section-link full-width" style="text-align: center">
+                <i class="fas fa-chevron-up" style="font-size: 40px;" @click="$emit('openSection')"></i>
+            </p>
+        </div>
     </div>
 </template>
 

@@ -91,7 +91,7 @@
             ></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
-                    <us-content-section id="uscontent"></us-content-section>
+                    <us-content-section id="uscontent" @openSection="toggleUsSection()"></us-content-section>
                 </div>
             </q-slide-transition>
             <blog-title-section id="blog"></blog-title-section>

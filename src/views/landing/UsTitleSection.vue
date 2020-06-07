@@ -4,7 +4,9 @@
         <p
             class="title-section-link absolute-bottom q-pb-xl"
             @click="$emit('openSection')"
-        >Explorar mas</p>
+        >
+            <i class="fas fa-chevron-down" style="font-size: 40px;"></i>
+        </p>
     </div>
 </template>
 
