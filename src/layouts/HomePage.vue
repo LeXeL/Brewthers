@@ -1,7 +1,10 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 desktop-only"
+                style="background-color: #111"
+            >
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -17,10 +20,17 @@
                             <span>{{ navlink.text }}</span>
                         </q-tab>
                     </a>
-                    <q-btn color="primary" text-color="black" label="iniciar sesion" />
+                    <q-btn
+                        color="primary"
+                        text-color="black"
+                        label="iniciar sesion"
+                    />
                 </q-tabs>
             </q-toolbar>
-            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 mobile-only"
+                style="background-color: #111"
+            >
                 <q-avatar>
                     <img src="../assets/brewthers-logo.png" />
                 </q-avatar>
@@ -47,16 +57,24 @@
                             </a>
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
-                            <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
+                            <a :href="navlink.ref" @click="dialog = false">{{
+                                navlink.text
+                            }}</a>
                         </li>
                         <li>
-                            <a href="http://google.com" @click="dialog = false">iniciar sesion</a>
+                            <a href="http://google.com" @click="dialog = false"
+                                >iniciar sesion</a
+                            >
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a href="#" class="on-right" @click="dialog = false">
+                            <a
+                                href="#"
+                                class="on-right"
+                                @click="dialog = false"
+                            >
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
@@ -67,7 +85,10 @@
 
         <q-page-container>
             <hero-section id="hero"></hero-section>
-            <us-title-section id="title" @openSection="toggleUsSection()"></us-title-section>
+            <us-title-section
+                id="title"
+                @openSection="toggleUsSection()"
+            ></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
                     <us-content-section id="uscontent"></us-content-section>
@@ -76,7 +97,9 @@
             <blog-title-section id="blog"></blog-title-section>
             <!-- <store-title-section></store-title-section> -->
             <!-- <store-content-section></store-content-section> -->
-            <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
+            <movingbeer-title-section
+                id="movingbeer"
+            ></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
             <contact-section id="contact"></contact-section>
             <footer>
@@ -85,10 +108,17 @@
                         <img src="../assets/brewthers-logo.png" width="60%" />
                     </div>
                     <div class="col-lg-3 col-md-4 q-pr-md">
-                        <div class="text-h6" style="font-family: GilroyExtraBold">Navegacion</div>
+                        <div
+                            class="text-h6"
+                            style="font-family: GilroyExtraBold"
+                        >
+                            Navegacion
+                        </div>
                         <ul>
                             <li v-for="(link, i) in navLinks" :key="i">
-                                <a :href="link.ref" v-smooth-scroll>{{ link.text }}</a>
+                                <a :href="link.ref" v-smooth-scroll>{{
+                                    link.text
+                                }}</a>
                             </li>
                             <li>
                                 <a href="#">terminos y condiciones</a>
@@ -96,7 +126,12 @@
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-4 q-pr-md">
-                        <div class="text-h6" style="font-family: GilroyExtraBold">Contactanos</div>
+                        <div
+                            class="text-h6"
+                            style="font-family: GilroyExtraBold"
+                        >
+                            Contactanos
+                        </div>
                         <p style="margin-top: 12px;">
                             Panama, San Francisco, Calle 23 Sur, Torre Something
                             Ofc. 3D
@@ -108,21 +143,28 @@
                         <div
                             class="text-h6"
                             style="font-family: GilroyExtraBold; margin-bottom: 12px;"
-                        >Conectate</div>
+                        >
+                            Conectate
+                        </div>
                         <a href="#">
-                            <i class="fab fa-instagram" style="font-size: 40px;"></i>
+                            <i
+                                class="fab fa-instagram"
+                                style="font-size: 40px;"
+                            ></i>
                         </a>
                         <a href="#" class="on-right">
-                            <i class="fab fa-facebook" style="font-size: 40px;"></i>
+                            <i
+                                class="fab fa-facebook"
+                                style="font-size: 40px;"
+                            ></i>
                         </a>
                         <br />
                         <br />
                         <span>
                             {{ new Date().getFullYear() }} &copy; Developed by.
-                            <a
-                                href="#"
-                                style="color: #27a3c3"
-                            >BlueBaloon Inc.</a>
+                            <a href="#" style="color: #27a3c3"
+                                >BlueBaloon Inc.</a
+                            >
                         </span>
                     </div>
                 </div>
