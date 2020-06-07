@@ -17,11 +17,7 @@
                             <span>{{ navlink.text }}</span>
                         </q-tab>
                     </a>
-                    <a href="http://www.google.com">
-                        <q-tab name="tab8">
-                            <span>iniciar sesion</span>
-                        </q-tab>
-                    </a>
+                    <q-btn color="primary" text-color="black" label="iniciar sesion" />
                 </q-tabs>
             </q-toolbar>
             <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
