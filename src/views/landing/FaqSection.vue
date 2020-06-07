@@ -41,7 +41,7 @@ export default {
                 {
                     q: '¿Cuál es su política para cambios de producto?',
                     a:
-                        'R. Una vez el pedido es creado, realizamos una llamada al local comercial responsable del mismo para corroborar y confirmar que el pedido que tenemos registrado está completo y correcto. Al momento de realizar la entrega del producto se hará una revisado en sitio del producto entregado por parte de Brewthers, con la finalidad de comprobar se encuentra en buen estado. Todo esto se hará en presencia de una persona asignada por el local comercial',
+                        'R. Una vez el pedido es creado, realizamos una llamada al local comercial responsable del mismo para corroborar y confirmar que el pedido que tenemos registrado está completo y correcto. Al momento de realizar la entrega del producto se hará una revisado en sitio del producto entregado por parte de Brewthers, con la finalidad de comprobar se encuentra en buen estado. Todo esto se hará en presencia de una persona asignada por el local comercial.',
                     show: true,
                 },
                 {

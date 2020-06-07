@@ -5,7 +5,7 @@
             <div class="text-h3 title-section mobile-only q-mb-md">movingbeer</div>
             <div class="text-h6 q-mb-lg" style="font-family: GilroyExtraBold; text-align: center;">
                 Espacio para conectar y facilitar el comercio entre las Casas
-                Cerveceras y tu negocio
+                Cerveceras y tu negocio.
             </div>
             <div class="row justify-center">
                 <q-btn color="primary">Crear cuenta</q-btn>
