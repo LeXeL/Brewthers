@@ -6,21 +6,17 @@
             frecuentes para ver si encuentras la información que estas buscando.
         </h4>
         <div v-for="(faq, i) in faqs" :key="i">
-            <h5 @click="hideAllQuestionExceptSelected(i)" class="desktop-only">
-                {{ faq.q }}
-            </h5>
-            <h5 @click="displayFaqPrompt(i)" class="mobile-only">
-                {{ faq.q }}
-            </h5>
+            <h5 @click="hideAllQuestionExceptSelected(i)" class="desktop-only">{{ faq.q }}</h5>
+            <h5 @click="displayFaqPrompt(i)" class="mobile-only">{{ faq.q }}</h5>
             <q-slide-transition class="desktop-only">
                 <div v-show="faq.show">
-                    <p>{{ faq.a }}</p>
+                    <p v-html="faq.a">{{ faq.a }}</p>
                 </div>
             </q-slide-transition>
         </div>
         <q-dialog v-model="faqPrompt">
             <q-card dark style="background-color: #111;">
-                <q-card-section>{{ faqs[promptAns].a }}</q-card-section>
+                <q-card-section v-html="faqs[promptAns].a">{{ faqs[promptAns].a }}</q-card-section>
                 <q-card-actions align="right">
                     <q-btn flat label="¡Fino!" color="primary" v-close-popup />
                 </q-card-actions>
@@ -38,7 +34,8 @@ export default {
             faqs: [
                 {
                     q: '¿Cómo me contacto con Brewthers?',
-                    a: 'R. Favor dirigirse a la sección de “Contáctenos”',
+                    a:
+                        'R. Favor dirigirse a la sección de <strong><a href="#contact" style="color: #27a3c3">Contáctenos</a></strong>',
                     show: false,
                 },
                 {
@@ -56,12 +53,14 @@ export default {
                 },
                 {
                     q: '¿Cuál es su Política de Privacidad?',
-                    a: 'asdaf',
+                    a:
+                        'Para leer sobre nuestras politicas de privacidad, puede entrar <strong><a href="#" style="color: #27a3c3">aqui</a></strong>.',
                     show: false,
                 },
                 {
                     q: '¿Cuáles son sus Términos y Condiciones?',
-                    a: 'asdaf',
+                    a:
+                        'Para leer sobre nuestros terminos de condiciones, puedes entrar <strong><a href="#" style="color: #27a3c3">aqui</a></strong>.',
                     show: false,
                 },
             ],
