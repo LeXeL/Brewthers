@@ -23,7 +23,7 @@
                     <q-btn
                         color="primary"
                         text-color="black"
-                        label="iniciar sesion"
+                        label="iniciar sesión"
                     />
                 </q-tabs>
             </q-toolbar>
@@ -91,7 +91,10 @@
             ></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
-                    <us-content-section id="uscontent" @openSection="toggleUsSection()"></us-content-section>
+                    <us-content-section
+                        id="uscontent"
+                        @openSection="toggleUsSection()"
+                    ></us-content-section>
                 </div>
             </q-slide-transition>
             <blog-title-section id="blog"></blog-title-section>
@@ -112,7 +115,7 @@
                             class="text-h6"
                             style="font-family: GilroyExtraBold"
                         >
-                            Navegacion
+                            Navegación
                         </div>
                         <ul>
                             <li v-for="(link, i) in navLinks" :key="i">
@@ -130,7 +133,7 @@
                             class="text-h6"
                             style="font-family: GilroyExtraBold"
                         >
-                            Contactanos
+                            Contáctanos
                         </div>
                         <p style="margin-top: 12px;">
                             Panama, San Francisco, Calle 23 Sur, Torre Something
@@ -221,7 +224,7 @@ export default {
                     name: 'tab6',
                 },
                 {
-                    text: 'contactanos',
+                    text: 'contáctanos',
                     ref: '#contact',
                     name: 'tab7',
                 },
