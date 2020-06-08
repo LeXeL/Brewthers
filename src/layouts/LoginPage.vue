@@ -8,5 +8,6 @@
 
 
 
-<style lang="scss" scoped>
+<style scoped>
+@import './../styles/login.css';
 </style>
