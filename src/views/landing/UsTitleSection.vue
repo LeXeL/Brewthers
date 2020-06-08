@@ -4,9 +4,7 @@
         <p
             class="title-section-link absolute-bottom q-pb-xl"
             @click="$emit('openSection')"
-        >
-            Explorar mas
-        </p>
+        >Explorar mas</p>
     </div>
 </template>
 
@@ -14,4 +12,4 @@
 export default {}
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>
