@@ -5,11 +5,14 @@ import store from '@/store/store'
 import HomePage from './layouts/HomePage.vue'
 import LoginPage from './layouts/LoginPage.vue'
 import AdminPage from './layouts/AdminPage.vue'
+import StorePage from './layouts/StorePage.vue'
 //Views
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
+import StoreIndex from './views/movingbeer/StoreIndex.vue'
+import {Store} from 'vuex'
 
 Vue.use(Router)
 
@@ -62,6 +65,17 @@ export default new Router({
                     path: '/about',
                     name: 'about',
                     component: About,
+                },
+            ],
+        },
+        {
+            path: '/movingbeer',
+            component: StorePage,
+            children: [
+                {
+                    path: '',
+                    name: 'storeindex',
+                    component: StoreIndex,
                 },
             ],
         },
