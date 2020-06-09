@@ -1,5 +1,5 @@
 <template>
-    <q-layout>
+    <q-layout class="brewthers-dark-bg">
         <q-page-container>
             <router-view></router-view>
         </q-page-container>

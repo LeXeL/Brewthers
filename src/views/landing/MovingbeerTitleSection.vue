@@ -8,11 +8,16 @@
                 Cerveceras y tu negocio.
             </div>
             <div class="row justify-center">
-                <q-btn color="primary" style="font-family: GilroyExtraBold">Crear cuenta</q-btn>
+                <q-btn
+                    color="primary"
+                    style="font-family: GilroyExtraBold"
+                    :to="'/createaccount'"
+                >Crear cuenta</q-btn>
                 <q-btn
                     color="primary"
                     class="on-right"
                     style="font-family: GilroyExtraBold"
+                    :to="'/login'"
                 >Iniciar sesion</q-btn>
             </div>
         </div>

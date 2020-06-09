@@ -15,7 +15,12 @@
                             <span>{{ navlink.text }}</span>
                         </q-tab>
                     </a>
-                    <q-btn color="primary" text-color="black" label="iniciar sesión" />
+                    <q-btn
+                        color="primary"
+                        text-color="black"
+                        label="iniciar sesión"
+                        :to="'/login'"
+                    />
                 </q-tabs>
             </q-toolbar>
             <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
@@ -50,7 +55,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="http://google.com" @click="dialog = false">iniciar sesion</a>
+                            <a href="/login" @click="dialog = false">iniciar sesion</a>
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">

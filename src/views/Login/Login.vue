@@ -78,7 +78,7 @@ export default {
                 .then(async () => {
                     let user = await firebase.auth().currentUser
                     await this.$store.dispatch('setCurrentUser', user)
-                    this.$router.push('/admin')
+                    this.$router.push('/movingbeer')
                 })
                 .catch(error => {
                     // Handle Errors here.
