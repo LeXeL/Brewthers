@@ -6,8 +6,6 @@
     </q-layout>
 </template>
 
-
-
 <style scoped>
 @import './../styles/login.css';
 </style>
