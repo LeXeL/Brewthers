@@ -1,12 +1,24 @@
 <template>
-    <q-layout>
+    <q-layout view="lHh Lpr lFf">
+        <q-header elevated>
+            <q-toolbar
+                class="text-white shadow-2 desktop-only"
+                style="background-color: #111"
+            >
+                <q-avatar>
+                    <img src="../assets/brewthers-logo.png" />
+                </q-avatar>
+                <q-space />
+                <q-btn flat round dense>
+                    <i class="fas fa-shopping-cart"></i>
+                </q-btn>
+            </q-toolbar>
+        </q-header>
         <q-page-container>
             <router-view></router-view>
         </q-page-container>
     </q-layout>
 </template>
-
-
 
 <style>
 @font-face {
