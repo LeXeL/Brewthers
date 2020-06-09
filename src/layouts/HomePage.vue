@@ -95,7 +95,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">terminos y condiciones</a>
+                                <a href="#">terminos & condiciones</a>
                             </li>
                         </ul>
                     </div>
