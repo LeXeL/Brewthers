@@ -64,3 +64,29 @@ exports.updateUserWithInfo = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.getUserInformatioById = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = ''
+            db.collection('users')
+                .doc(req.body.uid)
+                .get()
+                .then(doc => {
+                    console.log('llego aqui')
+                    if (!doc.exists) {
+                        response = 'No user with that id'
+                    } else {
+                        console.log(doc.data())
+                        response = doc.data()
+                    }
+                })
+                .catch(err => {
+                    response = err
+                })
+            res.status(200).send({status: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
