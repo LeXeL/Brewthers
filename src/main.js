@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
+import * as api from '@/api/api'
 
 import firebase from 'firebase/app'
 
@@ -25,6 +26,16 @@ const configOptions = {
 }
 
 firebase.initializeApp(configOptions)
+
+firebase.auth().onAuthStateChanged(user => {
+    // store.dispatch('fetchUser', user)
+    if (user && store.getters.user === '') {
+        store.dispatch('setCurrentUser', user)
+        api.getuserinformationbyid({uid: user.uid}).then(response => {
+            store.commit('SET_USER', response.data.data)
+        })
+    }
+})
 
 new Vue({
     router,
