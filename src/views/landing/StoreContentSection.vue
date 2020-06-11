@@ -3,7 +3,7 @@
         class="pattern-bg q-pa-xl"
         style="height: auto; background-repeat: repeat-y; background-position: top;"
     >
-        <div class="row q-mb-xl q-mt-xl justify-center">
+        <div class="row q-mb-lg q-mt-xl justify-center">
             <q-btn-group
                 push
                 class="desktop-only"
@@ -49,6 +49,15 @@
                 dark
                 emit-value
             />
+        </div>
+        <div class="row q-mb-lg">
+            <div
+                class="text-h6 text-center full-width"
+                style="font-family: GilroyExtraBold;"
+            >
+                Todo pedido de mercancia debe ser realizado a traves denuestro
+                numero de Whatsapp o Instagram.
+            </div>
         </div>
         <div class="row">
             <div
@@ -110,31 +119,31 @@ export default {
                 {
                     name: 'Logo Brewthers',
                     price: 17,
-                    photo: 'item_1.png',
+                    photo: 'item_1.jpg',
                     category: 'tshirt',
                 },
                 {
                     name: 'Una es Ninguna',
                     price: 17,
-                    photo: 'item_2.png',
+                    photo: 'item_2.jpg',
                     category: 'tshirt',
                 },
                 {
                     name: 'Brewthers',
                     price: 17,
-                    photo: 'item_3.png',
+                    photo: 'item_3.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'Brewthers Owl',
                     price: 17,
-                    photo: 'item_4.png',
+                    photo: 'item_4.jpg',
                     category: 'cap',
                 },
                 {
                     name: 'Brewthers Owl',
                     price: 17,
-                    photo: 'item_5.png',
+                    photo: 'item_5.jpg',
                     category: 'cup',
                 },
             ],
