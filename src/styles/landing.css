@@ -44,6 +44,16 @@ q-toolbar a {
     bottom: 0;
 }
 
+.carousel-img {
+    filter: grayscale(100%);
+    transition: filter 0.5s;
+}
+
+.carousel-img:hover {
+    filter: grayscale(0%);
+    cursor: pointer;
+}
+
 .us-bg {
     background-image: url('../assets/us-bg.jpg');
     background-position: center center;

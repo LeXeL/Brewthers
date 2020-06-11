@@ -80,6 +80,7 @@
 
         <q-page-container>
             <hero-section id="hero"></hero-section>
+            <carousel-section></carousel-section>
             <us-title-section
                 id="title"
                 @openSection="toggleUsSection()"
@@ -181,6 +182,7 @@ import StoreContentSection from '@/views/landing/StoreContentSection.vue'
 import MovingbeerTitleSection from '@/views/landing/MovingbeerTitleSection.vue'
 import FaqSection from '@/views/landing/FaqSection.vue'
 import ContactSection from '@/views/landing/ContactSection.vue'
+import CarouselSection from '@/views/landing/CarouselSection'
 
 export default {
     data() {
@@ -241,6 +243,7 @@ export default {
         'movingbeer-title-section': MovingbeerTitleSection,
         'faq-section': FaqSection,
         'contact-section': ContactSection,
+        'carousel-section': CarouselSection,
     },
 }
 </script>
