@@ -5,7 +5,12 @@
                 class="text-white shadow-2 desktop-only"
                 style="background-color: #111"
             >
-                <img src="../assets/logo-horizontal.png" width="10%" />
+                <img
+                    src="../assets/logo-horizontal.png"
+                    width="10%"
+                    class="nav-logo"
+                    @click="$router.push('/')"
+                />
                 <q-space />
                 <q-tabs class="brewthers-nav">
                     <a

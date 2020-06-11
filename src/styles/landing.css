@@ -21,6 +21,10 @@ q-toolbar a {
     text-decoration: none !important;
 }
 
+.nav-logo:hover {
+    cursor: pointer;
+}
+
 .brewthers-nav {
     font-family: GilroyExtraBold !important;
 }
