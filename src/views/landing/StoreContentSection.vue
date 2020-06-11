@@ -47,6 +47,7 @@
                 label="Categoria"
                 class="mobile-only full-width"
                 dark
+                emit-value
             />
         </div>
         <div class="row">
@@ -75,7 +76,36 @@ export default {
     data() {
         return {
             categorySelected: 'all',
-            options: ['beer', 'tshirt', 'cap', 'cup', 'all'],
+            // options: ['beer', 'tshirt', 'cap', 'cup', 'all'],
+            // options: {
+            //     camiseta: 'tshirt',
+            //     pitas: 'beer',
+            //     gorras: 'cap',
+            //     vasos: 'cup',
+            //     todo: 'all',
+            // },
+            options: [
+                {
+                    label: 'Pintas',
+                    value: 'beer',
+                },
+                {
+                    label: 'T-shirts',
+                    value: 'tshirt',
+                },
+                {
+                    label: 'Gorras',
+                    value: 'cap',
+                },
+                {
+                    label: 'Vasos',
+                    value: 'cup',
+                },
+                {
+                    label: 'Todo',
+                    value: 'all',
+                },
+            ],
             items: [
                 {
                     name: 'Logo Brewthers',
