@@ -96,7 +96,7 @@
             </q-slide-transition>
             <blog-title-section id="blog"></blog-title-section>
             <store-title-section></store-title-section>
-            <!-- <store-content-section></store-content-section> -->
+            <store-content-section></store-content-section>
             <movingbeer-title-section
                 id="movingbeer"
             ></movingbeer-title-section>
