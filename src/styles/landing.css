@@ -1,6 +1,7 @@
 * {
     color: #fff;
     text-decoration: none;
+    font-family: GilroyExtraBold;
 }
 
 @font-face {
@@ -201,6 +202,11 @@ footer li {
     margin-bottom: 5px;
 }
 
+footer a,
+footer span {
+    font-family: GilroyLight;
+}
+
 footer a:hover,
 i:hover {
     color: #27a3c3;
@@ -208,6 +214,7 @@ i:hover {
 
 footer p {
     margin-bottom: 5px;
+    font-family: GilroyLight;
 }
 
 /* width */
