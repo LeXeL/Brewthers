@@ -36,17 +36,17 @@ export default {
                 {
                     name: 'Diego Gomez',
                     rol: 'Gerente Marketing',
-                    pic: 'photo_1.png',
+                    pic: 'photo_1.jpg',
                 },
                 {
                     name: 'Francesco Mosca',
                     rol: 'Gerente Comercial',
-                    pic: 'photo_2.png',
+                    pic: 'photo_2.jpg',
                 },
                 {
                     name: 'Plinio Samaniego',
                     rol: 'Gerente Operaciones',
-                    pic: 'photo_3.png',
+                    pic: 'photo_3.jpg',
                 },
             ],
         }

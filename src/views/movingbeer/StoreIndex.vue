@@ -1,7 +1,7 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <q-carousel arrows animated v-model="slide" height="600px">
-            <q-carousel-slide name="first" :img-src="require('@/assets/movingbeer-bg.png')">
+            <q-carousel-slide name="first" :img-src="require('@/assets/movingbeer-bg.jpg')">
                 <div class="absolute-center full-width custom-caption">
                     <div
                         class="text-h2"
