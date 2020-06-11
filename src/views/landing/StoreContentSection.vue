@@ -1,7 +1,14 @@
 <template>
-    <div class="pattern-bg q-pa-xl" style="height: auto;">
-        <div class="row q-mb-xl q-mt-xl">
-            <q-btn-group push style="font-family: GilroyExtraBold;">
+    <div
+        class="pattern-bg q-pa-xl"
+        style="height: auto; background-repeat: repeat-y; background-position: top;"
+    >
+        <div class="row q-mb-xl q-mt-xl justify-center">
+            <q-btn-group
+                push
+                class="desktop-only"
+                style="font-family: GilroyExtraBold;"
+            >
                 <q-btn
                     color="primary"
                     push
@@ -33,12 +40,20 @@
                     @click="categorySelected = 'all'"
                 />
             </q-btn-group>
+            <q-select
+                filled
+                v-model="categorySelected"
+                :options="options"
+                label="Categoria"
+                class="mobile-only full-width"
+                dark
+            />
         </div>
         <div class="row">
             <div
-                class="col-lg-3 q-pa-md"
-                v-for="item in categoryFilter"
-                :key="item"
+                class="col-lg-3 col-md-3 q-pa-md"
+                v-for="(item, i) in categoryFilter"
+                :key="i"
             >
                 <img
                     :src="require(`@/assets/tiendita-items/${item.photo}`)"
@@ -60,6 +75,7 @@ export default {
     data() {
         return {
             categorySelected: 'all',
+            options: ['beer', 'tshirt', 'cap', 'cup', 'all'],
             items: [
                 {
                     name: 'Logo Brewthers',

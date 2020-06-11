@@ -15,7 +15,10 @@
             </div>
         </div>
 
-        <a href="#" class="title-section-link absolute-bottom q-pb-xl"
+        <a
+            href="#tienditacontent"
+            v-smooth-scroll
+            class="title-section-link absolute-bottom q-pb-xl"
             >Explorar mas</a
         >
     </div>

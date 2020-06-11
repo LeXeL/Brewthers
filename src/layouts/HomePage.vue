@@ -95,8 +95,8 @@
                 </div>
             </q-slide-transition>
             <blog-title-section id="blog"></blog-title-section>
-            <store-title-section></store-title-section>
-            <store-content-section></store-content-section>
+            <store-title-section id="tienditatitle"></store-title-section>
+            <store-content-section id="tienditacontent"></store-content-section>
             <movingbeer-title-section
                 id="movingbeer"
             ></movingbeer-title-section>
@@ -207,7 +207,7 @@ export default {
                 },
                 {
                     text: 'tiendita',
-                    ref: '#',
+                    ref: '#tienditatitle',
                     name: 'tab4',
                 },
                 {
