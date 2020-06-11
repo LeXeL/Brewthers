@@ -96,6 +96,15 @@ q-toolbar a {
     background-size: cover;
 }
 
+.tiendita-bg {
+    background-image: url('../assets/tiendita-bg.jpg');
+    background-position: center;
+    height: 1080px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 .movingbeer-bg {
     background-image: url('../assets/movingbeer-bg.png');
     background-position: center;
