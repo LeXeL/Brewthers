@@ -152,6 +152,11 @@ q-toolbar a {
         padding-left: 50px !important;
         padding-right: 50px !important;
     }
+    .pattern-bg {
+        height: auto;
+        background-repeat: repeat-y;
+        background-position: top;
+    }
 }
 
 .mobile-menu-overlay a {
