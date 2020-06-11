@@ -6,8 +6,7 @@
                 style="background-color: #111"
             >
                 <img src="../assets/logo-horizontal.png" width="10%" />
-                <q-space />
-                <q-tabs class="brewthers-nav">
+                <q-tabs class="brewthers-nav full-width">
                     <a
                         v-for="(navlink, i) in navLinks"
                         :href="navlink.ref"
@@ -19,6 +18,7 @@
                         </q-tab>
                     </a>
                     <q-btn
+                        class="on-right"
                         color="primary"
                         text-color="black"
                         label="iniciar sesión"
