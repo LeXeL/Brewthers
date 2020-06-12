@@ -29,6 +29,8 @@
 
 .movingbeer-tile {
     font-family: GilroyExtraBold;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 .movingbeer-tile:hover {
