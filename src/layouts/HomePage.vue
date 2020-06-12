@@ -1,10 +1,7 @@
 <template>
     <q-layout view="lHh Lpr lFf" class="brewthers-dark-bg">
         <q-header elevated>
-            <q-toolbar
-                class="text-white shadow-2 desktop-only"
-                style="background-color: #111"
-            >
+            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
                 <img
                     src="../assets/logo-horizontal.png"
                     width="10%"
@@ -25,14 +22,9 @@
                     </a>
                 </q-tabs>
                 <q-space />
-                <q-btn class="on-right" color="primary" :to="'/login'"
-                    >iniciar sesión</q-btn
-                >
+                <q-btn class="on-right" color="primary" :to="'/login'">iniciar sesión</q-btn>
             </q-toolbar>
-            <q-toolbar
-                class="text-white shadow-2 mobile-only"
-                style="background-color: #111"
-            >
+            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
                 <img src="../assets/logo-horizontal.png" width="50%" />
                 <q-space />
                 <q-btn flat round dense @click="dialog = true">
@@ -57,24 +49,16 @@
                             </a>
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
-                            <a :href="navlink.ref" @click="dialog = false">
-                                {{ navlink.text }}
-                            </a>
+                            <a :href="navlink.ref" @click="dialog = false">{{ navlink.text }}</a>
                         </li>
                         <li>
-                            <a href="/login" @click="dialog = false"
-                                >iniciar sesion</a
-                            >
+                            <a href="/login" @click="dialog = false">iniciar sesion</a>
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a
-                                href="#"
-                                class="on-right"
-                                @click="dialog = false"
-                            >
+                            <a href="#" class="on-right" @click="dialog = false">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
@@ -86,24 +70,23 @@
         <q-page-container>
             <hero-section id="hero"></hero-section>
             <carousel-section></carousel-section>
-            <us-title-section
-                id="title"
-                @openSection="toggleUsSection()"
-            ></us-title-section>
+            <us-title-section id="title" @toggleSection="toggleSection('us')"></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
-                    <us-content-section
-                        id="uscontent"
-                        @openSection="toggleUsSection()"
-                    ></us-content-section>
+                    <us-content-section id="uscontent" @toggleSection="toggleSection('us')"></us-content-section>
                 </div>
             </q-slide-transition>
             <blog-title-section id="blog"></blog-title-section>
-            <store-title-section id="tienditatitle"></store-title-section>
-            <store-content-section id="tienditacontent"></store-content-section>
-            <movingbeer-title-section
-                id="movingbeer"
-            ></movingbeer-title-section>
+            <store-title-section id="tienditatitle" @toggleSection="toggleSection('tiendita')"></store-title-section>
+            <q-slide-transition>
+                <div v-show="tienditaSection">
+                    <store-content-section
+                        id="tienditacontent"
+                        @toggleSection="toggleSection('tiendita')"
+                    ></store-content-section>
+                </div>
+            </q-slide-transition>
+            <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
             <contact-section id="contact"></contact-section>
             <footer>
@@ -112,17 +95,10 @@
                         <img src="../assets/brewthers-logo.png" width="60%" />
                     </div>
                     <div class="col-lg-3 col-md-4 q-pr-md">
-                        <div
-                            class="text-h6"
-                            style="font-family: GilroyExtraBold"
-                        >
-                            Navegación
-                        </div>
+                        <div class="text-h6" style="font-family: GilroyExtraBold">Navegación</div>
                         <ul>
                             <li v-for="(link, i) in navLinks" :key="i">
-                                <a :href="link.ref" v-smooth-scroll>
-                                    {{ link.text }}
-                                </a>
+                                <a :href="link.ref" v-smooth-scroll>{{ link.text }}</a>
                             </li>
                             <li>
                                 <a href="#">terminos & condiciones</a>
@@ -130,12 +106,7 @@
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-4 q-pr-md">
-                        <div
-                            class="text-h6"
-                            style="font-family: GilroyExtraBold"
-                        >
-                            Contáctanos
-                        </div>
+                        <div class="text-h6" style="font-family: GilroyExtraBold">Contáctanos</div>
                         <p style="margin-top: 12px;">
                             Panama, San Francisco, Calle 23 Sur, Torre Something
                             Ofc. 3D
@@ -147,28 +118,21 @@
                         <div
                             class="text-h6"
                             style="font-family: GilroyExtraBold; margin-bottom: 12px;"
-                        >
-                            Conectate
-                        </div>
+                        >Conectate</div>
                         <a href="#">
-                            <i
-                                class="fab fa-instagram"
-                                style="font-size: 40px;"
-                            ></i>
+                            <i class="fab fa-instagram" style="font-size: 40px;"></i>
                         </a>
                         <a href="#" class="on-right">
-                            <i
-                                class="fab fa-facebook"
-                                style="font-size: 40px;"
-                            ></i>
+                            <i class="fab fa-facebook" style="font-size: 40px;"></i>
                         </a>
                         <br />
                         <br />
                         <span>
                             {{ new Date().getFullYear() }} &copy; Developed by.
-                            <a href="#" style="color: #27a3c3"
-                                >BlueBaloon Inc.</a
-                            >
+                            <a
+                                href="#"
+                                style="color: #27a3c3"
+                            >BlueBaloon Inc.</a>
                         </span>
                     </div>
                 </div>
@@ -193,6 +157,7 @@ export default {
     data() {
         return {
             usSection: false,
+            tienditaSection: false,
             dialog: false,
             navLinks: [
                 {
@@ -234,8 +199,10 @@ export default {
         }
     },
     methods: {
-        toggleUsSection() {
-            this.usSection = !this.usSection
+        toggleSection(section) {
+            if (section === 'us') this.usSection = !this.usSection
+            if (section === 'tiendita')
+                this.tienditaSection = !this.tienditaSection
         },
     },
     components: {

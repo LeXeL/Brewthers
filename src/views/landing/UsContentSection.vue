@@ -22,7 +22,11 @@
         </div>
         <div class="row">
             <p class="title-section-link full-width" style="text-align: center">
-                <i class="fas fa-chevron-up" style="font-size: 40px;" @click="$emit('openSection')"></i>
+                <i
+                    class="fas fa-chevron-up"
+                    style="font-size: 40px;"
+                    @click="$emit('toggleSection')"
+                ></i>
             </p>
         </div>
     </div>
