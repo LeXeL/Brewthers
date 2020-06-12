@@ -22,7 +22,11 @@
         </div>
         <div class="row">
             <p class="title-section-link full-width" style="text-align: center">
-                <i class="fas fa-chevron-up" style="font-size: 40px;" @click="$emit('openSection')"></i>
+                <i
+                    class="fas fa-chevron-up"
+                    style="font-size: 40px;"
+                    @click="$emit('toggleSection')"
+                ></i>
             </p>
         </div>
     </div>
@@ -36,17 +40,17 @@ export default {
                 {
                     name: 'Diego Gomez',
                     rol: 'Gerente Marketing',
-                    pic: 'photo_1.png',
+                    pic: 'photo_1.jpg',
                 },
                 {
                     name: 'Francesco Mosca',
                     rol: 'Gerente Comercial',
-                    pic: 'photo_2.png',
+                    pic: 'photo_2.jpg',
                 },
                 {
                     name: 'Plinio Samaniego',
                     rol: 'Gerente Operaciones',
-                    pic: 'photo_3.png',
+                    pic: 'photo_3.jpg',
                 },
             ],
         }

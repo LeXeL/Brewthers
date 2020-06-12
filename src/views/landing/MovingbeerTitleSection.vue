@@ -11,18 +11,10 @@
                 <q-btn
                     color="primary"
                     style="font-family: GilroyExtraBold"
-                    :to="'/createaccount'"
-                >Crear cuenta</q-btn>
-                <q-btn
-                    color="primary"
-                    class="on-right"
-                    style="font-family: GilroyExtraBold"
-                    :to="'/login'"
-                >Iniciar sesion</q-btn>
+                    :to="'/movingbeer'"
+                >acceder</q-btn>
             </div>
         </div>
-
-        <a href="#" class="title-section-link absolute-bottom q-pb-xl">Explorar mas</a>
     </div>
 </template>
 

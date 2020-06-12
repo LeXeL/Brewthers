@@ -1,6 +1,7 @@
 * {
     color: #fff;
     text-decoration: none;
+    font-family: GilroyExtraBold;
 }
 
 @font-face {
@@ -18,6 +19,10 @@
 
 q-toolbar a {
     text-decoration: none !important;
+}
+
+.nav-logo:hover {
+    cursor: pointer;
 }
 
 .brewthers-nav {
@@ -43,8 +48,18 @@ q-toolbar a {
     bottom: 0;
 }
 
+.carousel-img {
+    filter: grayscale(100%);
+    transition: filter 0.5s;
+}
+
+.carousel-img:hover {
+    filter: grayscale(0%);
+    cursor: pointer;
+}
+
 .us-bg {
-    background-image: url('../assets/us-bg.png');
+    background-image: url('../assets/us-bg.jpg');
     background-position: center center;
     height: 1080px;
     background-repeat: no-repeat;
@@ -65,6 +80,7 @@ q-toolbar a {
     text-align: center;
     font-size: 20px;
     cursor: pointer;
+    text-transform: uppercase;
 }
 
 .title-section-link:hover {
@@ -88,7 +104,7 @@ q-toolbar a {
 }
 
 .blog-bg {
-    background-image: url('../assets/blog-bg.png');
+    background-image: url('../assets/blog-bg.jpg');
     background-position: center;
     height: 1080px;
     background-repeat: no-repeat;
@@ -106,7 +122,7 @@ q-toolbar a {
 }
 
 .movingbeer-bg {
-    background-image: url('../assets/movingbeer-bg.png');
+    background-image: url('../assets/movingbeer-bg.jpg');
     background-position: center;
     height: 1080px;
     background-repeat: no-repeat;
@@ -200,6 +216,11 @@ footer li {
     margin-bottom: 5px;
 }
 
+footer a,
+footer span {
+    font-family: GilroyLight;
+}
+
 footer a:hover,
 i:hover {
     color: #27a3c3;
@@ -207,6 +228,7 @@ i:hover {
 
 footer p {
     margin-bottom: 5px;
+    font-family: GilroyLight;
 }
 
 /* width */
