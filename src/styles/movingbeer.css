@@ -44,3 +44,16 @@
 .movingbeer-tile-overlay {
     display: none;
 }
+
+.movingbeer-item-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.movingbeer-item:hover .movingbeer-item-overlay {
+    display: block;
+}

@@ -38,21 +38,78 @@
                     <q-btn dense flat v-close-popup>
                         <i class="fas fa-times" style="font-size: 25px;"></i>
                         <q-tooltip content-class="bg-white text-primary"
-                            >Close</q-tooltip
+                            >Cerrar</q-tooltip
                         >
                     </q-btn>
                 </q-bar>
 
                 <q-card-section>
-                    <div class="text-h6">Alert</div>
+                    <div class="text-h4 text-center">Brewing House Name</div>
                 </q-card-section>
 
-                <q-card-section class="q-pt-none">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Rerum repellendus sit voluptate voluptas eveniet porro.
-                    Rerum blanditiis perferendis totam, ea at omnis vel numquam
-                    exercitationem aut, natus minima, porro labore.
+                <q-card-section>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-lg-1">
+                            <q-img
+                                :src="
+                                    require(`@/assets/familia-brewthers/2-oceans.jpg`)
+                                "
+                            />
+                        </div>
+                        <div class="col"></div>
+                    </div>
                 </q-card-section>
+                <q-card-section>
+                    <div class="row">
+                        <div
+                            class="col-lg-2 q-pa-md text-center"
+                            v-for="(beer, i) in 6"
+                            :key="i"
+                        >
+                            <div
+                                class="movingbeer-item"
+                                style="position: relative;"
+                            >
+                                <q-img :src="require(`@/assets/beer.jpg`)" />
+                                <div class="movingbeer-item-overlay q-pa-md">
+                                    <div
+                                        class="text-subtitle-2 q-mb-sm q-mt-lg"
+                                    >
+                                        Estilo: Something
+                                    </div>
+                                    <div class="text-subtitle-2 q-mb-sm">
+                                        Alcohol: 5%
+                                    </div>
+                                    <div class="text-subtitle-2 q-mb-lg">
+                                        IBU: 500
+                                    </div>
+                                    <q-btn-group class="q-mb-lg">
+                                        <q-btn color="primary" size="xs"
+                                            ><i class="fas fa-minus"></i
+                                        ></q-btn>
+                                        <q-btn color="primary" disable
+                                            >10</q-btn
+                                        >
+                                        <q-btn color="primary" size="xs"
+                                            ><i class="fas fa-plus"></i
+                                        ></q-btn>
+                                    </q-btn-group>
+                                    <br />
+                                    <q-btn color="primary">Agregar</q-btn>
+                                </div>
+                            </div>
+
+                            <div class="text-h6 text-center">
+                                Nombre de la beer
+                            </div>
+                            <div class="text-subtitle-2 text-center">
+                                $ 50.00
+                            </div>
+                        </div>
+                    </div>
+                </q-card-section>
+                <q-card-section> </q-card-section>
             </q-card>
         </q-dialog>
     </q-page>
