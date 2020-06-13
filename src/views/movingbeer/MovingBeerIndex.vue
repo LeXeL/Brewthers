@@ -1,27 +1,12 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
-        <q-carousel arrows animated v-model="slide" height="600px">
-            <q-carousel-slide
-                name="first"
-                :img-src="require('@/assets/movingbeer-bg.jpg')"
-            >
-                <div class="absolute-center full-width custom-caption">
-                    <div
-                        class="text-h2"
-                        style="font-family: GilroyExtraBold; text-transform: uppercase"
-                    >
-                        Bienvenido a movingbeer
-                    </div>
-                </div>
-            </q-carousel-slide>
-        </q-carousel>
-
+        <carousel />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
                     <div
                         class="text-h3 text-center"
-                        style="font-family: GilroyExtraBold; text-transform: uppercase;"
+                        style="text-transform: uppercase;"
                     >
                         Familia brewthers
                     </div>
@@ -33,22 +18,10 @@
                     v-for="(brew, i) in brewers"
                     :key="i"
                 >
-                    <q-card
-                        class="movingbeer-tile full-width q-pa-xl"
-                        @click="dialog = true"
-                    >
-                        <q-img
-                            :src="
-                                require(`@/assets/familia-brewthers/${brew.logo}`)
-                            "
-                        >
-                            <div
-                                class="absolute-bottom text-h6 text-center movingbeer-tile-overlay"
-                            >
-                                {{ brew.name }}
-                            </div>
-                        </q-img>
-                    </q-card>
+                    <beer-house-tile
+                        :brew="brew"
+                        @openBeerHouse="beerHouseDialog()"
+                    />
                 </div>
             </div>
         </section>
@@ -85,6 +58,9 @@
     </q-page>
 </template>
 <script>
+import Carousel from '@/components/movingbeer/Carousel.vue'
+import BeerHouseTile from '@/components/movingbeer/BeerHouseTile.vue'
+
 export default {
     data() {
         return {
@@ -114,6 +90,15 @@ export default {
                 },
             ],
         }
+    },
+    methods: {
+        beerHouseDialog() {
+            this.dialog = true
+        },
+    },
+    components: {
+        Carousel,
+        'beer-house-tile': BeerHouseTile,
     },
 }
 // VIEWS NEEDED
