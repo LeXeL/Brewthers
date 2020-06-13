@@ -52,6 +52,12 @@
                         </q-item>
                     </q-item>
                 </div>
+                <div
+                    class="text-h6 text-right on-left fixed-bottom"
+                    style="bottom: 65px;"
+                >
+                    Sub-total<br />$150.00
+                </div>
                 <div class="fixed-bottom">
                     <q-btn
                         class="full-width"

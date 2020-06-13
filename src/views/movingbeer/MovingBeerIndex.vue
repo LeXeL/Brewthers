@@ -61,55 +61,15 @@
                     </div>
                 </q-card-section>
                 <q-card-section>
+                    <div class="row"></div>
+                </q-card-section>
+                <q-card-section>
                     <div class="row">
-                        <div
-                            class="col-lg-2 q-pa-md text-center"
-                            v-for="(beer, i) in 6"
-                            :key="i"
-                        >
-                            <div
-                                class="movingbeer-item"
-                                style="position: relative;"
-                            >
-                                <q-img :src="require(`@/assets/beer.jpg`)" />
-                                <div class="movingbeer-item-overlay q-pa-md">
-                                    <div
-                                        class="text-subtitle-2 q-mb-sm q-mt-lg"
-                                    >
-                                        Estilo: Something
-                                    </div>
-                                    <div class="text-subtitle-2 q-mb-sm">
-                                        Alcohol: 5%
-                                    </div>
-                                    <div class="text-subtitle-2 q-mb-lg">
-                                        IBU: 500
-                                    </div>
-                                    <q-btn-group class="q-mb-lg">
-                                        <q-btn color="primary" size="xs"
-                                            ><i class="fas fa-minus"></i
-                                        ></q-btn>
-                                        <q-btn color="primary" disable
-                                            >10</q-btn
-                                        >
-                                        <q-btn color="primary" size="xs"
-                                            ><i class="fas fa-plus"></i
-                                        ></q-btn>
-                                    </q-btn-group>
-                                    <br />
-                                    <q-btn color="primary">Agregar</q-btn>
-                                </div>
-                            </div>
-
-                            <div class="text-h6 text-center">
-                                Nombre de la beer
-                            </div>
-                            <div class="text-subtitle-2 text-center">
-                                $ 50.00
-                            </div>
+                        <div class="col-lg-2" v-for="(item, i) in 6" :key="i">
+                            <beer-item-tile />
                         </div>
                     </div>
                 </q-card-section>
-                <q-card-section> </q-card-section>
             </q-card>
         </q-dialog>
     </q-page>
@@ -117,6 +77,7 @@
 <script>
 import Carousel from '@/components/movingbeer/Carousel.vue'
 import BeerHouseTile from '@/components/movingbeer/BeerHouseTile.vue'
+import BeerItemTile from '@/components/movingbeer/BeerItemTile.vue'
 
 export default {
     data() {
@@ -156,6 +117,7 @@ export default {
     components: {
         Carousel,
         'beer-house-tile': BeerHouseTile,
+        'beer-item-tile': BeerItemTile,
     },
 }
 // VIEWS NEEDED
