@@ -69,8 +69,8 @@ export default {
     },
     data() {
         return {
-            email: 'lexelEZ@gmail.com',
-            password: 'Atletico123!',
+            email: '',
+            password: '',
             dismissSecs: 15,
             dismissCountDown: 0,
         }
