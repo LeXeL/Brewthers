@@ -5,35 +5,24 @@ export default {
         user: '',
         token: localStorage.getItem('user-token') || '',
         uid: localStorage.getItem('uid') || '',
-        userModuleError: '',
     },
     mutations: {
-        setUser: (state, payload) => {
+        SET_USER: (state, payload) => {
             state.user = payload
         },
-        setUid: (state, payload) => {
+        SET_UID: (state, payload) => {
             state.uid = payload
         },
-        setToken: (state, payload) => {
+        SET_TOEKN: (state, payload) => {
             state.token = payload
-        },
-        setparticipatingLeagues: (state, payload) => {
-            state.participatingLeagues.add(payload)
-        },
-        userSuccess: state => {
-            state.status = 'success'
-        },
-        userError: (state, err) => {
-            state.status = 'error'
-            state.userModuleError = err
         },
     },
     actions: {
         setCurrentUser: async ({commit, dispatch}, user) => {
             try {
                 let token = await user.getIdToken()
-                commit('setUid', user.uid)
-                commit('setToken', token)
+                commit('SET_UID', user.uid)
+                commit('SET_TOEKN', token)
                 localStorage.setItem('user-token', token)
                 localStorage.setItem('uid', user.uid)
             } catch (error) {
@@ -42,9 +31,9 @@ export default {
             }
         },
         UserLogout: async ({commit, dispatch}) => {
-            commit('setUser', '')
-            commit('setUid', '')
-            commit('setToken', '')
+            commit('SET_USER', '')
+            commit('SET_UID', '')
+            commit('SET_TOEKN', '')
             localStorage.removeItem('user-token')
             localStorage.removeItem('uid')
         },

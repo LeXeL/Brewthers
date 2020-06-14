@@ -26,7 +26,7 @@
                             </q-item>
                             <q-separator />
                             <q-item clickable v-close-popup>
-                                <q-item-section>Cerrar sesion</q-item-section>
+                                <q-item-section @click="logout()">Cerrar sesion</q-item-section>
                             </q-item>
                         </q-list>
                     </q-menu>
@@ -116,11 +116,27 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
 export default {
     data() {
         return {
             drawerRight: false,
         }
+    },
+    methods: {
+        async logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(async () => {
+                    await this.$store.dispatch('UserLogout')
+                    this.$router.push('/login')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
     },
 }
 </script>

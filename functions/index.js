@@ -1,13 +1,15 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
+admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+})
+
 const cors = require('cors')({
     origin: true,
 })
 
-admin.initializeApp()
-
-const db = admin.firestore()
+const auth = require('./lib/auth')
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -17,47 +19,30 @@ const db = admin.firestore()
 // })
 
 //Create User on the database
-exports.createUserOnDatabase = functions.auth.user().onCreate(user => {
+exports.createUserOnDatabase = functions.auth.user().onCreate(async user => {
     try {
-        db.collection('users')
-            .doc(user.uid)
-            .set({
-                email: user.email,
-                creationTime: user.metadata.creationTime,
-                roll: 'user',
-            })
-            .then(function() {
-                console.log('Document successfully written!')
-            })
-            .catch(function(error) {
-                console.error('Error writing document: ', error)
-            })
-        return
+        await auth.createDatabaseWithUserInfo(user)
     } catch (err) {
         console.log(err)
-        return
     }
 })
 
 exports.updateUserWithInfo = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
-            let obj = req.body.obj
-            db.collection('users')
-                .doc(req.body.uid)
-                .set({
-                    name: obj.name,
-                    lastName: obj.lastName,
-                    restaurantName: obj.restaurantName,
-                    contactPhone: obj.contactPhone,
-                })
-                .then(function() {
-                    console.log('Document successfully written!')
-                })
-                .catch(function(error) {
-                    console.error('Error writing document: ', error)
-                })
-            res.status(200).send({status: 'updated'})
+            await auth.updateDatabaseWithUserInfo(req.body.uid, req.body.obj)
+            res.status(200).send({status: 'Updated'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.getUserInformationById = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await auth.returnUserById(req.body.uid)
+            res.status(200).send({data: response})
         } catch (err) {
             console.log(err)
             res.status(400).send({err: err})
