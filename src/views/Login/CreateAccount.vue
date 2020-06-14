@@ -18,6 +18,7 @@
                     type="text"
                     label="Nombre"
                     v-model="form.name"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
                     class="q-pb-md"
@@ -26,6 +27,7 @@
                     type="text"
                     label="Apellido"
                     v-model="form.lastName"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
                     class="q-pb-md"
@@ -42,6 +44,7 @@
                     type="text"
                     label="Nombre del restaurante"
                     v-model="form.restaurantName"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
                     class="q-pb-md"
@@ -50,6 +53,9 @@
                     type="text"
                     label="Celular de contacto"
                     v-model="form.contactPhone"
+                    mask="####-####"
+                    fill-mask
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
                     class="q-pb-md"
@@ -96,6 +102,7 @@ export default {
     },
     methods: {
         createuser() {
+            this.dismissCountDown = 0
             if (this.form.password === this.form.repassword) {
                 var strongRegex = new RegExp(
                     '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
@@ -131,6 +138,14 @@ export default {
                                     console.log(error)
                                     this.dismissCountDown = this.dismissSecs
                                     this.errorCode = error.code
+                                    if (
+                                        error.code ===
+                                        'auth/email-already-in-use'
+                                    ) {
+                                        this.errorMessage =
+                                            'Este correo ya esta en uso registrado'
+                                        return
+                                    }
                                     this.errorMessage = error.message
                                     // ...
                                 })
@@ -147,7 +162,7 @@ export default {
                 } else {
                     this.dismissCountDown = this.dismissSecs
                     this.errorMessage =
-                        'Por Favor introduce una contraseña mas fuerte tiene que tener 8 caracteres, Almenos una mayuscula y una minuscula y un simbolo que no sea un caracter( !@#$%^&* )'
+                        'Por favor introduce una contraseña mas fuerte. Debe contener 8 caracteres, al menos un numero (0-9), una mayúscula, una minúscula y carácter especial ( !@#$%^&* )'
                 }
             } else {
                 this.dismissCountDown = this.dismissSecs
