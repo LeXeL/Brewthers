@@ -12,6 +12,9 @@ import About from './views/About.vue'
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
 import MovingBeerIndex from './views/movingbeer/MovingBeerIndex.vue'
+import MovingBeerCheckout from './views/movingbeer/MovingBeerCheckout.vue'
+import MovingBeerAccount from './views/movingbeer/MovingBeerAccount.vue'
+import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
 import {Store} from 'vuex'
 
 Vue.use(Router)
@@ -76,6 +79,21 @@ export default new Router({
                     path: '',
                     name: 'movingbeerindex',
                     component: MovingBeerIndex,
+                },
+                {
+                    path: '/checkout',
+                    name: 'movingbeercheckout',
+                    component: MovingBeerCheckout,
+                },
+                {
+                    path: '/mi-cuenta',
+                    name: 'movingbeeraccount',
+                    component: MovingBeerAccount,
+                },
+                {
+                    path: '/historial',
+                    name: 'movingbeerhistory',
+                    component: MovingBeerHistory,
                 },
             ],
         },

@@ -34,29 +34,22 @@
                                 <img :src="require('@/assets/beer.jpg')" />
                             </q-avatar>
                             <q-item-section>
-                                <span class="on-right"
-                                    >Nombre item en venta</span
-                                >
+                                <span class="on-right">Nombre item en venta</span>
                                 <span class="on-right">Cant. 35</span>
                             </q-item-section>
 
                             <q-item-section side>
                                 <span class="on-left">$2.50 c/u</span>
                             </q-item-section>
-                            <q-item-section side
-                                ><i
-                                    class="fas fa-times"
-                                    style="font-size: 20px;"
-                                ></i
-                            ></q-item-section>
+                            <q-item-section side>
+                                <i class="fas fa-times" style="font-size: 20px;"></i>
+                            </q-item-section>
                         </q-item>
                     </q-item>
                 </div>
-                <div
-                    class="text-h6 text-right on-left fixed-bottom"
-                    style="bottom: 65px;"
-                >
-                    Sub-total<br />$150.00
+                <div class="text-h6 text-right on-left fixed-bottom" style="bottom: 65px;">
+                    Sub-total
+                    <br />$150.00
                 </div>
                 <div class="fixed-bottom">
                     <q-btn
@@ -65,6 +58,7 @@
                         label="Checkout"
                         size="lg"
                         square
+                        @click="$router.push('/checkout'); drawerRight = false"
                     />
                 </div>
             </q-scroll-area>

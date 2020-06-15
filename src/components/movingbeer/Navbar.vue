@@ -5,7 +5,7 @@
                 src="@/assets/logo-horizontal.png"
                 width="10%"
                 class="nav-logo"
-                @click="$router.push('/')"
+                @click="$router.push('/movingbeer')"
             />
             <q-space />
             <q-btn flat round dense>
@@ -13,27 +13,27 @@
                 <q-menu content-class="bg-dark">
                     <q-list style="width: 150px; font-family: GilroyExtraBold;">
                         <q-item clickable v-close-popup>
-                            <q-item-section>
-                                <span
-                                    ><i class="far fa-user on-left"></i>Mi
-                                    cuenta</span
-                                >
+                            <q-item-section @click="$router.push('/mi-cuenta')">
+                                <span>
+                                    <i class="far fa-user on-left"></i>Mi
+                                    cuenta
+                                </span>
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
-                            <span
-                                ><i class="fas fa-box-open on-left"></i
-                                >Historial</span
-                            >
+                            <q-item-section @click="$router.push('/historial')">
+                                <span>
+                                    <i class="fas fa-box-open on-left"></i>Historial
+                                </span>
+                            </q-item-section>
                         </q-item>
                         <q-separator />
                         <q-item clickable v-close-popup>
-                            <q-item-section
-                                ><span
-                                    ><i class="fas fa-sign-out-alt on-left"></i
-                                    >Cerrar sesion</span
-                                ></q-item-section
-                            >
+                            <q-item-section>
+                                <span>
+                                    <i class="fas fa-sign-out-alt on-left"></i>Cerrar sesion
+                                </span>
+                            </q-item-section>
                         </q-item>
                     </q-list>
                 </q-menu>
@@ -44,6 +44,7 @@
                 round
                 dense
                 @click="$emit('toggleCart')"
+                v-if="$route.fullPath != '/checkout'"
             >
                 <i class="fas fa-shopping-cart"></i>
             </q-btn>
