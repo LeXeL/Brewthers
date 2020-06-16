@@ -1,7 +1,7 @@
 <template>
     <div class="blog-bg" style="position: relative">
         <h2 class="title-section absolute-center">blog</h2>
-        <a href="#" class="title-section-link absolute-bottom q-pb-xl">leer mas</a>
+        <a href="#" class="title-section-link absolute-bottom q-pb-xl">leer más</a>
     </div>
 </template>
 
