@@ -8,11 +8,18 @@
                 Cerveceras y tu negocio.
             </div>
             <div class="row justify-center">
-                <q-btn
-                    color="primary"
-                    style="font-family: GilroyExtraBold"
-                    :to="'/movingbeer'"
-                >acceder</q-btn>
+                <a
+                    class="q-btn q-btn-item non-selectable no-outline q-btn--standard q-btn--rectangle bg-primary text-white q-btn--actionable q-focusable q-hoverable q-btn--wrap"
+                    href="/movingbeer"
+                    target="blank"
+                >
+                    <span class="q-focus-helper" tabindex="-1"></span>
+                    <span class="q-btn__wrapper col row q-anchor--skip">
+                        <span
+                            class="q-btn__content text-center col items-center q-anchor--skip justify-center row"
+                        >acceder</span>
+                    </span>
+                </a>
             </div>
         </div>
     </div>
