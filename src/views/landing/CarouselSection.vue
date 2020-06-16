@@ -1,11 +1,11 @@
 <template>
-    <div class="q-pl-xl q-pr-xl">
+    <div>
         <VueSlickCarousel v-bind="carouselSettings">
             <div v-for="(logo, i) in brands" :key="i">
                 <img
                     :src="require(`@/assets/familia-brewthers/${logo}`)"
                     width="100%"
-                    class="q-pa-lg carousel-img"
+                    class="q-pa-md carousel-img"
                 />
             </div>
         </VueSlickCarousel>
@@ -22,20 +22,27 @@ export default {
             carouselSettings: {
                 arrows: false,
                 dots: false,
-                slidesToShow: 8,
+                slidesToShow: 6,
                 autoplay: true,
                 autoplaySpeed: 2000,
+
+                vertical: true,
+                rtl: true,
                 responsive: [
                     {
                         breakpoint: 1024,
                         settings: {
                             slidesToShow: 6,
+                            vertical: false,
+                            rtl: false,
                         },
                     },
                     {
                         breakpoint: 600,
                         settings: {
                             slidesToShow: 3,
+                            vertical: false,
+                            rtl: false,
                         },
                     },
                 ],

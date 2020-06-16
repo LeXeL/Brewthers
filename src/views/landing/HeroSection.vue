@@ -21,10 +21,17 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="pattern-bg mobile-only" style="height: 600px;">
-            <div class="absolute-center full-width">
-                <img src="@/assets/brewthers-logo.png" width="60%" />
-            </div>
-        </div>-->
+        <div class="carousel-container desktop-only">
+            <carousel-section />
+        </div>
     </div>
 </template>
+
+<script>
+import CarouselSection from '@/views/landing/CarouselSection'
+export default {
+    components: {
+        'carousel-section': CarouselSection,
+    },
+}
+</script>
