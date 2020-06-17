@@ -98,25 +98,23 @@
             </q-form>
         </div>
         <q-dialog v-model="confirmationDialog">
-            <q-card
-                dark
-                class="text-white"
-                style="width: 700px; max-width: 80vw;"
-            >
+            <q-card dark class="text-white" style="width: 700px; max-width: 80vw;">
                 <q-card-section>
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    Hemos revivido tu información satisfactoriamente, ahora
-                    debes confirmar tu correo mediante el enlace que hemos
-                    enviado a tu dirección email.<br /><br />Uno de nuestros
-                    administradores aprobara tu cuenta para que empieces a
+                    Hemos recivido tu información satisfactoriamente. Uno de nuestros
+                    administradores aprobará tu cuenta para que empieces a
                     realizar pedidos.
+                    <br />
+                    <br />
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn flat label="Aceptar" color="primary" v-close-popup />
+                    <router-link to="/movingbeer">
+                        <q-btn flat label="Aceptar" color="primary" v-close-popup />
+                    </router-link>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -135,7 +133,7 @@ export default {
     },
     data() {
         return {
-            confirmationDialog: true,
+            confirmationDialog: false,
             form: {
                 name: '',
                 lastName: '',
@@ -176,7 +174,8 @@ export default {
                                     'setCurrentUser',
                                     user
                                 )
-                                api.updateuserwithinfo({
+                                this.confirmationDialog = true
+                                await api.updateuserwithinfo({
                                     uid: user.uid,
                                     obj: this.form,
                                 })
