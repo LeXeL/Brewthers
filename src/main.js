@@ -17,7 +17,7 @@ Vue.use(vueSmoothScroll)
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyCFEZr0Gvx28QLB38MDGAPgKeA7nb3XRgM',
+        key: 'AIzaSyBQ9QbePVZeAjzIlUSyaT7fMUJZNLMFtwA',
         libraries: 'places', // necessary for places input
     },
 })
