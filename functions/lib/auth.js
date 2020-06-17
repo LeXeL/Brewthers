@@ -27,6 +27,8 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             lastName: obj.lastName,
             restaurantName: obj.restaurantName,
             contactPhone: obj.contactPhone,
+            address: obj.address,
+            location: obj.location,
         })
         .then(() => {
             console.log('Document successfully written!')

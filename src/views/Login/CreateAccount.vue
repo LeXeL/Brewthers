@@ -12,7 +12,7 @@
             <h2>Crea una cuenta</h2>
             <q-form>
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="text"
@@ -21,7 +21,7 @@
                     :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="text"
@@ -30,15 +30,16 @@
                     :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="email"
                     label="Email"
                     v-model="form.email"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="text"
@@ -47,7 +48,7 @@
                     :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="text"
@@ -58,21 +59,33 @@
                     :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="password"
                     label="Contraseña"
                     v-model="form.password"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
                 <q-input
-                    class="q-pb-md"
+                    class="q-mb-md"
                     dark
                     filled
                     type="password"
                     label="Confirmar contraseña"
                     v-model="form.repassword"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
                 />
+                <q-input
+                    class="q-mb-md"
+                    dark
+                    filled
+                    type="text"
+                    label="Dirección"
+                    v-model="form.address"
+                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                />
+                <GoogleMaps @markerPosition="setMarkerPosition"></GoogleMaps>
                 <q-btn color="primary" @click="createuser">Enviar</q-btn>
             </q-form>
         </div>
@@ -83,8 +96,12 @@
 import * as api from '@/api/api'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import GoogleMaps from '@/components/GoogleMaps'
 
 export default {
+    components: {
+        GoogleMaps,
+    },
     data() {
         return {
             form: {
@@ -95,12 +112,17 @@ export default {
                 contactPhone: '',
                 password: '',
                 repassword: '',
+                address: '',
+                location: null,
             },
             dismissSecs: 15,
             dismissCountDown: 0,
         }
     },
     methods: {
+        setMarkerPosition(event) {
+            this.form.location = event
+        },
         createuser() {
             this.dismissCountDown = 0
             if (this.form.password === this.form.repassword) {
@@ -110,50 +132,38 @@ export default {
                 if (strongRegex.test(this.form.password)) {
                     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     if (re.test(this.form.email)) {
-                        if (
-                            this.form.name != '' &&
-                            this.form.lastName != '' &&
-                            this.form.restaurantName != '' &&
-                            this.form.contactPhone != ''
-                        ) {
-                            firebase
-                                .auth()
-                                .createUserWithEmailAndPassword(
-                                    this.form.email,
-                                    this.form.password
+                        firebase
+                            .auth()
+                            .createUserWithEmailAndPassword(
+                                this.form.email,
+                                this.form.password
+                            )
+                            .then(async () => {
+                                let user = await firebase.auth().currentUser
+                                await this.$store.dispatch(
+                                    'setCurrentUser',
+                                    user
                                 )
-                                .then(async () => {
-                                    let user = await firebase.auth().currentUser
-                                    await this.$store.dispatch(
-                                        'setCurrentUser',
-                                        user
-                                    )
-                                    api.updateuserwithinfo({
-                                        uid: user.uid,
-                                        obj: this.form,
-                                    })
+                                api.updateuserwithinfo({
+                                    uid: user.uid,
+                                    obj: this.form,
                                 })
-                                .catch(error => {
-                                    // Handle Errors here.
-                                    console.log(error)
-                                    this.dismissCountDown = this.dismissSecs
-                                    this.errorCode = error.code
-                                    if (
-                                        error.code ===
-                                        'auth/email-already-in-use'
-                                    ) {
-                                        this.errorMessage =
-                                            'Este correo ya esta en uso registrado'
-                                        return
-                                    }
-                                    this.errorMessage = error.message
-                                    // ...
-                                })
-                        } else {
-                            this.dismissCountDown = this.dismissSecs
-                            this.errorMessage =
-                                'Por favor llenar todos los datos pedidos'
-                        }
+                            })
+                            .catch(error => {
+                                // Handle Errors here.
+                                console.log(error)
+                                this.dismissCountDown = this.dismissSecs
+                                this.errorCode = error.code
+                                if (
+                                    error.code === 'auth/email-already-in-use'
+                                ) {
+                                    this.errorMessage =
+                                        'Este correo ya esta en uso registrado'
+                                    return
+                                }
+                                this.errorMessage = error.message
+                                // ...
+                            })
                     } else {
                         this.dismissCountDown = this.dismissSecs
                         this.errorMessage =
@@ -173,4 +183,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style  scoped></style>
