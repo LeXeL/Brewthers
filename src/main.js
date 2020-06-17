@@ -2,17 +2,25 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
-import * as api from '@/api/api'
 
-import firebase from 'firebase/app'
+import * as api from '@/api/api'
 
 import './quasar'
 
+import firebase from 'firebase/app'
 import vueSmoothScroll from 'vue2-smooth-scroll'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false
 
 Vue.use(vueSmoothScroll)
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: 'AIzaSyBQ9QbePVZeAjzIlUSyaT7fMUJZNLMFtwA',
+        libraries: 'places', // necessary for places input
+    },
+})
 
 const configOptions = {
     apiKey: 'AIzaSyAVLt18TcglgsGFV2Z0ixaZnq-jIUNtmzw',
