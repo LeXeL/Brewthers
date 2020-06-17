@@ -5,7 +5,8 @@
         <div class="hero-stripes desktop-only" style="left: 130px;"></div>
         <div class="pattern-bg desktop-only" style="background-size: cover; height: 930px;">
             <div class="absolute-center row justify-center">
-                <img class="q-mb-xl" src="@/assets/brewthers-logo.png" width="40%" />
+                <img class="q-mb-xl desktop-only" src="@/assets/brewthers-logo.png" width="60%" />
+                <img class="q-mb-xl mobile-only" src="@/assets/brewthers-logo.png" width="40%" />
                 <div class="text-h4" style="font-family: GilroyExtraBold; text-align: center;">
                     Somos el punto de conexión entre ustedes y las buenas
                     cervezas artesanales panameñas.
@@ -21,10 +22,17 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="pattern-bg mobile-only" style="height: 600px;">
-            <div class="absolute-center full-width">
-                <img src="@/assets/brewthers-logo.png" width="60%" />
-            </div>
-        </div>-->
+        <div class="carousel-container desktop-only">
+            <carousel-section />
+        </div>
     </div>
 </template>
+
+<script>
+import CarouselSection from '@/views/landing/CarouselSection'
+export default {
+    components: {
+        'carousel-section': CarouselSection,
+    },
+}
+</script>

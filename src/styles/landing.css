@@ -48,6 +48,14 @@ q-toolbar a {
     bottom: 0;
 }
 
+.carousel-container {
+    width: 150px;
+    height: 930px;
+    position: absolute;
+    bottom: 0;
+    right: 50px;
+}
+
 .carousel-img {
     filter: grayscale(100%);
     transition: filter 0.5s;

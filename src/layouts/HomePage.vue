@@ -69,7 +69,7 @@
 
         <q-page-container>
             <hero-section id="hero"></hero-section>
-            <carousel-section></carousel-section>
+            <carousel-section class="mobile-only"></carousel-section>
             <us-title-section id="title" @toggleSection="toggleSection('us')"></us-title-section>
             <q-slide-transition>
                 <div v-show="usSection">
