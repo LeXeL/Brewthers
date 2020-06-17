@@ -2,7 +2,7 @@
     <q-page>
         <div class="q-pa-md q-gutter-sm" v-if="dismissCountDown > 0">
             <q-banner inline-actions rounded class="bg-red text-white">
-                {{errorMessage}}
+                {{ errorMessage }}
                 <template v-slot:action>
                     <q-btn flat label="Dismiss" @click="dismissCountDown = 0" />
                 </template>
@@ -18,7 +18,9 @@
                     type="text"
                     label="Nombre"
                     v-model="form.name"
-                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                    :rules="[
+                        val => val.length > 0 || 'El campo es obligatorio',
+                    ]"
                 />
                 <q-input
                     class="q-mb-md"
@@ -27,7 +29,9 @@
                     type="text"
                     label="Apellido"
                     v-model="form.lastName"
-                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                    :rules="[
+                        val => val.length > 0 || 'El campo es obligatorio',
+                    ]"
                 />
                 <q-input
                     class="q-mb-md"
@@ -45,7 +49,9 @@
                     type="text"
                     label="Nombre del restaurante"
                     v-model="form.restaurantName"
-                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                    :rules="[
+                        val => val.length > 0 || 'El campo es obligatorio',
+                    ]"
                 />
                 <q-input
                     class="q-mb-md"
@@ -56,7 +62,9 @@
                     v-model="form.contactPhone"
                     mask="####-####"
                     fill-mask
-                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                    :rules="[
+                        val => val.length > 0 || 'El campo es obligatorio',
+                    ]"
                 />
                 <q-input
                     class="q-mb-md"
@@ -89,6 +97,29 @@
                 <q-btn color="primary" @click="createuser">Enviar</q-btn>
             </q-form>
         </div>
+        <q-dialog v-model="confirmationDialog">
+            <q-card
+                dark
+                class="text-white"
+                style="width: 700px; max-width: 80vw;"
+            >
+                <q-card-section>
+                    <div class="text-h6">¡Hemos recibido tu información!</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    Hemos revivido tu información satisfactoriamente, ahora
+                    debes confirmar tu correo mediante el enlace que hemos
+                    enviado a tu dirección email.<br /><br />Uno de nuestros
+                    administradores aprobara tu cuenta para que empieces a
+                    realizar pedidos.
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn flat label="Aceptar" color="primary" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </q-page>
 </template>
 
@@ -104,6 +135,7 @@ export default {
     },
     data() {
         return {
+            confirmationDialog: true,
             form: {
                 name: '',
                 lastName: '',
