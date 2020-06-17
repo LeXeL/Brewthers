@@ -1,18 +1,9 @@
 <template>
-    <q-page class="pattern-bg window-height window-width row justify-center items-center">
-        <div class="column">
-            <div class="q-pa-md q-gutter-sm" v-if="dismissCountDown > 0">
-                <q-banner inline-actions rounded class="bg-red text-white">
-                    {{errorMessage}}
-                    <template v-slot:action>
-                        <q-btn flat label="Dismiss" @click="dismissCountDown = 0" />
-                    </template>
-                </q-banner>
-            </div>
+    <q-page class="pattern-bg">
+        <div class="absolute-bottom"></div>
+        <div class="absolute-center">
             <div class="row">
-                <h5 class="text-h5 text-white q-my-md">Brewthers</h5>
-            </div>
-            <div class="row">
+                <q-img :src="require('@/assets/logo-horizontal.png')" class="q-mb-lg" />
                 <q-card square bordered class="q-pa-lg shadow-1">
                     <q-card-section>
                         <q-form class="q-gutter-md">
@@ -22,7 +13,7 @@
                                 clearable
                                 v-model="email"
                                 type="email"
-                                label="email"
+                                label="correo electrónico"
                             />
                             <q-input
                                 square
@@ -30,7 +21,7 @@
                                 clearable
                                 v-model="password"
                                 type="password"
-                                label="password"
+                                label="contraseña"
                             />
                         </q-form>
                     </q-card-section>
@@ -40,10 +31,20 @@
                             color="primary"
                             size="lg"
                             class="full-width"
-                            label="Login"
+                            label="Iniciar sesión"
                             @click="login"
                         />
                     </q-card-actions>
+                    <q-card-section v-if="dismissCountDown > 0">
+                        <q-banner inline-actions rounded class="bg-red text-white">
+                            {{errorMessage}}
+                            <template v-slot:action>
+                                <q-btn flat @click="dismissCountDown = 0">
+                                    <i class="fas fa-times"></i>
+                                </q-btn>
+                            </template>
+                        </q-banner>
+                    </q-card-section>
                     <q-card-section class="text-center q-pa-none">
                         <p class="text-grey-6">
                             Necesitas una cuenta?
