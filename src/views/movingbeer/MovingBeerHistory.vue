@@ -27,6 +27,9 @@
                             <span style="color: #27a3c3">Estado:</span>
                             Por confirmar
                         </div>
+                        <div class="text-subtitle-2">
+                            <span style="color: #27a3c3">Fecha:</span> 1 de enero 2020
+                        </div>
                     </q-card-section>
                     <q-separator dark />
                     <q-card-section>
