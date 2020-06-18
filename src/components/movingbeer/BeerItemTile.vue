@@ -7,11 +7,11 @@
                 <div class="text-subtitle-2 q-mb-sm">Alcohol: 5%</div>
                 <div class="text-subtitle-2 q-mb-lg">IBU: 500</div>
                 <q-btn-group class="q-mb-lg">
-                    <q-btn color="primary" size="xs">
+                    <q-btn color="primary" size="xs" @click="amount--">
                         <i class="fas fa-minus"></i>
                     </q-btn>
-                    <q-btn color="primary" disable>10</q-btn>
-                    <q-btn color="primary" size="xs">
+                    <q-btn color="primary" disable>{{ amount }}</q-btn>
+                    <q-btn color="primary" size="xs" @click="amount++">
                         <i class="fas fa-plus"></i>
                     </q-btn>
                 </q-btn-group>
@@ -30,3 +30,13 @@
         <div class="text-subtitle-2 text-center">$ 50.00</div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            amount: 0,
+        }
+    },
+}
+</script>
