@@ -7,21 +7,12 @@
                     <div
                         class="text-h3 text-center"
                         style="text-transform: uppercase;"
-                    >
-                        Familia brewthers
-                    </div>
+                    >Familia brewthers</div>
                 </div>
             </div>
             <div class="row">
-                <div
-                    class="col-lg-3 col-sm-3 col-xs-12"
-                    v-for="(brew, i) in brewers"
-                    :key="i"
-                >
-                    <beer-house-tile
-                        :brew="brew"
-                        @openBeerHouse="beerHouseDialog()"
-                    />
+                <div class="col-lg-3 col-sm-3 col-xs-12" v-for="(brew, i) in brewers" :key="i">
+                    <beer-house-tile :brew="brew" @openBeerHouse="beerHouseDialog()" />
                 </div>
             </div>
         </section>
@@ -37,9 +28,7 @@
                     <q-space />
                     <q-btn dense flat v-close-popup>
                         <i class="fas fa-times" style="font-size: 25px;"></i>
-                        <q-tooltip content-class="bg-white text-primary"
-                            >Cerrar</q-tooltip
-                        >
+                        <q-tooltip content-class="bg-white text-primary">Cerrar</q-tooltip>
                     </q-btn>
                 </q-bar>
 
@@ -48,13 +37,28 @@
                 </q-card-section>
 
                 <q-card-section>
-                    <div class="row">
+                    <div class="row q-mb-md">
                         <div class="col"></div>
                         <div class="col-lg-1">
                             <q-img
                                 :src="
                                     require(`@/assets/familia-brewthers/2-oceans.jpg`)
                                 "
+                            />
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </q-card-section>
+                <q-card-section>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-lg-2">
+                            <q-select
+                                v-model="type"
+                                outlined
+                                dark
+                                :options="['Keg', 'Caja']"
+                                label="Selecione un tipo"
                             />
                         </div>
                         <div class="col"></div>
@@ -83,6 +87,7 @@ export default {
     data() {
         return {
             slide: 'first',
+            type: 'Keg',
             dialog: false,
             maximizedToggle: true,
             brewers: [
