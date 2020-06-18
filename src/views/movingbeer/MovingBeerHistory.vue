@@ -6,6 +6,18 @@
             </div>
         </div>
         <div class="row q-pa-lg">
+            <div class="col"></div>
+            <div class="col on-left">
+                <q-input outlined label="No. de orden" dark />
+            </div>
+            <div class="col on-left">
+                <q-select outlined v-model="month" :options="months" label="Mes" dark />
+            </div>
+            <div class="col">
+                <q-select outlined v-model="year" :options="years" label="Mes" dark />
+            </div>
+        </div>
+        <div class="row q-pa-lg">
             <div class="col">
                 <q-card dark class="full-width q-mb-lg" v-for="(order, i) in 3" :key="i">
                     <q-card-section>
@@ -53,5 +65,98 @@
                 </q-card>
             </div>
         </div>
+        <div class="row q-mb-lg">
+            <div class="col flex flex-center">
+                <q-pagination v-model="current" :max="5" :direction-links="true"></q-pagination>
+            </div>
+        </div>
     </q-page>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            month: '',
+            year: '',
+            current: 1,
+            months: [
+                {
+                    label: '--',
+                    value: '--',
+                },
+                {
+                    label: 'Enero',
+                    value: 'jan',
+                },
+                {
+                    label: 'Febrero',
+                    value: 'feb',
+                },
+                {
+                    label: 'Marzo',
+                    value: 'mar',
+                },
+                {
+                    label: 'Abril',
+                    value: 'abr',
+                },
+                {
+                    label: 'Mayo',
+                    value: 'may',
+                },
+                {
+                    label: 'Junio',
+                    value: 'jun',
+                },
+                {
+                    label: 'Julio',
+                    value: 'jul',
+                },
+                {
+                    label: 'Agosto',
+                    value: 'aug',
+                },
+                {
+                    label: 'Septiembre',
+                    value: 'sep',
+                },
+                {
+                    label: 'Octubre',
+                    value: 'oct',
+                },
+                {
+                    label: 'Noviembre',
+                    value: 'nov',
+                },
+                {
+                    label: 'Diciembre',
+                    value: 'dec',
+                },
+            ],
+            years: [
+                {
+                    label: '2020',
+                    value: '2020',
+                },
+                {
+                    label: '2021',
+                    value: '2021',
+                },
+                {
+                    label: '2022',
+                    value: '2022',
+                },
+                {
+                    label: '2023',
+                    value: '2023',
+                },
+                {
+                    label: '2024',
+                    value: '2024',
+                },
+            ],
+        }
+    },
+}
+</script>
