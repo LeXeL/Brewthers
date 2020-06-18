@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pa-xl">
+    <q-page class="q-pa-xl pattern-bg">
         <div class="row">
             <div class="col"></div>
             <div class="col-lg-5">
