@@ -1,5 +1,5 @@
 <template>
-    <q-page>
+    <q-page class="q-pa-lg">
         <div class="row q-pa-lg">
             <div class="col">
                 <div class="text-h4">Historial de pedidos</div>
@@ -14,7 +14,7 @@
                 <q-select outlined v-model="month" :options="months" label="Mes" dark />
             </div>
             <div class="col">
-                <q-select outlined v-model="year" :options="years" label="Mes" dark />
+                <q-select outlined v-model="year" :options="years" label="Año" dark />
             </div>
         </div>
         <div class="row q-pa-lg">
