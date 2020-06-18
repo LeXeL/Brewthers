@@ -3,6 +3,14 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-lg-5">
+                <div class="text-h3 q-mb-xl">{{ title }}</div>
+            </div>
+            <div class="col-lg-2"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-lg-5">
                 <div class="text-h5 q-mb-lg">Detalle de articulos:</div>
                 <div class="row q-mb-lg" v-for="(item, i) in 3" :key="i">
                     <div class="col-lg-2">
@@ -26,10 +34,10 @@
                     <div class="text-h6">Total: $ 160.50</div>
                 </div>
 
-                <div class="row">
+                <div class="row" v-if="orderStatus === 'open'">
                     <div class="text-h5 q-mb-md">Metodo de pago:</div>
                 </div>
-                <div class="row q-mb-lg">
+                <div class="row q-mb-lg" v-if="orderStatus === 'open'">
                     <q-option-group
                         :options="paymentOptions"
                         label="Notifications"
@@ -37,10 +45,54 @@
                         v-model="paymentMethod"
                     />
                 </div>
-                <q-btn class="full-width" color="primary" label="Enviar orden" />
+                <div
+                    class="row"
+                    v-if="proofRequired.includes(paymentMethod) && orderStatus === 'open'"
+                >
+                    <div class="text-h5 q-mb-md">Comprobante de pago:</div>
+                </div>
+                <div
+                    class="row q-mb-lg"
+                    v-if="proofRequired.includes(paymentMethod) && orderStatus === 'open'"
+                >
+                    <q-file outlined color="white" dark label="Adjuntar comprobante">
+                        <template v-slot:prepend>
+                            <i class="fas fa-paperclip"></i>
+                        </template>
+                    </q-file>
+                </div>
+                <q-btn
+                    class="full-width"
+                    color="primary"
+                    label="Enviar orden"
+                    @click="sendOrder"
+                    v-if="orderStatus == 'open'"
+                />
+                <q-btn
+                    class="full-width"
+                    color="primary"
+                    label="Volver a Movingbeer"
+                    v-else
+                    to="/movingbeer"
+                />
             </div>
             <div class="col"></div>
         </div>
+        <q-dialog v-model="orderConfirmationDialog">
+            <q-card dark class="text-white">
+                <q-card-section>
+                    <div class="text-h6">Enviado con exito</div>
+                </q-card-section>
+
+                <q-card-section
+                    class="q-pt-none"
+                >Tu orden ha sido enviada con exito. Pronto nos pondremos en contacto contigo.</q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn flat label="OK" color="primary" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </q-page>
 </template>
 
@@ -48,7 +100,11 @@
 export default {
     data() {
         return {
+            orderStatus: 'open',
+            title: 'Confirmacion de orden',
+            orderConfirmationDialog: false,
             paymentMethod: '',
+            proofRequired: ['ach', 'yappy', 'nequi'],
             paymentOptions: [
                 {
                     label: 'ACH',
@@ -66,8 +122,19 @@ export default {
                     label: 'Credito',
                     value: 'credit',
                 },
+                {
+                    label: 'POS',
+                    value: 'pos',
+                },
             ],
         }
+    },
+    methods: {
+        sendOrder() {
+            this.orderStatus = 'sent'
+            this.title = 'Orden enviada con exito'
+            this.orderConfirmationDialog = true
+        },
     },
 }
 </script>
