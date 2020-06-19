@@ -11,7 +11,7 @@
         <!-- END PAGE CONTAINER -->
 
         <!-- FOOTER -->
-        <mb-footer />
+        <mb-footer :page="'movingbeer'" />
         <!-- END FOOTER -->
 
         <!-- SHOPPING CART -->
@@ -69,7 +69,7 @@
 
 <script>
 import Navbar from '@/components/movingbeer/Navbar.vue'
-import Footer from '@/components/movingbeer/Footer.vue'
+import Footer from '@/components/general/Footer.vue'
 
 export default {
     data() {

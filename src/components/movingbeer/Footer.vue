@@ -5,25 +5,21 @@
                 <img src="@/assets/brewthers-logo.png" width="60%" />
             </div>
             <div class="col-lg-3 col-md-4 q-pr-md">
-                <div class="text-h6" style="font-family: GilroyExtraBold">
-                    Navegación
-                </div>
+                <div class="text-h6" style="font-family: GilroyExtraBold">Navegación</div>
                 <ul>
-                    <!-- <li v-for="(link, i) in navLinks" :key="i">
-                            <a :href="link.ref" v-smooth-scroll>{{ link.text }}</a>
-                        </li>-->
+                    <li v-for="(link, i) in navLinks" :key="i">
+                        <a :href="link.ref" v-smooth-scroll>{{ link.text }}</a>
+                    </li>
                     <li>
                         <a href="#">terminos & condiciones</a>
                     </li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 q-pr-md">
-                <div class="text-h6" style="font-family: GilroyExtraBold">
-                    Contáctanos
-                </div>
-                <p style="margin-top: 12px;">
-                    Panama, San Francisco, Calle 23 Sur, Torre Something Ofc. 3D
-                </p>
+                <div class="text-h6" style="font-family: GilroyExtraBold">Contáctanos</div>
+                <p
+                    style="margin-top: 12px;"
+                >Panama, San Francisco, Calle 23 Sur, Torre Something Ofc. 3D</p>
                 <p>(+507) 236-1111</p>
                 <p>correo@brewthersco.com</p>
             </div>
@@ -31,9 +27,7 @@
                 <div
                     class="text-h6"
                     style="font-family: GilroyExtraBold; margin-bottom: 12px;"
-                >
-                    Conectate
-                </div>
+                >Conectate</div>
                 <a href="#">
                     <i class="fab fa-instagram" style="font-size: 40px;"></i>
                 </a>
@@ -44,9 +38,18 @@
                 <br />
                 <span>
                     {{ new Date().getFullYear() }} &copy; Developed by.
-                    <a href="#" style="color: #27a3c3">BlueBaloon Inc.</a>
+                    <a
+                        href="#"
+                        style="color: #27a3c3"
+                    >BlueBaloon Inc.</a>
                 </span>
             </div>
         </div>
     </footer>
 </template>
+
+<script>
+export default {
+    props: ['links'],
+}
+</script>

@@ -43,14 +43,6 @@
                             />
                             <q-input
                                 outlined
-                                v-model="profileInfo.email"
-                                class="q-mb-md"
-                                label="Correo"
-                                dark
-                                disable
-                            />
-                            <q-input
-                                outlined
                                 v-model="profileInfo.cellphone"
                                 class="q-mb-md"
                                 label="Celular"
@@ -135,7 +127,6 @@ export default {
                 restName: 'La Casa de Pepe',
                 contactName: 'Pepe',
                 contactLastName: 'Veraz',
-                email: 'pepe.veraz@gmail.com',
                 cellphone: '6262-6262',
             },
             addressInfo: {
