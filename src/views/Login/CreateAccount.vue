@@ -47,7 +47,10 @@
                                 class="q-mb-md"
                                 label="Correo"
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => val.length > 0 || 'El campo es obligatorio',
+                                    val => validEmail.test(val) || 'Formato de correo incorrecto'
+                                ]"
                             />
                             <q-input
                                 filled
@@ -80,7 +83,8 @@
                                 class="q-mb-md"
                                 label="Direccion"
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => val.length > 0 || 'El campo es obligatorio']"
                             />
                             <GoogleMaps @markerPosition="setMarkerPosition"></GoogleMaps>
                         </q-form>
@@ -106,7 +110,10 @@
                                     class="q-mb-md"
                                     label="Contraseña"
                                     dark
-                                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                                    :rules="[
+                                        val => val.length > 0 || 'El campo es obligatorio',
+                                        val => strongPass.test(val) || 'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.'
+                                    ]"
                                 />
                                 <q-input
                                     filled
@@ -115,7 +122,10 @@
                                     class="q-mb-md"
                                     label="Repite la contraseña"
                                     dark
-                                    :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                                    :rules="[
+                                        val => val.length > 0 || 'El campo es obligatorio',
+                                        val => val == form.password || 'Las contraseñas no coinciden'
+                                    ]"
                                 />
                             </q-form>
                         </q-form>
@@ -177,21 +187,8 @@ export default {
             },
             dismissSecs: 15,
             dismissCountDown: 0,
-            /* */
-            profileInfo: {
-                restName: 'La Casa de Pepe',
-                contactName: 'Pepe',
-                contactLastName: 'Veraz',
-                email: 'pepe.veraz@gmail.com',
-                cellphone: '6262-6262',
-            },
-            addressInfo: {
-                textAddress: 'Somewhere in Pma, 3th Street',
-            },
-            passwordInfo: {
-                actualPass: 'asdf123',
-                newPass: 'qwe123',
-            },
+            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         }
     },
     methods: {
