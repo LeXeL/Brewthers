@@ -5,13 +5,16 @@ import store from '@/store/store'
 import HomePage from './layouts/HomePage.vue'
 import LoginPage from './layouts/LoginPage.vue'
 import AdminPage from './layouts/AdminPage.vue'
-import StorePage from './layouts/StorePage.vue'
+import MovingBeerPage from './layouts/MovingBeerPage.vue'
 //Views
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
-import StoreIndex from './views/movingbeer/StoreIndex.vue'
+import MovingBeerIndex from './views/movingbeer/MovingBeerIndex.vue'
+import MovingBeerCheckout from './views/movingbeer/MovingBeerCheckout.vue'
+import MovingBeerAccount from './views/movingbeer/MovingBeerAccount.vue'
+import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
 import {Store} from 'vuex'
 
 Vue.use(Router)
@@ -70,12 +73,27 @@ export default new Router({
         },
         {
             path: '/movingbeer',
-            component: StorePage,
+            component: MovingBeerPage,
             children: [
                 {
                     path: '',
-                    name: 'storeindex',
-                    component: StoreIndex,
+                    name: 'movingbeerindex',
+                    component: MovingBeerIndex,
+                },
+                {
+                    path: '/checkout',
+                    name: 'movingbeercheckout',
+                    component: MovingBeerCheckout,
+                },
+                {
+                    path: '/mi-cuenta',
+                    name: 'movingbeeraccount',
+                    component: MovingBeerAccount,
+                },
+                {
+                    path: '/historial',
+                    name: 'movingbeerhistory',
+                    component: MovingBeerHistory,
                 },
             ],
         },

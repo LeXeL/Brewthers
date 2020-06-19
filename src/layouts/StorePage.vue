@@ -19,14 +19,29 @@
                             style="width: 150px; font-family: GilroyExtraBold;"
                         >
                             <q-item clickable v-close-popup>
-                                <q-item-section>Mi cuenta</q-item-section>
+                                <q-item-section>
+                                    <span
+                                        ><i class="far fa-user on-left"></i>Mi
+                                        cuenta</span
+                                    >
+                                </q-item-section>
                             </q-item>
                             <q-item clickable v-close-popup>
-                                <q-item-section>Historial</q-item-section>
+                                <span
+                                    ><i class="fas fa-box-open on-left"></i
+                                    >Historial</span
+                                >
                             </q-item>
                             <q-separator />
                             <q-item clickable v-close-popup>
-                                <q-item-section @click="logout()">Cerrar sesion</q-item-section>
+                                <q-item-section
+                                    ><span
+                                        ><i
+                                            class="fas fa-sign-out-alt on-left"
+                                        ></i
+                                        >Cerrar sesion</span
+                                    ></q-item-section
+                                >
                             </q-item>
                         </q-list>
                     </q-menu>
@@ -51,10 +66,45 @@
             :width="400"
             :breakpoint="500"
             content-class="bg-dark"
+            class="fixed-right"
         >
             <q-scroll-area class="fit">
-                <div class="q-pa-sm">
-                    <div class="text-h4">CART DETAILS</div>
+                <div class="q-mt-md q-mb-md">
+                    <div class="text-h5 text-center">CARRITO DE COMPRAS</div>
+                </div>
+                <div v-for="(item, i) in 5" :key="i">
+                    <q-item clickable ripple>
+                        <q-item class="full-width">
+                            <q-avatar rounded>
+                                <img :src="require('@/assets/beer.jpg')" />
+                            </q-avatar>
+                            <q-item-section>
+                                <span class="on-right"
+                                    >Nombre item en venta</span
+                                >
+                                <span class="on-right">Cant. 35</span>
+                            </q-item-section>
+
+                            <q-item-section side>
+                                <span class="on-left">$2.50 c/u</span>
+                            </q-item-section>
+                            <q-item-section side
+                                ><i
+                                    class="fas fa-times"
+                                    style="font-size: 20px;"
+                                ></i
+                            ></q-item-section>
+                        </q-item>
+                    </q-item>
+                </div>
+                <div class="fixed-bottom">
+                    <q-btn
+                        class="full-width"
+                        color="primary"
+                        label="Checkout"
+                        size="lg"
+                        square
+                    />
                 </div>
             </q-scroll-area>
         </q-drawer>
@@ -121,7 +171,7 @@ import 'firebase/auth'
 export default {
     data() {
         return {
-            drawerRight: false,
+            drawerRight: true,
         }
     },
     methods: {
