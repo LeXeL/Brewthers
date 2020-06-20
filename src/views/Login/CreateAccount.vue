@@ -198,55 +198,34 @@ export default {
         createuser() {
             this.dismissCountDown = 0
             if (this.form.password === this.form.repassword) {
-                var strongRegex = new RegExp(
-                    '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
-                )
-                if (strongRegex.test(this.form.password)) {
-                    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    if (re.test(this.form.email)) {
-                        firebase
-                            .auth()
-                            .createUserWithEmailAndPassword(
-                                this.form.email,
-                                this.form.password
-                            )
-                            .then(async () => {
-                                let user = await firebase.auth().currentUser
-                                await this.$store.dispatch(
-                                    'setCurrentUser',
-                                    user
-                                )
-                                this.confirmationDialog = true
-                                await api.updateuserwithinfo({
-                                    uid: user.uid,
-                                    obj: this.form,
-                                })
-                            })
-                            .catch(error => {
-                                // Handle Errors here.
-                                console.log(error)
-                                this.dismissCountDown = this.dismissSecs
-                                this.errorCode = error.code
-                                if (
-                                    error.code === 'auth/email-already-in-use'
-                                ) {
-                                    this.errorMessage =
-                                        'Este correo ya esta en uso registrado'
-                                    return
-                                }
-                                this.errorMessage = error.message
-                                // ...
-                            })
-                    } else {
+                firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(
+                        this.form.email,
+                        this.form.password
+                    )
+                    .then(async () => {
+                        let user = await firebase.auth().currentUser
+                        await this.$store.dispatch('setCurrentUser', user)
+                        this.confirmationDialog = true
+                        await api.updateuserwithinfo({
+                            uid: user.uid,
+                            obj: this.form,
+                        })
+                    })
+                    .catch(error => {
+                        // Handle Errors here.
+                        console.log(error)
                         this.dismissCountDown = this.dismissSecs
-                        this.errorMessage =
-                            'Por favor introduce un email valido'
-                    }
-                } else {
-                    this.dismissCountDown = this.dismissSecs
-                    this.errorMessage =
-                        'Por favor introduce una contraseña mas fuerte. Debe contener 8 caracteres, al menos un numero (0-9), una mayúscula, una minúscula y carácter especial ( !@#$%^&* )'
-                }
+                        this.errorCode = error.code
+                        if (error.code === 'auth/email-already-in-use') {
+                            this.errorMessage =
+                                'Este correo ya esta en uso registrado'
+                            return
+                        }
+                        this.errorMessage = error.message
+                        // ...
+                    })
             } else {
                 this.dismissCountDown = this.dismissSecs
                 this.errorMessage = 'Las Contraseñas no son iguales'
