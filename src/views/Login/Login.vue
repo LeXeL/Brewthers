@@ -13,7 +13,7 @@
                                 clearable
                                 v-model="email"
                                 type="email"
-                                label="correo electrónico"
+                                label="Correo electrónico"
                             />
                             <q-input
                                 square
@@ -21,7 +21,7 @@
                                 clearable
                                 v-model="password"
                                 type="password"
-                                label="contraseña"
+                                label="Contraseña"
                             />
                         </q-form>
                     </q-card-section>
@@ -74,6 +74,7 @@ export default {
             password: '',
             dismissSecs: 15,
             dismissCountDown: 0,
+            errorMessage: '',
         }
     },
     methods: {
@@ -87,16 +88,32 @@ export default {
                     this.$router.push('/movingbeer')
                 })
                 .catch(error => {
-                    // Handle Errors here.
                     this.dismissCountDown = this.dismissSecs
-                    this.errorCode = error.code
-                    this.errorMessage = error.message
-                    // ...
+                    switch (error.code) {
+                        case 'auth/user-disabled':
+                            this.errorMessage =
+                                'La cuenta esta deshabilitada por favor comunicarse con un administrador.'
+                            break
+                        case 'auth/user-not-found':
+                            this.errorMessage =
+                                'No se ha encontrado ese correo en nuestra base de datos por favor crea una cuenta.'
+                            break
+                        case 'auth/wrong-password':
+                            this.errorMessage =
+                                'El usuario o la contraseña está equivocado por favor revisar.'
+                            break
+                        case 'auth/invalid-email':
+                            this.errorMessage =
+                                'El usuario o la contraseña está equivocado por favor revisar.'
+                            break
+                        default:
+                            this.errorMessage = error.message
+                            break
+                    }
                 })
         },
     },
     mounted() {
-        console.log(this.user)
         if (this.user) this.$router.push('/movingbeer')
     },
 }
