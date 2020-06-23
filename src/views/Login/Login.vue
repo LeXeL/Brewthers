@@ -13,7 +13,7 @@
                                 clearable
                                 v-model="email"
                                 type="email"
-                                label="correo electrónico"
+                                label="Correo electrónico"
                             />
                             <q-input
                                 square
@@ -21,7 +21,7 @@
                                 clearable
                                 v-model="password"
                                 type="password"
-                                label="contraseña"
+                                label="Contraseña"
                             />
                         </q-form>
                     </q-card-section>
