@@ -114,7 +114,6 @@ export default {
         },
     },
     mounted() {
-        console.log(this.user)
         if (this.user) this.$router.push('/movingbeer')
     },
 }
