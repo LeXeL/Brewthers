@@ -4,7 +4,6 @@
         <div class="hero-stripes desktop-only" style="left: 90px;"></div>
         <div class="hero-stripes desktop-only" style="left: 130px;"></div>
 
-        <!-- TEST -->
         <div class="pattern-bg desktop-only" style="background-size: cover; height: 930px;">
             <div class="absolute-center row justify-center">
                 <div class="row">
@@ -43,7 +42,6 @@
                 </div>
             </div>
         </div>
-        <!-- END TEST -->
         <div class="carousel-container desktop-only">
             <carousel-section />
         </div>

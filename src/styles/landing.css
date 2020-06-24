@@ -195,14 +195,14 @@ q-toolbar a {
     }
 } */
 
-/* @media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 1080px) {
     .us-bg,
     .blog-bg,
     .tiendita-bg,
     .movingbeer-bg {
         background-attachment: scroll;
     }
-} */
+}
 
 .mobile-menu-overlay a {
     text-decoration: none;
