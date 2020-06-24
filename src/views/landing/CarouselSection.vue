@@ -30,7 +30,7 @@ export default {
                 rtl: true,
                 responsive: [
                     {
-                        breakpoint: 1024,
+                        breakpoint: 1081,
                         settings: {
                             slidesToShow: 6,
                             vertical: false,

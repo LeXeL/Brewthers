@@ -28,7 +28,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-3 q-pa-md" v-for="(item, i) in categoryFilter" :key="i">
+            <div
+                class="col-lg-3 col-md-3 col-sm-3 q-pa-md"
+                v-for="(item, i) in categoryFilter"
+                :key="i"
+            >
                 <img :src="require(`@/assets/tiendita-items/${item.photo}`)" width="100%" />
                 <div
                     class="text-h6 text-center"
