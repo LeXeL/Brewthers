@@ -25,7 +25,7 @@
                 <q-btn class="on-right" color="primary" :to="'/login'">iniciar sesión</q-btn>
             </q-toolbar>
             <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
-                <img src="@/assets/logo-horizontal.png" width="50%" />
+                <img src="@/assets/logo-horizontal.png" width="30%" />
                 <q-space />
                 <q-btn flat round dense @click="dialog = !dialog">
                     <i class="fas fa-bars" style="color: #27a3c3 "></i>
