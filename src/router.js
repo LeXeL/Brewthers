@@ -37,7 +37,6 @@ export default new Router({
         {
             path: '/admin',
             component: AdminPage,
-            beforeEnter: ifAuthenticated,
         },
         {
             path: '/login',
