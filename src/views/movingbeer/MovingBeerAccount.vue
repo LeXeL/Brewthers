@@ -1,8 +1,8 @@
 <template>
-    <q-page class="pattern-bg">
+    <q-page class="pattern-bg" v-if="Object.keys(user).length !== 0 ">
         <div class="row">
             <div class="col q-pa-lg">
-                <div class="text-h4">Nombre del comercio</div>
+                <div class="text-h4">{{user.restaurantName}}</div>
             </div>
         </div>
         <div class="row">
@@ -55,7 +55,7 @@
                     <q-card-actions>
                         <q-btn
                             color="primary"
-                            @click="editGeneralInfo = !editGeneralInfo"
+                            @click="handleData('GeneralInfo')"
                         >{{editGeneralInfo ? 'Guardar' : 'Editar'}}</q-btn>
                     </q-card-actions>
                 </q-card>
@@ -77,14 +77,22 @@
                                 class="q-mb-md"
                                 label="Direccion"
                                 dark
-                                disable
+                                :disable="!editAddressInfo"
                             />
-                            <GoogleMaps :editable="false" :mapCenter="userData.location"></GoogleMaps>
+                            <GoogleMaps
+                                @markerPosition="setMarkerPosition"
+                                :editable="editAddressInfo"
+                                :mapCenter="userData.location"
+                                :markers="[{position:userData.location}]"
+                            ></GoogleMaps>
                         </q-form>
                     </q-card-section>
                     <q-separator dark />
                     <q-card-actions>
-                        <q-btn color="primary">Editar</q-btn>
+                        <q-btn
+                            color="primary"
+                            @click="handleData('AddressInfo')"
+                        >{{editAddressInfo ? 'Guardar' : 'Editar'}}</q-btn>
                     </q-card-actions>
                 </q-card>
             </div>
@@ -123,6 +131,7 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 import GoogleMaps from '@/components/GoogleMaps'
 export default {
     components: {
@@ -132,12 +141,52 @@ export default {
         return {
             userData: {},
             editGeneralInfo: false,
+            editAddressInfo: false,
         }
     },
     computed: {
         user() {
             this.userData = this.$store.getters.user
             return this.userData
+        },
+        uid() {
+            return this.$store.getters.uid
+        },
+    },
+    methods: {
+        setMarkerPosition(event) {
+            this.userData.location = event
+        },
+        handleData(section) {
+            if (section === 'GeneralInfo') {
+                //Si editGeneralInfo es falso ponlo true y ya.
+                if (!this.editGeneralInfo) {
+                    this.editGeneralInfo = true
+                    return
+                }
+                this.editGeneralInfo = false
+                this.updateUserInformation()
+                return
+            }
+            if (section === 'AddressInfo') {
+                //Si editGeneralInfo es falso ponlo true y ya.
+                if (!this.editAddressInfo) {
+                    this.editAddressInfo = true
+                    return
+                }
+                this.editAddressInfo = false
+                this.updateUserInformation()
+                return
+            }
+        },
+        updateUserInformation() {
+            api.updateuserinformation({uid: this.uid, user: this.userData})
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
     },
 }
