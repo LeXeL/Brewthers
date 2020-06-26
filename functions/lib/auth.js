@@ -55,9 +55,24 @@ async function returnUserById(uid) {
             return error
         })
 }
+async function updateUserInfo(uid, userObj) {
+    return db
+        .collection('users')
+        .doc(uid)
+        .update(userObj)
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 
 module.exports = {
     createDatabaseWithUserInfo,
     updateDatabaseWithUserInfo,
     returnUserById,
+    updateUserInfo,
 }

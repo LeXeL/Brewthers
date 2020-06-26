@@ -49,3 +49,17 @@ exports.getUserInformationById = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await auth.updateUserInfo(
+                req.body.uid,
+                req.body.user
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
