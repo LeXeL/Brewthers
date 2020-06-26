@@ -210,6 +210,45 @@ export default {
                     console.log(error)
                 })
         },
+        uid() {
+            return this.$store.getters.uid
+        },
+    },
+    methods: {
+        setMarkerPosition(event) {
+            this.userData.location = event
+        },
+        handleData(section) {
+            if (section === 'GeneralInfo') {
+                //Si editGeneralInfo es falso ponlo true y ya.
+                if (!this.editGeneralInfo) {
+                    this.editGeneralInfo = true
+                    return
+                }
+                this.editGeneralInfo = false
+                this.updateUserInformation()
+                return
+            }
+            if (section === 'AddressInfo') {
+                //Si editGeneralInfo es falso ponlo true y ya.
+                if (!this.editAddressInfo) {
+                    this.editAddressInfo = true
+                    return
+                }
+                this.editAddressInfo = false
+                this.updateUserInformation()
+                return
+            }
+        },
+        updateUserInformation() {
+            api.updateuserinformation({uid: this.uid, user: this.userData})
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
     },
 }
 </script>
