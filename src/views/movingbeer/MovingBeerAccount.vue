@@ -22,41 +22,44 @@
                         <q-form>
                             <q-input
                                 outlined
-                                v-model="profileInfo.restName"
+                                v-model="userData.restaurantName"
                                 class="q-mb-md"
                                 label="Nombre del restaurante"
                                 dark
-                                disable
+                                :disable="!editGeneralInfo"
                             />
                             <q-input
                                 outlined
-                                v-model="profileInfo.contactName"
+                                v-model="userData.name"
                                 class="q-mb-md"
                                 label="Nombre"
                                 dark
-                                disable
+                                :disable="!editGeneralInfo"
                             />
                             <q-input
                                 outlined
-                                v-model="profileInfo.contactLastName"
+                                v-model="userData.lastName"
                                 class="q-mb-md"
                                 label="Apellido"
                                 dark
-                                disable
+                                :disable="!editGeneralInfo"
                             />
                             <q-input
                                 outlined
-                                v-model="profileInfo.cellphone"
+                                v-model="userData.contactPhone"
                                 class="q-mb-md"
                                 label="Celular"
                                 dark
-                                disable
+                                :disable="!editGeneralInfo"
                             />
                         </q-form>
                     </q-card-section>
                     <q-separator dark />
                     <q-card-actions>
-                        <q-btn color="primary">Editar</q-btn>
+                        <q-btn
+                            color="primary"
+                            @click="editGeneralInfo = !editGeneralInfo"
+                        >{{editGeneralInfo ? 'Guardar' : 'Editar'}}</q-btn>
                     </q-card-actions>
                 </q-card>
             </div>
@@ -73,13 +76,13 @@
                         <q-form>
                             <q-input
                                 outlined
-                                v-model="addressInfo.textAddress"
+                                v-model="userData.address"
                                 class="q-mb-md"
                                 label="Direccion"
                                 dark
                                 disable
                             />
-                            <p>Inser map here</p>
+                            <GoogleMaps :editable="false" :mapCenter="userData.location"></GoogleMaps>
                         </q-form>
                     </q-card-section>
                     <q-separator dark />
@@ -97,7 +100,7 @@
                             </div>
                         </div>
                     </q-card-section>
-                    <q-card-section>
+                    <!-- <q-card-section>
                         <q-form>
                             <q-form>
                                 <q-input
@@ -111,7 +114,7 @@
                                 />
                             </q-form>
                         </q-form>
-                    </q-card-section>
+                    </q-card-section>-->
                     <q-separator dark />
                     <q-card-actions>
                         <q-btn color="primary">Editar</q-btn>
@@ -123,34 +126,22 @@
 </template>
 
 <script>
+import GoogleMaps from '@/components/GoogleMaps'
 export default {
+    components: {
+        GoogleMaps,
+    },
     data() {
         return {
-            profileInfo: {
-                restName: 'La Casa de Pepe',
-                contactName: 'Pepe',
-                contactLastName: 'Veraz',
-                cellphone: '6262-6262',
-            },
-            addressInfo: {
-                textAddress: 'Somewhere in Pma, 3th Street',
-            },
-            passwordInfo: {
-                actualPass: 'asdf123',
-                newPass: 'qwe123',
-            },
+            userData: {},
+            editGeneralInfo: false,
         }
     },
+    computed: {
+        user() {
+            this.userData = this.$store.getters.user
+            return this.userData
+        },
+    },
 }
-/*
-nombre del comercio
-nombre
-apellido
-correo
-celular
-direccion
-mapa
-
-
-*/
 </script>
