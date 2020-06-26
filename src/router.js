@@ -15,6 +15,10 @@ import MovingBeerIndex from './views/movingbeer/MovingBeerIndex.vue'
 import MovingBeerCheckout from './views/movingbeer/MovingBeerCheckout.vue'
 import MovingBeerAccount from './views/movingbeer/MovingBeerAccount.vue'
 import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
+
+import AdminIndex from './views/admin/Index'
+import AccountsManager from './views/admin/AccountsManager'
+
 import {Store} from 'vuex'
 
 Vue.use(Router)
@@ -37,6 +41,18 @@ export default new Router({
         {
             path: '/admin',
             component: AdminPage,
+            children: [
+                {
+                    path: '',
+                    name: 'admin-index',
+                    component: AdminIndex,
+                },
+                {
+                    path: '/accounts-manager',
+                    name: 'accounts-manager',
+                    component: AccountsManager,
+                },
+            ],
         },
         {
             path: '/login',
