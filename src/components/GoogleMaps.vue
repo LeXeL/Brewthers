@@ -1,7 +1,7 @@
 <template>
     <div>
         <gmap-map
-            :center="center"
+            :center="mapCenter.length ? mapCenter : center"
             ref="mapRef"
             :options="mapStyle"
             :zoom="16"
@@ -11,10 +11,10 @@
                 :key="index"
                 v-for="(m, index) in markers"
                 :position="m.position"
-                :draggable="true"
+                :draggable="editable"
                 :ref="`marker${index}`"
                 @drag="setMarkerPosition"
-                :animation="1"
+                :animation="editable ? 1 : 0"
                 :icon="{ url: require('@/assets/MapMarker.png')}"
             ></gmap-marker>
         </gmap-map>
@@ -24,8 +24,20 @@
 <script>
 export default {
     name: 'GoogleMap',
+    props: {
+        editable: {
+            type: Boolean,
+            default: false,
+        },
+        mapCenter: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
+            center: {},
+            animation: 1,
             mapStyle: {
                 // other properties...
                 fullscreenControl: false,
@@ -124,17 +136,14 @@ export default {
 
             // default to Montreal to keep it simple
             // change this to whatever makes sense
-            center: {lat: 9.0152, lng: -79.587},
             markers: [],
             currentPlace: null,
             markerPosition: null,
         }
     },
-
     mounted() {
         this.geolocate()
     },
-
     methods: {
         setMarkerPosition(location) {
             this.markerPosition = {
