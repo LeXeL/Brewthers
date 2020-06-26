@@ -86,7 +86,7 @@
                                 :rules="[
                                     val => val.length > 0 || 'El campo es obligatorio']"
                             />
-                            <GoogleMaps @markerPosition="setMarkerPosition"></GoogleMaps>
+                            <GoogleMaps @markerPosition="setMarkerPosition" :editable="true"></GoogleMaps>
                         </q-form>
                     </q-card-section>
                 </q-card>
