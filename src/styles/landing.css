@@ -68,11 +68,13 @@ q-toolbar a {
 
 .us-bg {
     background-image: url('../assets/us-bg.jpg');
-    background-position: center center;
+
     height: 1080px;
-    background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .title-section {
@@ -169,6 +171,7 @@ q-toolbar a {
 @media only screen and (max-width: 600px) {
     .us-bg,
     .blog-bg,
+    .tiendita-bg,
     .movingbeer-bg {
         height: 650px;
     }
@@ -180,6 +183,24 @@ q-toolbar a {
         height: auto;
         background-repeat: repeat-y;
         background-position: top;
+    }
+}
+
+/* @media only screen and (max-width: 847px) {
+    .us-bg,
+    .blog-bg,
+    .tiendita-bg,
+    .movingbeer-bg {
+        background-attachment: scroll;
+    }
+} */
+
+@media only screen and (max-width: 1080px) {
+    .us-bg,
+    .blog-bg,
+    .tiendita-bg,
+    .movingbeer-bg {
+        background-attachment: scroll;
     }
 }
 

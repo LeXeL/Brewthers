@@ -8,7 +8,7 @@
         </div>
         <div class="row q-pb-xl">
             <div
-                class="col-lg-4 col-md-4 us-partner-tile q-pt-xl q-pl-xl q-pr-xl"
+                class="col-lg-4 col-md-4 col-sm-4 us-partner-tile q-pt-xl q-pl-xl q-pr-xl"
                 v-for="(partner, i) in partners"
                 :key="i"
             >

@@ -3,22 +3,42 @@
         <div class="hero-stripes desktop-only" style="left: 50px;"></div>
         <div class="hero-stripes desktop-only" style="left: 90px;"></div>
         <div class="hero-stripes desktop-only" style="left: 130px;"></div>
+
         <div class="pattern-bg desktop-only" style="background-size: cover; height: 930px;">
             <div class="absolute-center row justify-center">
-                <img class="q-mb-xl desktop-only" src="@/assets/brewthers-logo.png" width="60%" />
-                <img class="q-mb-xl mobile-only" src="@/assets/brewthers-logo.png" width="40%" />
-                <div class="text-h4" style="font-family: GilroyExtraBold; text-align: center;">
-                    Somos el punto de conexión entre ustedes y las buenas
-                    cervezas artesanales panameñas.
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+                        <img class="q-mb-xl" src="@/assets/brewthers-logo.png" width="100%" />
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-h4" style="text-align: center;">
+                            Somos el punto de conexión entre ustedes y las buenas
+                            cervezas artesanales panameñas.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="pattern-bg mobile-only" style="background-size: cover; height: 600px;">
-            <div class="absolute-center row justify-center full-width">
-                <img class="q-mb-lg" src="@/assets/brewthers-logo.png" width="60%" />
-                <div class="text-h6" style="font-family: GilroyExtraBold; text-align: center;">
-                    Somos el punto de conexión entre ustedes y las buenas
-                    cervezas artesanales panameñas.
+            <div class="absolute-center row justify-center">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+                        <img class="q-mb-xl" src="@/assets/brewthers-logo.png" width="100%" />
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-h6" style="text-align: center;">
+                            Somos el punto de conexión entre ustedes y las buenas
+                            cervezas artesanales panameñas.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
