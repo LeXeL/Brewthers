@@ -94,7 +94,12 @@
                                 :rules="[
                                     val => val.length > 0 || 'El campo es obligatorio']"
                             />
-                            <GoogleMaps @markerPosition="setMarkerPosition" :editable="true"></GoogleMaps>
+                            <GoogleMaps
+                                @markerPosition="setMarkerPosition"
+                                :editable="true"
+                                :markers="markers"
+                                :mapCenter="center"
+                            ></GoogleMaps>
                         </q-form>
                     </q-card-section>
                 </q-card>
@@ -181,6 +186,8 @@ export default {
     },
     data() {
         return {
+            markers: [],
+            center: {},
             confirmationDialog: false,
             form: {
                 name: '',
@@ -199,7 +206,19 @@ export default {
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         }
     },
+    mounted() {
+        this.geolocate()
+    },
     methods: {
+        geolocate() {
+            navigator.geolocation.getCurrentPosition(position => {
+                this.center = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                }
+                this.markers.push({position: this.center})
+            })
+        },
         setMarkerPosition(event) {
             this.form.location = event
         },

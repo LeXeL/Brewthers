@@ -1,7 +1,7 @@
 <template>
     <div>
         <gmap-map
-            :center="mapCenter.length ? mapCenter : center"
+            :center="mapCenter"
             ref="mapRef"
             :options="mapStyle"
             :zoom="16"
@@ -32,6 +32,9 @@ export default {
         mapCenter: {
             type: Object,
             default: () => ({}),
+        },
+        markers: {
+            type: Array,
         },
     },
     data() {
@@ -136,14 +139,12 @@ export default {
 
             // default to Montreal to keep it simple
             // change this to whatever makes sense
-            markers: [],
+
             currentPlace: null,
             markerPosition: null,
         }
     },
-    mounted() {
-        this.geolocate()
-    },
+
     methods: {
         setMarkerPosition(location) {
             this.markerPosition = {
@@ -151,15 +152,6 @@ export default {
                 lng: location.latLng.lng(),
             }
             this.$emit('markerPosition', this.markerPosition)
-        },
-        geolocate() {
-            navigator.geolocation.getCurrentPosition(position => {
-                this.center = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                }
-                this.markers.push({position: this.center})
-            })
         },
     },
 }
