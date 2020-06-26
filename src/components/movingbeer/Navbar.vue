@@ -21,6 +21,13 @@
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
+                            <q-item-section @click="$router.push('/admin')">
+                                <span>
+                                    <i class="fas fa-user-shield on-left"></i>Admin
+                                </span>
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
                             <q-item-section @click="$router.push('/historial')">
                                 <span>
                                     <i class="fas fa-box-open on-left"></i>Historial
