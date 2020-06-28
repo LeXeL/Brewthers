@@ -2,7 +2,7 @@
     <q-page class="pattern-bg" v-if="Object.keys(user).length !== 0 ">
         <div class="row">
             <div class="col q-pa-lg">
-                <div class="text-h4">{{user.restaurantName}}</div>
+                <div class="text-h4">{{restName}}</div>
                 <div class="text-h6">
                     Estatus:
                     <span style="color: #27a3c3">Aprobado</span>
@@ -86,8 +86,8 @@
                             <GoogleMaps
                                 @markerPosition="setMarkerPosition"
                                 :editable="editAddressInfo"
-                                :mapCenter="userData.location"
-                                :markers="[{position:userData.location}]"
+                                :mapCenter="center"
+                                :markers="markers"
                             ></GoogleMaps>
                         </q-form>
                     </q-card-section>
@@ -105,28 +105,12 @@
                     <q-card-section>
                         <div class="row">
                             <div class="col">
-                                <div class="text-h6">Seguridad:</div>
+                                <div class="text-h6">Seguridad</div>
                             </div>
                         </div>
                     </q-card-section>
-                    <!-- <q-card-section>
-                        <q-form>
-                            <q-form>
-                                <q-input
-                                    outlined
-                                    type="password"
-                                    v-model="passwordInfo.actualPass"
-                                    class="q-mb-md"
-                                    label="Contraseña actual"
-                                    dark
-                                    disable
-                                />
-                            </q-form>
-                        </q-form>
-                    </q-card-section>-->
-                    <q-separator dark />
                     <q-card-actions>
-                        <q-btn color="primary">Editar</q-btn>
+                        <q-btn @click="resetPassword()" color="primary">Reiniciar Contraseña</q-btn>
                     </q-card-actions>
                 </q-card>
             </div>
@@ -136,6 +120,8 @@
 
 <script>
 import * as api from '@/api/api'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import GoogleMaps from '@/components/GoogleMaps'
 export default {
     components: {
@@ -146,18 +132,45 @@ export default {
             userData: {},
             editGeneralInfo: false,
             editAddressInfo: false,
+            markers: [],
+            center: {},
+            restName: '',
         }
     },
     computed: {
         user() {
-            this.userData = this.$store.getters.user
-            return this.userData
+            let userInfo = this.$store.getters.user
+            this.userData = userInfo
+            return userInfo
         },
         uid() {
             return this.$store.getters.uid
         },
     },
+    created() {
+        api.getuserinformationbyid({uid: this.uid}).then(response => {
+            this.$store.commit('SET_USER', response.data.data)
+        })
+    },
+    mounted() {
+        this.restName = this.userData.restaurantName
+        this.center = this.userData.location
+        this.markers.push({position: this.center})
+    },
     methods: {
+        resetPassword() {
+            firebase
+                .auth()
+                .sendPasswordResetEmail(this.user.email)
+                .then(function() {
+                    alert(
+                        'Hemos enviado a tu correo un email para resetear la contraseña'
+                    )
+                })
+                .catch(function(error) {
+                    console.log(error)
+                })
+        },
         setMarkerPosition(event) {
             this.userData.location = event
         },
@@ -186,9 +199,14 @@ export default {
         updateUserInformation() {
             api.updateuserinformation({uid: this.uid, user: this.userData})
                 .then(response => {
-                    console.log(response)
+                    //TODO: Vista de poner contraseña que no sea la default.
+                    alert('Se ha actualizado con éxito la información')
+                    this.$router.push('/movingbeer')
                 })
                 .catch(error => {
+                    alert(
+                        'Hubo un error con la solicitud por favor inténtelo más tarde'
+                    )
                     console.log(error)
                 })
         },
