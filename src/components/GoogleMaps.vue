@@ -31,7 +31,10 @@ export default {
         },
         mapCenter: {
             type: Object,
-            default: () => ({}),
+            default: () => ({
+                lat: 8.965975885948076,
+                lng: -79.53750488336794,
+            }),
         },
         markers: {
             type: Array,
@@ -136,11 +139,6 @@ export default {
                 //     },
                 // ],
             },
-
-            // default to Montreal to keep it simple
-            // change this to whatever makes sense
-
-            currentPlace: null,
             markerPosition: null,
         }
     },
