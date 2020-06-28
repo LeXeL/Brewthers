@@ -35,9 +35,12 @@ export default {
                 lat: 8.965975885948076,
                 lng: -79.53750488336794,
             }),
+<<<<<<< HEAD
         },
         markers: {
             type: Array,
+=======
+>>>>>>> Improve google map errors and account profile
         },
         markers: {
             type: Array,
