@@ -77,7 +77,10 @@ export default {
                             console.log(error)
                         })
                 })
-                .catch(error => {})
+                .catch(error => {
+                    this.dismissCountDown = this.dismissSecs
+                    this.errorMessage = error
+                })
         },
     },
     created() {
