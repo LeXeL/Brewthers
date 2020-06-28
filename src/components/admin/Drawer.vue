@@ -2,13 +2,13 @@
     <q-drawer v-model="showDrawer" show-if-above :width="300" :breakpoint="400" dark>
         <q-scroll-area style="height: calc(100% - 150px);">
             <q-list padding>
-                <q-item active clickable v-ripple>
+                <q-item active clickable v-ripple to="/admin">
                     <q-avatar rounded>
                         <i class="fas fa-home" style="font-size: 15px;"></i>
                     </q-avatar>
                     <q-item-section>Inicio</q-item-section>
                 </q-item>
-                <q-item active clickable v-ripple>
+                <q-item active clickable v-ripple to="/accounts-manager">
                     <q-avatar rounded>
                         <i class="fas fa-user-circle" style="font-size: 15px;"></i>
                     </q-avatar>
