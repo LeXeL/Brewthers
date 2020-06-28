@@ -12,6 +12,7 @@
         "axios": "^0.19.2",
         "firebase": "^7.14.6",
         "quasar": "^1.0.0",
+        "smtpjs": "0.0.1",
         "vue": "^2.6.10",
         "vue-router": "^3.0.3",
         "vue-slick-carousel": "^1.0.5",
