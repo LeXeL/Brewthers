@@ -7,9 +7,27 @@
             </div>
             <div class="col-lg-6 q-pa-md">
                 <pending-accounts-table />
-                <admin-accounts-table />
+                <admin-accounts-table @openDialog="openNewAdminAccountDialog" />
             </div>
         </div>
+        <q-dialog v-model="prompt" persistent>
+            <q-card style="min-width: 350px" dark>
+                <q-card-section>
+                    <div class="text-h6">Nueva cuenta de administrador</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <q-input label="Nombre" class="q-mb-md" dark filled />
+                    <q-input label="Apellido" class="q-mb-md" dark filled />
+                    <q-input label="Correo" class="q-mb-md" dark filled />
+                </q-card-section>
+
+                <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Cancelar" v-close-popup />
+                    <q-btn flat label="Crear" />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -20,7 +38,14 @@ import AdminAccountsTable from '@/components/admin/AdminAccountsTable'
 
 export default {
     data() {
-        return {}
+        return {
+            prompt: false,
+        }
+    },
+    methods: {
+        openNewAdminAccountDialog() {
+            this.prompt = true
+        },
     },
     components: {
         'active-accounts-table': ActiveAccountsTable,

@@ -7,6 +7,11 @@
         class="full-width"
         dark
     >
+        <template v-slot:top-right>
+            <q-btn color="primary" size="sm" no-caps @click="$emit('openDialog')">
+                <i class="fas fa-plus"></i>
+            </q-btn>
+        </template>
         <template v-slot:header="props">
             <q-tr :props="props">
                 <q-th auto-width />
