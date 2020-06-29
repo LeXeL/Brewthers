@@ -5,7 +5,7 @@
                 <div class="text-h4">{{restName}}</div>
                 <div class="text-h6">
                     Estatus:
-                    <span style="color: #27a3c3">Aprobado</span>
+                    <span style="color: #27a3c3">{{user.status ? user.status : 'pending'}}</span>
                 </div>
             </div>
         </div>
