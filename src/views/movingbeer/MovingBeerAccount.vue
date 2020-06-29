@@ -3,6 +3,9 @@
         <div class="row">
             <div class="col q-pa-lg">
                 <div class="text-h4">Nombre del comercio</div>
+                <div class="text-h6">
+                    Estatus: <span style="color: #27a3c3">Aprobado</span>
+                </div>
             </div>
         </div>
         <div class="row">

@@ -27,6 +27,14 @@
                             />
                             <q-input
                                 filled
+                                v-model="form.restaurantName"
+                                class="q-mb-md"
+                                label="RUC"
+                                dark
+                                :rules="[val => val.length > 0 || 'El campo es obligatorio',]"
+                            />
+                            <q-input
+                                filled
                                 v-model="form.name"
                                 class="q-mb-md"
                                 label="Nombre"

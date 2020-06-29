@@ -71,7 +71,12 @@
             </div>
             <div class="row q-pa-md">
                 <q-space />
-                <q-btn label="Enviar" type="submit" color="primary" @click="sendEmail" />
+                <q-btn
+                    label="Enviar"
+                    type="submit"
+                    color="primary"
+                    @click="sendEmail"
+                />
             </div>
         </q-form>
     </div>
@@ -93,6 +98,7 @@ export default {
             options: [
                 'Alquiler de equipo draft',
                 'Solicitar cotización de servicio',
+                'Comprar caja o keg',
                 'MovingBeer',
                 'Otros',
             ],
