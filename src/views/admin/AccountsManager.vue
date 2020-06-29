@@ -17,9 +17,10 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    <q-input label="Nombre" class="q-mb-md" dark filled />
-                    <q-input label="Apellido" class="q-mb-md" dark filled />
-                    <q-input label="Correo" class="q-mb-md" dark filled />
+                    <q-input label="Nombre" class="q-mb-md" dark filled type="text" />
+                    <q-input label="Apellido" class="q-mb-md" dark filled type="text" />
+                    <q-input label="Correo" class="q-mb-md" dark filled type="email" />
+                    <q-input label="Contraseña" class="q-mb-md" dark filled type="password" />
                 </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">
