@@ -42,7 +42,7 @@
                         <div class="col-lg-1">
                             <q-img
                                 :src="
-                                    require(`@/assets/familia-brewthers/2-oceans.jpg`)
+                                    require(`@/assets/familia-brewthers/2-oceans.png`)
                                 "
                             />
                         </div>
@@ -92,24 +92,40 @@ export default {
             maximizedToggle: true,
             brewers: [
                 {
-                    name: 'Boquete Brewing Company',
-                    logo: 'boquete-brewing-co.png',
+                    name: '2 Oceans Brewing',
+                    logo: '2-oceans.png',
                 },
                 {
-                    name: 'Buena Vista Brewery',
-                    logo: 'buena-vista-brew.jpg',
+                    name: 'Backyard',
+                    logo: 'back-yard.png',
+                },
+                {
+                    name: 'Boquete Brewing Company',
+                    logo: 'boquete-brewing.png',
+                },
+                {
+                    name: 'Buena Vista',
+                    logo: 'buena-vista.png',
                 },
                 {
                     name: 'Casa Bruja',
                     logo: 'casa-bruja.png',
                 },
                 {
-                    name: 'Cerveza La Murga',
-                    logo: 'la-murga.jpg',
+                    name: 'Central',
+                    logo: 'central.png',
                 },
                 {
-                    name: '2 Oceans Brewing',
-                    logo: '2-oceans.jpg',
+                    name: 'La Murga',
+                    logo: 'la-murga.png',
+                },
+                {
+                    name: 'Rana Dorada',
+                    logo: 'rana-dorada.png',
+                },
+                {
+                    name: 'Tres Gatos',
+                    logo: 'tres-gatos.png',
                 },
             ],
         }
