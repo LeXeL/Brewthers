@@ -9,6 +9,7 @@ async function createDatabaseWithUserInfo(user) {
             email: user.email,
             creationTime: user.metadata.creationTime,
             roll: 'user',
+            status: 'pending', //pending, aproved, unaprove
         })
         .then(() => {
             return 'Succesfull'
@@ -29,6 +30,7 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             contactPhone: obj.contactPhone,
             address: obj.address,
             location: obj.location,
+            ruc: obj.ruc,
         })
         .then(() => {
             console.log('Document successfully written!')

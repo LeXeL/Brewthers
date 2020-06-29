@@ -27,7 +27,7 @@
                             />
                             <q-input
                                 filled
-                                v-model="form.restaurantName"
+                                v-model="form.ruc"
                                 class="q-mb-md"
                                 label="RUC"
                                 dark
@@ -199,6 +199,7 @@ export default {
                 repassword: '',
                 address: '',
                 location: null,
+                ruc: '',
             },
             dismissSecs: 15,
             dismissCountDown: 0,
