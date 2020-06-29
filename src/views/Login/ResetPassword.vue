@@ -4,17 +4,33 @@
         <div class="absolute-center">
             <div class="row">
                 <q-img :src="require('@/assets/logo-horizontal.png')" class="q-mb-lg" />
-                <q-card square bordered class="q-pa-lg shadow-1">
+                <q-card dark square class="q-pa-lg shadow-1">
                     <q-card-section>
                         <q-form class="q-gutter-md">
                             <q-input
+                                dark
                                 square
                                 filled
-                                clearable
                                 v-model="newPassword"
                                 type="password"
-                                label="Contraseña"
+                                label="Nueva contraseña"
+                                :rules="[
+                                        val => val.length > 0 || 'El campo es obligatorio',
+                                        val => strongPass.test(val) || 'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.'
+                                    ]"
                             />
+                            <q-input
+                                dark
+                                square
+                                filled
+                                v-model="repassword"
+                                type="password"
+                                label="Repite contraseña"
+                                :rules="[
+                                        val => val.length > 0 || 'El campo es obligatorio',
+                                        val => val == form.password || 'Las contraseñas no coinciden'
+                                    ]"
+                            ></q-input>
                         </q-form>
                     </q-card-section>
                     <q-card-actions class="q-px-md">
@@ -54,33 +70,40 @@ export default {
             actionCode: '',
             email: '',
             newPassword: '',
+            repassword: '',
             dismissSecs: 15,
             dismissCountDown: 0,
             errorMessage: '',
+            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         }
     },
     methods: {
         updatePassword() {
-            firebase
-                .auth()
-                .confirmPasswordReset(this.actionCode, this.newPassword)
-                .then(resp => {
-                    alert('Contraseña cambiada con éxito')
-                    firebase
-                        .auth()
-                        .signOut()
-                        .then(async () => {
-                            await this.$store.dispatch('UserLogout')
-                            this.$router.push('/login')
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                })
-                .catch(error => {
-                    this.dismissCountDown = this.dismissSecs
-                    this.errorMessage = error
-                })
+            if (this.newPassword === this.repassword) {
+                firebase
+                    .auth()
+                    .confirmPasswordReset(this.actionCode, this.newPassword)
+                    .then(resp => {
+                        alert('Contraseña cambiada con éxito')
+                        firebase
+                            .auth()
+                            .signOut()
+                            .then(async () => {
+                                await this.$store.dispatch('UserLogout')
+                                this.$router.push('/login')
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                    })
+                    .catch(error => {
+                        this.dismissCountDown = this.dismissSecs
+                        this.errorMessage = error
+                    })
+            } else {
+                this.dismissCountDown = this.dismissSecs
+                this.errorMessage = 'Las Contraseñas no son iguales'
+            }
         },
     },
     created() {
@@ -100,5 +123,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 </style>
