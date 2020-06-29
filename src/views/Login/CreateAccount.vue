@@ -27,7 +27,7 @@
                             />
                             <q-input
                                 filled
-                                v-model="form.restaurantName"
+                                v-model="form.ruc"
                                 class="q-mb-md"
                                 label="RUC"
                                 dark
@@ -94,7 +94,12 @@
                                 :rules="[
                                     val => val.length > 0 || 'El campo es obligatorio']"
                             />
-                            <GoogleMaps @markerPosition="setMarkerPosition"></GoogleMaps>
+                            <GoogleMaps
+                                @markerPosition="setMarkerPosition"
+                                :editable="true"
+                                :markers="markers"
+                                :mapCenter="center"
+                            ></GoogleMaps>
                         </q-form>
                     </q-card-section>
                 </q-card>
@@ -181,6 +186,8 @@ export default {
     },
     data() {
         return {
+            markers: [],
+            center: {},
             confirmationDialog: false,
             form: {
                 name: '',
@@ -192,6 +199,7 @@ export default {
                 repassword: '',
                 address: '',
                 location: null,
+                ruc: '',
             },
             dismissSecs: 15,
             dismissCountDown: 0,
@@ -199,7 +207,19 @@ export default {
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         }
     },
+    mounted() {
+        this.geolocate()
+    },
     methods: {
+        geolocate() {
+            navigator.geolocation.getCurrentPosition(position => {
+                this.center = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                }
+                this.markers.push({position: this.center})
+            })
+        },
         setMarkerPosition(event) {
             this.form.location = event
         },
