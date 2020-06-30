@@ -1,8 +1,8 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <brewthers-alert :title="'test'" :message="'test message'" :display="alert" />
-        <q-btn color="primary" label="Trigger alert" @click="alert = !alert" />
+        <brewthers-alert :title="alert.title" :message="alert.message" :display="alert.display" />
+        <q-btn color="primary" label="Trigger alert" @click="triggerAlert" />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
@@ -93,7 +93,6 @@ export default {
                 message: '',
                 display: null,
             },
-            loadingAlert: false,
             slide: 'first',
             type: 'Keg',
             dialog: false,
@@ -149,15 +148,6 @@ export default {
             this.alert.title = title
             this.alert.message = message
             this.alert.display = !this.alert.display
-        },
-        triggerLoading() {
-            this.toggleLoading()
-            setTimeout(() => {
-                this.toggleLoading()
-            }, 3000)
-        },
-        toggleLoading() {
-            this.loadingAlert = !this.loadingAlert
         },
     },
     components: {
