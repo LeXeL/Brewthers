@@ -14,6 +14,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import BrewthersAlert from '@/components/general/Alert'
 
 Vue.component('brewthers-alert', BrewthersAlert)
+import LoadingAlert from '@/components/general/LoadingAlert'
 
 Vue.config.productionTip = false
 

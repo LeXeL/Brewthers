@@ -1,5 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
+        <loading-alert />
         <carousel />
         <brewthers-alert :title="alert.title" :message="alert.message" :display="alert.display" />
         <q-btn color="primary" label="Trigger alert" @click="triggerAlert" />
