@@ -2,22 +2,27 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
-
+//Librerias del proyecto
 import * as api from '@/api/api'
-
+import LoadingAlert from '@/components/general/LoadingAlert'
+import BrewthersAlert from '@/components/general/Alert'
+//Librerias extras
 import './quasar'
-
 import firebase from 'firebase/app'
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
+<<<<<<< HEAD
 import BrewthersAlert from '@/components/general/Alert'
 
 Vue.component('brewthers-alert', BrewthersAlert)
 import LoadingAlert from '@/components/general/LoadingAlert'
 
+=======
+>>>>>>> Alert component and display handling
 Vue.config.productionTip = false
 
+Vue.component('brewthers-alert', BrewthersAlert)
 Vue.component('loading-alert', LoadingAlert)
 
 Vue.use(vueSmoothScroll)
