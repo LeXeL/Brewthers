@@ -1,5 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
+        <loading-alert />
         <carousel />
         <section>
             <div class="row q-pt-xl">
