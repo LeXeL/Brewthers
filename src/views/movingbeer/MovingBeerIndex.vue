@@ -1,6 +1,8 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
+        <brewthers-alert :title="'test'" :message="'test message'" :display="alert" />
+        <q-btn color="primary" label="Trigger alert" @click="alert = !alert" />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
@@ -86,6 +88,7 @@ import BeerItemTile from '@/components/movingbeer/BeerItemTile.vue'
 export default {
     data() {
         return {
+            alert: false,
             slide: 'first',
             type: 'Keg',
             dialog: false,

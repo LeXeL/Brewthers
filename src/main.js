@@ -11,7 +11,9 @@ import firebase from 'firebase/app'
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-import LoadingAlert from '@/components/general/LoadingAlert'
+import BrewthersAlert from '@/components/general/Alert'
+
+Vue.component('brewthers-alert', BrewthersAlert)
 
 Vue.config.productionTip = false
 
