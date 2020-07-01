@@ -1,8 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
-        <loading-alert :display="loadingAlert"/>
         <carousel />
-        <q-btn color="primary" label="Trigger Loading" @click="triggerLoading"/>
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
@@ -88,7 +86,6 @@ import BeerItemTile from '@/components/movingbeer/BeerItemTile.vue'
 export default {
     data() {
         return {
-            loadingAlert: false,
             slide: 'first',
             type: 'Keg',
             dialog: false,
@@ -137,14 +134,6 @@ export default {
         beerHouseDialog() {
             this.dialog = true
         },
-        triggerLoading() {
-            this.toggleLoading()
-            setTimeout(() => { this.toggleLoading() }, 3000);
-        },
-        toggleLoading() {
-            this.loadingAlert = !this.loadingAlert
-        }
-
     },
     components: {
         Carousel,
