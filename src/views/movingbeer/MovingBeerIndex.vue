@@ -138,14 +138,11 @@ export default {
             this.dialog = true
         },
         triggerLoading() {
-            this.showLoading()
-            setTimeout(() => { this.hideLoading() }, 3000);
+            this.toggleLoading()
+            setTimeout(() => { this.toggleLoading() }, 3000);
         },
-        showLoading() {
-            this.loadingAlert = true
-        },
-        hideLoading() {
-            this.loadingAlert = false
+        toggleLoading() {
+            this.loadingAlert = !this.loadingAlert
         }
 
     },
