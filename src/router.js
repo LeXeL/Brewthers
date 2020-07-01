@@ -19,6 +19,7 @@ import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
 
 import AdminIndex from './views/admin/Index'
 import AccountsManager from './views/admin/AccountsManager'
+import AccountDetails from './views/admin/AccountDetails'
 
 import {Store} from 'vuex'
 
@@ -52,6 +53,11 @@ export default new Router({
                     path: '/accounts-manager',
                     name: 'accounts-manager',
                     component: AccountsManager,
+                },
+                {
+                    path: '/account-details',
+                    name: 'account-details',
+                    component: AccountDetails,
                 },
             ],
         },
