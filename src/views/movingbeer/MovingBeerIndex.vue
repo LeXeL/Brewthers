@@ -1,6 +1,7 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
+        <confirm-dialog />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
