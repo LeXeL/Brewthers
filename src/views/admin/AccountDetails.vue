@@ -80,18 +80,13 @@
                 </div>
             </div>
             <div class="col-lg-8 q-pa-md">
-                <div class="row q-mb-md">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.850840989894!2d-79.51440278464861!3d8.98586989213582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8faca90318b2d289%3A0x6c3da9deb445c2dd!2sMultiplaza!5e0!3m2!1sen!2spa!4v1593540947688!5m2!1sen!2spa"
-                        width="100%"
-                        height="550"
-                        frameborder="0"
-                        style="border:0;"
-                        allowfullscreen
-                        aria-hidden="false"
-                        tabindex="0"
-                    ></iframe>
-                </div>
+                <GoogleMaps
+                    class="full-width q-mb-md"
+                    :editable="true"
+                    :markers="[{position:{lat:9.08,lng:-47.8}}]"
+                    :mapCenter="{lat:9.08,lng:-47.8}"
+                ></GoogleMaps>
+
                 <div class="row">
                     <q-space />
                     <q-btn
@@ -132,7 +127,12 @@
 </template>
 
 <script>
+import GoogleMaps from '@/components/GoogleMaps'
+
 export default {
+    components: {
+        GoogleMaps,
+    },
     data() {
         return {
             rejectDialog: false,
@@ -146,3 +146,5 @@ export default {
     },
 }
 </script>
+<style scoped>
+</style>
