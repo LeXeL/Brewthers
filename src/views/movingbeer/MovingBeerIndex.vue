@@ -1,6 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
-        <loading-alert />
+        <loading-alert :display="loadingAlert" />
         <carousel />
         <brewthers-alert :title="alert.title" :message="alert.message" :display="alert.display" />
         <q-btn color="primary" label="Trigger alert" @click="triggerAlert" />
@@ -94,6 +94,7 @@ export default {
                 message: '',
                 display: null,
             },
+            loadingAlert: false,
             slide: 'first',
             type: 'Keg',
             dialog: false,
