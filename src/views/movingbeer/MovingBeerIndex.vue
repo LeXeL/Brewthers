@@ -1,7 +1,7 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <confirm-dialog />
+        <confirm-dialog :title="'Confirmacion'" :message="'Estas seguro que no eres trolaso?'"/>
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
