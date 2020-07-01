@@ -21,8 +21,6 @@ import AdminIndex from './views/admin/Index'
 import AccountsManager from './views/admin/AccountsManager'
 import AccountDetails from './views/admin/AccountDetails'
 
-import {Store} from 'vuex'
-
 Vue.use(Router)
 
 const ifAuthenticated = (to, from, next) => {
