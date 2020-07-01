@@ -91,7 +91,7 @@ export default {
             alert: {
                 title: '',
                 message: '',
-                display: null,
+                display: false,
             },
             slide: 'first',
             type: 'Keg',

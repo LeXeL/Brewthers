@@ -1,5 +1,5 @@
 <template>
-    <q-dialog v-model="alert" persistent>
+    <q-dialog v-model="alert">
         <q-card dark>
             <q-card-section>
                 <div class="text-h6">{{ title }}</div>
@@ -15,20 +15,26 @@
 </template>
 <script>
 export default {
-    props: ['title', 'message', 'display'],
+    props: {
+        display: {
+            type: Boolean,
+            default: false,
+        },
+        title: {
+            type: String,
+        },
+        message: {
+            type: String,
+        },
+    },
     data() {
         return {
             alert: false,
         }
     },
-    methods: {
-        displayAlert() {
-            this.alert = true
-        },
-    },
     watch: {
         display: function() {
-            this.displayAlert()
+            this.alert = true
         },
     },
 }
