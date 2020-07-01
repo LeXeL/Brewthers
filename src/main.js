@@ -15,7 +15,7 @@ import LoadingAlert from '@/components/general/LoadingAlert'
 
 Vue.config.productionTip = false
 
-Vue.use('loading-alert', LoadingAlert)
+Vue.component('loading-alert', LoadingAlert)
 
 Vue.use(vueSmoothScroll)
 
