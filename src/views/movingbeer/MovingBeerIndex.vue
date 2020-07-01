@@ -151,6 +151,15 @@ export default {
             this.alert.message = message
             this.alert.display = !this.alert.display
         },
+        triggerLoading() {
+            this.toggleLoading()
+            setTimeout(() => {
+                this.toggleLoading()
+            }, 3000)
+        },
+        toggleLoading() {
+            this.loadingAlert = !this.loadingAlert
+        },
     },
     components: {
         Carousel,
