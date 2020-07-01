@@ -1,7 +1,12 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <brewthers-alert :title="alert.title" :message="alert.message" :display="alert.display" />
+        <brewthers-alert
+            :title="alert.title"
+            :message="alert.message"
+            :display="alert.display"
+            :type="'success'"
+        />
         <q-btn color="primary" label="Trigger alert" @click="triggerAlert" />
         <section>
             <div class="row q-pt-xl">
@@ -142,7 +147,10 @@ export default {
             this.dialog = true
         },
         triggerAlert() {
-            this.setAlert('This title', 'This is the message')
+            this.setAlert(
+                'Guardado con exito!',
+                'La informacion de tu cuenta ha sido actualizada con exito.'
+            )
         },
         setAlert(title, message, display) {
             this.alert.title = title
