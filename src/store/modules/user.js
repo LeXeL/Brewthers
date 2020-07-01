@@ -42,6 +42,6 @@ export default {
         user: state => state.user,
         uid: state => state.uid,
         isAuthenticated: state => !!state.token,
-        isAdmin: state => state.user.isAdmin,
+        role: state => state.user.role,
     },
 }

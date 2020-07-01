@@ -31,7 +31,7 @@ const ifAuthenticated = (to, from, next) => {
     } else next('/login')
 }
 const ifAuthenticatedAndAdmin = (to, from, next) => {
-    if (store.getters.isAuthenticated && store.getters.isAdmin) {
+    if (store.getters.isAuthenticated && store.getters.role === 'admin') {
         next()
     } else next('/')
 }
@@ -43,6 +43,7 @@ export default new Router({
         {
             path: '/admin',
             component: AdminPage,
+            beforeEnter: ifAuthenticatedAndAdmin,
             children: [
                 {
                     path: '',

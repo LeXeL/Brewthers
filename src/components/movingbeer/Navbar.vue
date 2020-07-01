@@ -20,7 +20,7 @@
                                 </span>
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-close-popup>
+                        <q-item clickable v-close-popup v-if="user.role === 'admin'">
                             <q-item-section @click="$router.push('/admin')">
                                 <span>
                                     <i class="fas fa-user-shield on-left"></i>Admin
@@ -62,6 +62,11 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 export default {
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
     methods: {
         async logout() {
             firebase
