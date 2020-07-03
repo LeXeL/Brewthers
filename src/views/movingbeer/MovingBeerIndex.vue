@@ -1,12 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <brewthers-alert
-            :title="alert.title"
-            :message="alert.message"
-            :display="alert.display"
-            :type="'success'"
-        />
         <q-btn color="primary" label="Trigger alert" @click="triggerAlert" />
         <section>
             <div class="row q-pt-xl">
@@ -93,11 +87,6 @@ import BeerItemTile from '@/components/movingbeer/BeerItemTile.vue'
 export default {
     data() {
         return {
-            alert: {
-                title: '',
-                message: '',
-                display: false,
-            },
             slide: 'first',
             type: 'Keg',
             dialog: false,
@@ -145,17 +134,6 @@ export default {
     methods: {
         beerHouseDialog() {
             this.dialog = true
-        },
-        triggerAlert() {
-            this.setAlert(
-                'Guardado con exito!',
-                'La informacion de tu cuenta ha sido actualizada con exito.'
-            )
-        },
-        setAlert(title, message, display) {
-            this.alert.title = title
-            this.alert.message = message
-            this.alert.display = !this.alert.display
         },
     },
     components: {
