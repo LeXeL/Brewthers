@@ -15,6 +15,8 @@
                         <q-input type="text" v-model="props.row.name" dense autofocus dark />
                     </q-popup-edit>
                 </q-td>
+                <q-td key="presentation" :props="props">{{ props.row.presentation }}</q-td>
+                <q-td key="presentation" :props="props">{{ props.row.house }}</q-td>
                 <q-td key="status" :props="props">
                     <q-btn
                         :color="props.row.status == true ? 'secondary' : 'warning'"
@@ -23,7 +25,9 @@
                         @click="props.row.status = !props.row.status"
                     />
                 </q-td>
-
+                <q-td>
+                    <q-btn color="info" size="xs" label="Detalles" />
+                </q-td>
                 <q-td>
                     <q-btn color="red-7" size="xs" label="Eliminar" />
                 </q-td>
@@ -49,13 +53,30 @@ export default {
                     sortable: true,
                 },
                 {
+                    name: 'presentation',
+                    align: 'left',
+                    label: 'Presentacion',
+                    field: 'presentation',
+                    sortable: true,
+                },
+                {
+                    name: 'house',
+                    align: 'left',
+                    label: 'Casa',
+                    field: 'house',
+                    sortable: true,
+                },
+                {
                     name: 'status',
                     align: 'left',
                     label: 'Estatus',
                     field: 'status',
                     sortable: true,
                 },
-
+                {
+                    label: 'Details',
+                    align: 'left',
+                },
                 {
                     label: 'Eliminar',
                     align: 'left',
@@ -63,40 +84,52 @@ export default {
             ],
             data: [
                 {
-                    name: '2 Oceans',
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
                     status: false,
                 },
                 {
-                    name: 'Back Yard Brewery',
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
                     status: false,
                 },
                 {
-                    name: 'Boquete Brewing Company',
-                    status: true,
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
+                    status: false,
                 },
                 {
-                    name: 'Buena Vista Brewery',
-                    status: true,
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
+                    status: false,
                 },
                 {
-                    name: 'Casa Bruja Brewing Co.',
-                    status: true,
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
+                    status: false,
                 },
                 {
-                    name: 'Central',
-                    status: true,
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
+                    status: false,
                 },
                 {
-                    name: 'La Murga',
-                    status: true,
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
+                    status: false,
                 },
                 {
-                    name: 'La Rana Dorada',
-                    status: true,
-                },
-                {
-                    name: 'Tres Gatos',
-                    status: true,
+                    name: 'Beer 1',
+                    presentation: 'KEG',
+                    house: 'Buena Vista Brewery',
+                    status: false,
                 },
             ],
         }
