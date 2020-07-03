@@ -10,7 +10,7 @@
                 <i
                     class="fas fa-times full-width text-center"
                     style="font-size: 50px; color: #e53935"
-                    v-else-if="'error'"
+                    v-else-if="type == 'error'"
                 ></i>
             </q-card-section>
             <q-card-section class="q-pt-none">
