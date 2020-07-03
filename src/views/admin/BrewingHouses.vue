@@ -32,9 +32,10 @@
                             </q-td>
                             <q-td key="status" :props="props">
                                 <q-btn
-                                    :color="props.row.status == 'active' ? 'secondary' : 'warning'"
+                                    :color="props.row.status == true ? 'secondary' : 'warning'"
                                     size="xs"
-                                    :label="props.row.status == 'active' ? 'Desactivar' : 'Activar'"
+                                    :label="props.row.status == true ? 'Desactivar' : 'Activar'"
+                                    @click="props.row.status = !props.row.status"
                                 />
                             </q-td>
 
@@ -102,39 +103,39 @@ export default {
             data: [
                 {
                     name: '2 Oceans',
-                    status: 'inactive',
+                    status: false,
                 },
                 {
                     name: 'Back Yard Brewery',
-                    status: 'inactive',
+                    status: false,
                 },
                 {
                     name: 'Boquete Brewing Company',
-                    status: 'active',
+                    status: true,
                 },
                 {
                     name: 'Buena Vista Brewery',
-                    status: 'active',
+                    status: true,
                 },
                 {
                     name: 'Casa Bruja Brewing Co.',
-                    status: 'active',
+                    status: true,
                 },
                 {
                     name: 'Central',
-                    status: 'active',
+                    status: true,
                 },
                 {
                     name: 'La Murga',
-                    status: 'active',
+                    status: true,
                 },
                 {
                     name: 'La Rana Dorada',
-                    status: 'active',
+                    status: true,
                 },
                 {
                     name: 'Tres Gatos',
-                    status: 'active',
+                    status: true,
                 },
             ],
         }
