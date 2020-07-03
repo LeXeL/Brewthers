@@ -1,5 +1,12 @@
 <template>
-    <q-table title="Treats" :data="data" :columns="columns" row-key="name" binary-state-sort dark>
+    <q-table
+        title="Articulos en inventario"
+        :data="data"
+        :columns="columns"
+        row-key="name"
+        binary-state-sort
+        dark
+    >
         <template v-slot:body="props">
             <q-tr :props="props">
                 <q-td key="status" :props="props">
