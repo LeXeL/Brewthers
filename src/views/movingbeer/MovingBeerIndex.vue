@@ -1,13 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <confirm-dialog
-            :title="'Confirmacion'"
-            :message="'Estas seguro que no eres trolaso?'"
-            :display="confirm"
-            @accept="sendAlert('accept')"
-            @cancel="sendAlert('cancel')"
-        ></confirm-dialog>
         <q-btn color="primary" label="Trigger confirm" @click="triggerConfirm()" />
         <section>
             <div class="row q-pt-xl">
@@ -94,7 +87,6 @@ import BeerItemTile from '@/components/movingbeer/BeerItemTile.vue'
 export default {
     data() {
         return {
-            confirm: false,
             slide: 'first',
             type: 'Keg',
             dialog: false,
@@ -142,12 +134,6 @@ export default {
     methods: {
         beerHouseDialog() {
             this.dialog = true
-        },
-        triggerConfirm() {
-            this.confirm = !this.confirm
-        },
-        sendAlert(type) {
-            alert(`Clicked: ${type}`)
         },
     },
     components: {
