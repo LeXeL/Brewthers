@@ -6,6 +6,7 @@ import store from './store/store'
 import * as api from '@/api/api'
 import LoadingAlert from '@/components/general/LoadingAlert'
 import BrewthersAlert from '@/components/general/Alert'
+import Confirm from '@/components/general/Confirm'
 //Librerias extras
 import './quasar'
 import firebase from 'firebase/app'
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 
 Vue.component('brewthers-alert', BrewthersAlert)
 Vue.component('loading-alert', LoadingAlert)
+Vue.component('confirm-dialog', Confirm)
 
 Vue.use(vueSmoothScroll)
 
