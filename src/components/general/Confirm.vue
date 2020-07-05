@@ -8,8 +8,8 @@
             <q-card-section class="q-pt-none">{{ message }}</q-card-section>
 
             <q-card-actions align="right">
-                <q-btn label="Aceptar" color="secondary" v-close-popup />
-                <q-btn label="Cancelar" color="red-7" v-close-popup />
+                <q-btn label="Aceptar" color="secondary" @click="sendAccept()" v-close-popup />
+                <q-btn label="Cancelar" color="red-7" @click="sendCancel()" v-close-popup />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -26,6 +26,14 @@ export default {
     watch: {
         display: function() {
             this.confirm = !this.confirm
+        },
+    },
+    methods: {
+        sendAccept() {
+            this.$emit('accept')
+        },
+        sendCancel() {
+            this.$emit('cancel')
         },
     },
 }

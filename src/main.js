@@ -6,14 +6,12 @@ import store from './store/store'
 import * as api from '@/api/api'
 import LoadingAlert from '@/components/general/LoadingAlert'
 import BrewthersAlert from '@/components/general/Alert'
+import Confirm from '@/components/general/Confirm'
 //Librerias extras
 import './quasar'
 import firebase from 'firebase/app'
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
-
-import LoadingAlert from '@/components/general/LoadingAlert'
-import Confirm from '@/components/general/Confirm'
 
 Vue.config.productionTip = false
 

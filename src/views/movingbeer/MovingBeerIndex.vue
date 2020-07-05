@@ -5,8 +5,10 @@
             :title="'Confirmacion'"
             :message="'Estas seguro que no eres trolaso?'"
             :display="confirm"
-        />
-        <q-btn color="primary" label="Trigger confirm" @click="triggerConfirm" />
+            @accept="sendAlert('accept')"
+            @cancel="sendAlert('cancel')"
+        ></confirm-dialog>
+        <q-btn color="primary" label="Trigger confirm" @click="triggerConfirm()" />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
@@ -142,8 +144,10 @@ export default {
             this.dialog = true
         },
         triggerConfirm() {
-            console.log('Starting a task')
             this.confirm = !this.confirm
+        },
+        sendAlert(type) {
+            alert(`Clicked: ${type}`)
         },
     },
     components: {
