@@ -8,7 +8,7 @@ async function createDatabaseWithUserInfo(user) {
         .set({
             email: user.email,
             creationTime: user.metadata.creationTime,
-            roll: 'user',
+            role: 'user',
             status: 'pending', //pending, aproved, unaprove
         })
         .then(() => {
