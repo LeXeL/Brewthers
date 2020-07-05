@@ -20,8 +20,8 @@ import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
 import AdminIndex from './views/admin/Index'
 import AccountsManager from './views/admin/AccountsManager'
 import AccountDetails from './views/admin/AccountDetails'
-
-import {Store} from 'vuex'
+import BrewingHouses from './views/admin/BrewingHouses'
+import InventoryManager from './views/admin/InventoryManager'
 
 Vue.use(Router)
 
@@ -31,7 +31,7 @@ const ifAuthenticated = (to, from, next) => {
     } else next('/login')
 }
 const ifAuthenticatedAndAdmin = (to, from, next) => {
-    if (store.getters.isAuthenticated && store.getters.isAdmin) {
+    if (store.getters.isAuthenticated && store.getters.role === 'admin') {
         next()
     } else next('/')
 }
@@ -43,6 +43,7 @@ export default new Router({
         {
             path: '/admin',
             component: AdminPage,
+            beforeEnter: ifAuthenticatedAndAdmin,
             children: [
                 {
                     path: '',
@@ -58,6 +59,16 @@ export default new Router({
                     path: '/account-details',
                     name: 'account-details',
                     component: AccountDetails,
+                },
+                {
+                    path: '/brewing-houses',
+                    name: 'brewing-houses',
+                    component: BrewingHouses,
+                },
+                {
+                    path: '/inventory-manager',
+                    name: 'inventory-manager',
+                    component: InventoryManager,
                 },
             ],
         },

@@ -20,13 +20,13 @@
                     </q-avatar>
                     <q-item-section>Pedidos</q-item-section>
                 </q-item>
-                <q-item active clickable v-ripple>
+                <q-item active clickable v-ripple to="/inventory-manager">
                     <q-avatar rounded>
                         <i class="fas fa-boxes" style="font-size: 15px;"></i>
                     </q-avatar>
                     <q-item-section>Inventario</q-item-section>
                 </q-item>
-                <q-item active clickable v-ripple>
+                <q-item active clickable v-ripple to="/brewing-houses">
                     <q-avatar rounded>
                         <i class="fas fa-beer" style="font-size: 15px;"></i>
                     </q-avatar>
