@@ -1,7 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <q-btn color="primary" label="Trigger alert" @click="triggerAlert" />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
