@@ -21,6 +21,7 @@ import AdminIndex from './views/admin/Index'
 import AccountsManager from './views/admin/AccountsManager'
 import AccountDetails from './views/admin/AccountDetails'
 import BrewingHouses from './views/admin/BrewingHouses'
+import InventoryManager from './views/admin/InventoryManager'
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
                     path: '/brewing-houses',
                     name: 'brewing-houses',
                     component: BrewingHouses,
+                },
+                {
+                    path: '/inventory-manager',
+                    name: 'inventory-manager',
+                    component: InventoryManager,
                 },
             ],
         },
