@@ -88,6 +88,7 @@ export default {
         return {
             slide: 'first',
             type: 'Keg',
+            dialog: false,
             maximizedToggle: true,
             brewers: [
                 {
