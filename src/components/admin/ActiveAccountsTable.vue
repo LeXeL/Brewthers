@@ -17,7 +17,13 @@
         <template v-slot:body="props">
             <q-tr :props="props">
                 <q-td auto-width>
-                    <q-btn size="sm" color="primary" round dense to="/account-details">
+                    <q-btn
+                        size="sm"
+                        color="primary"
+                        round
+                        dense
+                        :to="`/account-details/${props.row.id}`"
+                    >
                         <i class="fas fa-eye"></i>
                     </q-btn>
                 </q-td>
