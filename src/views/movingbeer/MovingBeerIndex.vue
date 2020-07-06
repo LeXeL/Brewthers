@@ -1,7 +1,6 @@
 <template>
     <q-page class="movingbeer-pattern-bg">
         <carousel />
-        <q-btn color="primary" label="Trigger confirm" @click="triggerConfirm()" />
         <section>
             <div class="row q-pt-xl">
                 <div class="col">
@@ -89,7 +88,6 @@ export default {
         return {
             slide: 'first',
             type: 'Keg',
-            dialog: false,
             maximizedToggle: true,
             brewers: [
                 {
