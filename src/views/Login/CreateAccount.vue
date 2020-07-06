@@ -233,13 +233,15 @@ export default {
                         this.form.password
                     )
                     .then(async () => {
-                        let user = await firebase.auth().currentUser
-                        await this.$store.dispatch('setCurrentUser', user)
                         this.confirmationDialog = true
-                        await api.updateuserwithinfo({
-                            uid: user.uid,
-                            obj: this.form,
-                        })
+                        let user = await firebase.auth().currentUser
+                        setTimeout(async () => {
+                            await this.$store.dispatch('setCurrentUser', user)
+                            await api.updateuserwithinfo({
+                                uid: user.uid,
+                                obj: this.form,
+                            })
+                        }, 1000)
                     })
                     .catch(error => {
                         // Handle Errors here.

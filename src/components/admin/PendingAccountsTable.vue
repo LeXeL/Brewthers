@@ -17,7 +17,13 @@
         <template v-slot:body="props">
             <q-tr :props="props">
                 <q-td auto-width>
-                    <q-btn size="sm" color="primary" round dense to="/account-details">
+                    <q-btn
+                        size="sm"
+                        color="primary"
+                        round
+                        dense
+                        :to="`/account-details/${props.row.id}`"
+                    >
                         <i class="fas fa-eye"></i>
                     </q-btn>
                 </q-td>
@@ -29,14 +35,20 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             columns: [
                 {
-                    name: 'rest',
+                    name: 'restaurantName',
                     label: 'Restaurante',
                     align: 'left',
-                    field: 'rest',
+                    field: 'restaurantName',
                     sortable: true,
                 },
 
@@ -54,22 +66,6 @@ export default {
                     field: 'status',
                     sortable: true,
                     align: 'left',
-                },
-            ],
-            data: [
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
-                },
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
                 },
             ],
         }

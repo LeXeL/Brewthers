@@ -17,7 +17,13 @@
         <template v-slot:body="props">
             <q-tr :props="props">
                 <q-td auto-width>
-                    <q-btn size="sm" color="primary" round dense to="/account-details">
+                    <q-btn
+                        size="sm"
+                        color="primary"
+                        round
+                        dense
+                        :to="`/account-details/${props.row.id}`"
+                    >
                         <i class="fas fa-eye"></i>
                     </q-btn>
                 </q-td>
@@ -29,21 +35,27 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             columns: [
                 {
-                    name: 'rest',
+                    name: 'restaurantName',
                     label: 'Restaurante',
                     align: 'left',
-                    field: 'rest',
+                    field: 'restaurantName',
                     sortable: true,
                 },
                 {
                     name: 'name',
                     label: 'Nombre',
                     align: 'left',
-                    field: 'rest',
+                    field: 'name',
                     sortable: true,
                 },
                 {
@@ -54,48 +66,11 @@ export default {
                     sortable: true,
                 },
                 {
-                    name: 'phone',
+                    name: 'contactPhone',
                     label: 'Celular',
-                    field: 'phone',
+                    field: 'contactPhone',
                     align: 'left',
                     sortable: true,
-                },
-            ],
-            data: [
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
-                },
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
-                },
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
-                },
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
-                },
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
                 },
             ],
         }

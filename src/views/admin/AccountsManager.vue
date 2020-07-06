@@ -1,13 +1,27 @@
 <template>
-    <div class="q-pa-md">
+    <div class="q-pa-md" v-if="!!users">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
         <div class="text-h5 q-mb-md">Administrador de cuentas</div>
         <div class="row q-mb-lg">
             <div class="col-lg-6 q-pa-md">
-                <active-accounts-table />
+                <active-accounts-table
+                    :data="users.filter(user => {if(user.status === 'approved' && user.role !== 'admin') return user})"
+                ></active-accounts-table>
             </div>
             <div class="col-lg-6 q-pa-md">
-                <pending-accounts-table />
-                <admin-accounts-table @openDialog="openNewAdminAccountDialog" />
+                <pending-accounts-table
+                    :data="users.filter(user => {if(user.status === 'pending' || user.status === 'rejected' && user.role !== 'admin') return user})"
+                ></pending-accounts-table>
+                <admin-accounts-table
+                    :data="users.filter(user => {if( user.role === 'admin') return user})"
+                    @openDialog="openNewAdminAccountDialog"
+                />
             </div>
         </div>
         <q-dialog v-model="prompt" persistent>
@@ -17,15 +31,43 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    <q-input label="Nombre" class="q-mb-md" dark filled type="text" />
-                    <q-input label="Apellido" class="q-mb-md" dark filled type="text" />
-                    <q-input label="Correo" class="q-mb-md" dark filled type="email" />
-                    <q-input label="Contraseña" class="q-mb-md" dark filled type="password" />
+                    <q-input
+                        label="Nombre"
+                        class="q-mb-md"
+                        dark
+                        filled
+                        type="text"
+                        v-model="adminName"
+                    />
+                    <q-input
+                        label="Apellido"
+                        class="q-mb-md"
+                        dark
+                        filled
+                        type="text"
+                        v-model="adminLastName"
+                    />
+                    <q-input
+                        label="Correo"
+                        class="q-mb-md"
+                        dark
+                        filled
+                        type="email"
+                        v-model="adminEmail"
+                    />
+                    <q-input
+                        label="Contraseña"
+                        class="q-mb-md"
+                        dark
+                        filled
+                        type="password"
+                        v-model="adminPassword"
+                    />
                 </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">
-                    <q-btn flat label="Cancelar" v-close-popup />
-                    <q-btn flat label="Crear" />
+                    <q-btn flat label="Cancelar" @click="clearadmin()" v-close-popup />
+                    <q-btn flat label="Crear" @click="createadmin()" />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -33,25 +75,132 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
+
 import ActiveAccountsTable from '@/components/admin/ActiveAccountsTable'
 import PendingAccoutsTable from '@/components/admin/PendingAccountsTable'
 import AdminAccountsTable from '@/components/admin/AdminAccountsTable'
+
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 export default {
     data() {
         return {
             prompt: false,
+            users: [],
+            adminName: '',
+            adminLastName: '',
+            adminEmail: '',
+            adminPassword: '',
+            displayLoading: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
     },
     methods: {
         openNewAdminAccountDialog() {
             this.prompt = true
         },
+        addToUsers(id, data) {
+            let name = data.name + ' ' + data.lastName
+            data.name = name
+            data.id = id
+            this.users.push(data)
+        },
+        editInUsers(id, data) {
+            let name = data.name + ' ' + data.lastName
+            data.name = name
+            data.id = id
+            this.users.forEach((user, index) => {
+                if (user.id === id) {
+                    this.users.splice(index, 1, data)
+                }
+            })
+        },
+        removeInUsers(id) {
+            this.users.forEach((user, index) => {
+                if (user.id === id) {
+                    this.users.splice(index, 1)
+                }
+            })
+        },
+        clearadmin() {
+            this.adminName = ''
+            this.adminLastName = ''
+            this.adminEmail = ''
+            this.adminPassword = ''
+        },
+        createadmin() {
+            this.displayLoading = true
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                    this.adminEmail,
+                    this.adminPassword
+                )
+                .then(async user => {
+                    setTimeout(async () => {
+                        await api
+                            .updateadmininformation({
+                                uid: user.user.uid,
+                                obj: {
+                                    name: this.adminName,
+                                    lastName: this.adminLastName,
+                                },
+                            })
+                            .then(() => {
+                                this.displayLoading = false
+                                this.displayAlert = true
+                                this.alertTitle = 'Exito!'
+                                this.alertMessage =
+                                    'Se ha creado la cuenta con exito'
+                                this.alertType = 'success'
+                                this.prompt = false
+                            })
+                            .catch(error => {
+                                this.displayLoading = false
+                                this.displayAlert = true
+                                this.alertTitle = 'Error'
+                                this.alertMessage = error
+                                this.alertType = 'error'
+                            })
+                    }, 1000)
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    console.log(error)
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error.message
+                    this.alertType = 'error'
+                })
+        },
     },
     components: {
         'active-accounts-table': ActiveAccountsTable,
         'pending-accounts-table': PendingAccoutsTable,
         'admin-accounts-table': AdminAccountsTable,
+    },
+    mounted() {
+        let db = firebase.firestore()
+        db.collection('users').onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change => {
+                if (change.type === 'added') {
+                    this.addToUsers(change.doc.id, change.doc.data())
+                }
+                if (change.type === 'modified') {
+                    this.editInUsers(change.doc.id, change.doc.data())
+                }
+                if (change.type === 'removed') {
+                    this.removeInUsers(change.doc.id)
+                }
+            })
+        })
     },
 }
 </script>

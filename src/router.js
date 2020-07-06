@@ -56,7 +56,7 @@ export default new Router({
                     component: AccountsManager,
                 },
                 {
-                    path: '/account-details',
+                    path: '/account-details/:id',
                     name: 'account-details',
                     component: AccountDetails,
                 },

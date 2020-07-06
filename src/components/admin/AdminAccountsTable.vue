@@ -22,9 +22,9 @@
         <template v-slot:body="props">
             <q-tr :props="props">
                 <q-td auto-width>
-                    <q-btn size="sm" color="warning" round dense>
+                    <!-- <q-btn size="sm" color="warning" round dense>
                         <i class="fas fa-user-alt-slash"></i>
-                    </q-btn>
+                    </q-btn>-->
                 </q-td>
                 <q-td v-for="col in props.cols" :key="col.name" :props="props">{{ col.value }}</q-td>
             </q-tr>
@@ -34,6 +34,12 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             columns: [
@@ -51,16 +57,6 @@ export default {
                     field: 'email',
                     align: 'left',
                     sortable: true,
-                },
-            ],
-            data: [
-                {
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                },
-                {
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
                 },
             ],
         }
