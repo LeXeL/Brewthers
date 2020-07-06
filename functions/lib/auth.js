@@ -9,7 +9,7 @@ async function createDatabaseWithUserInfo(user) {
             email: user.email,
             creationTime: user.metadata.creationTime,
             role: 'user',
-            status: 'pending', //pending, approved, unaprove
+            status: 'pending', //pending, approved, rejected
         })
         .then(() => {
             return 'Succesfull'
