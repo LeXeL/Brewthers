@@ -4,41 +4,12 @@
         style="height: auto; background-repeat: repeat-y; background-position: top;"
     >
         <div class="row q-mb-lg q-mt-xl justify-center">
-            <q-btn-group
-                push
-                class="desktop-only"
-                style="font-family: GilroyExtraBold;"
-            >
-                <q-btn
-                    color="primary"
-                    push
-                    label="Cervezas"
-                    @click="categorySelected = 'beer'"
-                />
-                <q-btn
-                    color="primary"
-                    push
-                    label="T-shirts"
-                    @click="categorySelected = 'tshirt'"
-                />
-                <q-btn
-                    color="primary"
-                    push
-                    label="Gorras"
-                    @click="categorySelected = 'cap'"
-                />
-                <q-btn
-                    color="primary"
-                    push
-                    label="Vasos"
-                    @click="categorySelected = 'cup'"
-                />
-                <q-btn
-                    color="primary"
-                    push
-                    label="Todo"
-                    @click="categorySelected = 'all'"
-                />
+            <q-btn-group push class="desktop-only" style="font-family: GilroyExtraBold;">
+                <q-btn color="primary" push label="Cervezas" @click="categorySelected = 'beer'" />
+                <q-btn color="primary" push label="T-shirts" @click="categorySelected = 'tshirt'" />
+                <q-btn color="primary" push label="Gorras" @click="categorySelected = 'cap'" />
+                <q-btn color="primary" push label="Vasos" @click="categorySelected = 'cup'" />
+                <q-btn color="primary" push label="Todo" @click="categorySelected = 'all'" />
             </q-btn-group>
             <q-select
                 filled
@@ -53,14 +24,24 @@
         <div class="row q-mb-lg">
             <div class="text-h6 text-center full-width">
                 Todo pedido de mercancia debe ser realizado a traves denuestro
-                numero de Whatsapp o Instagram.
+                numero de
+                <i
+                    class="fab fa-whatsapp"
+                ></i> Whatsapp o
+                <i class="fab fa-instagram"></i> Instagram.
             </div>
             <div
                 class="text-h6 text-center full-width"
                 style="font-family: GilroyLight; font-size: 15px;"
                 v-if="categorySelected == 'beer'"
             >
-                ¿Interesado en comprar caja o keg? ¡Dirígete a Contáctanos!
+                ¿Interesado en comprar caja o keg? ¡Dirígete a
+                <a
+                    href="#contact"
+                    style="color: #27a3c3"
+                    v-smooth-scroll
+                    @click="$emit('setContactReason')"
+                >Contáctanos!</a>
             </div>
         </div>
         <div class="row">
@@ -69,16 +50,11 @@
                 v-for="(item, i) in categoryFilter"
                 :key="i"
             >
-                <img
-                    :src="require(`@/assets/tiendita-items/${item.photo}`)"
-                    width="100%"
-                />
+                <img :src="require(`@/assets/tiendita-items/${item.photo}`)" width="100%" />
                 <div
                     class="text-h6 text-center"
                     style="font-family: GilroyExtraBold;"
-                >
-                    {{ item.name }} - ${{ item.price.toFixed(2) }}
-                </div>
+                >{{ item.name }} - ${{ item.price.toFixed(2) }}</div>
             </div>
         </div>
         <div class="row">

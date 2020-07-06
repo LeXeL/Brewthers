@@ -45,7 +45,7 @@
                                 color="white"
                                 dark
                                 filled
-                                v-model="form.contactReazon"
+                                v-model="form.contactReason"
                                 :options="options"
                                 label="Razon de contacto"
                             />
@@ -71,12 +71,7 @@
             </div>
             <div class="row q-pa-md">
                 <q-space />
-                <q-btn
-                    label="Enviar"
-                    type="submit"
-                    color="primary"
-                    @click="sendEmail"
-                />
+                <q-btn label="Enviar" type="submit" color="primary" @click="sendEmail" />
             </div>
         </q-form>
     </div>
@@ -86,6 +81,7 @@
 import emailjs from 'emailjs-com'
 
 export default {
+    props: ['reason'],
     data() {
         return {
             form: {
@@ -93,7 +89,7 @@ export default {
                 lastName: '',
                 message: '',
                 email: '',
-                contactReazon: '',
+                contactReason: '',
             },
             options: [
                 'Alquiler de equipo draft',
@@ -103,6 +99,11 @@ export default {
                 'Otros',
             ],
         }
+    },
+    watch: {
+        reason: function() {
+            this.form.contactReason = 'Comprar caja o keg'
+        },
     },
     methods: {
         sendEmail() {
