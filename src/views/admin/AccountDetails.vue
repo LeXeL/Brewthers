@@ -69,7 +69,7 @@
                     />
                 </div>
 
-                <div class="row" v-if="data.rejectionReasons">
+                <div class="row" v-if="data.rejectionReasons ">
                     <div class="text-h6">Motivos de rechazo de cuenta:</div>
                     <q-list dark padding class="full-width">
                         <q-item
@@ -94,12 +94,18 @@
                 <div class="row">
                     <q-space />
                     <q-btn
+                        v-if="data.status != 'approved'"
                         color="secondary"
                         label="Aceptar"
                         @click="approveUser()"
                         class="on-left"
                     />
-                    <q-btn color="red-7" label="Reachazar" @click="rejectDialog = true" />
+                    <q-btn
+                        v-if="data.status != 'approved'"
+                        color="red-7"
+                        label="Reachazar"
+                        @click="rejectDialog = true"
+                    />
                 </div>
             </div>
         </div>
