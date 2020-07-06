@@ -3,7 +3,7 @@
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
-            :title="alertMessage"
+            :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
         ></brewthers-alert>
@@ -16,7 +16,7 @@
             </div>
             <div class="col-lg-6 q-pa-md">
                 <pending-accounts-table
-                    :data="users.filter(user => {if(user.status === 'pending' && user.role !== 'admin') return user})"
+                    :data="users.filter(user => {if(user.status === 'pending' || user.status === 'rejected' && user.role !== 'admin') return user})"
                 ></pending-accounts-table>
                 <admin-accounts-table
                     :data="users.filter(user => {if( user.role === 'admin') return user})"
