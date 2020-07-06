@@ -1,5 +1,12 @@
 <template>
     <q-page class="pattern-bg" v-if="Object.keys(user).length !== 0 ">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
         <div class="row">
             <div class="col q-pa-lg">
                 <div class="text-h4">{{restName}}</div>
@@ -135,6 +142,11 @@ export default {
             markers: [],
             center: {},
             restName: '',
+            displayLoading: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
     },
     computed: {
@@ -197,17 +209,25 @@ export default {
             }
         },
         updateUserInformation() {
+            this.displayLoading = true
             api.updateuserinformation({uid: this.uid, user: this.userData})
                 .then(response => {
-                    //TODO: Vista de poner contraseña que no sea la default.
-                    alert('Se ha actualizado con éxito la información')
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado con exito la informacion'
+                    this.alertType = 'success'
                     this.$router.push('/movingbeer')
                 })
                 .catch(error => {
-                    alert(
-                        'Hubo un error con la solicitud por favor inténtelo más tarde'
-                    )
                     console.log(error)
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Error'
+                    this.alertMessage =
+                        'Hubo un error con la solicitud por favor inténtelo más tarde'
+                    this.alertType = 'error'
                 })
         },
     },
