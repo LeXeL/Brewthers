@@ -34,6 +34,12 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             columns: [
@@ -51,16 +57,6 @@ export default {
                     field: 'email',
                     align: 'left',
                     sortable: true,
-                },
-            ],
-            data: [
-                {
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                },
-                {
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
                 },
             ],
         }

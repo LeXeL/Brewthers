@@ -19,3 +19,7 @@ export const updateuserinformation = data =>
     Request.post('/updateUserInformation', data, {
         'Content-Type': 'application/json',
     })
+export const updateadmininformation = data =>
+    Request.post('/updateAdminWithInfo', data, {
+        'Content-Type': 'application/json',
+    })

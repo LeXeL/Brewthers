@@ -29,14 +29,20 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             columns: [
                 {
-                    name: 'rest',
+                    name: 'restaurantName',
                     label: 'Restaurante',
                     align: 'left',
-                    field: 'rest',
+                    field: 'restaurantName',
                     sortable: true,
                 },
 
@@ -54,22 +60,6 @@ export default {
                     field: 'status',
                     sortable: true,
                     align: 'left',
-                },
-            ],
-            data: [
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
-                },
-                {
-                    rest: 'La Papa Caliente',
-                    name: 'Pepe Veraz',
-                    email: 'pepe.veraz@gmail.com',
-                    phone: '6203-2566',
-                    status: 'En revision',
                 },
             ],
         }

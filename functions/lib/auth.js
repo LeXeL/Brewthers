@@ -9,7 +9,7 @@ async function createDatabaseWithUserInfo(user) {
             email: user.email,
             creationTime: user.metadata.creationTime,
             role: 'user',
-            status: 'pending', //pending, aproved, unaprove
+            status: 'pending', //pending, approved, unaprove
         })
         .then(() => {
             return 'Succesfull'
@@ -31,6 +31,27 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             address: obj.address,
             location: obj.location,
             ruc: obj.ruc,
+        })
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
+async function updateDatabaseWithAdminInfo(uid, obj) {
+    console.log(`UID: ${uid}`)
+    console.log(`obj: ${obj}`)
+    return db
+        .collection('users')
+        .doc(uid)
+        .update({
+            name: obj.name,
+            lastName: obj.lastName,
+            role: 'admin',
+            status: 'approved',
         })
         .then(() => {
             console.log('Document successfully written!')
@@ -75,6 +96,7 @@ async function updateUserInfo(uid, userObj) {
 module.exports = {
     createDatabaseWithUserInfo,
     updateDatabaseWithUserInfo,
+    updateDatabaseWithAdminInfo,
     returnUserById,
     updateUserInfo,
 }
