@@ -1,5 +1,12 @@
 <template>
     <div class="pattern-bg contact-form">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
         <h2 class="q-ml-md title-section">Contacto</h2>
         <q-form>
             <div class="row">
@@ -71,7 +78,7 @@
             </div>
             <div class="row q-pa-md">
                 <q-space />
-                <q-btn label="Enviar" type="submit" color="primary" @click="sendEmail" />
+                <q-btn label="Enviar" color="primary" @click="sendEmail()" />
             </div>
         </q-form>
     </div>
@@ -98,6 +105,11 @@ export default {
                 'MovingBeer',
                 'Otros',
             ],
+            displayLoading: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
     },
     watch: {
@@ -114,9 +126,15 @@ export default {
                 this.form.contactReazon === '' &&
                 this.form.message === ''
             ) {
-                alert('Por favor no dejes ningún campo vacío')
+                this.displayLoading = false
+                this.displayAlert = true
+                this.alertTitle = 'Error'
+                this.alertMessage =
+                    'Por favor asegurate de llenar todos los campos'
+                this.alertType = 'error'
                 return
             }
+            this.displayLoading = true
             emailjs
                 .send(
                     'gmail',
@@ -126,14 +144,20 @@ export default {
                 )
                 .then(
                     result => {
-                        alert(
-                            'Mensaje Enviado satisfactoria mente. \nUn administrador lo responderá  lo antes posible.'
-                        )
-                        console.log('SUCCESS!', result.status, result.text)
+                        this.displayLoading = false
+                        this.displayAlert = true
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage =
+                            'Se ha enviado tu petición con éxito, pronto un administrador se pondrá en contacto contigo.'
+                        this.alertType = 'success'
                     },
                     error => {
-                        alert('Hubo un error por favor intentarlo nuevamente.')
-                        console.log('FAILED...', error)
+                        this.displayLoading = false
+                        this.displayAlert = true
+                        this.alertTitle = 'Error'
+                        this.alertMessage =
+                            'Hubo un error por favor intentarlo nuevamente.'
+                        this.alertType = 'error'
                     }
                 )
         },
