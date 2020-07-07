@@ -17,12 +17,13 @@
                     <store-content-section
                         id="tienditacontent"
                         @toggleSection="toggleSection('tiendita')"
+                        @setContactReason="contactReason = !contactReason"
                     ></store-content-section>
                 </div>
             </q-slide-transition>
             <movingbeer-title-section id="movingbeer"></movingbeer-title-section>
             <faq-section id="faq"></faq-section>
-            <contact-section id="contact"></contact-section>
+            <contact-section id="contact" :reason="contactReason"></contact-section>
             <footer-section :page="'landing'" />
         </q-page-container>
     </q-layout>
@@ -51,6 +52,7 @@ export default {
             usSection: false,
             tienditaSection: false,
             dialog: false,
+            contactReason: true,
         }
     },
     methods: {
@@ -58,6 +60,9 @@ export default {
             if (section === 'us') this.usSection = !this.usSection
             if (section === 'tiendita')
                 this.tienditaSection = !this.tienditaSection
+        },
+        contact() {
+            console.log('Comprar caja o keg')
         },
     },
     components: {

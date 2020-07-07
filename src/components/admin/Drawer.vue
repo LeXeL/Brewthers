@@ -30,7 +30,7 @@
                     <q-avatar rounded>
                         <i class="fas fa-beer" style="font-size: 15px;"></i>
                     </q-avatar>
-                    <q-item-section>Casas cervezeras</q-item-section>
+                    <q-item-section>Casas cerveceras</q-item-section>
                 </q-item>
                 <q-item active clickable v-ripple>
                     <q-avatar rounded>
