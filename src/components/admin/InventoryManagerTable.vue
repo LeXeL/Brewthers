@@ -9,19 +9,37 @@
     >
         <template v-slot:body="props">
             <q-tr :props="props">
-                <q-td key="status" :props="props">
+                <q-td key="name" :props="props">
                     {{ props.row.name }}
-                    <q-popup-edit v-model="props.row.name" title="Actualizar nombre" buttons dark>
-                        <q-input type="text" v-model="props.row.name" dense autofocus dark />
+                    <q-popup-edit
+                        v-model="props.row.name"
+                        title="Actualizar nombre"
+                        buttons
+                        dark
+                    >
+                        <q-input
+                            type="text"
+                            v-model="props.row.name"
+                            dense
+                            autofocus
+                            dark
+                        />
                     </q-popup-edit>
                 </q-td>
-                <q-td key="presentation" :props="props">{{ props.row.presentation }}</q-td>
-                <q-td key="presentation" :props="props">{{ props.row.house }}</q-td>
+                <q-td key="presentation" :props="props">{{
+                    props.row.presentation
+                }}</q-td>
+                <q-td key="stock" :props="props">{{ props.row.stock }}</q-td>
+                <q-td key="house" :props="props">{{ props.row.house }}</q-td>
                 <q-td key="status" :props="props">
                     <q-btn
-                        :color="props.row.status == true ? 'secondary' : 'warning'"
+                        :color="
+                            props.row.status == true ? 'secondary' : 'warning'
+                        "
                         size="xs"
-                        :label="props.row.status == true ? 'Desactivar' : 'Activar'"
+                        :label="
+                            props.row.status == true ? 'Desactivar' : 'Activar'
+                        "
                         @click="props.row.status = !props.row.status"
                     />
                 </q-td>
@@ -36,8 +54,7 @@
     </q-table>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <script>
 export default {
@@ -57,6 +74,13 @@ export default {
                     align: 'left',
                     label: 'Presentacion',
                     field: 'presentation',
+                    sortable: true,
+                },
+                {
+                    name: 'stock',
+                    align: 'left',
+                    label: 'Inventario',
+                    field: 'stock',
                     sortable: true,
                 },
                 {
@@ -87,48 +111,56 @@ export default {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
                 {
                     name: 'Beer 1',
                     presentation: 'KEG',
                     house: 'Buena Vista Brewery',
+                    stock: 10,
                     status: false,
                 },
             ],
