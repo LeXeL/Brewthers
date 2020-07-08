@@ -44,7 +44,7 @@ export default new Router({
         {
             path: '/admin',
             component: AdminPage,
-            // beforeEnter: ifAuthenticatedAndAdmin,
+            beforeEnter: ifAuthenticatedAndAdmin,
             children: [
                 {
                     path: '',
