@@ -138,7 +138,7 @@ export default {
                 this.displayLoading = true
                 emailjs
                     .send(
-                        'gmail2',
+                        'gmail',
                         'template_Nldne3t8',
                         this.form,
                         'user_l9KYZVj8DNvwXi3kegar5'
