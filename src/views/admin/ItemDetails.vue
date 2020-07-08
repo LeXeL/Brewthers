@@ -13,32 +13,29 @@
                         :value="itemData.name"
                         disable
                     />
-                    <q-select
+                    <q-input
                         filled
                         class="q-mb-md full-width"
                         dark
-                        :options="styles"
                         label="Estilo"
                         :value="itemData.style"
-                        disable
+                        readonly
                     />
-                    <q-select
+                    <q-input
                         filled
                         class="q-mb-md full-width"
                         dark
-                        :options="presentations"
                         label="Presentacion"
                         :value="itemData.presentation"
-                        disable
+                        readonly
                     />
-                    <q-select
+                    <q-input
                         filled
                         class="q-mb-md full-width"
                         dark
-                        :options="houses"
                         label="Casa"
                         :value="itemData.house"
-                        disable
+                        readonly
                     />
                     <q-input
                         filled
@@ -141,10 +138,6 @@
 export default {
     data() {
         return {
-            model: null,
-            styles: ['style 1', 'style 2', 'style 3', 'style 4', 'style 5'],
-            presentations: ['KEG', 'Caja'],
-            houses: ['House A', 'House B', 'House C'],
             itemData: {
                 name: 'Beer item A',
                 style: 'style 1',
