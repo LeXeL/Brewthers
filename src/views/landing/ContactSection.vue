@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <h2 class="q-ml-md title-section">Contacto</h2>
         <q-form>
@@ -120,10 +121,10 @@ export default {
     methods: {
         sendEmail() {
             if (
-                this.form.name === '' &&
-                this.form.lastName === '' &&
-                this.form.email === '' &&
-                this.form.contactReazon === '' &&
+                this.form.name === '' ||
+                this.form.lastName === '' ||
+                this.form.email === '' ||
+                this.form.contactReason === '' ||
                 this.form.message === ''
             ) {
                 this.displayLoading = false
@@ -133,33 +134,39 @@ export default {
                     'Por favor asegurate de llenar todos los campos'
                 this.alertType = 'error'
                 return
+            } else {
+                this.displayLoading = true
+                emailjs
+                    .send(
+                        'gmail2',
+                        'template_Nldne3t8',
+                        this.form,
+                        'user_l9KYZVj8DNvwXi3kegar5'
+                    )
+                    .then(
+                        result => {
+                            this.displayLoading = false
+                            this.displayAlert = true
+                            this.alertTitle = 'Exito!'
+                            this.alertMessage =
+                                'Se ha enviado tu petición con éxito, pronto un administrador se pondrá en contacto contigo.'
+                            this.alertType = 'success'
+                            this.form.name = ''
+                            this.form.lastName = ''
+                            this.form.email = ''
+                            this.form.contactReason = ''
+                            this.form.message = ''
+                        },
+                        error => {
+                            this.displayLoading = false
+                            this.displayAlert = true
+                            this.alertTitle = 'Error'
+                            this.alertMessage =
+                                'Hubo un error por favor intentarlo nuevamente.'
+                            this.alertType = 'error'
+                        }
+                    )
             }
-            this.displayLoading = true
-            emailjs
-                .send(
-                    'gmail',
-                    'template_Nldne3t8',
-                    this.form,
-                    'user_l9KYZVj8DNvwXi3kegar5'
-                )
-                .then(
-                    result => {
-                        this.displayLoading = false
-                        this.displayAlert = true
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage =
-                            'Se ha enviado tu petición con éxito, pronto un administrador se pondrá en contacto contigo.'
-                        this.alertType = 'success'
-                    },
-                    error => {
-                        this.displayLoading = false
-                        this.displayAlert = true
-                        this.alertTitle = 'Error'
-                        this.alertMessage =
-                            'Hubo un error por favor intentarlo nuevamente.'
-                        this.alertType = 'error'
-                    }
-                )
         },
     },
 }
