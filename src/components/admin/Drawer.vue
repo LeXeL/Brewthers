@@ -14,7 +14,7 @@
                     </q-avatar>
                     <q-item-section>Cuentas</q-item-section>
                 </q-item>
-                <q-item active clickable v-ripple>
+                <q-item active clickable v-ripple to="/orders-manager">
                     <q-avatar rounded>
                         <i class="fas fa-dolly" style="font-size: 15px;"></i>
                     </q-avatar>
