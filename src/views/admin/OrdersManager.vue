@@ -49,10 +49,11 @@
         <div class="row">
             <div class="col-lg-12 q-pa-md">
                 <q-table
-                    title="Articulos en inventario"
+                    title="Ordenes existentes"
                     :data="data"
                     :columns="columns"
                     row-key="name"
+                    :pagination="initialPagination"
                     binary-state-sort
                     dark
                 >
@@ -79,13 +80,41 @@
                                 <q-btn color="info" size="xs" label="Detalles" to="/order-details" />
                             </q-td>
                             <q-td>
-                                <q-btn color="red-7" size="xs" label="Cancelar" />
+                                <q-btn
+                                    color="red-7"
+                                    size="xs"
+                                    label="Cancelar"
+                                    @click="alert = true"
+                                    :disable="props.row.status == 5"
+                                />
                             </q-td>
                         </q-tr>
                     </template>
                 </q-table>
             </div>
         </div>
+        <q-dialog v-model="alert">
+            <q-card style="width: 700px; max-width: 80vw;" dark>
+                <q-card-section>
+                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <q-option-group
+                        :options="cancelationReasons"
+                        label="Notifications"
+                        type="checkbox"
+                        v-model="group"
+                        dark
+                    />
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn label="Confirmar" color="secondary" v-close-popup />
+                    <q-btn label="Cancelar" color="red-7" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 <script>
@@ -93,6 +122,8 @@ export default {
     data() {
         return {
             date: '2019/02/01',
+            alert: false,
+            initialPagination: {rowsPerPage: 15},
             options: [
                 'Abiertas',
                 'Por revisar',
@@ -101,6 +132,12 @@ export default {
                 'Entregado',
                 'Completado',
                 'Todas',
+            ],
+            group: [],
+            cancelationReasons: [
+                {label: 'This is cancelation reason 1', value: 'bat'},
+                {label: 'This is cancelation reason 2', value: 'friend'},
+                {label: 'This is cancelation reason 3', value: 'upload'},
             ],
             columns: [
                 {
@@ -226,6 +263,17 @@ export default {
                     date: '10-10-10',
                     status: 4,
                 },
+                {
+                    orderNo: 159789,
+                    restName: 'La Cocina de Pepe',
+                    something: 'asdf',
+                    email: 'pepe@live.com',
+                    phone: '6565-6556',
+                    items: 10,
+                    amount: 50.78,
+                    date: '10-10-10',
+                    status: 5,
+                },
             ],
             status: [
                 {
@@ -247,6 +295,10 @@ export default {
                 {
                     text: 'Completado',
                     color: 'secondary',
+                },
+                {
+                    text: 'Cancelada',
+                    color: 'red-7',
                 },
             ],
         }
