@@ -2,6 +2,51 @@
     <div class="q-pa-md">
         <div class="text-h5 q-mb-md">Administrador de ordernes</div>
         <div class="row">
+            <q-space />
+            <div class="col-lg-2 q-pa-md">
+                <q-select filled :options="options" label="Estatus" dark dense />
+            </div>
+            <div class="col-lg-2 q-pa-md">
+                <q-input filled label="No. de Orden" dark dense />
+            </div>
+            <div class="col-lg-2 q-pa-md">
+                <q-input filled label="Restaurante" dark dense />
+            </div>
+            <div class="col-lg-2 q-pa-md">
+                <q-input filled mask="date" label="Fecha inicial" dark dense>
+                    <template v-slot:append>
+                        <i class="far fa-calendar-alt cursor-pointer">
+                            <q-popup-proxy
+                                ref="qDateProxy"
+                                transition-show="scale"
+                                transition-hide="scale"
+                            >
+                                <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" dark />
+                            </q-popup-proxy>
+                        </i>
+                    </template>
+                </q-input>
+            </div>
+            <div class="col-lg-2 q-pa-md">
+                <q-input filled mask="date" label="Fecha final" dark dense>
+                    <template v-slot:append>
+                        <i class="far fa-calendar-alt cursor-pointer">
+                            <q-popup-proxy
+                                ref="qDateProxy"
+                                transition-show="scale"
+                                transition-hide="scale"
+                            >
+                                <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" dark />
+                            </q-popup-proxy>
+                        </i>
+                    </template>
+                </q-input>
+            </div>
+            <div class="col-lg-1 q-pa-md">
+                <q-btn class="full-height" color="primary" label="Buscar" />
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12 q-pa-md">
                 <q-table
                     title="Articulos en inventario"
@@ -36,26 +81,6 @@
                             <q-td>
                                 <q-btn color="red-7" size="xs" label="Cancelar" />
                             </q-td>
-                            <!-- <q-td key="stock" :props="props">{{ props.row.stock }}</q-td>
-                            <q-td key="house" :props="props">{{ props.row.house }}</q-td>
-                            <q-td key="status" :props="props">
-                                <q-btn
-                                    :color="
-                            props.row.status == true ? 'secondary' : 'warning'
-                        "
-                                    size="xs"
-                                    :label="
-                            props.row.status == true ? 'Desactivar' : 'Activar'
-                        "
-                                    @click="props.row.status = !props.row.status"
-                                />
-                            </q-td>
-                            <q-td>
-                                <q-btn color="info" size="xs" label="Detalles" to="/item-details" />
-                            </q-td>
-                            <q-td>
-                                <q-btn color="red-7" size="xs" label="Eliminar" />
-                            </q-td>-->
                         </q-tr>
                     </template>
                 </q-table>
@@ -67,6 +92,16 @@
 export default {
     data() {
         return {
+            date: '2019/02/01',
+            options: [
+                'Abiertas',
+                'Por revisar',
+                'En preparacion',
+                'En camino',
+                'Entregado',
+                'Completado',
+                'Todas',
+            ],
             columns: [
                 {
                     name: 'orderNo',
