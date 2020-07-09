@@ -143,32 +143,34 @@ export default {
                     this.adminPassword
                 )
                 .then(async user => {
-                    setTimeout(async () => {
-                        await api
-                            .updateadmininformation({
-                                uid: user.user.uid,
-                                obj: {
-                                    name: this.adminName,
-                                    lastName: this.adminLastName,
-                                },
-                            })
-                            .then(() => {
-                                this.displayLoading = false
-                                this.displayAlert = true
-                                this.alertTitle = 'Exito!'
-                                this.alertMessage =
-                                    'Se ha creado la cuenta con exito'
-                                this.alertType = 'success'
-                                this.prompt = false
-                            })
-                            .catch(error => {
-                                this.displayLoading = false
-                                this.displayAlert = true
-                                this.alertTitle = 'Error'
-                                this.alertMessage = error
-                                this.alertType = 'error'
-                            })
-                    }, 1000)
+                    await api
+                        .createuserondatabase({user: user.user})
+                        .then(async () => {
+                            await api
+                                .updateadmininformation({
+                                    uid: user.user.uid,
+                                    obj: {
+                                        name: this.adminName,
+                                        lastName: this.adminLastName,
+                                    },
+                                })
+                                .then(() => {
+                                    this.displayLoading = false
+                                    this.displayAlert = true
+                                    this.alertTitle = 'Exito!'
+                                    this.alertMessage =
+                                        'Se ha creado la cuenta con exito'
+                                    this.alertType = 'success'
+                                    this.prompt = false
+                                })
+                                .catch(error => {
+                                    this.displayLoading = false
+                                    this.displayAlert = true
+                                    this.alertTitle = 'Error'
+                                    this.alertMessage = error
+                                    this.alertType = 'error'
+                                })
+                        })
                 })
                 .catch(error => {
                     // Handle Errors here.

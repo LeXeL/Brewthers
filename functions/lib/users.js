@@ -7,7 +7,7 @@ async function createDatabaseWithUserInfo(user) {
         .doc(user.uid)
         .set({
             email: user.email,
-            creationTime: user.metadata.creationTime,
+            creationTime: user.createdAt,
             role: 'user',
             status: 'pending', //pending, approved, rejected
         })
