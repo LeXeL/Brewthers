@@ -149,7 +149,7 @@ export default {
                             this.displayAlert = true
                             this.alertTitle = 'Exito!'
                             this.alertMessage =
-                                'Se ha enviado tu petición con éxito, pronto un administrador se pondrá en contacto contigo.'
+                                'Tu mensaje ha sido enviado con exito, pronto nos estaremos poniendo en contacto contigo'
                             this.alertType = 'success'
                             this.form.name = ''
                             this.form.lastName = ''
