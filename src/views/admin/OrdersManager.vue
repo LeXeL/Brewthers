@@ -23,10 +23,11 @@
 
                             <q-td>
                                 <q-btn
-                                    color="warning"
+                                    :color="status[props.row.status].color"
                                     size="xs"
                                     :props="props"
-                                    :label="props.row.status"
+                                    :label="status[props.row.status].text"
+                                    @click="props.row.status < 4 ? props.row.status++ : ''"
                                 />
                             </q-td>
                             <q-td>
@@ -144,7 +145,73 @@ export default {
                     items: 10,
                     amount: 50.78,
                     date: '10-10-10',
-                    status: 'review',
+                    status: 0,
+                },
+                {
+                    orderNo: 159789,
+                    restName: 'La Cocina de Pepe',
+                    something: 'asdf',
+                    email: 'pepe@live.com',
+                    phone: '6565-6556',
+                    items: 10,
+                    amount: 50.78,
+                    date: '10-10-10',
+                    status: 1,
+                },
+                {
+                    orderNo: 159789,
+                    restName: 'La Cocina de Pepe',
+                    something: 'asdf',
+                    email: 'pepe@live.com',
+                    phone: '6565-6556',
+                    items: 10,
+                    amount: 50.78,
+                    date: '10-10-10',
+                    status: 2,
+                },
+                {
+                    orderNo: 159789,
+                    restName: 'La Cocina de Pepe',
+                    something: 'asdf',
+                    email: 'pepe@live.com',
+                    phone: '6565-6556',
+                    items: 10,
+                    amount: 50.78,
+                    date: '10-10-10',
+                    status: 3,
+                },
+                {
+                    orderNo: 159789,
+                    restName: 'La Cocina de Pepe',
+                    something: 'asdf',
+                    email: 'pepe@live.com',
+                    phone: '6565-6556',
+                    items: 10,
+                    amount: 50.78,
+                    date: '10-10-10',
+                    status: 4,
+                },
+            ],
+            status: [
+                {
+                    text: 'Por revisar',
+                    color: 'amber-9',
+                },
+                {
+                    text: 'En preparacion',
+                    color: 'yellow-9',
+                },
+                {
+                    text: 'En camino',
+                    color: 'lime-8',
+                },
+                {
+                    text: 'Entregado',
+                    color: 'light-green-9',
+                },
+                {
+                    text: 'Completado',
+                    color: 'secondary',
                 },
             ],
         }
