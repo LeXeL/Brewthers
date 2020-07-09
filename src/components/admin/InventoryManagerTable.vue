@@ -11,24 +11,15 @@
             <q-tr :props="props">
                 <q-td key="name" :props="props">
                     {{ props.row.name }}
-                    <q-popup-edit
-                        v-model="props.row.name"
-                        title="Actualizar nombre"
-                        buttons
-                        dark
-                    >
-                        <q-input
-                            type="text"
-                            v-model="props.row.name"
-                            dense
-                            autofocus
-                            dark
-                        />
+                    <q-popup-edit v-model="props.row.name" title="Actualizar nombre" buttons dark>
+                        <q-input type="text" v-model="props.row.name" dense autofocus dark />
                     </q-popup-edit>
                 </q-td>
-                <q-td key="presentation" :props="props">{{
+                <q-td key="presentation" :props="props">
+                    {{
                     props.row.presentation
-                }}</q-td>
+                    }}
+                </q-td>
                 <q-td key="stock" :props="props">{{ props.row.stock }}</q-td>
                 <q-td key="house" :props="props">{{ props.row.house }}</q-td>
                 <q-td key="status" :props="props">
@@ -98,7 +89,7 @@ export default {
                     sortable: true,
                 },
                 {
-                    label: 'Details',
+                    label: 'Detalles',
                     align: 'left',
                 },
                 {
