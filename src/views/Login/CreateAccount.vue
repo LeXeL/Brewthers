@@ -1,5 +1,7 @@
 <template>
     <q-page class="pattern-bg q-pa-xl">
+        <loading-alert :display="displayLoading"></loading-alert>
+
         <div class="row">
             <div class="col q-pa-lg">
                 <div class="text-h3">Crea tu cuenta</div>
@@ -188,6 +190,7 @@ export default {
         return {
             markers: [],
             center: {},
+            displayLoading: false,
             confirmationDialog: false,
             form: {
                 name: '',
@@ -225,6 +228,7 @@ export default {
         },
         createuser() {
             this.dismissCountDown = 0
+            this.displayLoading = true
             if (this.form.password === this.form.repassword) {
                 firebase
                     .auth()
@@ -232,19 +236,24 @@ export default {
                         this.form.email,
                         this.form.password
                     )
-                    .then(async () => {
-                        this.confirmationDialog = true
-                        let user = await firebase.auth().currentUser
-                        setTimeout(async () => {
-                            await this.$store.dispatch('setCurrentUser', user)
-                            await api.updateuserwithinfo({
-                                uid: user.uid,
-                                obj: this.form,
+                    .then(async user => {
+                        await this.$store.dispatch('setCurrentUser', user.user)
+                        await api
+                            .createuserondatabase({
+                                user: user.user,
                             })
-                        }, 1000)
+                            .then(() => {
+                                this.displayLoading = false
+                                this.confirmationDialog = true
+                                api.updateuserwithinfo({
+                                    uid: user.user.uid,
+                                    obj: this.form,
+                                })
+                            })
                     })
                     .catch(error => {
                         // Handle Errors here.
+                        this.displayLoading = false
                         console.log(error)
                         this.dismissCountDown = this.dismissSecs
                         this.errorCode = error.code

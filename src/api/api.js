@@ -11,6 +11,10 @@ export const updateuserwithinfo = data =>
     Request.post('/updateUserWithInfo', data, {
         'Content-Type': 'application/json',
     })
+export const createuserondatabase = data =>
+    Request.post('/createUserOnDatabase', data, {
+        'Content-Type': 'application/json',
+    })
 export const getuserinformationbyid = data =>
     Request.post('/getUserInformationById', data, {
         'Content-Type': 'application/json',

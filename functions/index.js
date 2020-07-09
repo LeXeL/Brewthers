@@ -9,7 +9,7 @@ const cors = require('cors')({
     origin: true,
 })
 
-const auth = require('./lib/auth')
+const users = require('./lib/users')
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -19,18 +19,22 @@ const auth = require('./lib/auth')
 // })
 
 //Create User on the database
-exports.createUserOnDatabase = functions.auth.user().onCreate(async user => {
-    try {
-        await auth.createDatabaseWithUserInfo(user)
-    } catch (err) {
-        console.log(err)
-    }
+exports.createUserOnDatabase = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await users.createDatabaseWithUserInfo(req.body.user)
+            res.status(200).send({status: 'Created'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
 })
 
 exports.updateUserWithInfo = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
-            await auth.updateDatabaseWithUserInfo(req.body.uid, req.body.obj)
+            await users.updateDatabaseWithUserInfo(req.body.uid, req.body.obj)
             res.status(200).send({status: 'Updated'})
         } catch (err) {
             console.log(err)
@@ -41,7 +45,7 @@ exports.updateUserWithInfo = functions.https.onRequest(async (req, res) => {
 exports.updateAdminWithInfo = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
-            await auth.updateDatabaseWithAdminInfo(req.body.uid, req.body.obj)
+            await users.updateDatabaseWithAdminInfo(req.body.uid, req.body.obj)
             res.status(200).send({status: 'Updated'})
         } catch (err) {
             console.log(err)
@@ -52,7 +56,7 @@ exports.updateAdminWithInfo = functions.https.onRequest(async (req, res) => {
 exports.getUserInformationById = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
-            let response = await auth.returnUserById(req.body.uid)
+            let response = await users.returnUserById(req.body.uid)
             res.status(200).send({data: response})
         } catch (err) {
             console.log(err)
@@ -63,7 +67,7 @@ exports.getUserInformationById = functions.https.onRequest(async (req, res) => {
 exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
-            let response = await auth.updateUserInfo(
+            let response = await users.updateUserInfo(
                 req.body.uid,
                 req.body.user
             )

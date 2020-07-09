@@ -218,7 +218,6 @@ export default {
                     this.alertMessage =
                         'Se ha actualizado con exito la informacion'
                     this.alertType = 'success'
-                    this.$router.push('/movingbeer')
                 })
                 .catch(error => {
                     console.log(error)

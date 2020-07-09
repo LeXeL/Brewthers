@@ -17,7 +17,18 @@
 
 <script>
 export default {
-    props: ['title', 'message', 'display'],
+    props: {
+        display: {
+            type: Boolean,
+            default: false,
+        },
+        title: {
+            type: String,
+        },
+        message: {
+            type: String,
+        },
+    },
     data() {
         return {
             confirm: false,

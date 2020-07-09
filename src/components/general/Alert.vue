@@ -20,7 +20,7 @@
             <q-card-section class="q-pt-none">{{ message }}</q-card-section>
 
             <q-card-actions align="right">
-                <q-btn flat label="ACEPTAR" color="primary" v-close-popup />
+                <q-btn flat label="ACEPTAR" @click="$emit('accept')" color="primary" v-close-popup />
             </q-card-actions>
         </q-card>
     </q-dialog>
