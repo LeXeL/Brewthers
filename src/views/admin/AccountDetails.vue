@@ -72,8 +72,34 @@
                 <div class="row" v-if="data.logs">
                     <div class="text-h6">Log de cuenta:</div>
                     <q-list dark padding class="full-width">
-                        <q-item clickable v-ripple v-for="(log,index) in data.logs" :key="index">
-                            <q-item-section>{{returnTime(log.time)}} - {{log.action}} - {{log.section}} {{log.who ? 'who: '+ log.who: ''}}</q-item-section>
+                        <q-item
+                            clickable
+                            v-ripple
+                            v-for="(log, index) in data.logs"
+                            :key="index"
+                        >
+                            <!-- <q-item-section
+                                >{{ returnTime(log.time) }} - {{ log.action }} -
+                                {{ log.section }}
+                                {{
+                                    log.who ? 'who: ' + log.who : ''
+                                }}</q-item-section
+                            > -->
+                            <q-item-section>
+                                {{ formatLog(log.action) }}
+                                {{ formatLog(log.section) }} -
+                                {{ log.who ? `Por: ${log.who} - ` : '' }}
+                                {{ returnTime(log.time) }}
+                                <br />
+                                <ul v-if="Array.isArray(log.section)">
+                                    <li
+                                        v-for="(reason, i) in log.section"
+                                        :key="i"
+                                    >
+                                        {{ reason }}
+                                    </li>
+                                </ul>
+                            </q-item-section>
                         </q-item>
                     </q-list>
                 </div>
@@ -82,7 +108,7 @@
                 <GoogleMaps
                     class="full-width q-mb-md"
                     :editable="false"
-                    :markers="[{position:data.location}]"
+                    :markers="[{position: data.location}]"
                     :mapCenter="data.location"
                 ></GoogleMaps>
 
@@ -122,7 +148,12 @@
 
                 <q-card-actions align="right" class="text-primary">
                     <q-btn flat label="Cancelar" v-close-popup />
-                    <q-btn flat label="Confirmar" @click="addRejectedReasons()" v-close-popup />
+                    <q-btn
+                        flat
+                        label="Confirmar"
+                        @click="addRejectedReasons()"
+                        v-close-popup
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -231,6 +262,14 @@ export default {
                     this.alertType = 'error'
                 })
         },
+        formatLog(s) {
+            if (s == 'edited') return 'Se edito: '
+            if (s == 'Account Created') return 'Cuenta creada'
+            if (s == 'GeneralInfo') return 'Informacion general'
+            if (s == 'AddressInfo') return 'Informacion de direccion'
+            if (s == 'rejected') return 'Se rechazo la cuenta'
+            if (s == 'approved') return 'Se aprobo la cuenta'
+        },
     },
     mounted() {
         api.getuserinformationbyid({uid: this.$route.params.id})
@@ -239,7 +278,7 @@ export default {
                 if (this.data.logs[0].action != 'Account Created') {
                     this.data.logs.splice(0, 0, {
                         time: this.data.creationTime,
-                        action: 'Acccount Created',
+                        action: 'Account Created',
                         section: '',
                     })
                 }
@@ -250,5 +289,4 @@ export default {
     },
 }
 </script>
-<style scoped>
-</style>
+<style scoped></style>
