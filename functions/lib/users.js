@@ -7,7 +7,7 @@ async function createDatabaseWithUserInfo(user) {
         .doc(user.uid)
         .set({
             email: user.email,
-            creationTime: user.createdAt,
+            creationTime: Date.now(),
             role: 'user',
             status: 'pending', //pending, approved, rejected
         })
@@ -30,6 +30,7 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             contactPhone: obj.contactPhone,
             address: obj.address,
             location: obj.location,
+            logs: [],
             ruc: obj.ruc,
         })
         .then(() => {

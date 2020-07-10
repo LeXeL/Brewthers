@@ -69,16 +69,11 @@
                     />
                 </div>
 
-                <div class="row" v-if="data.rejectionReasons ">
-                    <div class="text-h6">Motivos de rechazo de cuenta:</div>
+                <div class="row" v-if="data.logs">
+                    <div class="text-h6">Log de cuenta:</div>
                     <q-list dark padding class="full-width">
-                        <q-item
-                            clickable
-                            v-ripple
-                            v-for="rejections in data.rejectionReasons"
-                            :key="rejections"
-                        >
-                            <q-item-section>{{rejections}}</q-item-section>
+                        <q-item clickable v-ripple v-for="(log,index) in data.logs" :key="index">
+                            <q-item-section>{{returnTime(log.time)}} - {{log.action}} - {{log.section}} {{log.who ? 'who: '+ log.who: ''}}</q-item-section>
                         </q-item>
                     </q-list>
                 </div>
@@ -138,9 +133,16 @@
 import GoogleMaps from '@/components/GoogleMaps'
 import * as api from '@/api/api'
 
+import moment from 'moment'
+
 export default {
     components: {
         GoogleMaps,
+    },
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
     },
     data() {
         return {
@@ -160,6 +162,9 @@ export default {
         }
     },
     methods: {
+        returnTime(time) {
+            return moment(time).format('MMMM DD YYYY, h:mm:ss a')
+        },
         addRejectedReasons() {
             this.displayLoading = true
             let data = this.data
@@ -170,8 +175,12 @@ export default {
                 })
             })
             data.status = 'rejected'
-            data.rejectionReasons = reasons
-
+            let obj = {}
+            obj.time = Date.now()
+            obj.action = 'rejected'
+            obj.section = reasons
+            obj.who = this.user.email
+            data.logs.push(obj)
             api.updateuserinformation({
                 uid: this.$route.params.id,
                 user: data,
@@ -196,6 +205,12 @@ export default {
             this.displayLoading = true
             let data = this.data
             data.status = 'approved'
+            let obj = {}
+            obj.time = Date.now()
+            obj.action = 'approved'
+            obj.section = ''
+            obj.who = this.user.email
+            data.logs.push(obj)
             api.updateuserinformation({
                 uid: this.$route.params.id,
                 user: data,
@@ -221,6 +236,13 @@ export default {
         api.getuserinformationbyid({uid: this.$route.params.id})
             .then(user => {
                 this.data = user.data.data
+                if (this.data.logs[0].action != 'Account Created') {
+                    this.data.logs.splice(0, 0, {
+                        time: this.data.creationTime,
+                        action: 'Acccount Created',
+                        section: '',
+                    })
+                }
             })
             .catch(error => {
                 console.log(error)
