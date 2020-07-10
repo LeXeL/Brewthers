@@ -194,7 +194,7 @@ export default {
                     return
                 }
                 this.editGeneralInfo = false
-                this.updateUserInformation()
+                this.updateUserInformation(section)
                 return
             }
             if (section === 'AddressInfo') {
@@ -204,12 +204,17 @@ export default {
                     return
                 }
                 this.editAddressInfo = false
-                this.updateUserInformation()
+                this.updateUserInformation(section)
                 return
             }
         },
-        updateUserInformation() {
+        updateUserInformation(section) {
             this.displayLoading = true
+            let obj = {}
+            obj.time = Date.now()
+            obj.action = 'edited'
+            obj.section = section
+            this.userData.logs.push(obj)
             api.updateuserinformation({uid: this.uid, user: this.userData})
                 .then(response => {
                     this.displayLoading = false
