@@ -79,6 +79,11 @@
     </q-page>
 </template>
 <script>
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+
+import * as api from '@/api/api'
+
 import Carousel from '@/components/movingbeer/Carousel.vue'
 import BeerHouseTile from '@/components/movingbeer/BeerHouseTile.vue'
 import BeerItemTile from '@/components/movingbeer/BeerItemTile.vue'
@@ -91,44 +96,49 @@ export default {
             dialog: false,
             maximizedToggle: true,
             brewers: [
-                {
-                    name: '2 Oceans Brewing',
-                    logo: '2-oceans.png',
-                },
-                {
-                    name: 'Backyard',
-                    logo: 'back-yard.png',
-                },
-                {
-                    name: 'Boquete Brewing Company',
-                    logo: 'boquete-brewing.png',
-                },
-                {
-                    name: 'Buena Vista',
-                    logo: 'buena-vista.png',
-                },
-                {
-                    name: 'Casa Bruja',
-                    logo: 'casa-bruja.png',
-                },
-                {
-                    name: 'Central',
-                    logo: 'central.png',
-                },
-                {
-                    name: 'La Murga',
-                    logo: 'la-murga.png',
-                },
-                {
-                    name: 'Rana Dorada',
-                    logo: 'rana-dorada.png',
-                },
-                {
-                    name: 'Tres Gatos',
-                    logo: 'tres-gatos.png',
-                },
+                // {
+                //     name: '2 Oceans Brewing',
+                //     logo: '2-oceans.png',
+                // },
+                // {
+                //     name: 'Backyard',
+                //     logo: 'back-yard.png',
+                // },
+                // {
+                //     name: 'Boquete Brewing Company',
+                //     logo: 'boquete-brewing.png',
+                // },
+                // {
+                //     name: 'Buena Vista',
+                //     logo: 'buena-vista.png',
+                // },
+                // {
+                //     name: 'Casa Bruja',
+                //     logo: 'casa-bruja.png',
+                // },
+                // {
+                //     name: 'Central',
+                //     logo: 'central.png',
+                // },
+                // {
+                //     name: 'La Murga',
+                //     logo: 'la-murga.png',
+                // },
+                // {
+                //     name: 'Rana Dorada',
+                //     logo: 'rana-dorada.png',
+                // },
+                // {
+                //     name: 'Tres Gatos',
+                //     logo: 'tres-gatos.png',
+                // },
             ],
         }
+    },
+    mounted() {
+        api.returnAllBrewerys().then(response => {
+            this.brewers = response.data.data
+        })
     },
     methods: {
         beerHouseDialog() {
