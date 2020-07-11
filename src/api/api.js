@@ -6,7 +6,7 @@ import Request from './request'
 //         'Content-Type': 'application/json',
 //     })
 
-//Auth
+//USERS
 export const updateuserwithinfo = data =>
     Request.post('/updateUserWithInfo', data, {
         'Content-Type': 'application/json',
@@ -25,5 +25,23 @@ export const updateuserinformation = data =>
     })
 export const updateadmininformation = data =>
     Request.post('/updateAdminWithInfo', data, {
+        'Content-Type': 'application/json',
+    })
+
+//BREWERY
+export const createBreweryOnDatabase = data =>
+    Request.post('/createBreweryOnDatabase', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateBreweryInformation = data =>
+    Request.post('/updateBreweryInformation', data, {
+        'Content-Type': 'application/json',
+    })
+export const deleteBreweryInformation = data =>
+    Request.post('/deleteBreweryInformation', data, {
+        'Content-Type': 'application/json',
+    })
+export const returnAllBrewerys = data =>
+    Request.post('/returnAllBrewerys', data, {
         'Content-Type': 'application/json',
     })
