@@ -46,6 +46,8 @@ import CarouselSection from '@/views/landing/CarouselSection'
 import Navbar from '@/components/landing/Navbar'
 import Footer from '@/components/general/Footer'
 
+import * as api from '@/api/api'
+
 export default {
     data() {
         return {
@@ -61,9 +63,13 @@ export default {
             if (section === 'tiendita')
                 this.tienditaSection = !this.tienditaSection
         },
-        contact() {
-            console.log('Comprar caja o keg')
-        },
+    },
+    mounted() {
+        if (!this.$store.getters.brewerys.length) {
+            api.returnAllBrewerys().then(response => {
+                this.$store.dispatch('setBrewerys', response.data.data)
+            })
+        }
     },
     components: {
         'hero-section': HeroSection,
