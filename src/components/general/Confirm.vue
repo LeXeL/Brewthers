@@ -2,10 +2,10 @@
     <q-dialog v-model="confirm">
         <q-card dark>
             <q-card-section>
-                <div class="text-h6">{{ title }}</div>
+                <div class="text-h6 text-center">{{ title }}</div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">{{ message }}</q-card-section>
+            <q-card-section class="q-pt-none text-center">{{ message }}</q-card-section>
 
             <q-card-actions align="right">
                 <q-btn label="Aceptar" color="secondary" @click="sendAccept()" v-close-popup />

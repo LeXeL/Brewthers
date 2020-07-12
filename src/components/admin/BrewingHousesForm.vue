@@ -1,12 +1,19 @@
 <template>
     <q-card class="my-card text-white full-width" dark>
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
         <q-card-section>
             <div class="text-h6">Nueva casa cervecera</div>
         </q-card-section>
 
         <q-card-section>
-            <q-input filled dark label="Nombre" class="q-mb-md" />
-            <q-file filled dark label="Logo">
+            <q-input filled dark label="Nombre" class="q-mb-md" v-model="form.name" />
+            <q-file append filled dark label="Logo" v-model="breweryImage">
                 <template v-slot:prepend>
                     <i class="fas fa-paperclip"></i>
                 </template>
@@ -17,8 +24,111 @@
 
         <q-card-actions>
             <q-space />
-            <q-btn color="secondary">Guardar</q-btn>
-            <q-btn color="red-7">Cancelar</q-btn>
+            <q-btn color="secondary" @click="Generate()">Guardar</q-btn>
+            <q-btn color="red-7" @click="Cancel()">Cancelar</q-btn>
         </q-card-actions>
     </q-card>
 </template>
+<script>
+import * as api from '@/api/api'
+
+import firebase from 'firebase/app'
+import 'firebase/storage'
+
+export default {
+    data() {
+        return {
+            breweryImage: null,
+            form: {
+                name: '',
+                photoLocation: '',
+            },
+            displayLoading: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
+        }
+    },
+    methods: {
+        Cancel() {
+            this.breweryImage = null
+            this.form.name = ''
+            this.form.photoLocation = ''
+        },
+        async Generate() {
+            this.displayLoading = true
+            let db = firebase.firestore()
+            await this.uploadToFirebase(
+                this.breweryImage,
+                `brewery/${this.form.name}`,
+                this.form.name
+            ).then(async filename => {
+                this.form.photoLocation = filename
+                api.createBreweryOnDatabase({brewery: this.form})
+                    .then(response => {
+                        this.displayLoading = false
+                        this.displayAlert = true
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage =
+                            'Se ha creado la casa cerveceras con exito'
+                        this.alertType = 'success'
+                        this.breweryImage = null
+                        this.form = {
+                            name: '',
+                            photoLocation: '',
+                        }
+                    })
+                    .catch(error => {
+                        this.displayLoading = false
+                        this.displayAlert = true
+                        this.alertTitle = 'Error'
+                        this.alertMessage = error
+                        this.alertType = 'error'
+                    })
+            })
+        },
+        uploadToFirebase(imageFile, fullDirectory, filename) {
+            return new Promise(function(resolve, reject) {
+                var storageRef = firebase
+                    .storage()
+                    .ref(fullDirectory + '/' + filename)
+                //Upload file
+                var task = storageRef.put(imageFile)
+                //Update progress bar
+                task.on(
+                    'state_changed',
+                    function(snapshot) {
+                        // Observe state change events such as progress, pause, and resume
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        var progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100
+                        console.log('Upload is ' + progress + '% done')
+                        switch (snapshot.state) {
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused')
+                                break
+                        }
+                    },
+                    function(error) {
+                        // Handle unsuccessful uploads
+                        console.log(`Error in uploadToFirebase: ${error}`)
+                        reject(error)
+                    },
+                    function() {
+                        // Handle successful uploads on complete
+                        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                        task.snapshot.ref
+                            .getDownloadURL()
+                            .then(function(downloadURL) {
+                                console.log('File available at', downloadURL)
+                                resolve(downloadURL)
+                            })
+                    }
+                )
+            })
+        },
+    },
+}
+</script>

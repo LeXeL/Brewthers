@@ -10,15 +10,9 @@ const cors = require('cors')({
 })
 
 const users = require('./lib/users')
+const brewery = require('./lib/brewery')
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//     response.send('Hello from Firebase!')
-// })
-
-//Create User on the database
+//Handle USERS
 exports.createUserOnDatabase = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
@@ -71,6 +65,61 @@ exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
                 req.body.uid,
                 req.body.user
             )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+
+//Handle BREWERY
+exports.createBreweryOnDatabase = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await brewery.createBrewery(req.body.brewery)
+                res.status(200).send({status: 'Created'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.updateBreweryInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await brewery.updateBrewery(
+                    req.body.id,
+                    req.body.brewery
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.deleteBreweryInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await brewery.deleteBrewery(req.body.id)
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.returnAllBrewerys = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await brewery.returnAllBrewerys()
             res.status(200).send({data: response})
         } catch (err) {
             console.log(err)

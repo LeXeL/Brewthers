@@ -17,7 +17,7 @@
                 <div class="text-h6 text-center">{{ title }}</div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">{{ message }}</q-card-section>
+            <q-card-section class="q-pt-none text-center">{{ message }}</q-card-section>
 
             <q-card-actions align="right">
                 <q-btn flat label="ACEPTAR" @click="$emit('accept')" color="primary" v-close-popup />

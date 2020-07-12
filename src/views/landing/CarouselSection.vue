@@ -1,12 +1,8 @@
 <template>
-    <div>
+    <div v-if="!!brewerys.length">
         <VueSlickCarousel v-bind="carouselSettings">
-            <div v-for="(logo, i) in brands" :key="i">
-                <img
-                    :src="require(`@/assets/familia-brewthers/${logo}`)"
-                    width="100%"
-                    class="q-pa-md carousel-img"
-                />
+            <div v-for="(brewery, i) in brewerys" :key="i">
+                <img :src="brewery.photoLocation" width="100%" class="q-pa-md carousel-img" />
             </div>
         </VueSlickCarousel>
     </div>
@@ -17,6 +13,11 @@ import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 
 export default {
+    computed: {
+        brewerys() {
+            return this.$store.getters.brewerys
+        },
+    },
     data() {
         return {
             carouselSettings: {
@@ -25,7 +26,6 @@ export default {
                 slidesToShow: 6,
                 autoplay: true,
                 autoplaySpeed: 2000,
-
                 vertical: true,
                 rtl: true,
                 responsive: [
@@ -47,17 +47,6 @@ export default {
                     },
                 ],
             },
-            brands: [
-                '2-oceans.png',
-                'back-yard.png',
-                'boquete-brewing.png',
-                'buena-vista.png',
-                'casa-bruja.png',
-                'central.png',
-                'la-murga.png',
-                'rana-dorada.png',
-                'tres-gatos.png',
-            ],
         }
     },
     components: {VueSlickCarousel},
