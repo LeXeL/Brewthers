@@ -99,9 +99,13 @@ export default {
         }
     },
     mounted() {
-        api.returnAllBrewerys().then(response => {
-            this.brewers = response.data.data
-        })
+        if (this.$store.getters.brewerys.length > 1) {
+            this.brewers = this.$store.getters.brewerys
+        } else {
+            api.returnAllBrewerys().then(response => {
+                this.brewers = response.data.data
+            })
+        }
     },
     methods: {
         beerHouseDialog() {
