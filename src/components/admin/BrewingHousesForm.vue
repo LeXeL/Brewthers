@@ -73,6 +73,11 @@ export default {
                         this.alertMessage =
                             'Se ha creado la casa cerveceras con exito'
                         this.alertType = 'success'
+                        this.breweryImage = null
+                        this.form = {
+                            name: '',
+                            photoLocation: '',
+                        }
                     })
                     .catch(error => {
                         this.displayLoading = false

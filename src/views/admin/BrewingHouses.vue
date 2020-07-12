@@ -20,7 +20,7 @@
                     :data="data"
                     @changeStatus="editStatus"
                     @delete="askForDeleteBrewery"
-                    @namechange="logevent"
+                    @namechange="updateNameChange"
                 ></brewing-houses-table>
             </div>
             <div class="col-lg-4 q-pa-md">
@@ -73,8 +73,28 @@ export default {
         })
     },
     methods: {
-        logevent(event) {
-            console.log(event)
+        updateNameChange(event) {
+            this.displayLoading = true
+            this.displayAlert = false
+            api.updateBreweryInformation({
+                id: event.id,
+                brewery: {name: event.newName},
+            })
+                .then(() => {
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha cambiado el nombre con exito'
+                    this.alertType = 'success'
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                })
         },
         askForDeleteBrewery(event) {
             this.displayConfirm = true

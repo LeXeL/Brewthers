@@ -6,7 +6,7 @@
                     {{ props.row.name }}
                     <q-popup-edit
                         v-model="props.row.name"
-                        @save="$emit('namechange',props.row.name)"
+                        @save="$emit('namechange',{id:props.row.id,newName:props.row.name})"
                         title="Actualizar nombre"
                         buttons
                         dark
