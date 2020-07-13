@@ -188,35 +188,60 @@ export default {
             let brewery = this.brewerys.filter(brewery => {
                 if (brewery.id === this.data.brewery) return brewery
             })[0].name
-            await this.uploadToFirebase(
-                this.file,
-                `products/${brewery}/${this.data.name}`,
-                this.data.name
-            ).then(async filename => {
-                this.data.photoLocation = filename
-                api.updateProductInformation({
-                    id: this.$route.params.id,
-                    product: this.data,
+            if (this.file != null) {
+                await this.uploadToFirebase(
+                    this.file,
+                    `products/${brewery}/${this.data.name}`,
+                    this.data.name
+                ).then(async filename => {
+                    this.data.photoLocation = filename
+                    api.updateProductInformation({
+                        id: this.$route.params.id,
+                        product: this.data,
+                    })
+                        .then(response => {
+                            this.displayLoading = false
+                            this.displayAlert = true
+                            this.alertTitle = 'Exito!'
+                            this.alertMessage =
+                                'Se ha actualizado con exito la informacion'
+                            this.alertType = 'success'
+                            this.getProductInformation()
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            this.displayLoading = false
+                            this.displayAlert = true
+                            this.alertTitle = 'Error'
+                            this.alertMessage =
+                                'Hubo un error con la solicitud por favor inténtelo más tarde'
+                            this.alertType = 'error'
+                        })
                 })
-                    .then(response => {
-                        this.displayLoading = false
-                        this.displayAlert = true
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage =
-                            'Se ha actualizado con exito la informacion'
-                        this.alertType = 'success'
-                        this.getProductInformation()
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        this.displayLoading = false
-                        this.displayAlert = true
-                        this.alertTitle = 'Error'
-                        this.alertMessage =
-                            'Hubo un error con la solicitud por favor inténtelo más tarde'
-                        this.alertType = 'error'
-                    })
+                return
+            }
+            api.updateProductInformation({
+                id: this.$route.params.id,
+                product: this.data,
             })
+                .then(response => {
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado con exito la informacion'
+                    this.alertType = 'success'
+                    this.getProductInformation()
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.displayLoading = false
+                    this.displayAlert = true
+                    this.alertTitle = 'Error'
+                    this.alertMessage =
+                        'Hubo un error con la solicitud por favor inténtelo más tarde'
+                    this.alertType = 'error'
+                })
         },
         addToInventory(inventory) {
             this.displayLoading = true
@@ -249,39 +274,41 @@ export default {
         subtractToInventory(inventory) {
             this.displayLoading = true
             this.displayAlert = false
-            if (this.data.inventory - inventory < 0) {
+            let count = this.data.inventory - inventory
+            if (count < 0) {
                 this.displayLoading = false
                 this.displayAlert = true
+                this.substractInventory = 0
                 this.alertTitle = 'Error'
                 this.alertMessage =
                     'No se puede restar esta cantidad ya que da un valor menor a 0'
                 this.alertType = 'error'
-                return
+            } else {
+                this.data.inventory -= inventory
+                api.updateProductInformation({
+                    id: this.$route.params.id,
+                    product: this.data,
+                })
+                    .then(response => {
+                        this.displayLoading = false
+                        this.displayAlert = true
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage =
+                            'Se ha aumentado con exito el inventario'
+                        this.alertType = 'success'
+                        this.substractInventory = 0
+                        this.getProductInformation()
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.displayLoading = false
+                        this.displayAlert = true
+                        this.alertTitle = 'Error'
+                        this.alertMessage =
+                            'Hubo un error con la solicitud por favor inténtelo más tarde'
+                        this.alertType = 'error'
+                    })
             }
-            this.data.inventory -= inventory
-            api.updateProductInformation({
-                id: this.$route.params.id,
-                product: this.data,
-            })
-                .then(response => {
-                    this.displayLoading = false
-                    this.displayAlert = true
-                    this.alertTitle = 'Exito!'
-                    this.alertMessage =
-                        'Se ha aumentado con exito el inventario'
-                    this.alertType = 'success'
-                    this.substractInventory = 0
-                    this.getProductInformation()
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.displayLoading = false
-                    this.displayAlert = true
-                    this.alertTitle = 'Error'
-                    this.alertMessage =
-                        'Hubo un error con la solicitud por favor inténtelo más tarde'
-                    this.alertType = 'error'
-                })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
             return new Promise(function(resolve, reject) {
@@ -325,6 +352,7 @@ export default {
             })
         },
         getProductInformation() {
+            this.displayAlert = false
             api.getProductInformationById({id: this.$route.params.id})
                 .then(product => {
                     this.data = product.data.data
