@@ -82,18 +82,18 @@ export default {
             })
                 .then(() => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage = 'Se ha cambiado el nombre con exito'
                     this.alertType = 'success'
+                    this.displayAlert = true
                 })
                 .catch(error => {
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage = error
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         askForDeleteBrewery(event) {
@@ -112,18 +112,18 @@ export default {
             })
                 .then(() => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage = 'Se ha cambiado el estado con exito'
                     this.alertType = 'success'
+                    this.displayAlert = true
                 })
                 .catch(error => {
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage = error
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         editStatus(event) {
@@ -136,18 +136,18 @@ export default {
             })
                 .then(() => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage = 'Se ha cambiado el estado con exito'
                     this.alertType = 'success'
+                    this.displayAlert = true
                 })
                 .catch(error => {
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage = error
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         addToData(id, data) {

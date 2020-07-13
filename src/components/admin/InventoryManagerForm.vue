@@ -132,18 +132,18 @@ export default {
                 api.createProductOnDatabase({product: this.form})
                     .then(response => {
                         this.displayLoading = false
-                        this.displayAlert = true
                         this.alertTitle = 'Exito!'
                         this.alertMessage = 'Se ha creado el producto con exito'
                         this.alertType = 'success'
+                        this.displayAlert = true
                         this.clear()
                     })
                     .catch(error => {
                         this.displayLoading = false
-                        this.displayAlert = true
                         this.alertTitle = 'Error'
                         this.alertMessage = error
                         this.alertType = 'error'
+                        this.displayAlert = true
                     })
             })
         },

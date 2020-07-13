@@ -68,11 +68,11 @@ export default {
                 api.createBreweryOnDatabase({brewery: this.form})
                     .then(response => {
                         this.displayLoading = false
-                        this.displayAlert = true
                         this.alertTitle = 'Exito!'
                         this.alertMessage =
                             'Se ha creado la casa cerveceras con exito'
                         this.alertType = 'success'
+                        this.displayAlert = true
                         this.breweryImage = null
                         this.form = {
                             name: '',
@@ -81,10 +81,10 @@ export default {
                     })
                     .catch(error => {
                         this.displayLoading = false
-                        this.displayAlert = true
                         this.alertTitle = 'Error'
                         this.alertMessage = error
                         this.alertType = 'error'
+                        this.displayAlert = true
                     })
             })
         },

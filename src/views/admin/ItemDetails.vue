@@ -202,21 +202,21 @@ export default {
                     })
                         .then(response => {
                             this.displayLoading = false
-                            this.displayAlert = true
                             this.alertTitle = 'Exito!'
                             this.alertMessage =
                                 'Se ha actualizado con exito la informacion'
                             this.alertType = 'success'
+                            this.displayAlert = true
                             this.getProductInformation()
                         })
                         .catch(error => {
                             console.log(error)
                             this.displayLoading = false
-                            this.displayAlert = true
                             this.alertTitle = 'Error'
                             this.alertMessage =
                                 'Hubo un error con la solicitud por favor inténtelo más tarde'
                             this.alertType = 'error'
+                            this.displayAlert = true
                         })
                 })
                 return
@@ -227,21 +227,21 @@ export default {
             })
                 .then(response => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
                         'Se ha actualizado con exito la informacion'
                     this.alertType = 'success'
+                    this.displayAlert = true
                     this.getProductInformation()
                 })
                 .catch(error => {
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage =
                         'Hubo un error con la solicitud por favor inténtelo más tarde'
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         addToInventory(inventory) {
@@ -254,36 +254,36 @@ export default {
             })
                 .then(response => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
                         'Se ha aumentado con exito el inventario'
                     this.alertType = 'success'
+                    this.displayAlert = true
                     this.addInventory = 0
                     this.getProductInformation()
                 })
                 .catch(error => {
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage =
                         'Hubo un error con la solicitud por favor inténtelo más tarde'
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         subtractToInventory(inventory) {
             this.displayLoading = true
-            this.displayAlert = true
+            this.displayAlert = false
             let count = this.data.inventory - inventory
             if (count < 0) {
                 this.displayLoading = false
-                this.displayAlert = true
-                this.substractInventory = 0
                 this.alertTitle = 'Error'
                 this.alertMessage =
                     'No se puede restar esta cantidad ya que da un valor menor a 0'
                 this.alertType = 'error'
+                this.displayAlert = true
+                this.substractInventory = 0
             } else {
                 this.data.inventory -= inventory
                 api.updateProductInformation({
@@ -292,22 +292,22 @@ export default {
                 })
                     .then(response => {
                         this.displayLoading = false
-                        this.displayAlert = true
                         this.alertTitle = 'Exito!'
                         this.alertMessage =
                             'Se ha aumentado con exito el inventario'
                         this.alertType = 'success'
+                        this.displayAlert = true
                         this.substractInventory = 0
                         this.getProductInformation()
                     })
                     .catch(error => {
                         console.log(error)
                         this.displayLoading = false
-                        this.displayAlert = true
                         this.alertTitle = 'Error'
                         this.alertMessage =
                             'Hubo un error con la solicitud por favor inténtelo más tarde'
                         this.alertType = 'error'
+                        this.displayAlert = true
                     })
             }
         },

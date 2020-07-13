@@ -128,11 +128,11 @@ export default {
                 this.form.message === ''
             ) {
                 this.displayLoading = false
-                this.displayAlert = true
                 this.alertTitle = 'Error'
                 this.alertMessage =
                     'Por favor asegurate de llenar todos los campos'
                 this.alertType = 'error'
+                this.displayAlert = true
                 return
             } else {
                 this.displayLoading = true
@@ -146,11 +146,11 @@ export default {
                     .then(
                         result => {
                             this.displayLoading = false
-                            this.displayAlert = true
                             this.alertTitle = 'Exito!'
                             this.alertMessage =
                                 'Tu mensaje ha sido enviado con exito, pronto nos estaremos poniendo en contacto contigo'
                             this.alertType = 'success'
+                            this.displayAlert = true
                             this.form.name = ''
                             this.form.lastName = ''
                             this.form.email = ''
@@ -159,11 +159,11 @@ export default {
                         },
                         error => {
                             this.displayLoading = false
-                            this.displayAlert = true
                             this.alertTitle = 'Error'
                             this.alertMessage =
                                 'Hubo un error por favor intentarlo nuevamente.'
                             this.alertType = 'error'
+                            this.displayAlert = true
                         }
                     )
             }

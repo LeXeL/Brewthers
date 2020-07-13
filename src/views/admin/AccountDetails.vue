@@ -72,19 +72,14 @@
                 <div class="row" v-if="data.logs">
                     <div class="text-h6">Log de cuenta:</div>
                     <q-list dark padding class="full-width">
-                        <q-item
-                            clickable
-                            v-ripple
-                            v-for="(log, index) in data.logs"
-                            :key="index"
-                        >
+                        <q-item clickable v-ripple v-for="(log, index) in data.logs" :key="index">
                             <!-- <q-item-section
                                 >{{ returnTime(log.time) }} - {{ log.action }} -
                                 {{ log.section }}
                                 {{
                                     log.who ? 'who: ' + log.who : ''
                                 }}</q-item-section
-                            > -->
+                            >-->
                             <q-item-section>
                                 {{ formatLog(log.action) }}
                                 {{ formatLog(log.section) }} -
@@ -92,12 +87,7 @@
                                 {{ returnTime(log.time) }}
                                 <br />
                                 <ul v-if="Array.isArray(log.section)">
-                                    <li
-                                        v-for="(reason, i) in log.section"
-                                        :key="i"
-                                    >
-                                        {{ reason }}
-                                    </li>
+                                    <li v-for="(reason, i) in log.section" :key="i">{{ reason }}</li>
                                 </ul>
                             </q-item-section>
                         </q-item>
@@ -148,12 +138,7 @@
 
                 <q-card-actions align="right" class="text-primary">
                     <q-btn flat label="Cancelar" v-close-popup />
-                    <q-btn
-                        flat
-                        label="Confirmar"
-                        @click="addRejectedReasons()"
-                        v-close-popup
-                    />
+                    <q-btn flat label="Confirmar" @click="addRejectedReasons()" v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -218,18 +203,18 @@ export default {
             })
                 .then(() => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage = 'Se ha agregado las razones de rechazo'
                     this.alertType = 'success'
+                    this.displayAlert = true
                     this.prompt = false
                 })
                 .catch(error => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage = error
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         approveUser() {
@@ -248,18 +233,18 @@ export default {
             })
                 .then(() => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage = 'Se ha aprovado el usuario'
                     this.alertType = 'success'
+                    this.displayAlert = true
                     this.prompt = false
                 })
                 .catch(error => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage = error
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         formatLog(s) {

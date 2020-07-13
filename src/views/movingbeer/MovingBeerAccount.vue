@@ -218,20 +218,20 @@ export default {
             api.updateuserinformation({uid: this.uid, user: this.userData})
                 .then(response => {
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
                         'Se ha actualizado con exito la informacion'
                     this.alertType = 'success'
+                    this.displayAlert = true
                 })
                 .catch(error => {
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage =
                         'Hubo un error con la solicitud por favor inténtelo más tarde'
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
     },
