@@ -146,7 +146,7 @@
 </template>
 
 <script>
-import GoogleMaps from '@/components/GoogleMaps'
+import GoogleMaps from '@/components/general/GoogleMaps'
 import * as api from '@/api/api'
 
 import moment from 'moment'
