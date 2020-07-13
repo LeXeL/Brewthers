@@ -11,6 +11,7 @@ const cors = require('cors')({
 
 const users = require('./lib/users')
 const brewery = require('./lib/brewery')
+const product = require('./lib/product')
 
 //Handle USERS
 exports.createUserOnDatabase = functions.https.onRequest(async (req, res) => {
@@ -120,6 +121,61 @@ exports.returnAllBrewerys = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
             let response = await brewery.returnAllBrewerys()
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+
+//Handle PRODUCT
+exports.createProductOnDatabase = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await product.createProduct(req.body.product)
+                res.status(200).send({status: 'Created'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.updateProductInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await product.updateProduct(
+                    req.body.id,
+                    req.body.product
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.deleteProductInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await product.deleteProduct(req.body.id)
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.returnAllProducts = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await product.returnAllProducts()
             res.status(200).send({data: response})
         } catch (err) {
             console.log(err)

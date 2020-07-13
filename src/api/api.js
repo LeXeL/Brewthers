@@ -45,3 +45,21 @@ export const returnAllBrewerys = data =>
     Request.post('/returnAllBrewerys', data, {
         'Content-Type': 'application/json',
     })
+
+//PRODUCT
+export const createProductOnDatabase = data =>
+    Request.post('/createProductOnDatabase', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateProductInformation = data =>
+    Request.post('/updateProductInformation', data, {
+        'Content-Type': 'application/json',
+    })
+export const deleteProductInformation = data =>
+    Request.post('/deleteProductInformation', data, {
+        'Content-Type': 'application/json',
+    })
+export const returnAllProducts = data =>
+    Request.post('/returnAllProducts', data, {
+        'Content-Type': 'application/json',
+    })
