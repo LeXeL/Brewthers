@@ -63,3 +63,7 @@ export const returnAllProducts = data =>
     Request.post('/returnAllProducts', data, {
         'Content-Type': 'application/json',
     })
+export const getProductInformationById = data =>
+    Request.post('/getProductInformationById', data, {
+        'Content-Type': 'application/json',
+    })

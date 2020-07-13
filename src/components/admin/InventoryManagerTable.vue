@@ -40,7 +40,12 @@
                     />
                 </q-td>
                 <q-td>
-                    <q-btn color="info" size="xs" label="Detalles" to="/item-details" />
+                    <q-btn
+                        color="info"
+                        size="xs"
+                        label="Detalles"
+                        :to="`/item-details/${props.row.id}`"
+                    />
                 </q-td>
                 <q-td>
                     <q-btn

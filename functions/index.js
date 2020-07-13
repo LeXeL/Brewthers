@@ -183,3 +183,17 @@ exports.returnAllProducts = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+
+exports.getProductInformationById = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await product.returnProductById(req.body.id)
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)

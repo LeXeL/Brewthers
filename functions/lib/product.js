@@ -74,10 +74,27 @@ async function returnAllProducts() {
         })
     return products
 }
+async function returnProductById(id) {
+    return db
+        .collection('product')
+        .doc(id)
+        .get()
+        .then(doc => {
+            if (doc.exists) {
+                return doc.data()
+            } else {
+                console.log('Document no existe')
+            }
+        })
+        .catch(error => {
+            return error
+        })
+}
 
 module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
     returnAllProducts,
+    returnProductById,
 }

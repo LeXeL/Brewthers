@@ -71,7 +71,7 @@ export default new Router({
                     component: InventoryManager,
                 },
                 {
-                    path: '/item-details',
+                    path: '/item-details/:id',
                     name: 'item-details',
                     component: ItemDetails,
                 },
