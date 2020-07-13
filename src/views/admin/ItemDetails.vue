@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert= false"
         ></brewthers-alert>
         <div class="text-h5 q-mb-md">Detalles de articulo</div>
         <div class="row">
@@ -273,7 +274,7 @@ export default {
         },
         subtractToInventory(inventory) {
             this.displayLoading = true
-            this.displayAlert = false
+            this.displayAlert = true
             let count = this.data.inventory - inventory
             if (count < 0) {
                 this.displayLoading = false
@@ -352,7 +353,6 @@ export default {
             })
         },
         getProductInformation() {
-            this.displayAlert = false
             api.getProductInformationById({id: this.$route.params.id})
                 .then(product => {
                     this.data = product.data.data
