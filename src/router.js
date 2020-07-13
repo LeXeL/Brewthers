@@ -7,8 +7,6 @@ import LoginPage from './layouts/LoginPage.vue'
 import AdminPage from './layouts/AdminPage.vue'
 import MovingBeerPage from './layouts/MovingBeerPage.vue'
 //Views
-import Home from './views/Home.vue'
-import About from './views/About.vue'
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
 import ResetPassword from './views/Login/ResetPassword.vue'
@@ -73,7 +71,7 @@ export default new Router({
                     component: InventoryManager,
                 },
                 {
-                    path: '/item-details',
+                    path: '/item-details/:id',
                     name: 'item-details',
                     component: ItemDetails,
                 },
@@ -108,18 +106,6 @@ export default new Router({
         {
             path: '/',
             component: HomePage,
-            children: [
-                {
-                    path: '',
-                    name: 'home',
-                    component: Home,
-                },
-                {
-                    path: '/about',
-                    name: 'about',
-                    component: About,
-                },
-            ],
         },
         {
             path: '/movingbeer',

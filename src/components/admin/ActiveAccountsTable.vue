@@ -6,6 +6,7 @@
         row-key="name"
         class="full-width"
         dark
+        :pagination="{rowsPerPage: 50}"
     >
         <template v-slot:header="props">
             <q-tr :props="props">

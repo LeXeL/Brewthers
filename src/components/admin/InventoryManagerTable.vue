@@ -6,39 +6,55 @@
         row-key="name"
         binary-state-sort
         dark
+        :pagination="{rowsPerPage: 50}"
     >
         <template v-slot:body="props">
             <q-tr :props="props">
                 <q-td key="name" :props="props">
                     {{ props.row.name }}
-                    <q-popup-edit v-model="props.row.name" title="Actualizar nombre" buttons dark>
+                    <q-popup-edit
+                        v-model="props.row.name"
+                        @save="$emit('namechange',{id:props.row.id,newName:props.row.name})"
+                        title="Actualizar nombre"
+                        buttons
+                        dark
+                    >
                         <q-input type="text" v-model="props.row.name" dense autofocus dark />
                     </q-popup-edit>
                 </q-td>
                 <q-td key="presentation" :props="props">
                     {{
-                    props.row.presentation
+                    props.row.type
                     }}
                 </q-td>
-                <q-td key="stock" :props="props">{{ props.row.stock }}</q-td>
-                <q-td key="house" :props="props">{{ props.row.house }}</q-td>
+                <q-td key="stock" :props="props">{{ props.row.inventory }}</q-td>
+                <q-td
+                    key="house"
+                    :props="props"
+                >{{ brewerys.filter(brewery=> {if(brewery.id === props.row.brewery) return brewery})[0].name }}</q-td>
                 <q-td key="status" :props="props">
                     <q-btn
-                        :color="
-                            props.row.status == true ? 'secondary' : 'warning'
-                        "
+                        :color="props.row.status == 'inactive' ? 'secondary' : 'warning'"
                         size="xs"
-                        :label="
-                            props.row.status == true ? 'Desactivar' : 'Activar'
-                        "
-                        @click="props.row.status = !props.row.status"
+                        :label="props.row.status == 'inactive' ? 'Activar' : 'Desactivar'"
+                        @click="$emit('changeStatus',{id:props.row.id,status:props.row.status})"
                     />
                 </q-td>
                 <q-td>
-                    <q-btn color="info" size="xs" label="Detalles" to="/item-details" />
+                    <q-btn
+                        color="info"
+                        size="xs"
+                        label="Detalles"
+                        :to="`/item-details/${props.row.id}`"
+                    />
                 </q-td>
                 <q-td>
-                    <q-btn color="red-7" size="xs" label="Eliminar" />
+                    <q-btn
+                        color="red-7"
+                        size="xs"
+                        label="Eliminar"
+                        @click="$emit('delete',{id:props.row.id})"
+                    />
                 </q-td>
             </q-tr>
         </template>
@@ -49,6 +65,17 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+    },
+    computed: {
+        brewerys() {
+            return this.$store.getters.brewerys
+        },
+    },
     data() {
         return {
             columns: [
@@ -95,64 +122,6 @@ export default {
                 {
                     label: 'Eliminar',
                     align: 'left',
-                },
-            ],
-            data: [
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
-                },
-                {
-                    name: 'Beer 1',
-                    presentation: 'KEG',
-                    house: 'Buena Vista Brewery',
-                    stock: 10,
-                    status: false,
                 },
             ],
         }

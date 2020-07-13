@@ -59,7 +59,7 @@ async function updateDatabaseWithAdminInfo(uid, obj) {
             return 'Succesfull'
         })
         .catch(error => {
-            console.error('Error writing document: ', error)
+            console.error('Error writing to document: ', error)
             return error
         })
 }

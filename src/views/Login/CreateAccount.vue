@@ -180,7 +180,7 @@
 import * as api from '@/api/api'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import GoogleMaps from '@/components/GoogleMaps'
+import GoogleMaps from '@/components/general/GoogleMaps'
 
 export default {
     components: {

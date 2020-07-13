@@ -156,19 +156,19 @@ export default {
                                 })
                                 .then(() => {
                                     this.displayLoading = false
-                                    this.displayAlert = true
                                     this.alertTitle = 'Exito!'
                                     this.alertMessage =
                                         'Se ha creado la cuenta con exito'
                                     this.alertType = 'success'
+                                    this.displayAlert = true
                                     this.prompt = false
                                 })
                                 .catch(error => {
                                     this.displayLoading = false
-                                    this.displayAlert = true
                                     this.alertTitle = 'Error'
                                     this.alertMessage = error
                                     this.alertType = 'error'
+                                    this.displayAlert = true
                                 })
                         })
                 })
@@ -176,10 +176,10 @@ export default {
                     // Handle Errors here.
                     console.log(error)
                     this.displayLoading = false
-                    this.displayAlert = true
                     this.alertTitle = 'Error'
                     this.alertMessage = error.message
                     this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
     },
