@@ -6,6 +6,7 @@
         row-key="name"
         binary-state-sort
         dark
+        :pagination="{rowsPerPage: 50}"
     >
         <template v-slot:body="props">
             <q-tr :props="props">
