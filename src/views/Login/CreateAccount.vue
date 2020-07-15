@@ -250,6 +250,18 @@ export default {
                                     obj: this.form,
                                 })
                             })
+                            .then(async () => {
+                                await api
+                                    .getuserinformationbyid({
+                                        uid: user.user.uid,
+                                    })
+                                    .then(response => {
+                                        this.$store.commit(
+                                            'SET_USER',
+                                            response.data.data
+                                        )
+                                    })
+                            })
                     })
                     .catch(error => {
                         // Handle Errors here.
