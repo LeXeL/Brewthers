@@ -261,7 +261,7 @@ export default {
             .then(user => {
                 this.data = user.data.data
                 if (
-                    !this.data.logs.action ||
+                    this.data.logs.length === 0 ||
                     this.data.logs[0].action != 'Account Created'
                 ) {
                     this.data.logs.splice(0, 0, {
