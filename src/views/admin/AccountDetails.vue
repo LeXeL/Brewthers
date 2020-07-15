@@ -112,7 +112,7 @@
                         class="on-left"
                     />
                     <q-btn
-                        v-if="data.status != 'approved'"
+                        v-if="data.status === 'pending'"
                         color="red-7"
                         label="Reachazar"
                         @click="rejectDialog = true"
@@ -260,7 +260,10 @@ export default {
         api.getuserinformationbyid({uid: this.$route.params.id})
             .then(user => {
                 this.data = user.data.data
-                if (this.data.logs[0].action != 'Account Created') {
+                if (
+                    !this.data.logs.action ||
+                    this.data.logs[0].action != 'Account Created'
+                ) {
                     this.data.logs.splice(0, 0, {
                         time: this.data.creationTime,
                         action: 'Account Created',
