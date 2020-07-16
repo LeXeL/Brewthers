@@ -48,6 +48,7 @@
             <q-btn class="on-right" flat round dense @click="$emit('toggleCart')" v-if="user">
                 <i class="fas fa-shopping-cart"></i>
             </q-btn>
+            <q-btn class="on-right" color="primary" :to="'/login'" v-if="!user">iniciar sesión</q-btn>
         </q-toolbar>
     </q-header>
 </template>
