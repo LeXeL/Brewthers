@@ -24,7 +24,7 @@
                         </q-item>
                         <q-separator />
                         <q-item clickable v-close-popup>
-                            <q-item-section>
+                            <q-item-section @click="logout()">
                                 <span>
                                     <i class="fas fa-sign-out-alt on-left"></i>Cerrar sesion
                                 </span>
@@ -36,3 +36,28 @@
         </q-toolbar>
     </q-header>
 </template>
+<script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+export default {
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
+    methods: {
+        async logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(async () => {
+                    await this.$store.dispatch('UserLogout')
+                    this.$router.push('/login')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+    },
+}
+</script>

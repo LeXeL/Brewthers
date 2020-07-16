@@ -215,6 +215,9 @@ export default {
             obj.action = 'edited'
             obj.section = section
             this.userData.logs.push(obj)
+            if (this.userData.status === 'rejected') {
+                this.userData.status = 'pending'
+            }
             api.updateuserinformation({uid: this.uid, user: this.userData})
                 .then(response => {
                     this.displayLoading = false

@@ -8,7 +8,7 @@
                 @click="$router.push('/movingbeer')"
             />
             <q-space />
-            <q-btn flat round dense>
+            <q-btn flat round dense v-if="user">
                 <i class="fas fa-user"></i>
                 <q-menu content-class="bg-dark">
                     <q-list style="width: 150px; font-family: GilroyExtraBold;">
@@ -45,16 +45,10 @@
                     </q-list>
                 </q-menu>
             </q-btn>
-            <q-btn
-                class="on-right"
-                flat
-                round
-                dense
-                @click="$emit('toggleCart')"
-                v-if="$route.fullPath != '/checkout'"
-            >
+            <q-btn class="on-right" flat round dense @click="$emit('toggleCart')" v-if="user">
                 <i class="fas fa-shopping-cart"></i>
             </q-btn>
+            <q-btn class="on-right" color="primary" :to="'/login'" v-if="!user">iniciar sesión</q-btn>
         </q-toolbar>
     </q-header>
 </template>
