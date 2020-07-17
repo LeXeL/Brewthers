@@ -26,6 +26,40 @@
             <contact-section id="contact" :reason="contactReason"></contact-section>
             <footer-section :page="'landing'" />
         </q-page-container>
+        <q-dialog v-model="ageDialog" persistent>
+            <q-card dark style="width: 450px; max-width: 80vw;">
+                <q-card-section>
+                    <div class="row justify-center">
+                        <q-img
+                            :src="require('@/assets/lupulo.png')"
+                            class="q-mt-md q-mb-lg"
+                            style="width: 40px;"
+                        />
+                    </div>
+
+                    <div class="text-h5 q-mb-md text-center">¡Bienvenido a Brewthers!</div>
+                    <div
+                        class="text-subtitle2 text-center"
+                    >Nos reservamos el derecho de vender bebidas alcohólicas solamente a personas con 18+ años de edad.</div>
+                </q-card-section>
+                <q-card-actions align="right">
+                    <q-btn
+                        dense
+                        label="Soy mayor de edad"
+                        color="primary"
+                        v-close-popup
+                        class="q-mb-md"
+                    />
+                    <q-btn
+                        dense
+                        label="No soy mayor de edad"
+                        color="red-7"
+                        class="q-mb-md"
+                        @click="$router.go(-1)"
+                    />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </q-layout>
 </template>
 
@@ -51,6 +85,7 @@ import * as api from '@/api/api'
 export default {
     data() {
         return {
+            ageDialog: true,
             usSection: false,
             tienditaSection: false,
             dialog: false,
