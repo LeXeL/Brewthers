@@ -12,19 +12,7 @@
             <div class="col"></div>
             <div class="col-lg-5">
                 <div class="text-h5 q-mb-lg">Detalle de articulos:</div>
-                <div class="row q-mb-lg" v-for="(item, i) in 3" :key="i">
-                    <div class="col-lg-2">
-                        <q-img :src="require('@/assets/beer.jpg')" class="rounded-borders" />
-                    </div>
-                    <div class="col-lg-10 q-pl-md">
-                        <div class="text-h6" style="color: #27a3c3">Nombre de lo que estan comprando</div>
-                        <div class="text-subtitle-2">Estilo: Something</div>
-                        <div class="text-subtitle-2">Alcohol: 5%</div>
-                        <div class="text-subtitle-2">IBU: 150</div>
-                        <div class="text-subtitle-2">Precio unitario: $ 5.50</div>
-                        <div class="text-subtitle-2">Cantidad: 10</div>
-                    </div>
-                </div>
+                <order-item-details v-for="(item, i) in 5" :key="i" class="q-mb-md" />
             </div>
             <div class="col-lg-2">
                 <div class="q-mb-xl">
@@ -97,6 +85,7 @@
 </template>
 
 <script>
+import OrderItemDetails from '@/components/general/OrderItemDetails'
 export default {
     data() {
         return {
@@ -135,6 +124,9 @@ export default {
             this.title = 'Orden enviada con exito'
             this.orderConfirmationDialog = true
         },
+    },
+    components: {
+        'order-item-details': OrderItemDetails,
     },
 }
 </script>
