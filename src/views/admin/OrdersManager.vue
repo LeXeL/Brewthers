@@ -65,6 +65,7 @@
                             <q-td key="phone" :props="props">{{ props.row.phone }}</q-td>
                             <q-td key="items" :props="props">{{ props.row.items }}</q-td>
                             <q-td key="amount" :props="props">$ {{ props.row.amount }}</q-td>
+                            <q-td key="paymentMethod" :props="props">{{ props.row.paymentMethod }}</q-td>
                             <q-td key="date" :props="props">{{ props.row.date }}</q-td>
 
                             <q-td>
@@ -185,6 +186,13 @@ export default {
                     sortable: true,
                 },
                 {
+                    name: 'paymentMethod',
+                    align: 'left',
+                    label: 'Metodo de pago',
+                    field: 'paymentMethod',
+                    sortable: true,
+                },
+                {
                     name: 'date',
                     align: 'left',
                     label: 'Fecha',
@@ -216,6 +224,7 @@ export default {
                     phone: '6565-6556',
                     items: 10,
                     amount: 50.78,
+                    paymentMethod: 'ACH',
                     date: '10-10-10',
                     status: 0,
                 },
@@ -227,6 +236,7 @@ export default {
                     phone: '6565-6556',
                     items: 10,
                     amount: 50.78,
+                    paymentMethod: 'ACH',
                     date: '10-10-10',
                     status: 1,
                 },
@@ -238,6 +248,7 @@ export default {
                     phone: '6565-6556',
                     items: 10,
                     amount: 50.78,
+                    paymentMethod: 'ACH',
                     date: '10-10-10',
                     status: 2,
                 },
@@ -249,6 +260,7 @@ export default {
                     phone: '6565-6556',
                     items: 10,
                     amount: 50.78,
+                    paymentMethod: 'ACH',
                     date: '10-10-10',
                     status: 3,
                 },
@@ -260,6 +272,7 @@ export default {
                     phone: '6565-6556',
                     items: 10,
                     amount: 50.78,
+                    paymentMethod: 'ACH',
                     date: '10-10-10',
                     status: 4,
                 },
@@ -271,6 +284,7 @@ export default {
                     phone: '6565-6556',
                     items: 10,
                     amount: 50.78,
+                    paymentMethod: 'ACH',
                     date: '10-10-10',
                     status: 5,
                 },
