@@ -1,8 +1,15 @@
 <template>
     <div class="q-pa-md">
         <div class="text-h5 q-mb-md">Orden No. 123456</div>
+
         <div class="row">
             <div class="col-8">
+                <div class="row">
+                    <div class="col">
+                        <div class="text-h6 q-px-md">Control de estados</div>
+                        <order-stepper />
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col q-pa-md">
                         <div class="text-h6 q-mb-sm">Datos de orden</div>
@@ -43,6 +50,7 @@
 </template>
 
 <script>
+import OrderStepper from '@/components/admin/OrderStepper'
 import OrderInfo from '@/components/admin/OrderInfo'
 import OrderAmounts from '@/components/admin/OrderAmounts'
 import OrderItemDetails from '@/components/general/OrderItemDetails'
@@ -52,6 +60,7 @@ import OrderLog from '@/components/admin/OrderLog'
 
 export default {
     components: {
+        'order-stepper': OrderStepper,
         'order-info': OrderInfo,
         'order-amounts': OrderAmounts,
         'order-item-details': OrderItemDetails,

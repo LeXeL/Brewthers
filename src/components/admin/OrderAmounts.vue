@@ -31,46 +31,12 @@
         <q-input
             filled
             dark
-            label="Estado actual"
-            value="En revision"
+            label="Metodo de pago"
+            value="ACH"
             readonly
             type="text"
             class="q-mb-md"
         />
-        <div class="row">
-            <q-space />
-            <q-btn color="red-7" class="on-left" @click="cancelationModal = true">
-                <i class="fas fa-times"></i>
-            </q-btn>
-            <q-btn color="warning" class="on-left">
-                <i class="fas fa-long-arrow-alt-left"></i>
-            </q-btn>
-            <q-btn color="secondary">
-                <i class="fas fa-long-arrow-alt-right"></i>
-            </q-btn>
-        </div>
-        <q-dialog v-model="cancelationModal">
-            <q-card style="width: 700px; max-width: 80vw;" dark>
-                <q-card-section>
-                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
-                </q-card-section>
-
-                <q-card-section class="q-pt-none">
-                    <q-option-group
-                        :options="cancelationReasons"
-                        label="Notifications"
-                        type="checkbox"
-                        v-model="group"
-                        dark
-                    />
-                </q-card-section>
-
-                <q-card-actions align="right">
-                    <q-btn label="Confirmar" color="secondary" v-close-popup />
-                    <q-btn label="Cancelar" color="red-7" />
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
     </div>
 </template>
 

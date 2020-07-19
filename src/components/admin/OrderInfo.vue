@@ -28,14 +28,5 @@
             class="q-mb-md"
         />
         <q-input filled dark label="Fecha" value="2020-01-15" readonly type="date" class="q-mb-md" />
-        <q-input
-            filled
-            dark
-            label="Metodo de pago"
-            value="ACH"
-            readonly
-            type="text"
-            class="q-mb-md"
-        />
     </div>
 </template>
