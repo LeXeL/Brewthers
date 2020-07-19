@@ -93,6 +93,51 @@ async function updateUserInfo(uid, userObj) {
             return error
         })
 }
+async function addToShoppingCart(uid, itemObj) {
+    console.log(
+        `el user: ${uid} esta agregando al carrito: ${itemObj.name} con una cantidad de ${itemObj.amount}`
+    )
+    return db
+        .collection('users')
+        .doc(uid)
+        .update({cart: admin.firestore.FieldValue.arrayUnion(itemObj)})
+        .then(() => {
+            console.log('Document successfully added!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
+async function removeFromShoppingCart(uid, itemObj) {
+    return db
+        .collection('users')
+        .doc(uid)
+        .update({cart: admin.firestore.FieldValue.arrayRemove(itemObj)})
+        .then(() => {
+            console.log('Document successfully removed!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
+async function clearShoppingCart(uid) {
+    return db
+        .collection('users')
+        .doc(uid)
+        .update({cart: []})
+        .then(() => {
+            console.log('Document successfully cleared!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 
 module.exports = {
     createDatabaseWithUserInfo,
@@ -100,4 +145,7 @@ module.exports = {
     updateDatabaseWithAdminInfo,
     returnUserById,
     updateUserInfo,
+    addToShoppingCart,
+    removeFromShoppingCart,
+    clearShoppingCart,
 }

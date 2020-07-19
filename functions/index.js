@@ -73,6 +73,45 @@ exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.addToShoppingCart = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.addToShoppingCart(
+                req.body.uid,
+                req.body.product
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.removeFromShoppingCart = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.removeFromShoppingCart(
+                req.body.uid,
+                req.body.product
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.clearShoppingCart = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.clearShoppingCart(req.body.uid)
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
 
 //Handle BREWERY
 exports.createBreweryOnDatabase = functions.https.onRequest(
