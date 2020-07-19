@@ -39,8 +39,15 @@
         />
         <div class="row">
             <q-space />
-            <q-btn color="red-7" class="on-left" label="cancelar" @click="cancelationModal = true" />
-            <q-btn color="secondary" label="continuar" />
+            <q-btn color="red-7" class="on-left" @click="cancelationModal = true">
+                <i class="fas fa-times"></i>
+            </q-btn>
+            <q-btn color="warning" class="on-left">
+                <i class="fas fa-long-arrow-alt-left"></i>
+            </q-btn>
+            <q-btn color="secondary">
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </q-btn>
         </div>
         <q-dialog v-model="cancelationModal">
             <q-card style="width: 700px; max-width: 80vw;" dark>
