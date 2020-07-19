@@ -1,5 +1,9 @@
 <template>
-    <q-page class="pattern-bg" v-if="Object.keys(user).length !== 0 ">
+    <q-page
+        class="pattern-bg"
+        v-if="Object.keys(user).length !== 0"
+        style="height: auto; background-repeat: repeat-y;"
+    >
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -9,10 +13,12 @@
         ></brewthers-alert>
         <div class="row">
             <div class="col q-pa-lg">
-                <div class="text-h4">{{restName}}</div>
+                <div class="text-h4">{{ restName }}</div>
                 <div class="text-h6">
                     Estatus:
-                    <span style="color: #27a3c3">{{user.status ? user.status : 'pending'}}</span>
+                    <span style="color: #27a3c3">{{
+                        user.status ? user.status : 'pending'
+                    }}</span>
                 </div>
             </div>
         </div>
@@ -67,7 +73,8 @@
                         <q-btn
                             color="primary"
                             @click="handleData('GeneralInfo')"
-                        >{{editGeneralInfo ? 'Guardar' : 'Editar'}}</q-btn>
+                            >{{ editGeneralInfo ? 'Guardar' : 'Editar' }}</q-btn
+                        >
                     </q-card-actions>
                 </q-card>
             </div>
@@ -103,7 +110,8 @@
                         <q-btn
                             color="primary"
                             @click="handleData('AddressInfo')"
-                        >{{editAddressInfo ? 'Guardar' : 'Editar'}}</q-btn>
+                            >{{ editAddressInfo ? 'Guardar' : 'Editar' }}</q-btn
+                        >
                     </q-card-actions>
                 </q-card>
             </div>
@@ -117,7 +125,9 @@
                         </div>
                     </q-card-section>
                     <q-card-actions>
-                        <q-btn @click="resetPassword()" color="primary">Reiniciar Contraseña</q-btn>
+                        <q-btn @click="resetPassword()" color="primary"
+                            >Reiniciar Contraseña</q-btn
+                        >
                     </q-card-actions>
                 </q-card>
             </div>

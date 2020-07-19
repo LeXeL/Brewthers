@@ -25,7 +25,7 @@ import Drawer from '@/components/admin/Drawer'
 export default {
     data() {
         return {
-            drawer: true,
+            drawer: false,
         }
     },
     methods: {
@@ -49,5 +49,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

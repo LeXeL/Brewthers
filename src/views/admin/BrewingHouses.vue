@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md">
+    <q-page class="q-pa-md">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -28,7 +28,7 @@
                 <brewing-houses-form />
             </div>
         </div>
-    </div>
+    </q-page>
 </template>
 
 <script>

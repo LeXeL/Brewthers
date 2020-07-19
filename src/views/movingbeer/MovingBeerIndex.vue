@@ -14,7 +14,7 @@
             </div>
             <div class="row">
                 <div
-                    class="col-lg-3 col-sm-3 col-xs-12"
+                    class="col-lg-3 col-sm-4 col-sm-3 col-xs-12"
                     v-for="(brew, i) in brewers"
                     :key="i"
                 >
@@ -58,7 +58,7 @@
                 <q-card-section>
                     <div class="row q-mb-md">
                         <div class="col"></div>
-                        <div class="col-lg-1 col-xs-6">
+                        <div class="col-lg-1 col-sm-3 col-xs-6">
                             <q-img
                                 class="rounded-borders"
                                 :src="
@@ -75,7 +75,7 @@
                 <q-card-section>
                     <div class="row">
                         <div class="col"></div>
-                        <div class="col-lg-2 col-xs-10">
+                        <div class="col-lg-2 col-sm-8 col-xs-10">
                             <q-select
                                 v-model="type"
                                 outlined
@@ -93,7 +93,7 @@
                 <q-card-section>
                     <div class="row">
                         <div
-                            class="col-lg-2 col-xs-12 rounded-corners"
+                            class="col-lg-2 col-sm-6 col-xs-12 rounded-corners"
                             v-for="(product, i) in productsInHouse"
                             :key="i"
                         >
