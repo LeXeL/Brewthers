@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row q-pa-md">
         <div class="col-lg-3">
             <q-img :src="require('@/assets/beer.jpg')" class="rounded-borders" />
         </div>

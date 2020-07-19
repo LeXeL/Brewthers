@@ -11,8 +11,8 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-lg-5">
-                <div class="text-h5 q-mb-lg">Detalle de articulos:</div>
-                <order-item-details v-for="(item, i) in 5" :key="i" class="q-mb-md" />
+                <div class="text-h5 q-pl-md">Detalle de articulos:</div>
+                <order-item-details v-for="(item, i) in 5" :key="i" />
             </div>
             <div class="col-lg-2">
                 <div class="q-mb-xl">
