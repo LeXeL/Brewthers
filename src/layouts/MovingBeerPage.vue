@@ -76,10 +76,14 @@ export default {
     methods: {
         calculateTotal() {
             let total = 0
-            this.data[0].cart.forEach(product => {
-                total += parseFloat(product.price) * parseFloat(product.amount)
-            })
-            return total.toFixed(2)
+            if (this.data[0].cart) {
+                this.data[0].cart.forEach(product => {
+                    total +=
+                        parseFloat(product.price) * parseFloat(product.amount)
+                })
+                return total.toFixed(2)
+            }
+            return '0'
         },
         deleteFromCart(product) {
             try {
@@ -110,21 +114,22 @@ export default {
     },
     mounted() {
         let db = firebase.firestore()
-        db.collection('users').onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                if (change.doc.id === this.uid) {
-                    if (change.type === 'added') {
-                        this.addToData(change.doc.id, change.doc.data())
+        db.collection('users')
+            .doc(this.uid)
+            .onSnapshot(
+                {
+                    // Listen for document metadata changes
+                    includeMetadataChanges: true,
+                },
+                doc => {
+                    // ...
+                    if (this.data.length < 1) {
+                        this.addToData(doc.id, doc.data())
+                        return
                     }
-                    if (change.type === 'modified') {
-                        this.editData(change.doc.id, change.doc.data())
-                    }
-                    if (change.type === 'removed') {
-                        this.removeData(change.doc.id)
-                    }
+                    this.editData(doc.id, doc.data())
                 }
-            })
-        })
+            )
     },
     components: {
         'mb-navbar': Navbar,
