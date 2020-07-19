@@ -22,6 +22,7 @@ import BrewingHouses from './views/admin/BrewingHouses'
 import InventoryManager from './views/admin/InventoryManager'
 import ItemDetails from './views/admin/ItemDetails'
 import OrdersManager from './views/admin/OrdersManager'
+import OrderDetails from './views/admin/OrderDetails'
 
 Vue.use(Router)
 
@@ -79,6 +80,11 @@ export default new Router({
                     path: '/orders-manager',
                     name: 'orders-manager',
                     component: OrdersManager,
+                },
+                {
+                    path: '/order-details',
+                    name: 'order-details',
+                    component: OrderDetails,
                 },
             ],
         },

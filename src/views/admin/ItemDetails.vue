@@ -161,8 +161,8 @@ export default {
         return {
             file: null,
             data: '',
-            addInventory: 0,
-            substractInventory: 0,
+            addInventory: '',
+            substractInventory: '',
             editInformation: false,
             displayLoading: false,
             displayAlert: false,
@@ -259,7 +259,7 @@ export default {
                         'Se ha aumentado con exito el inventario'
                     this.alertType = 'success'
                     this.displayAlert = true
-                    this.addInventory = 0
+                    this.addInventory = ''
                     this.getProductInformation()
                 })
                 .catch(error => {
@@ -283,7 +283,7 @@ export default {
                     'No se puede restar esta cantidad ya que da un valor menor a 0'
                 this.alertType = 'error'
                 this.displayAlert = true
-                this.substractInventory = 0
+                this.substractInventory = ''
             } else {
                 this.data.inventory -= inventory
                 api.updateProductInformation({
@@ -362,8 +362,10 @@ export default {
                 })
         },
     },
-    mounted() {
-        this.getProductInformation()
+    async mounted() {
+        this.displayLoading = true
+        await this.getProductInformation()
+        this.displayLoading = false
     },
 }
 </script>
