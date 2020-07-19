@@ -39,8 +39,46 @@
         />
         <div class="row">
             <q-space />
-            <q-btn color="red-7" class="on-left" label="cancelar" />
+            <q-btn color="red-7" class="on-left" label="cancelar" @click="cancelationModal = true" />
             <q-btn color="secondary" label="continuar" />
         </div>
+        <q-dialog v-model="cancelationModal">
+            <q-card style="width: 700px; max-width: 80vw;" dark>
+                <q-card-section>
+                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <q-option-group
+                        :options="cancelationReasons"
+                        label="Notifications"
+                        type="checkbox"
+                        v-model="group"
+                        dark
+                    />
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn label="Confirmar" color="secondary" v-close-popup />
+                    <q-btn label="Cancelar" color="red-7" />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            cancelationModal: false,
+            group: [],
+            cancelationReasons: [
+                {label: 'This is cancelation reason 1', value: 'bat'},
+                {label: 'This is cancelation reason 2', value: 'friend'},
+                {label: 'This is cancelation reason 3', value: 'upload'},
+            ],
+        }
+    },
+}
+</script>
