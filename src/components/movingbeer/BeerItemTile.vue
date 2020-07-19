@@ -5,23 +5,26 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert =false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div
-            class="movingbeer-item"
+            class="movingbeer-item "
             style="position: relative;"
             @mouseleave="showAddedOverlay = false"
         >
-            <q-img :src="product.photoLocation" />
-            <div class="movingbeer-item-overlay q-pa-md" v-if="!showAddedOverlay">
-                <div class="q-mb-sm q-mt-lg">Estilo: {{product.style}}</div>
-                <div class="q-mb-sm">ABV: {{product.abv}}%</div>
-                <div class="q-mb-sm">IBU: {{product.ibu}}</div>
+            <q-img :src="product.photoLocation" class="rounded-borders" />
+            <div
+                class="movingbeer-item-overlay q-pa-md"
+                v-if="!showAddedOverlay"
+            >
+                <div class="q-mb-sm q-mt-lg">Estilo: {{ product.style }}</div>
+                <div class="q-mb-sm">ABV: {{ product.abv }}%</div>
+                <div class="q-mb-sm">IBU: {{ product.ibu }}</div>
                 <div class="q-mb-sm" style="color:#27a3c3; cursor: pointer;">
                     Descripción
-                    <q-tooltip
-                        content-style="font-size: 16px; width: 250px;"
-                    >{{product.description}}</q-tooltip>
+                    <q-tooltip content-style="font-size: 16px; width: 250px;">{{
+                        product.description
+                    }}</q-tooltip>
                 </div>
                 <q-btn-group class="q-mb-lg">
                     <q-btn
@@ -48,8 +51,8 @@
             </div>
         </div>
 
-        <div class="text-h6 text-center">{{product.name}}</div>
-        <div class="text-subtitle-2 text-center">$ {{product.price}}</div>
+        <div class="text-h6 text-center">{{ product.name }}</div>
+        <div class="text-subtitle-2 text-center">$ {{ product.price }}</div>
     </div>
 </template>
 

@@ -1,16 +1,16 @@
 <template>
-    <div class="q-pa-md" v-if="Object.keys(data).length !== 0 ">
+    <div class="q-pa-md" v-if="Object.keys(data).length !== 0">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert= false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div class="text-h5 q-mb-md">Detalles de articulo</div>
         <div class="row">
-            <div class="col-lg-4 q-pa-md">
+            <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
                 <div class="row q-mb-md">
                     <q-input
                         filled
@@ -42,7 +42,11 @@
                         class="q-mb-md full-width"
                         dark
                         label="Casa"
-                        :value="brewerys.filter(brewery=> {if(brewery.id === data.brewery) return brewery})[0].name"
+                        :value="
+                            brewerys.filter(brewery => {
+                                if (brewery.id === data.brewery) return brewery
+                            })[0].name
+                        "
                         readonly
                     />
                     <q-input
@@ -93,18 +97,18 @@
                         v-model="data.price"
                         :disable="!editInformation"
                     />
-                    <q-btn
-                        color="info"
-                        class="on-left"
-                        @click="handleData()"
-                    >{{editInformation ? 'Guardar' : 'Editar'}}</q-btn>
+                    <q-btn color="info" class="on-left" @click="handleData()">{{
+                        editInformation ? 'Guardar' : 'Editar'
+                    }}</q-btn>
                 </div>
             </div>
-            <div class="col-lg-4 q-pa-md">
+            <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
                 <q-img :src="data.photoLocation" />
             </div>
-            <div class="col-lg-4 q-pa-md">
-                <div class="text-h6 q-mb-md">Cantidad en inventario: {{ data.inventory }}</div>
+            <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
+                <div class="text-h6 q-mb-md">
+                    Cantidad en inventario: {{ data.inventory }}
+                </div>
                 <q-input
                     dark
                     filled
@@ -135,7 +139,11 @@
                         <q-btn
                             round
                             color="red-7"
-                            @click="subtractToInventory(parseInt(substractInventory))"
+                            @click="
+                                subtractToInventory(
+                                    parseInt(substractInventory)
+                                )
+                            "
                         >
                             <i class="fas fa-minus"></i>
                         </q-btn>

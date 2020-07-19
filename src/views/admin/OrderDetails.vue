@@ -3,7 +3,7 @@
         <div class="text-h5 q-mb-md">Orden No. 123456</div>
 
         <div class="row">
-            <div class="col-8">
+            <div class="col-lg-8 col-xs-12">
                 <div class="row">
                     <div class="col">
                         <div class="text-h6 q-px-md">Control de estados</div>
@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col q-pa-md">
+                    <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
                         <div class="text-h6 q-mb-sm">Datos de orden</div>
                         <order-info />
                     </div>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col q-pa-md">
+                    <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
                         <div class="text-h6 q-mb-sm">Entrega</div>
                         <order-address />
                     </div>
@@ -31,13 +31,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 q-pa-md">
+                    <div class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md">
                         <div class="text-h6 q-mb-sm">Log de orden</div>
                         <order-log />
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
                 <order-item-details v-for="(item, i) in 5" :key="i" />
             </div>
         </div>

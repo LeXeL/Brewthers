@@ -72,7 +72,12 @@
                 <div class="row" v-if="data.logs">
                     <div class="text-h6">Log de cuenta:</div>
                     <q-list dark padding class="full-width">
-                        <q-item clickable v-ripple v-for="(log, index) in data.logs" :key="index">
+                        <q-item
+                            clickable
+                            v-ripple
+                            v-for="(log, index) in data.logs"
+                            :key="index"
+                        >
                             <!-- <q-item-section
                                 >{{ returnTime(log.time) }} - {{ log.action }} -
                                 {{ log.section }}
@@ -87,14 +92,19 @@
                                 {{ returnTime(log.time) }}
                                 <br />
                                 <ul v-if="Array.isArray(log.section)">
-                                    <li v-for="(reason, i) in log.section" :key="i">{{ reason }}</li>
+                                    <li
+                                        v-for="(reason, i) in log.section"
+                                        :key="i"
+                                    >
+                                        {{ reason }}
+                                    </li>
                                 </ul>
                             </q-item-section>
                         </q-item>
                     </q-list>
                 </div>
             </div>
-            <div class="col-lg-8 q-pa-md">
+            <div class="col-lg-8 col-xs-12 q-pa-md">
                 <GoogleMaps
                     class="full-width q-mb-md"
                     :editable="false"
@@ -138,7 +148,12 @@
 
                 <q-card-actions align="right" class="text-primary">
                     <q-btn flat label="Cancelar" v-close-popup />
-                    <q-btn flat label="Confirmar" @click="addRejectedReasons()" v-close-popup />
+                    <q-btn
+                        flat
+                        label="Confirmar"
+                        @click="addRejectedReasons()"
+                        v-close-popup
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
