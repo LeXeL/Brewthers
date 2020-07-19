@@ -94,7 +94,9 @@ async function updateUserInfo(uid, userObj) {
         })
 }
 async function addToShoppingCart(uid, itemObj) {
-    console.log(itemObj)
+    console.log(
+        `el user: ${uid} esta agregando al carrito: ${itemObj.name} con una cantidad de ${itemObj.amount}`
+    )
     return db
         .collection('users')
         .doc(uid)
