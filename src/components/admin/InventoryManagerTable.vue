@@ -31,6 +31,7 @@
                 <q-td
                     key="house"
                     :props="props"
+                    v-if="brewerys"
                 >{{ brewerys.filter(brewery=> {if(brewery.id === props.row.brewery) return brewery})[0].name }}</q-td>
                 <q-td key="status" :props="props">
                     <q-btn
