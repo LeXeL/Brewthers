@@ -27,6 +27,18 @@ export const updateadmininformation = data =>
     Request.post('/updateAdminWithInfo', data, {
         'Content-Type': 'application/json',
     })
+export const addToShoppingCart = data =>
+    Request.post('/addToShoppingCart', data, {
+        'Content-Type': 'application/json',
+    })
+export const removeFromShoppingCart = data =>
+    Request.post('/removeFromShoppingCart', data, {
+        'Content-Type': 'application/json',
+    })
+export const clearShoppingCart = data =>
+    Request.post('/clearShoppingCart', data, {
+        'Content-Type': 'application/json',
+    })
 
 //BREWERY
 export const createBreweryOnDatabase = data =>

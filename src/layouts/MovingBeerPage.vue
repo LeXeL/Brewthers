@@ -23,33 +23,17 @@
             content-class="bg-dark"
             class="fixed-right"
         >
-            <q-scroll-area class="fit">
+            <q-scroll-area class="fit" v-if="data.length > 0">
                 <div class="q-mt-md q-mb-md">
                     <div class="text-h5 text-center">CARRITO DE COMPRAS</div>
                 </div>
-                <div v-for="(item, i) in 5" :key="i">
-                    <q-item clickable ripple>
-                        <q-item class="full-width">
-                            <q-avatar rounded>
-                                <img :src="require('@/assets/beer.jpg')" />
-                            </q-avatar>
-                            <q-item-section>
-                                <span class="on-right">Nombre item en venta</span>
-                                <span class="on-right">Cant. 35</span>
-                            </q-item-section>
-
-                            <q-item-section side>
-                                <span class="on-left">$2.50 c/u</span>
-                            </q-item-section>
-                            <q-item-section side>
-                                <i class="fas fa-times" style="font-size: 20px;"></i>
-                            </q-item-section>
-                        </q-item>
-                    </q-item>
+                <div v-for="(item, i) in data[0].cart" :key="i">
+                    <CartItemTile :item="item" @deleteItemFromCart="deleteFromCart" />
                 </div>
                 <div class="text-h6 text-right on-left fixed-bottom" style="bottom: 65px;">
                     Sub-total
-                    <br />$150.00
+                    <br />
+                    ${{calculateTotal()}}
                 </div>
                 <div class="fixed-bottom">
                     <q-btn
@@ -68,18 +52,84 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+
+import * as api from '@/api/api'
+
 import Navbar from '@/components/movingbeer/Navbar.vue'
 import Footer from '@/components/general/Footer.vue'
+import CartItemTile from '@/components/movingbeer/CartItemTile.vue'
 
 export default {
+    computed: {
+        uid() {
+            return this.$store.getters.uid
+        },
+    },
     data() {
         return {
             drawerRight: false,
+            data: [],
         }
+    },
+    methods: {
+        calculateTotal() {
+            let total = 0
+            this.data[0].cart.forEach(product => {
+                total += parseFloat(product.price) * parseFloat(product.amount)
+            })
+            return total.toFixed(2)
+        },
+        deleteFromCart(product) {
+            try {
+                api.removeFromShoppingCart({uid: this.uid, product: product})
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        addToData(id, data) {
+            data.id = id
+            this.data.push(data)
+        },
+        editData(id, data) {
+            data.id = id
+            this.data.forEach((d, index) => {
+                if (d.id === id) {
+                    this.data.splice(index, 1, data)
+                }
+            })
+        },
+        removeData(id) {
+            this.data.forEach((d, index) => {
+                if (d.id === id) {
+                    this.data.splice(index, 1)
+                }
+            })
+        },
+    },
+    mounted() {
+        let db = firebase.firestore()
+        db.collection('users').onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change => {
+                if (change.doc.id === this.uid) {
+                    if (change.type === 'added') {
+                        this.addToData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'modified') {
+                        this.editData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'removed') {
+                        this.removeData(change.doc.id)
+                    }
+                }
+            })
+        })
     },
     components: {
         'mb-navbar': Navbar,
         'mb-footer': Footer,
+        CartItemTile,
     },
 }
 </script>

@@ -1,8 +1,19 @@
 <template>
     <div class="q-pa-md text-center">
-        <div class="movingbeer-item" style="position: relative;">
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="displayAlert =false"
+        ></brewthers-alert>
+        <div
+            class="movingbeer-item"
+            style="position: relative;"
+            @mouseleave="showAddedOverlay = false"
+        >
             <q-img :src="product.photoLocation" />
-            <div class="movingbeer-item-overlay q-pa-md">
+            <div class="movingbeer-item-overlay q-pa-md" v-if="!showAddedOverlay">
                 <div class="q-mb-sm q-mt-lg">Estilo: {{product.style}}</div>
                 <div class="q-mb-sm">ABV: {{product.abv}}%</div>
                 <div class="q-mb-sm">IBU: {{product.ibu}}</div>
@@ -13,35 +24,28 @@
                     >{{product.description}}</q-tooltip>
                 </div>
                 <q-btn-group class="q-mb-lg">
-                    <q-btn color="primary" size="xs" @click="amount--">
+                    <q-btn
+                        color="primary"
+                        :disable="amount == 0 ? true : false"
+                        size="xs"
+                        @click="subtractAmount"
+                    >
                         <i class="fas fa-minus"></i>
                     </q-btn>
                     <q-btn color="primary" disable>{{ amount }}</q-btn>
-                    <q-btn color="primary" size="xs" @click="amount++">
+                    <q-btn color="primary" size="xs" @click="addAmount">
                         <i class="fas fa-plus"></i>
                     </q-btn>
                 </q-btn-group>
                 <br />
-                <q-btn color="primary">Agregar</q-btn>
+                <q-btn color="primary" @click="addToCart">Agregar</q-btn>
             </div>
-            <!-- <div class="movingbeer-item-overlay">
+            <div class="movingbeer-item-overlay" v-if="showAddedOverlay">
                 <div class="text-body-1 absolute-center">
                     <i class="fas fa-check" style="color: #27a3c3"></i> Articulo
                     agregado
                 </div>
-            </div>-->
-            <!-- {"style":"style 2",
-            "description":"asdasdasd",
-            "inventory":0,
-            "type":"KEG",
-            "status":"active",
-            "name":"Prueba",
-            "photoLocation":"https://firebasestorage.googleapis.com/v0/b/brewthers-374c0.appspot.com/o/products%2FLa%20Murga%2FPrueba%2FPrueba?alt=media&token=1cdcfeb8-e992-488b-b1ca-352d22df7d8e",
-            "ibu":"123",
-            "brewery":"7TtGmy9E0JTaTRPU68GW",
-            "price":"123",
-            "abv":"122",
-            "id":"Nn95wsfITZAIWrdA1Fha"}-->
+            </div>
         </div>
 
         <div class="text-h6 text-center">{{product.name}}</div>
@@ -50,6 +54,7 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
     props: {
         product: {
@@ -59,10 +64,55 @@ export default {
             },
         },
     },
+    computed: {
+        uid() {
+            return this.$store.getters.uid
+        },
+    },
     data() {
         return {
             amount: 0,
+            showAddedOverlay: false,
+            maxlimitreach: false,
+            minlimitreach: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
+    },
+    methods: {
+        addToCart() {
+            this.showAddedOverlay = true
+            this.product.amount = this.amount
+            api.addToShoppingCart({uid: this.uid, product: this.product})
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    this.alertTitle = 'Hey AWANTA!'
+                    this.alertMessage =
+                        'Hubo un error con tu peticion por favor intentalo mas tarde'
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
+        addAmount() {
+            this.displayAlert = false
+            if (this.amount < this.product.inventory) {
+                return this.amount++
+            }
+            this.alertTitle = 'Hey AWANTA!'
+            this.alertMessage =
+                'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
+            this.alertType = 'error'
+            this.displayAlert = true
+        },
+        subtractAmount() {
+            if (this.amount > 0) {
+                return this.amount--
+            }
+        },
     },
 }
 </script>
