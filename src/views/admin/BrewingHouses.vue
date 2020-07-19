@@ -12,6 +12,7 @@
             :title="alertTitle"
             :message="alertMessage"
             @accept="deleteBrewery"
+            @cancel="displayConfirm=false"
         ></confirm-dialog>
         <div class="text-h5 q-mb-md">Administrador de casas cerveceras</div>
         <div class="row">

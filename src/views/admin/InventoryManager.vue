@@ -12,6 +12,7 @@
             :title="alertTitle"
             :message="alertMessage"
             @accept="deleteBrewery"
+            @cancel="displayConfirm=false"
         ></confirm-dialog>
         <div class="text-h5 q-mb-md">Administrador de inventario</div>
         <div class="row">
