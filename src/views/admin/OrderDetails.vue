@@ -23,6 +23,12 @@
                         <order-proof-of-payments />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-6 q-pa-md">
+                        <div class="text-h6 q-mb-sm">Log de orden</div>
+                        <order-log />
+                    </div>
+                </div>
             </div>
             <div class="col">
                 <order-item-details v-for="(item, i) in 5" :key="i" />
@@ -42,6 +48,7 @@ import OrderAmounts from '@/components/admin/OrderAmounts'
 import OrderItemDetails from '@/components/general/OrderItemDetails'
 import OrderAddress from '@/components/admin/OrderAddress'
 import OrderProofOfPayments from '@/components/admin/OrderProofOfPayments'
+import OrderLog from '@/components/admin/OrderLog'
 
 export default {
     components: {
@@ -50,6 +57,7 @@ export default {
         'order-item-details': OrderItemDetails,
         'order-address': OrderAddress,
         'order-proof-of-payments': OrderProofOfPayments,
+        'order-log': OrderLog,
     },
 }
 </script>
