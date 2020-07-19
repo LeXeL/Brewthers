@@ -12,11 +12,16 @@
             </div>
             <div class="row">
                 <div class="col-lg-3 col-sm-3 col-xs-12" v-for="(brew, i) in brewers" :key="i">
-                    <beer-house-tile :brew="brew" @openBeerHouse="beerHouseDialog()" />
+                    <beer-house-tile
+                        :brew="brew"
+                        :products="products"
+                        @openBeerHouse="beerHouseDialog"
+                    />
                 </div>
             </div>
         </section>
         <q-dialog
+            v-if="brewerWorkingId"
             v-model="dialog"
             persistent
             :maximized="maximizedToggle"
@@ -33,7 +38,11 @@
                 </q-bar>
 
                 <q-card-section>
-                    <div class="text-h4 text-center">Brewing House Name</div>
+                    <div class="text-h4 text-center">
+                        {{brewers.filter(brew =>{
+                        if(brew.id === brewerWorkingId) return brew
+                        })[0].name}}
+                    </div>
                 </q-card-section>
 
                 <q-card-section>
@@ -41,9 +50,9 @@
                         <div class="col"></div>
                         <div class="col-lg-1">
                             <q-img
-                                :src="
-                                    require(`@/assets/familia-brewthers/2-oceans.png`)
-                                "
+                                :src="brewers.filter(brew =>{
+                                    if(brew.id === brewerWorkingId) return brew
+                                })[0].photoLocation"
                             />
                         </div>
                         <div class="col"></div>
@@ -69,8 +78,8 @@
                 </q-card-section>
                 <q-card-section>
                     <div class="row">
-                        <div class="col-lg-2" v-for="(item, i) in 6" :key="i">
-                            <beer-item-tile />
+                        <div class="col-lg-2" v-for="(product, i) in productsInHouse" :key="i">
+                            <beer-item-tile :product="product" />
                         </div>
                     </div>
                 </q-card-section>
@@ -96,19 +105,46 @@ export default {
             dialog: false,
             maximizedToggle: true,
             brewers: [],
+            products: [],
+            brewerWorkingId: '',
+            productsInHouse: [],
         }
     },
-    mounted() {
+    watch: {
+        type(newValue, oldValue) {
+            this.productsInHouse = this.products.filter(product => {
+                if (
+                    product.brewery === this.brewerWorkingId &&
+                    product.inventory > 0 &&
+                    product.type.toLowerCase() === this.type.toLowerCase()
+                )
+                    return product
+            })
+        },
+    },
+    async mounted() {
         if (this.$store.getters.brewerys.length > 1) {
             this.brewers = this.$store.getters.brewerys
         } else {
-            api.returnAllBrewerys().then(response => {
+            await api.returnAllBrewerys().then(response => {
                 this.brewers = response.data.data
             })
         }
+        await api.returnAllProducts().then(response => {
+            this.products = response.data.data
+        })
     },
     methods: {
-        beerHouseDialog() {
+        beerHouseDialog(event) {
+            this.brewerWorkingId = event
+            this.productsInHouse = this.products.filter(product => {
+                if (
+                    product.brewery === this.brewerWorkingId &&
+                    product.inventory > 0 &&
+                    product.type.toLowerCase() === this.type.toLowerCase()
+                )
+                    return product
+            })
             this.dialog = true
         },
     },
