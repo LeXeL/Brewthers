@@ -18,6 +18,7 @@
         <q-drawer
             side="right"
             v-model="drawerRight"
+            :overlay="mobileDrawer"
             :width="400"
             :breakpoint="500"
             content-class="bg-dark"
@@ -69,6 +70,7 @@ export default {
     },
     data() {
         return {
+            mobileDrawer: false,
             drawerRight: false,
             data: [],
         }
@@ -130,6 +132,9 @@ export default {
                     this.editData(doc.id, doc.data())
                 }
             )
+    },
+    beforeMount() {
+        if (this.$q.platform.is.mobile) this.mobileDrawer = true
     },
     components: {
         'mb-navbar': Navbar,
