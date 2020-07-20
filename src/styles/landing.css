@@ -250,8 +250,7 @@ footer span {
     font-family: GilroyLight;
 }
 
-footer a:hover,
-i:hover {
+footer a:hover {
     color: #27a3c3;
 }
 

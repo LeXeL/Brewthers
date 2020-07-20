@@ -31,6 +31,14 @@
                 <div v-for="(item, i) in data[0].cart" :key="i">
                     <CartItemTile :item="item" @deleteItemFromCart="deleteFromCart" />
                 </div>
+                <div class="row text-center" style="margin-top: 300px;">
+                    <div class="col">
+                        <i class="fas fa-beer" style="color: #5c5c5c; font-size: 65px;"></i>
+                        <p
+                            style="color: #5c5c5c; font-size: 18px;"
+                        >Parece que la marea esta baja y no tienes artículos en tu carrito.</p>
+                    </div>
+                </div>
                 <div class="text-h6 text-right on-left fixed-bottom" style="bottom: 65px;">
                     Sub-total
                     <br />
