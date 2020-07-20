@@ -31,7 +31,11 @@
                 <div v-for="(item, i) in data[0].cart" :key="i">
                     <CartItemTile :item="item" @deleteItemFromCart="deleteFromCart" />
                 </div>
-                <div class="row text-center" style="margin-top: 300px;">
+                <div
+                    class="row text-center"
+                    style="margin-top: 300px;"
+                    v-if="!data[0].cart || data[0].cart.length == 0"
+                >
                     <div class="col">
                         <i class="fas fa-beer" style="color: #5c5c5c; font-size: 65px;"></i>
                         <p
