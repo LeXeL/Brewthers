@@ -93,7 +93,11 @@
                             <beer-item-tile :product="product" />
                         </div>
                     </div>
-                    <div class="row text-center" style="margin-top: 100px;">
+                    <div
+                        class="row text-center"
+                        style="margin-top: 100px;"
+                        v-if="productsInHouse.length == 0"
+                    >
                         <div class="col">
                             <i class="fas fa-beer" style="color: #5c5c5c; font-size: 100px;"></i>
                             <p

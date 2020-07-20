@@ -8,23 +8,22 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div
-            class="movingbeer-item "
+            class="movingbeer-item"
             style="position: relative;"
             @mouseleave="showAddedOverlay = false"
         >
             <q-img :src="product.photoLocation" class="rounded-borders" />
-            <div
-                class="movingbeer-item-overlay q-pa-md"
-                v-if="!showAddedOverlay"
-            >
+            <div class="movingbeer-item-overlay q-pa-md" v-if="!showAddedOverlay">
                 <div class="q-mb-sm q-mt-lg">Estilo: {{ product.style }}</div>
                 <div class="q-mb-sm">ABV: {{ product.abv }}%</div>
                 <div class="q-mb-sm">IBU: {{ product.ibu }}</div>
                 <div class="q-mb-sm" style="color:#27a3c3; cursor: pointer;">
                     Descripción
-                    <q-tooltip content-style="font-size: 16px; width: 250px;">{{
+                    <q-tooltip content-style="font-size: 16px; width: 250px;">
+                        {{
                         product.description
-                    }}</q-tooltip>
+                        }}
+                    </q-tooltip>
                 </div>
                 <q-btn-group class="q-mb-lg">
                     <q-btn
@@ -41,7 +40,7 @@
                     </q-btn>
                 </q-btn-group>
                 <br />
-                <q-btn color="primary" @click="addToCart">Agregar</q-btn>
+                <q-btn color="primary" @click="addToCart" :disabled="!amount">Agregar</q-btn>
             </div>
             <div class="movingbeer-item-overlay" v-if="showAddedOverlay">
                 <div class="text-body-1 absolute-center">
