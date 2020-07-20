@@ -7,11 +7,17 @@
                     <div
                         class="text-h3 text-center"
                         style="text-transform: uppercase;"
-                    >Familia brewthers</div>
+                    >
+                        Familia brewthers
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-sm-3 col-xs-12" v-for="(brew, i) in brewers" :key="i">
+                <div
+                    class="col-lg-3 col-sm-4 col-sm-3 col-xs-12"
+                    v-for="(brew, i) in brewers"
+                    :key="i"
+                >
                     <beer-house-tile
                         :brew="brew"
                         :products="products"
@@ -33,26 +39,34 @@
                     <q-space />
                     <q-btn dense flat v-close-popup>
                         <i class="fas fa-times" style="font-size: 25px;"></i>
-                        <q-tooltip content-class="bg-white text-primary">Cerrar</q-tooltip>
+                        <q-tooltip content-class="bg-white text-primary"
+                            >Cerrar</q-tooltip
+                        >
                     </q-btn>
                 </q-bar>
 
                 <q-card-section>
                     <div class="text-h4 text-center">
-                        {{brewers.filter(brew =>{
-                        if(brew.id === brewerWorkingId) return brew
-                        })[0].name}}
+                        {{
+                            brewers.filter(brew => {
+                                if (brew.id === brewerWorkingId) return brew
+                            })[0].name
+                        }}
                     </div>
                 </q-card-section>
 
                 <q-card-section>
                     <div class="row q-mb-md">
                         <div class="col"></div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-1 col-sm-3 col-xs-6">
                             <q-img
-                                :src="brewers.filter(brew =>{
-                                    if(brew.id === brewerWorkingId) return brew
-                                })[0].photoLocation"
+                                class="rounded-borders"
+                                :src="
+                                    brewers.filter(brew => {
+                                        if (brew.id === brewerWorkingId)
+                                            return brew
+                                    })[0].photoLocation
+                                "
                             />
                         </div>
                         <div class="col"></div>
@@ -61,7 +75,7 @@
                 <q-card-section>
                     <div class="row">
                         <div class="col"></div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-2 col-sm-8 col-xs-10">
                             <q-select
                                 v-model="type"
                                 outlined
@@ -78,7 +92,11 @@
                 </q-card-section>
                 <q-card-section>
                     <div class="row">
-                        <div class="col-lg-2" v-for="(product, i) in productsInHouse" :key="i">
+                        <div
+                            class="col-lg-2 col-sm-6 col-xs-12 rounded-corners"
+                            v-for="(product, i) in productsInHouse"
+                            :key="i"
+                        >
                             <beer-item-tile :product="product" />
                         </div>
                     </div>

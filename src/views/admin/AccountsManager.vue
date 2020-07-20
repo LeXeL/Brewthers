@@ -9,17 +9,38 @@
         ></brewthers-alert>
         <div class="text-h5 q-mb-md">Administrador de cuentas</div>
         <div class="row q-mb-lg">
-            <div class="col-lg-6 q-pa-md">
+            <div class="col-lg-6 col-xs-12 q-pa-md">
                 <active-accounts-table
-                    :data="users.filter(user => {if(user.status === 'approved' && user.role !== 'admin') return user})"
+                    :data="
+                        users.filter(user => {
+                            if (
+                                user.status === 'approved' &&
+                                user.role !== 'admin'
+                            )
+                                return user
+                        })
+                    "
                 ></active-accounts-table>
             </div>
-            <div class="col-lg-6 q-pa-md">
+            <div class="col-lg-6 col-xs-12 q-pa-md">
                 <pending-accounts-table
-                    :data="users.filter(user => {if(user.status === 'pending' || user.status === 'rejected' && user.role !== 'admin') return user})"
+                    :data="
+                        users.filter(user => {
+                            if (
+                                user.status === 'pending' ||
+                                (user.status === 'rejected' &&
+                                    user.role !== 'admin')
+                            )
+                                return user
+                        })
+                    "
                 ></pending-accounts-table>
                 <admin-accounts-table
-                    :data="users.filter(user => {if( user.role === 'admin') return user})"
+                    :data="
+                        users.filter(user => {
+                            if (user.role === 'admin') return user
+                        })
+                    "
                     @openDialog="openNewAdminAccountDialog"
                 />
             </div>
@@ -66,7 +87,12 @@
                 </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">
-                    <q-btn flat label="Cancelar" @click="clearadmin()" v-close-popup />
+                    <q-btn
+                        flat
+                        label="Cancelar"
+                        @click="clearadmin()"
+                        v-close-popup
+                    />
                     <q-btn flat label="Crear" @click="createadmin()" />
                 </q-card-actions>
             </q-card>

@@ -7,7 +7,12 @@
             <img
                 src="@/assets/logo-horizontal.png"
                 width="10%"
-                class="nav-logo on-right"
+                class="nav-logo on-right desktop-only"
+                @click="$router.push('/admin')"
+            /><img
+                src="@/assets/logo-horizontal.png"
+                width="30%"
+                class="nav-logo on-right mobile-only"
                 @click="$router.push('/admin')"
             />
             <q-space />
@@ -16,9 +21,12 @@
                 <q-menu content-class="bg-dark">
                     <q-list style="width: 150px; font-family: GilroyExtraBold;">
                         <q-item clickable v-close-popup>
-                            <q-item-section @click="$router.push('/movingbeer')">
+                            <q-item-section
+                                @click="$router.push('/movingbeer')"
+                            >
                                 <span>
-                                    <i class="fas fa-beer on-left"></i>Movingbeer
+                                    <i class="fas fa-beer on-left"></i
+                                    >Movingbeer
                                 </span>
                             </q-item-section>
                         </q-item>
@@ -26,7 +34,8 @@
                         <q-item clickable v-close-popup>
                             <q-item-section @click="logout()">
                                 <span>
-                                    <i class="fas fa-sign-out-alt on-left"></i>Cerrar sesion
+                                    <i class="fas fa-sign-out-alt on-left"></i
+                                    >Cerrar sesion
                                 </span>
                             </q-item-section>
                         </q-item>

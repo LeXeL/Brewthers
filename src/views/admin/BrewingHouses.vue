@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md">
+    <q-page class="q-pa-md">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -12,11 +12,11 @@
             :title="alertTitle"
             :message="alertMessage"
             @accept="deleteBrewery"
-            @cancel="displayConfirm=false"
+            @cancel="displayConfirm = false"
         ></confirm-dialog>
         <div class="text-h5 q-mb-md">Administrador de casas cerveceras</div>
         <div class="row">
-            <div class="col-lg-8 q-pa-md">
+            <div class="col-lg-8 col-xs-12 q-pa-md">
                 <brewing-houses-table
                     :data="data"
                     @changeStatus="editStatus"
@@ -24,11 +24,11 @@
                     @namechange="updateNameChange"
                 ></brewing-houses-table>
             </div>
-            <div class="col-lg-4 q-pa-md">
+            <div class="col-lg-4 col-xs-12 q-pa-md">
                 <brewing-houses-form />
             </div>
         </div>
-    </div>
+    </q-page>
 </template>
 
 <script>

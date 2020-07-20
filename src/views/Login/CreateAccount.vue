@@ -1,5 +1,8 @@
 <template>
-    <q-page class="pattern-bg q-pa-xl">
+    <q-page
+        class="pattern-bg q-pa-xl"
+        style="height: auto; background-repeat: repeat-y;"
+    >
         <loading-alert :display="displayLoading"></loading-alert>
 
         <div class="row">
@@ -25,7 +28,11 @@
                                 class="q-mb-md"
                                 label="Nombre del restaurante"
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio',]"
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -33,7 +40,11 @@
                                 class="q-mb-md"
                                 label="RUC"
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio',]"
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -41,7 +52,11 @@
                                 class="q-mb-md"
                                 label="Nombre"
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio',]"
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -49,7 +64,11 @@
                                 class="q-mb-md"
                                 label="Apellido"
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio',]"
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -58,8 +77,12 @@
                                 label="Correo"
                                 dark
                                 :rules="[
-                                    val => val.length > 0 || 'El campo es obligatorio',
-                                    val => validEmail.test(val) || 'Formato de correo incorrecto'
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                    val =>
+                                        validEmail.test(val) ||
+                                        'Formato de correo incorrecto',
                                 ]"
                             />
                             <q-input
@@ -70,7 +93,11 @@
                                 mask="####-####"
                                 fill-mask
                                 dark
-                                :rules="[val => val.length > 0 || 'El campo es obligatorio']"
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                ]"
                             />
                         </q-form>
                     </q-card-section>
@@ -94,7 +121,10 @@
                                 label="Direccion"
                                 dark
                                 :rules="[
-                                    val => val.length > 0 || 'El campo es obligatorio']"
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                ]"
                             />
                             <GoogleMaps
                                 @markerPosition="setMarkerPosition"
@@ -126,8 +156,12 @@
                                     label="Contraseña"
                                     dark
                                     :rules="[
-                                        val => val.length > 0 || 'El campo es obligatorio',
-                                        val => strongPass.test(val) || 'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.'
+                                        val =>
+                                            val.length > 0 ||
+                                            'El campo es obligatorio',
+                                        val =>
+                                            strongPass.test(val) ||
+                                            'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
                                     ]"
                                 />
                                 <q-input
@@ -138,8 +172,12 @@
                                     label="Repite la contraseña"
                                     dark
                                     :rules="[
-                                        val => val.length > 0 || 'El campo es obligatorio',
-                                        val => val == form.password || 'Las contraseñas no coinciden'
+                                        val =>
+                                            val.length > 0 ||
+                                            'El campo es obligatorio',
+                                        val =>
+                                            val == form.password ||
+                                            'Las contraseñas no coinciden',
                                     ]"
                                 />
                             </q-form>
@@ -148,27 +186,38 @@
                 </q-card>
                 <div class="row">
                     <q-space />
-                    <q-btn class="q-mt-md" color="primary" @click="createuser">Registrar</q-btn>
+                    <q-btn class="q-mt-md" color="primary" @click="createuser"
+                        >Registrar</q-btn
+                    >
                 </div>
             </div>
         </div>
         <q-dialog v-model="confirmationDialog">
-            <q-card dark class="text-white" style="width: 700px; max-width: 80vw;">
+            <q-card
+                dark
+                class="text-white"
+                style="width: 700px; max-width: 80vw;"
+            >
                 <q-card-section>
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    Hemos recivido tu información satisfactoriamente. Uno de nuestros
-                    administradores aprobará tu cuenta para que empieces a
-                    realizar pedidos.
+                    Hemos recivido tu información satisfactoriamente. Uno de
+                    nuestros administradores aprobará tu cuenta para que
+                    empieces a realizar pedidos.
                     <br />
                     <br />
                 </q-card-section>
 
                 <q-card-actions align="right">
                     <router-link to="/movingbeer">
-                        <q-btn flat label="Aceptar" color="primary" v-close-popup />
+                        <q-btn
+                            flat
+                            label="Aceptar"
+                            color="primary"
+                            v-close-popup
+                        />
                     </router-link>
                 </q-card-actions>
             </q-card>
@@ -286,4 +335,4 @@ export default {
 }
 </script>
 
-<style  scoped></style>
+<style scoped></style>

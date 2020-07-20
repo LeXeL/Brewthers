@@ -1,32 +1,32 @@
 <template>
     <div>
         <div class="row q-px-md q-py-sm">
-            <div class="col">
-                <q-btn color="amber-9" size="sm">
+            <div class="col-lg-2 col-sm-4 col-xs-6">
+                <q-btn color="amber-9" size="sm" class="q-mb-sm">
                     <i class="fas fa-box q-mr-xs"></i>Por Revisar
                 </q-btn>
             </div>
-            <div class="col">
-                <q-btn color="grey-6" size="sm">
+            <div class="col-lg-2 col-sm-4 col-xs-6">
+                <q-btn color="grey-6" size="sm" class="q-mb-sm">
                     <i class="fas fa-boxes q-mr-xs"></i>En Preparacion
                 </q-btn>
             </div>
-            <div class="col">
-                <q-btn color="grey-6" size="sm">
+            <div class="col-lg-2 col-sm-4 col-xs-6">
+                <q-btn color="grey-6" size="sm" class="q-mb-sm">
                     <i class="fas fa-truck q-mr-xs"></i>En Camino
                 </q-btn>
             </div>
-            <div class="col">
-                <q-btn color="grey-6" size="sm">
+            <div class="col-lg-2 col-sm-4 col-xs-6">
+                <q-btn color="grey-6" size="sm" class="q-mb-sm">
                     <i class="fas fa-truck-loading q-mr-xs"></i>Entregado
                 </q-btn>
             </div>
-            <div class="col">
-                <q-btn color="grey-6" size="sm">
+            <div class="col-lg-2 col-sm-4 col-xs-6">
+                <q-btn color="grey-6" size="sm" class="q-mb-sm">
                     <i class="fas fa-check q-mr-xs"></i>Completado
                 </q-btn>
             </div>
-            <div class="col">
+            <div class="col-lg-2 col-sm-4 col-xs-6">
                 <q-btn color="red-7" size="sm" @click="cancelationModal = true">
                     <i class="fas fa-times q-mr-xs"></i>Cancelar
                 </q-btn>
@@ -35,7 +35,9 @@
         <q-dialog v-model="cancelationModal">
             <q-card style="width: 700px; max-width: 80vw;" dark>
                 <q-card-section>
-                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
+                    <div class="text-h6">
+                        Seleccione los motivos de cancelacion de orden
+                    </div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
