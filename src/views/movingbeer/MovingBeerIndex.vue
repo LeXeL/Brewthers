@@ -7,9 +7,7 @@
                     <div
                         class="text-h3 text-center"
                         style="text-transform: uppercase;"
-                    >
-                        Familia brewthers
-                    </div>
+                    >Familia brewthers</div>
                 </div>
             </div>
             <div class="row">
@@ -39,18 +37,16 @@
                     <q-space />
                     <q-btn dense flat v-close-popup>
                         <i class="fas fa-times" style="font-size: 25px;"></i>
-                        <q-tooltip content-class="bg-white text-primary"
-                            >Cerrar</q-tooltip
-                        >
+                        <q-tooltip content-class="bg-white text-primary">Cerrar</q-tooltip>
                     </q-btn>
                 </q-bar>
 
                 <q-card-section>
                     <div class="text-h4 text-center">
                         {{
-                            brewers.filter(brew => {
-                                if (brew.id === brewerWorkingId) return brew
-                            })[0].name
+                        brewers.filter(brew => {
+                        if (brew.id === brewerWorkingId) return brew
+                        })[0].name
                         }}
                     </div>
                 </q-card-section>
@@ -88,9 +84,6 @@
                     </div>
                 </q-card-section>
                 <q-card-section>
-                    <div class="row"></div>
-                </q-card-section>
-                <q-card-section>
                     <div class="row">
                         <div
                             class="col-lg-2 col-sm-6 col-xs-12 rounded-corners"
@@ -98,6 +91,18 @@
                             :key="i"
                         >
                             <beer-item-tile :product="product" />
+                        </div>
+                    </div>
+                    <div
+                        class="row text-center"
+                        style="margin-top: 100px;"
+                        v-if="productsInHouse.length == 0"
+                    >
+                        <div class="col">
+                            <i class="fas fa-beer" style="color: #5c5c5c; font-size: 100px;"></i>
+                            <p
+                                style="color: #5c5c5c; font-size: 18px;"
+                            >Lo sentimos, por el momento no tenemos inventario de esta presentación.</p>
                         </div>
                     </div>
                 </q-card-section>
