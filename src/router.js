@@ -23,6 +23,7 @@ import InventoryManager from './views/admin/InventoryManager'
 import ItemDetails from './views/admin/ItemDetails'
 import OrdersManager from './views/admin/OrdersManager'
 import OrderDetails from './views/admin/OrderDetails'
+import AdminReports from './views/admin/AdminReports'
 
 Vue.use(Router)
 
@@ -85,6 +86,11 @@ export default new Router({
                     path: '/order-details',
                     name: 'order-details',
                     component: OrderDetails,
+                },
+                {
+                    path: '/admin-reports',
+                    name: 'admin-reports',
+                    component: AdminReports,
                 },
             ],
         },
