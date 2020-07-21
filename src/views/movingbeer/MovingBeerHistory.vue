@@ -19,7 +19,7 @@
         </div>
         <div class="row q-pa-lg">
             <div class="col">
-                <q-card dark class="full-width q-mb-lg" v-for="(order, i) in 3" :key="i">
+                <q-card dark class="full-width q-mb-lg" v-for="order in 2" :key="order">
                     <q-card-section>
                         <div class="text-h5">
                             <span style="color: #27a3c3">No. de pedido:</span>
@@ -33,26 +33,25 @@
                     </q-card-section>
                     <q-separator dark />
                     <q-card-section>
-                        <div class="row q-mb-md" v-for="(item, i) in 3" :key="i">
-                            <div class="col-lg-1">
-                                <q-img :src="require('@/assets/beer.jpg')" class="rounded-borders" />
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="row" v-for="item in 3" :key="item">
+                                    <div class="col-lg-7">
+                                        <order-item-details />
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="text-h6" style="color: #27a3c3">Cantidad</div>
+                                        <div class="text-subtitle-2">5</div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="text-h6" style="color: #27a3c3">Precio unitario</div>
+                                        <div class="text-subtitle-2">$ 5.50</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-9 q-pl-md">
-                                <div
-                                    class="text-h6"
-                                    style="color: #27a3c3"
-                                >Nombre de lo que estan comprando</div>
-                                <div class="text-subtitle-2">Estilo: Something</div>
-                                <div class="text-subtitle-2">Alcohol: 5%</div>
-                                <div class="text-subtitle-2">IBU: 150</div>
-                            </div>
-                            <div class="col-lg-1">
-                                <div class="text-h6" style="color: #27a3c3">Cantidad</div>
-                                <div class="text-subtitle-2">5</div>
-                            </div>
-                            <div class="col-lg-1">
-                                <div class="text-h6" style="color: #27a3c3">Precio unitario</div>
-                                <div class="text-subtitle-2">$ 5.50</div>
+
+                            <div class="col-lg-3">
+                                <order-proof-of-payment />
                             </div>
                         </div>
                     </q-card-section>
@@ -77,6 +76,9 @@
 </template>
 
 <script>
+import OrderItemDetails from '@/components/general/OrderItemDetails'
+import OrderProofOfPayment from '@/components/general/OrderProofOfPayments'
+
 export default {
     data() {
         return {
@@ -160,6 +162,10 @@ export default {
                 },
             ],
         }
+    },
+    components: {
+        'order-item-details': OrderItemDetails,
+        'order-proof-of-payment': OrderProofOfPayment,
     },
 }
 </script>
