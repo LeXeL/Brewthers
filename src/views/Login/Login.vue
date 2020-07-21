@@ -3,10 +3,7 @@
         <div class="absolute-bottom"></div>
         <div class="absolute-center">
             <div class="row">
-                <q-img
-                    :src="require('@/assets/logo-horizontal.png')"
-                    class="q-mb-lg"
-                />
+                <q-img :src="require('@/assets/logo-horizontal.png')" class="q-mb-lg" />
                 <q-card square bordered class="q-pa-lg shadow-1">
                     <q-card-section>
                         <q-form class="q-gutter-md">
@@ -39,11 +36,7 @@
                         />
                     </q-card-actions>
                     <q-card-section v-if="dismissCountDown > 0">
-                        <q-banner
-                            inline-actions
-                            rounded
-                            class="bg-red text-white"
-                        >
+                        <q-banner inline-actions rounded class="bg-red text-white">
                             {{ errorMessage }}
                             <template v-slot:action>
                                 <q-btn flat @click="dismissCountDown = 0">
@@ -55,13 +48,10 @@
                     <q-card-section class="text-center q-pa-none">
                         <p class="text-grey-6">
                             Necesitas una cuenta?
-                            <router-link class="text-grey-9" to="createaccount"
-                                >Creala Aquí</router-link
-                            >
+                            <router-link class="text-grey-9" to="createaccount">Creala Aquí</router-link>
                         </p>
-                        <p style="color: #111">
-                            Espacio exclusivo para locales comerciales.
-                        </p>
+                        <p style="color: #111">Espacio exclusivo para locales comerciales.</p>
+                        <router-link to="/" style="color: #27a3c3">Volver al inicio</router-link>
                     </q-card-section>
                 </q-card>
             </div>
