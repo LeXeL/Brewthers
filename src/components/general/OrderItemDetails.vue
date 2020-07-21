@@ -8,12 +8,35 @@
             <div class="text-subtitle-2">Presentacion: KEG</div>
             <div
                 class="text-subtitle-2"
-                v-if="$route.fullPath.includes('checkout')"
+                v-if="style.some(el => $route.fullPath.includes(el))"
             >Estilo: Something</div>
-            <div class="text-subtitle-2" v-if="$route.fullPath.includes('checkout')">Alcohol: 5%</div>
-            <div class="text-subtitle-2" v-if="$route.fullPath.includes('checkout')">IBU: 150</div>
-            <div class="text-subtitle-2">Precio unitario: $ 5.50</div>
-            <div class="text-subtitle-2">Cantidad: 10</div>
+            <div class="text-subtitle-2" v-if="abv.some(el => $route.fullPath.includes(el))">ABV: 5%</div>
+            <div
+                class="text-subtitle-2"
+                v-if="ibu.some(el => $route.fullPath.includes(el))"
+            >IBU: 150</div>
+            <div
+                class="text-subtitle-2"
+                v-if="price.some(el => $route.fullPath.includes(el))"
+            >Precio unitario: $ 5.50</div>
+            <div
+                class="text-subtitle-2"
+                v-if="amount.some(el => $route.fullPath.includes(el))"
+            >Cantidad: 10</div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            style: ['checkout', 'historial'],
+            abv: ['checkout', 'historial'],
+            ibu: ['checkout', 'historial'],
+            price: ['checkout', 'order-details'],
+            amount: ['checkout', 'order-details'],
+        }
+    },
+}
+</script>
