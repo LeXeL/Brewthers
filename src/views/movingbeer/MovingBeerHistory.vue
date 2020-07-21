@@ -6,15 +6,22 @@
             </div>
         </div>
         <div class="row q-pa-lg">
-            <div class="col"></div>
-            <div class="col on-left">
-                <q-input outlined label="No. de orden" dark />
+            <div class="col desktop-only"></div>
+            <div class="col col-sm-12 col-xs-12 on-left">
+                <q-input filled label="No. de orden" dark class="q-mb-md" />
             </div>
-            <div class="col on-left">
-                <q-select outlined v-model="month" :options="months" label="Mes" dark />
+            <div class="col col-sm-12 col-xs-12 on-left">
+                <q-select
+                    filled
+                    v-model="month"
+                    :options="months"
+                    label="Mes"
+                    dark
+                    class="q-mb-md"
+                />
             </div>
-            <div class="col">
-                <q-select outlined v-model="year" :options="years" label="Año" dark />
+            <div class="col col-sm-12 col-xs-12">
+                <q-select filled v-model="year" :options="years" label="Año" dark class="q-mb-md" />
             </div>
         </div>
         <div class="row q-pa-lg">
@@ -34,23 +41,23 @@
                     <q-separator dark />
                     <q-card-section>
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-9 col-sm-12 col-xs-12">
                                 <div class="row" v-for="item in 3" :key="item">
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-7 col-sm-6 col-xs-12">
                                         <order-item-details />
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-sm-2 col-xs-6 q-mb-md">
                                         <div class="text-h6" style="color: #27a3c3">Cantidad</div>
-                                        <div class="text-subtitle-2">5</div>
+                                        <div class="text-subtitle-3">5</div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-sm-4 col-xs-6 q-mb-md">
                                         <div class="text-h6" style="color: #27a3c3">Precio unitario</div>
                                         <div class="text-subtitle-2">$ 5.50</div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-xs-12">
                                 <order-proof-of-payment />
                             </div>
                         </div>
