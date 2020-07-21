@@ -1,7 +1,6 @@
 <template>
     <q-drawer
         v-model="showDrawer"
-        :show-if-above="desktopDrawer"
         :overlay="mobileDrawer"
         :width="300"
         :breakpoint="400"
@@ -76,13 +75,7 @@ export default {
         }
     },
     beforeMount() {
-        if (this.$q.platform.is.desktop) {
-            this.desktopDrawer = true
-            this.mobileDrawer = false
-        } else {
-            this.desktopDrawer = false
-            this.mobileDrawer = true
-        }
+        if (this.$q.platform.is.mobile) this.mobileDrawer = true
     },
 }
 </script>
