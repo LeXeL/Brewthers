@@ -55,7 +55,7 @@ import OrderInfo from '@/components/admin/OrderInfo'
 import OrderAmounts from '@/components/admin/OrderAmounts'
 import OrderItemDetails from '@/components/general/OrderItemDetails'
 import OrderAddress from '@/components/admin/OrderAddress'
-import OrderProofOfPayments from '@/components/admin/OrderProofOfPayments'
+import OrderProofOfPayments from '@/components/general/OrderProofOfPayments'
 import OrderLog from '@/components/admin/OrderLog'
 
 export default {
