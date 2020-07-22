@@ -7,10 +7,10 @@
         </div>
         <div class="row q-pa-lg">
             <div class="col desktop-only"></div>
-            <div class="col col-sm-12 col-xs-12 on-left">
+            <div class="col-lg-3 col-sm-12 col-xs-12 on-left">
                 <q-input filled label="No. de orden" dark class="q-mb-md" />
             </div>
-            <div class="col col-sm-12 col-xs-12 on-left">
+            <div class="col-lg-3 col-sm-12 col-xs-12 on-left">
                 <q-select
                     filled
                     v-model="month"
@@ -20,7 +20,7 @@
                     class="q-mb-md"
                 />
             </div>
-            <div class="col col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-sm-12 col-xs-12">
                 <q-select filled v-model="year" :options="years" label="Año" dark class="q-mb-md" />
             </div>
         </div>
