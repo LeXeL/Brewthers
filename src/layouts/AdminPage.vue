@@ -25,7 +25,7 @@ import Drawer from '@/components/admin/Drawer'
 export default {
     data() {
         return {
-            drawer: false,
+            drawer: true,
         }
     },
     methods: {
@@ -41,6 +41,9 @@ export default {
                     console.log(error)
                 })
         },
+    },
+    beforeMount() {
+        if (this.$q.platform.is.mobile) this.drawer = false
     },
     components: {
         'admin-navbar': Navbar,
