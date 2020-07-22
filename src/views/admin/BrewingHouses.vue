@@ -58,20 +58,24 @@ export default {
         }
     },
     mounted() {
-        let db = firebase.firestore()
-        db.collection('brewery').onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                if (change.type === 'added') {
-                    this.addToData(change.doc.id, change.doc.data())
-                }
-                if (change.type === 'modified') {
-                    this.editData(change.doc.id, change.doc.data())
-                }
-                if (change.type === 'removed') {
-                    this.removeData(change.doc.id)
-                }
+        try {
+            let db = firebase.firestore()
+            db.collection('brewery').onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        this.addToData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'modified') {
+                        this.editData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'removed') {
+                        this.removeData(change.doc.id)
+                    }
+                })
             })
-        })
+        } catch (error) {
+            console.log(`error in Brewing House with firebase`)
+        }
     },
     methods: {
         updateNameChange(event) {
