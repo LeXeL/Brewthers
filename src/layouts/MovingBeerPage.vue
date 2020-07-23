@@ -43,7 +43,11 @@
                         >Parece que la marea esta baja y no tienes artículos en tu carrito.</p>
                     </div>
                 </div>
-                <div class="text-h6 text-right on-left fixed-bottom" style="bottom: 65px;">
+                <div
+                    class="text-h6 text-right on-left fixed-bottom"
+                    style="bottom: 65px;"
+                    v-if="data[0].cart.length > 0"
+                >
                     Sub-total
                     <br />
                     ${{calculateTotal()}}
@@ -55,6 +59,7 @@
                         label="Checkout"
                         size="lg"
                         square
+                        v-if="data[0].cart.length > 0"
                         @click="$router.push('/checkout'); drawerRight = false"
                     />
                 </div>
