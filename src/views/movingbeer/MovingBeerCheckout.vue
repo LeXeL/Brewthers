@@ -1,5 +1,12 @@
 <template>
     <q-page class="q-pa-md pattern-bg" style="height: auto; background-repeat: repeat-y">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
         <div class="row q-pt-xl">
             <div class="col desktop-only"></div>
             <div class="col-lg-8 col-xs-12">
@@ -11,18 +18,24 @@
         <div class="row">
             <div class="col desktop-only"></div>
 
-            <div class="col-lg-8 col-sm-12 col-xs-12">
+            <div class="col-lg-8 col-sm-12 col-xs-12" v-if="data.length > 0">
                 <div class="row">
                     <div class="col-lg-8 col-sm-8 col-xs-12 q-mb-md">
                         <div class="text-h5 q-pl-md">Detalle de articulos:</div>
-                        <order-item-details v-for="(item, i) in 5" :key="i" />
+                        <order-item-details
+                            :data="item"
+                            v-for="(item, i) in data[0].cart"
+                            :key="i"
+                        />
                     </div>
                     <div class="col-lg-4 col-sm-4 col-xs-12">
                         <div class="q-mb-xl">
                             <div class="text-h5 q-mb-md">Detalle de orden:</div>
-                            <div class="text-subitle-2">Articulos (10): $ 150.00</div>
-                            <div class="text-subitle-2">ITBMS: $ 10.50</div>
-                            <div class="text-h6">Total: $ 160.50</div>
+                            <div
+                                class="text-subitle-2"
+                            >Articulos ({{calculateTotalAmount()}}): $ {{calculatePrice()}}</div>
+                            <div class="text-subitle-2">ITBMS: $ {{ITBM}}</div>
+                            <div class="text-h6">Total: $ {{calculateTotal()}}</div>
                         </div>
                         <div class="row" v-if="orderStatus === 'open'">
                             <div class="text-h5 q-mb-md">Metodo de pago:</div>
@@ -45,7 +58,13 @@
                             class="row q-mb-lg"
                             v-if="proofRequired.includes(paymentMethod) && orderStatus === 'open'"
                         >
-                            <q-file outlined color="white" dark label="Adjuntar comprobante">
+                            <q-file
+                                outlined
+                                color="white"
+                                dark
+                                label="Adjuntar comprobante"
+                                v-model="file"
+                            >
                                 <template v-slot:prepend>
                                     <i class="fas fa-paperclip"></i>
                                 </template>
@@ -90,15 +109,23 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/storage'
+
+import * as api from '@/api/api'
+
 import OrderItemDetails from '@/components/general/OrderItemDetails'
 export default {
     data() {
         return {
+            file: null,
             orderStatus: 'open',
             title: 'Confirmacion de orden',
             orderConfirmationDialog: false,
             paymentMethod: '',
             proofRequired: ['ach', 'yappy', 'nequi'],
+            ITBM: 10.51,
             paymentOptions: [
                 {
                     label: 'ACH',
@@ -121,14 +148,175 @@ export default {
                     value: 'pos',
                 },
             ],
+            data: [],
+            displayLoading: false,
+            displayAlert: false,
+            displayConfirm: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
+            subTotal: 0,
+            total: 0,
+            amount: 0,
         }
     },
-    methods: {
-        sendOrder() {
-            this.orderStatus = 'sent'
-            this.title = 'Orden enviada con exito'
-            this.orderConfirmationDialog = true
+    computed: {
+        uid() {
+            return this.$store.getters.uid
         },
+    },
+    methods: {
+        calculateTotal() {
+            let total = 0
+            if (this.data[0].cart) {
+                this.data[0].cart.forEach(product => {
+                    total +=
+                        parseFloat(product.price) * parseFloat(product.amount)
+                })
+                this.total =
+                    parseFloat(total.toFixed(2)) + parseFloat(this.ITBM)
+                return this.total
+            }
+            return '0'
+        },
+        calculatePrice() {
+            let total = 0
+            if (this.data[0].cart) {
+                this.data[0].cart.forEach(product => {
+                    total +=
+                        parseFloat(product.price) * parseFloat(product.amount)
+                })
+                this.subTotal = total.toFixed(2)
+                return this.subTotal
+            }
+            return '0'
+        },
+        calculateTotalAmount() {
+            let amount = 0
+            if (this.data[0].cart) {
+                this.data[0].cart.forEach(product => {
+                    amount += product.amount
+                })
+                this.amount = amount.toFixed(0)
+                return this.amount
+            }
+            return '0'
+        },
+        async sendOrder() {
+            this.displayLoading = true
+            let obj = {}
+            obj.restaurantId = this.data[0].id
+            obj.cart = this.data[0].cart
+            obj.total = this.total
+            obj.itbms = this.ITBM
+            obj.amount = this.amount
+            obj.paymentMethod = this.paymentMethod
+            if (this.file) {
+                obj.paymentProof = await this.uploadToFirebase(
+                    this.file,
+                    `users/proofOfPayment/${this.uid}`,
+                    this.file
+                )
+            } else {
+                obj.paymentProof = ''
+            }
+
+            api.createOrdersOnDatabase({order: obj}).then(response => {
+                this.displayLoading = false
+                this.orderStatus = 'sent'
+                this.title = 'Orden enviada con exito'
+                this.orderConfirmationDialog = true
+                api.clearShoppingCart({uid: this.uid})
+            })
+        },
+        addToData(id, data) {
+            data.id = id
+            this.data.push(data)
+        },
+        editData(id, data) {
+            data.id = id
+            this.data.forEach((d, index) => {
+                if (d.id === id) {
+                    this.data.splice(index, 1, data)
+                }
+            })
+        },
+        uploadToFirebase(imageFile, fullDirectory, filename) {
+            return new Promise(function(resolve, reject) {
+                var storageRef = firebase
+                    .storage()
+                    .ref(fullDirectory + '/' + filename)
+                //Upload file
+                var task = storageRef.put(imageFile)
+                //Update progress bar
+                task.on(
+                    'state_changed',
+                    function(snapshot) {
+                        // Observe state change events such as progress, pause, and resume
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        var progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100
+                        console.log('Upload is ' + progress + '% done')
+                        switch (snapshot.state) {
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused')
+                                break
+                        }
+                    },
+                    function(error) {
+                        // Handle unsuccessful uploads
+                        console.log(`Error in uploadToFirebase: ${error}`)
+                        reject(error)
+                    },
+                    function() {
+                        // Handle successful uploads on complete
+                        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                        task.snapshot.ref
+                            .getDownloadURL()
+                            .then(function(downloadURL) {
+                                console.log('File available at', downloadURL)
+                                resolve(downloadURL)
+                            })
+                    }
+                )
+            })
+        },
+    },
+    async mounted() {
+        this.displayLoading = true
+        let db = firebase.firestore()
+        await db
+            .collection('users')
+            .doc(this.uid)
+            .get()
+            .then(doc => {
+                if (doc.exists) {
+                    this.addToData(doc.id, doc.data())
+                    console.log('Document data:', doc.data())
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log('No such document!')
+                }
+            })
+            .catch(function(error) {
+                console.log('Error getting document:', error)
+            })
+        // .onSnapshot(
+        //     {
+        //         // Listen for document metadata changes
+        //         includeMetadataChanges: true,
+        //     },
+        //     doc => {
+        //         // ...
+        //         if (this.data.length < 1) {
+        //             this.addToData(doc.id, doc.data())
+        //             return
+        //         }
+        //         this.editData(doc.id, doc.data())
+        //     }
+        // )
+        this.displayLoading = false
     },
     components: {
         'order-item-details': OrderItemDetails,

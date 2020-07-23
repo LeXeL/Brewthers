@@ -12,6 +12,7 @@ const cors = require('cors')({
 const users = require('./lib/users')
 const brewery = require('./lib/brewery')
 const product = require('./lib/product')
+const order = require('./lib/order')
 
 //Handle USERS
 exports.createUserOnDatabase = functions.https.onRequest(async (req, res) => {
@@ -236,3 +237,56 @@ exports.getProductInformationById = functions.https.onRequest(
         })
     }
 )
+
+//Handle ORDERS
+exports.createOrdersOnDatabase = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await order.createOrder(req.body.order)
+            res.status(200).send({status: 'Created'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.updateOrdersInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await order.updateOrder(
+                    req.body.id,
+                    req.body.Order
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.deleteOrdersInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await order.deleteOrder(req.body.id)
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.returnAllOrders = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await order.returnAllOrders()
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})

@@ -79,3 +79,21 @@ export const getProductInformationById = data =>
     Request.post('/getProductInformationById', data, {
         'Content-Type': 'application/json',
     })
+
+//ORDER
+export const createOrdersOnDatabase = data =>
+    Request.post('/createOrdersOnDatabase', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateOrdersInformation = data =>
+    Request.post('/updateOrdersInformation', data, {
+        'Content-Type': 'application/json',
+    })
+export const deleteOrdersInformation = data =>
+    Request.post('/deleteOrdersInformation', data, {
+        'Content-Type': 'application/json',
+    })
+export const returnAllOrders = data =>
+    Request.post('/returnAllOrders', data, {
+        'Content-Type': 'application/json',
+    })
