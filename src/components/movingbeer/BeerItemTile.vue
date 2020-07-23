@@ -89,7 +89,7 @@ export default {
             this.product.amount = this.amount
             api.addToShoppingCart({uid: this.uid, product: this.product})
                 .then(response => {
-                    console.log(response)
+                    this.amount = 0
                 })
                 .catch(error => {
                     this.alertTitle = 'Hey AWANTA!'

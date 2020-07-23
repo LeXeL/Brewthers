@@ -87,12 +87,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">
-                    <q-btn
-                        flat
-                        label="Cancelar"
-                        @click="clearadmin()"
-                        v-close-popup
-                    />
+                    <q-btn flat label="Cancelar" @click="clearadmin()" v-close-popup />
                     <q-btn flat label="Crear" @click="createadmin()" />
                 </q-card-actions>
             </q-card>
@@ -215,20 +210,24 @@ export default {
         'admin-accounts-table': AdminAccountsTable,
     },
     mounted() {
-        let db = firebase.firestore()
-        db.collection('users').onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                if (change.type === 'added') {
-                    this.addToUsers(change.doc.id, change.doc.data())
-                }
-                if (change.type === 'modified') {
-                    this.editInUsers(change.doc.id, change.doc.data())
-                }
-                if (change.type === 'removed') {
-                    this.removeInUsers(change.doc.id)
-                }
+        try {
+            let db = firebase.firestore()
+            db.collection('users').onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        this.addToUsers(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'modified') {
+                        this.editInUsers(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'removed') {
+                        this.removeInUsers(change.doc.id)
+                    }
+                })
             })
-        })
+        } catch (error) {
+            console.log(`error in Accounts Manager with firebase`)
+        }
     },
 }
 </script>
