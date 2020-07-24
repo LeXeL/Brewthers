@@ -24,6 +24,8 @@ import ItemDetails from './views/admin/ItemDetails'
 import OrdersManager from './views/admin/OrdersManager'
 import OrderDetails from './views/admin/OrderDetails'
 import AdminReports from './views/admin/AdminReports'
+import BlogManager from './views/admin/BlogManager'
+import BlogWriter from './views/admin/BlogWriter'
 
 Vue.use(Router)
 
@@ -91,6 +93,16 @@ export default new Router({
                     path: '/admin-reports',
                     name: 'admin-reports',
                     component: AdminReports,
+                },
+                {
+                    path: '/blog-manager',
+                    name: 'blog-manager',
+                    component: BlogManager,
+                },
+                {
+                    path: '/blog-writer',
+                    name: 'blog-writer',
+                    component: BlogWriter,
                 },
             ],
         },

@@ -1,10 +1,7 @@
 <template>
     <div>
         <q-header elevated>
-            <q-toolbar
-                class="text-white shadow-2 desktop-only"
-                style="background-color: #111"
-            >
+            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
                 <img
                     src="@/assets/logo-horizontal.png"
                     width="10%"
@@ -19,6 +16,7 @@
                         :href="navlink.ref"
                         :key="i"
                         v-smooth-scroll
+                        style="text-decoration: none;"
                     >
                         <q-tab :name="navlink.name">
                             <span>{{ navlink.text }}</span>
@@ -26,14 +24,9 @@
                     </a>
                 </q-tabs>
                 <q-space />
-                <q-btn class="on-right" color="primary" :to="'/login'"
-                    >iniciar sesión</q-btn
-                >
+                <q-btn class="on-right" color="primary" :to="'/login'">iniciar sesión</q-btn>
             </q-toolbar>
-            <q-toolbar
-                class="text-white shadow-2 mobile-only"
-                style="background-color: #111"
-            >
+            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
                 <img src="@/assets/logo-horizontal.png" width="30%" />
                 <q-space />
                 <q-btn flat round dense @click="dialog = !dialog">
@@ -57,24 +50,20 @@
                             </a>
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
-                            <a :href="navlink.ref" @click="dialog = false">{{
+                            <a :href="navlink.ref" @click="dialog = false">
+                                {{
                                 navlink.text
-                            }}</a>
+                                }}
+                            </a>
                         </li>
                         <li>
-                            <a href="/login" @click="dialog = false"
-                                >iniciar sesion</a
-                            >
+                            <a href="/login" @click="dialog = false">iniciar sesion</a>
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a
-                                href="#"
-                                class="on-right"
-                                @click="dialog = false"
-                            >
+                            <a href="#" class="on-right" @click="dialog = false">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
