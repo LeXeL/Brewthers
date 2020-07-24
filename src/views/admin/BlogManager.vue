@@ -3,7 +3,7 @@
         <div class="text-h5 q-mb-md">Administrador de blog</div>
         <div class="row q-pa-md">
             <q-space />
-            <q-btn color="secondary" label="Redactar" />
+            <q-btn color="secondary" label="Redactar" to="/blog-writer" />
         </div>
         <div class="row">
             <div class="col-lg-12 col-xs-12 q-pa-md">
@@ -28,7 +28,13 @@
                             </q-td>
 
                             <q-td>
-                                <q-btn color="info" size="xs" :props="props" label="editar" />
+                                <q-btn
+                                    color="info"
+                                    size="xs"
+                                    :props="props"
+                                    label="editar"
+                                    to="/blog-writer"
+                                />
                             </q-td>
                             <q-td>
                                 <q-btn color="red-7" size="xs" label="eliminar" />
