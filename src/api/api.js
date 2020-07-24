@@ -39,6 +39,10 @@ export const clearShoppingCart = data =>
     Request.post('/clearShoppingCart', data, {
         'Content-Type': 'application/json',
     })
+export const returnApprovedUser = data =>
+    Request.post('/returnApprovedUser', data, {
+        'Content-Type': 'application/json',
+    })
 
 //BREWERY
 export const createBreweryOnDatabase = data =>

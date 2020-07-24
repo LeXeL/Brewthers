@@ -25,7 +25,7 @@
                         }}
                     </q-tooltip>
                 </div>
-                <q-btn-group class="q-mb-lg">
+                <q-btn-group class="q-mb-lg" v-if="user.status === 'approved'">
                     <q-btn
                         color="primary"
                         :disable="amount == 0 ? true : false"
@@ -40,7 +40,12 @@
                     </q-btn>
                 </q-btn-group>
                 <br />
-                <q-btn color="primary" @click="addToCart" :disabled="!amount">Agregar</q-btn>
+                <q-btn
+                    color="primary"
+                    @click="addToCart"
+                    :disabled="!amount"
+                    v-if="user.status === 'approved'"
+                >Agregar</q-btn>
             </div>
             <div class="movingbeer-item-overlay" v-if="showAddedOverlay">
                 <div class="text-body-1 absolute-center">
@@ -67,6 +72,9 @@ export default {
         },
     },
     computed: {
+        user() {
+            return this.$store.getters.user
+        },
         uid() {
             return this.$store.getters.uid
         },

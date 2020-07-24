@@ -1,16 +1,23 @@
 <template>
     <div class="q-pa-md">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
+        <confirm-dialog
+            :display="displayConfirm"
+            :title="alertTitle"
+            :message="alertMessage"
+            @cancel="displayConfirm = false"
+        ></confirm-dialog>
         <div class="text-h5 q-mb-md">Administrador de ordernes</div>
         <div class="row">
             <q-space class="desktop-only" />
             <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-select
-                    filled
-                    :options="options"
-                    label="Estatus"
-                    dark
-                    dense
-                />
+                <!-- <q-select filled :options="options" label="Estatus" dark dense /> -->
             </div>
             <div class="col-lg-2 col-xs-12 q-pa-md">
                 <q-input filled label="No. de Orden" dark dense />
@@ -27,11 +34,7 @@
                                 transition-show="scale"
                                 transition-hide="scale"
                             >
-                                <q-date
-                                    v-model="date"
-                                    @input="() => $refs.qDateProxy.hide()"
-                                    dark
-                                />
+                                <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" dark />
                             </q-popup-proxy>
                         </i>
                     </template>
@@ -46,11 +49,7 @@
                                 transition-show="scale"
                                 transition-hide="scale"
                             >
-                                <q-date
-                                    v-model="date"
-                                    @input="() => $refs.qDateProxy.hide()"
-                                    dark
-                                />
+                                <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" dark />
                             </q-popup-proxy>
                         </i>
                     </template>
@@ -70,54 +69,57 @@
                     :pagination="initialPagination"
                     binary-state-sort
                     dark
+                    v-if="restaurants.length > 0"
                 >
                     <template v-slot:body="props">
                         <q-tr :props="props">
-                            <q-td key="orderNo" :props="props">{{
-                                props.row.orderNo
-                            }}</q-td>
-                            <q-td key="restName" :props="props">{{
-                                props.row.restName
-                            }}</q-td>
-                            <q-td key="email" :props="props">{{
-                                props.row.email
-                            }}</q-td>
-                            <q-td key="phone" :props="props">{{
-                                props.row.phone
-                            }}</q-td>
-                            <q-td key="items" :props="props">{{
-                                props.row.items
-                            }}</q-td>
-                            <q-td key="amount" :props="props"
-                                >$ {{ props.row.amount }}</q-td
-                            >
-                            <q-td key="paymentMethod" :props="props">{{
+                            <q-td key="orderNo" :props="props">
+                                {{
+                                props.row.id
+                                }}
+                            </q-td>
+                            <q-td key="restName" :props="props">
+                                {{
+                                restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].restaurantName
+                                }}
+                            </q-td>
+                            <q-td key="email" :props="props">
+                                {{
+                                restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].email
+                                }}
+                            </q-td>
+                            <q-td key="phone" :props="props">
+                                {{
+                                restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].contactPhone
+                                }}
+                            </q-td>
+                            <q-td key="items" :props="props">
+                                {{
+                                props.row.amount
+                                }}
+                            </q-td>
+                            <q-td key="amount" :props="props">$ {{ props.row.total }}</q-td>
+                            <q-td key="paymentMethod" :props="props">
+                                {{
                                 props.row.paymentMethod
-                            }}</q-td>
-                            <q-td key="date" :props="props">{{
-                                props.row.date
-                            }}</q-td>
+                                }}
+                            </q-td>
+                            <q-td key="date" :props="props">
+                                {{
+                                returnTime(props.row.logs[0])
+                                }}
+                            </q-td>
 
-                            <q-td>
+                            <!-- <q-td>
                                 <q-btn
                                     :color="status[props.row.status].color"
                                     size="xs"
                                     :props="props"
                                     :label="status[props.row.status].text"
-                                    @click="
-                                        props.row.status < 4
-                                            ? props.row.status++
-                                            : ''
-                                    "
                                 />
-                            </q-td>
+                            </q-td>-->
                             <q-td>
-                                <q-btn
-                                    color="info"
-                                    size="xs"
-                                    label="Detalles"
-                                    to="/order-details"
-                                />
+                                <q-btn color="info" size="xs" label="Detalles" to="/order-details" />
                             </q-td>
                             <q-td>
                                 <q-btn
@@ -136,9 +138,7 @@
         <q-dialog v-model="alert">
             <q-card style="width: 700px; max-width: 80vw;" dark>
                 <q-card-section>
-                    <div class="text-h6">
-                        Seleccione los motivos de cancelacion de orden
-                    </div>
+                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -160,6 +160,11 @@
     </div>
 </template>
 <script>
+import * as api from '@/api/api'
+
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import moment from 'moment'
 export default {
     data() {
         return {
@@ -256,83 +261,10 @@ export default {
                     align: 'left',
                 },
             ],
-            data: [
-                {
-                    orderNo: 159789,
-                    restName: 'La Cocina de Pepe',
-                    something: 'asdf',
-                    email: 'pepe@live.com',
-                    phone: '6565-6556',
-                    items: 10,
-                    amount: 50.78,
-                    paymentMethod: 'ACH',
-                    date: '10-10-10',
-                    status: 0,
-                },
-                {
-                    orderNo: 159789,
-                    restName: 'La Cocina de Pepe',
-                    something: 'asdf',
-                    email: 'pepe@live.com',
-                    phone: '6565-6556',
-                    items: 10,
-                    amount: 50.78,
-                    paymentMethod: 'ACH',
-                    date: '10-10-10',
-                    status: 1,
-                },
-                {
-                    orderNo: 159789,
-                    restName: 'La Cocina de Pepe',
-                    something: 'asdf',
-                    email: 'pepe@live.com',
-                    phone: '6565-6556',
-                    items: 10,
-                    amount: 50.78,
-                    paymentMethod: 'ACH',
-                    date: '10-10-10',
-                    status: 2,
-                },
-                {
-                    orderNo: 159789,
-                    restName: 'La Cocina de Pepe',
-                    something: 'asdf',
-                    email: 'pepe@live.com',
-                    phone: '6565-6556',
-                    items: 10,
-                    amount: 50.78,
-                    paymentMethod: 'ACH',
-                    date: '10-10-10',
-                    status: 3,
-                },
-                {
-                    orderNo: 159789,
-                    restName: 'La Cocina de Pepe',
-                    something: 'asdf',
-                    email: 'pepe@live.com',
-                    phone: '6565-6556',
-                    items: 10,
-                    amount: 50.78,
-                    paymentMethod: 'ACH',
-                    date: '10-10-10',
-                    status: 4,
-                },
-                {
-                    orderNo: 159789,
-                    restName: 'La Cocina de Pepe',
-                    something: 'asdf',
-                    email: 'pepe@live.com',
-                    phone: '6565-6556',
-                    items: 10,
-                    amount: 50.78,
-                    paymentMethod: 'ACH',
-                    date: '10-10-10',
-                    status: 5,
-                },
-            ],
+            data: [],
             status: [
                 {
-                    text: 'Por revisar',
+                    text: 'review',
                     color: 'amber-9',
                 },
                 {
@@ -356,7 +288,77 @@ export default {
                     color: 'red-7',
                 },
             ],
+            displayLoading: false,
+            displayAlert: false,
+            displayConfirm: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
+            workingDeletedId: '',
+            restaurants: [],
         }
+    },
+    methods: {
+        returnTime(time) {
+            return moment(time).format('MMMM DD YYYY')
+        },
+        askForDeleteBrewery(event) {
+            this.displayConfirm = true
+            this.alertTitle = 'Esta seguro?'
+            this.alertMessage =
+                'Se va a proceder a eliminar esta casa cervecera'
+            this.workingDeletedId = event.id
+        },
+        addToData(id, data) {
+            data.firebaseId = id
+            this.data.push(data)
+        },
+        editData(id, data) {
+            data.firebaseId = id
+            this.data.forEach((d, index) => {
+                if (d.id === id) {
+                    this.data.splice(index, 1, data)
+                }
+            })
+        },
+        removeData(id) {
+            this.data.forEach((d, index) => {
+                if (d.firebaseId === id) {
+                    this.data.splice(index, 1)
+                }
+            })
+        },
+    },
+    async mounted() {
+        this.displayLoading = true
+        try {
+            let db = firebase.firestore()
+            db.collection('order').onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        this.addToData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'modified') {
+                        this.editData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'removed') {
+                        this.removeData(change.doc.id)
+                    }
+                })
+            })
+        } catch (error) {
+            console.log(`error in Brewing House with firebase`)
+        }
+        api.returnApprovedUser()
+            .then(response => {
+                response.data.data.forEach(element => {
+                    this.restaurants.push(element)
+                })
+            })
+            .then(() => (this.displayLoading = false))
+            .catch(error => {
+                console.log(error)
+            })
     },
 }
 </script>

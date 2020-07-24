@@ -80,6 +80,28 @@ async function returnUserById(uid) {
             return error
         })
 }
+async function returnApprovedUser() {
+    let users = []
+    await db
+        .collection('users')
+        .where('role', '==', 'user')
+        .where('status', '==', 'approved')
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.')
+                return
+            }
+            snapshot.forEach(doc => {
+                users.push({...doc.data(), id: doc.id})
+            })
+        })
+        .catch(function(error) {
+            console.log('Error getting documents: ', error)
+        })
+
+    return users
+}
 async function updateUserInfo(uid, userObj) {
     return db
         .collection('users')
@@ -145,6 +167,7 @@ module.exports = {
     updateDatabaseWithUserInfo,
     updateDatabaseWithAdminInfo,
     returnUserById,
+    returnApprovedUser,
     updateUserInfo,
     addToShoppingCart,
     removeFromShoppingCart,

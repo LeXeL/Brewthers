@@ -1,28 +1,31 @@
 const admin = require('firebase-admin')
 const db = admin.firestore()
 
-async function getCount(ref) {
+async function addToLastId() {
     // Sum the count of each shard in the subcollection
     return await db
-        .collection('order')
+        .collection('general')
+        .doc('lastId')
+        .update({lastId: admin.firestore.FieldValue.increment(1)})
+}
+async function getLastId() {
+    // Sum the count of each shard in the subcollection
+    return await db
+        .collection('general')
+        .doc('lastId')
         .get()
-        .then(snapshot => {
-            let total_count = 0
-            snapshot.forEach(doc => {
-                total_count++
-            })
-
-            return total_count
+        .then(doc => {
+            console.log(doc.data())
+            return doc.data().lastId
         })
 }
 
 async function createOrder(order) {
-    console.log(order)
     return db
         .collection('order')
         .doc()
         .set({
-            id: parseInt(await getCount()) + 1,
+            id: parseInt(getLastId()),
             restaurantId: order.restaurantId,
             cart: order.cart,
             paymentProof: order.paymentProof ? order.paymentProof : [],
@@ -34,6 +37,7 @@ async function createOrder(order) {
             status: 'review', //review, preparation, onroute, delivered, completed, cancel
         })
         .then(() => {
+            addToLastId()
             return 'Succesfull'
         })
         .catch(error => {

@@ -60,6 +60,17 @@ exports.getUserInformationById = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.returnApprovedUser = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.returnApprovedUser()
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
 exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
