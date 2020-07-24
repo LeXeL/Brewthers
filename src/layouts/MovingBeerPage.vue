@@ -59,7 +59,7 @@
                         label="Checkout"
                         size="lg"
                         square
-                        v-if="data[0].cart.length > 0"
+                        v-if="data[0].cart.length > 0 && user.status === 'approved'"
                         @click="$router.push('/checkout'); drawerRight = false"
                     />
                 </div>
@@ -81,6 +81,9 @@ import CartItemTile from '@/components/movingbeer/CartItemTile.vue'
 
 export default {
     computed: {
+        user() {
+            return this.$store.getters.user
+        },
         uid() {
             return this.$store.getters.uid
         },
