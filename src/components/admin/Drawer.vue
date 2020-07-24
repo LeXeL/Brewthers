@@ -68,7 +68,7 @@ export default {
                 },
                 {
                     name: 'Blog',
-                    link: '',
+                    link: '/blog-manager',
                     icon: 'fas fa-rss',
                 },
             ],
