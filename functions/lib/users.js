@@ -32,6 +32,7 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             location: obj.location,
             logs: [],
             ruc: obj.ruc,
+            cart: [],
         })
         .then(() => {
             console.log('Document successfully written!')
