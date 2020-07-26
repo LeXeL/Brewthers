@@ -17,16 +17,23 @@
         <div class="row">
             <q-space class="desktop-only" />
             <div class="col-lg-2 col-xs-12 q-pa-md">
-                <!-- <q-select filled :options="options" label="Estatus" dark dense /> -->
+                <q-select
+                    filled
+                    v-model="filteredStatus"
+                    :options="status.map(st=>{return st.textEs})"
+                    label="Estatus"
+                    dark
+                    dense
+                />
             </div>
             <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled label="No. de Orden" dark dense />
+                <q-input filled label="No. de Orden" dark dense v-model="filteredOrderNumber" />
             </div>
             <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled label="Restaurante" dark dense />
+                <q-input filled label="Restaurante" dark dense v-model="filteredRestaurantName" />
             </div>
             <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled mask="date" label="Fecha inicial" dark dense>
+                <q-input filled mask="date" label="Fecha inicial" v-model="dateToday" dark dense>
                     <template v-slot:append>
                         <i class="far fa-calendar-alt cursor-pointer">
                             <q-popup-proxy
@@ -34,14 +41,18 @@
                                 transition-show="scale"
                                 transition-hide="scale"
                             >
-                                <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" dark />
+                                <q-date
+                                    v-model="dateToday"
+                                    @input="() => $refs.qDateProxy.hide()"
+                                    dark
+                                />
                             </q-popup-proxy>
                         </i>
                     </template>
                 </q-input>
             </div>
             <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled mask="date" label="Fecha final" dark dense>
+                <q-input filled mask="date" label="Fecha final" dark dense v-model="dateTomorow">
                     <template v-slot:append>
                         <i class="far fa-calendar-alt cursor-pointer">
                             <q-popup-proxy
@@ -49,14 +60,18 @@
                                 transition-show="scale"
                                 transition-hide="scale"
                             >
-                                <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" dark />
+                                <q-date
+                                    v-model="dateTomorow"
+                                    @input="() => $refs.qDateProxy.hide()"
+                                    dark
+                                />
                             </q-popup-proxy>
                         </i>
                     </template>
                 </q-input>
             </div>
             <div class="col-lg-1 q-pa-md">
-                <q-btn class="full-height" color="primary" label="Buscar" />
+                <q-btn class="full-height" color="primary" label="Buscar" @click="filterContent()" />
             </div>
         </div>
         <div class="row">
@@ -66,7 +81,7 @@
                     :data="data"
                     :columns="columns"
                     row-key="name"
-                    :pagination="initialPagination"
+                    :pagination="{rowsPerPage: 15}"
                     binary-state-sort
                     dark
                     v-if="restaurants.length > 0"
@@ -110,14 +125,13 @@
                                 }}
                             </q-td>
 
-                            <!-- <q-td>
-                                <q-btn
-                                    :color="status[props.row.status].color"
+                            <q-td>
+                                <q-badge
+                                    :color="status.filter(st =>{ if(st.text === props.row.status) return st})[0].color"
                                     size="xs"
-                                    :props="props"
-                                    :label="status[props.row.status].text"
+                                    :label="status.filter(st =>{ if(st.text === props.row.status) return st})[0].textEs"
                                 />
-                            </q-td>-->
+                            </q-td>
                             <q-td>
                                 <q-btn color="info" size="xs" label="Detalles" to="/order-details" />
                             </q-td>
@@ -168,18 +182,12 @@ import moment from 'moment'
 export default {
     data() {
         return {
-            date: '2019/02/01',
+            dateToday: moment(new Date()).format('YYYY/MM/DD'),
+            dateTomorow: moment(new Date()).format('YYYY/MM/DD'),
             alert: false,
-            initialPagination: {rowsPerPage: 15},
-            options: [
-                'Abiertas',
-                'Por revisar',
-                'En preparacion',
-                'En camino',
-                'Entregado',
-                'Completado',
-                'Todas',
-            ],
+            filteredStatus: '',
+            filteredOrderNumber: '',
+            filteredRestaurantName: '',
             group: [],
             cancelationReasons: [
                 {label: 'This is cancelation reason 1', value: 'bat'},
@@ -266,27 +274,34 @@ export default {
                 {
                     text: 'review',
                     color: 'amber-9',
+                    textEs: 'Por Revisar',
                 },
                 {
-                    text: 'En preparacion',
+                    text: 'preparation',
                     color: 'yellow-9',
+                    textEs: 'En preparacion',
                 },
                 {
-                    text: 'En camino',
+                    text: 'onroute',
                     color: 'lime-8',
+                    textEs: 'En camino',
                 },
                 {
-                    text: 'Entregado',
+                    text: 'delivered',
                     color: 'light-green-9',
+                    textEs: 'Entregado',
                 },
                 {
-                    text: 'Completado',
+                    text: 'completed',
                     color: 'secondary',
+                    textEs: 'Completado',
                 },
                 {
-                    text: 'Cancelada',
+                    text: 'cancel',
                     color: 'red-7',
+                    textEs: 'Cancelada',
                 },
+                {textEs: 'Todos'},
             ],
             displayLoading: false,
             displayAlert: false,
@@ -296,9 +311,64 @@ export default {
             alertType: '',
             workingDeletedId: '',
             restaurants: [],
+            completeData: [],
         }
     },
     methods: {
+        filterContent() {
+            this.data = this.completeData
+            if (this.filteredStatus) {
+                if (this.filteredStatus === 'Todos') {
+                    this.data = this.completeData
+                    return
+                }
+                let status = this.status.filter(sta => {
+                    if (sta.textEs === this.filteredStatus) return sta
+                })
+                this.data = this.data.filter(data => {
+                    if (data.status === status[0].text) {
+                        return data
+                    }
+                })
+            }
+            if (this.filteredOrderNumber) {
+                this.data = this.data.filter(data => {
+                    if (data.id === parseInt(this.filteredOrderNumber)) {
+                        return data
+                    }
+                })
+            }
+            if (this.filteredRestaurantName) {
+                let restaurantsName = this.restaurants.filter(res => {
+                    return res.restaurantName
+                        .toLowerCase()
+                        .includes(this.filteredRestaurantName.toLowerCase())
+                })
+                this.data = this.data.filter(data => {
+                    if (data.restaurantId === restaurantsName[0].id) {
+                        return data
+                    }
+                })
+            }
+            if (
+                this.dateToday != moment(new Date()).format('YYYY/MM/DD') ||
+                this.dateTomorow != moment(new Date()).format('YYYY/MM/DD')
+            ) {
+                console.log('entra')
+                this.data = this.data.filter(data => {
+                    if (
+                        moment(data.logs[0]).isAfter(
+                            moment(this.dateToday).format('YYYY/MM/DD')
+                        ) &&
+                        moment(data.logs[0]).isBefore(
+                            moment(this.dateTomorow).format('YYYY/MM/DD')
+                        )
+                    ) {
+                        return data
+                    }
+                })
+            }
+        },
         returnTime(time) {
             return moment(time).format('MMMM DD YYYY')
         },
@@ -311,12 +381,14 @@ export default {
         },
         addToData(id, data) {
             data.firebaseId = id
+            this.completeData.push(data)
             this.data.push(data)
         },
         editData(id, data) {
             data.firebaseId = id
             this.data.forEach((d, index) => {
                 if (d.id === id) {
+                    this.completeData.splice(index, 1, data)
                     this.data.splice(index, 1, data)
                 }
             })
@@ -324,6 +396,7 @@ export default {
         removeData(id) {
             this.data.forEach((d, index) => {
                 if (d.firebaseId === id) {
+                    this.completeData.splice(index, 1)
                     this.data.splice(index, 1)
                 }
             })
