@@ -137,7 +137,7 @@
                                     color="info"
                                     size="xs"
                                     label="Detalles"
-                                    :to="`/order-details/${props.row.id}`"
+                                    :to="`/order-details/${props.row.firebaseId}`"
                                 />
                             </q-td>
                             <q-td>

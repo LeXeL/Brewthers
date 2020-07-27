@@ -92,10 +92,27 @@ async function returnAllOrders() {
         })
     return orders
 }
+async function returnOrderById(id) {
+    return db
+        .collection('order')
+        .doc(id)
+        .get()
+        .then(doc => {
+            if (doc.exists) {
+                return doc.data()
+            } else {
+                console.log('Document no existe')
+            }
+        })
+        .catch(error => {
+            return error
+        })
+}
 
 module.exports = {
     createOrder,
     updateOrder,
     deleteOrder,
     returnAllOrders,
+    returnOrderById,
 }
