@@ -58,9 +58,9 @@ export default {
         }
     },
     mounted() {
-        try {
-            let db = firebase.firestore()
-            db.collection('brewery').onSnapshot(snapshot => {
+        let db = firebase.firestore()
+        db.collection('brewery').onSnapshot(
+            snapshot => {
                 snapshot.docChanges().forEach(change => {
                     if (change.type === 'added') {
                         this.addToData(change.doc.id, change.doc.data())
@@ -72,10 +72,11 @@ export default {
                         this.removeData(change.doc.id)
                     }
                 })
-            })
-        } catch (error) {
-            console.log(`error in Brewing House with firebase`)
-        }
+            },
+            error => {
+                console.log(error)
+            }
+        )
     },
     methods: {
         updateNameChange(event) {

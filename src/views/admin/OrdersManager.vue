@@ -133,7 +133,12 @@
                                 />
                             </q-td>
                             <q-td>
-                                <q-btn color="info" size="xs" label="Detalles" to="/order-details" />
+                                <q-btn
+                                    color="info"
+                                    size="xs"
+                                    label="Detalles"
+                                    :to="`/order-details/${props.row.id}`"
+                                />
                             </q-td>
                             <q-td>
                                 <q-btn
@@ -368,6 +373,14 @@ export default {
                     }
                 })
             }
+            this.clear()
+        },
+        clear() {
+            this.filteredStatus = ''
+            this.filteredOrderNumber = ''
+            this.filteredRestaurantName = ''
+            this.dateToday = moment(new Date()).format('YYYY/MM/DD')
+            this.dateTomorow = moment(new Date()).format('YYYY/MM/DD')
         },
         returnTime(time) {
             return moment(time).format('MMMM DD YYYY')
@@ -404,9 +417,9 @@ export default {
     },
     async mounted() {
         this.displayLoading = true
-        try {
-            let db = firebase.firestore()
-            db.collection('order').onSnapshot(snapshot => {
+        let db = firebase.firestore()
+        db.collection('order').onSnapshot(
+            snapshot => {
                 snapshot.docChanges().forEach(change => {
                     if (change.type === 'added') {
                         this.addToData(change.doc.id, change.doc.data())
@@ -418,10 +431,11 @@ export default {
                         this.removeData(change.doc.id)
                     }
                 })
-            })
-        } catch (error) {
-            console.log(`error in Brewing House with firebase`)
-        }
+            },
+            error => {
+                console.log(error)
+            }
+        )
         api.returnApprovedUser()
             .then(response => {
                 response.data.data.forEach(element => {

@@ -135,27 +135,26 @@ export default {
         },
     },
     mounted() {
-        try {
-            let db = firebase.firestore()
-            db.collection('users')
-                .doc(this.uid)
-                .onSnapshot(
-                    {
-                        // Listen for document metadata changes
-                        includeMetadataChanges: true,
-                    },
-                    doc => {
-                        // ...
-                        if (this.data.length < 1) {
-                            this.addToData(doc.id, doc.data())
-                            return
-                        }
-                        this.editData(doc.id, doc.data())
+        let db = firebase.firestore()
+        db.collection('users')
+            .doc(this.uid)
+            .onSnapshot(
+                {
+                    // Listen for document metadata changes
+                    includeMetadataChanges: true,
+                },
+                doc => {
+                    // ...
+                    if (this.data.length < 1) {
+                        this.addToData(doc.id, doc.data())
+                        return
                     }
-                )
-        } catch (error) {
-            console.log(error)
-        }
+                    this.editData(doc.id, doc.data())
+                },
+                error => {
+                    console.log(error)
+                }
+            )
     },
     beforeMount() {
         if (this.$q.platform.is.mobile) this.mobileDrawer = true

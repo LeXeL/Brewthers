@@ -210,9 +210,9 @@ export default {
         'admin-accounts-table': AdminAccountsTable,
     },
     mounted() {
-        try {
-            let db = firebase.firestore()
-            db.collection('users').onSnapshot(snapshot => {
+        let db = firebase.firestore()
+        db.collection('users').onSnapshot(
+            snapshot => {
                 snapshot.docChanges().forEach(change => {
                     if (change.type === 'added') {
                         this.addToUsers(change.doc.id, change.doc.data())
@@ -224,10 +224,11 @@ export default {
                         this.removeInUsers(change.doc.id)
                     }
                 })
-            })
-        } catch (error) {
-            console.log(`error in Accounts Manager with firebase`)
-        }
+            },
+            error => {
+                console.log(error)
+            }
+        )
     },
 }
 </script>
