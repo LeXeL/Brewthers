@@ -211,14 +211,16 @@ export default {
             obj.itbms = this.ITBM
             obj.amount = this.amount
             obj.paymentMethod = this.paymentMethod
+            obj.paymentProof = []
             if (this.file) {
-                obj.paymentProof = await this.uploadToFirebase(
+                let file = await this.uploadToFirebase(
                     this.file,
                     `users/proofOfPayment/${this.uid}`,
                     this.file
                 )
+                obj.paymentProof.push(file)
             } else {
-                obj.paymentProof = ''
+                obj.paymentProof = []
             }
 
             api.createOrdersOnDatabase({order: obj}).then(response => {
