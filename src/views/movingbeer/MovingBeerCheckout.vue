@@ -207,7 +207,7 @@ export default {
             let obj = {}
             obj.restaurantId = this.data[0].id
             obj.cart = this.data[0].cart
-            obj.total = this.total
+            obj.total = this.total.toFixed(2)
             obj.itbms = this.ITBM
             obj.amount = this.amount
             obj.paymentMethod = this.paymentMethod
