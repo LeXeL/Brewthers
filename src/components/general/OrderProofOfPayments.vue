@@ -107,7 +107,7 @@ export default {
                     action: 'Upload Proof',
                     section: '',
                     who: this.user.email,
-                    time: new Date(),
+                    time: Date.now(),
                 })
                 api.updateOrdersInformation({
                     id: this.orderId,

@@ -108,6 +108,21 @@ async function returnOrderById(id) {
             return error
         })
 }
+async function changeOrderStatus(id, status) {
+    console.log(`Request to change order: ${id} to the new status ${status}`)
+    return db
+        .collection('order')
+        .doc(id)
+        .update({status: status})
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 
 module.exports = {
     createOrder,
@@ -115,4 +130,5 @@ module.exports = {
     deleteOrder,
     returnAllOrders,
     returnOrderById,
+    changeOrderStatus,
 }

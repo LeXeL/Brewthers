@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="text-h6 q-px-md">Control de estados</div>
-                        <order-stepper />
+                        <order-stepper :orderId="this.$route.params.id" :data="data" />
                     </div>
                 </div>
                 <div class="row">
