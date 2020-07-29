@@ -361,19 +361,10 @@ export default {
                 this.dateTomorow != moment(new Date()).format('YYYY/MM/DD')
             ) {
                 this.data = this.data.filter(data => {
-                    console.log(
-                        moment(data.logs[0]).isSameOrAfter(
-                            moment(this.dateToday)
-                        )
-                    )
-
+                    let dataDate = moment(data.logs[0]).format('YYYY/MM/DD')
                     if (
-                        moment(data.logs[0]).isSameOrAfter(
-                            moment(this.dateToday)
-                        ) &&
-                        moment(data.logs[0]).isSameOrBefore(
-                            moment(this.dateTomorow)
-                        )
+                        moment(dataDate).isSameOrAfter(this.dateToday) &&
+                        moment(dataDate).isSameOrBefore(this.dateTomorow)
                     ) {
                         return data
                     }
