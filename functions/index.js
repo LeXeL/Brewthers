@@ -301,3 +301,28 @@ exports.returnAllOrders = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.returnOrderById = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await order.returnOrderById(req.body.id)
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.changeOrderStatus = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await order.changeOrderStatus(
+                req.body.id,
+                req.body.status
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})

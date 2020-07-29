@@ -15,17 +15,17 @@ async function getLastId() {
         .doc('lastId')
         .get()
         .then(doc => {
-            console.log(doc.data())
-            return doc.data().lastId
+            return doc.data()
         })
 }
 
 async function createOrder(order) {
+    let lastId = await getLastId()
     return db
         .collection('order')
         .doc()
         .set({
-            id: parseInt(getLastId()),
+            id: parseInt(lastId.lastId),
             restaurantId: order.restaurantId,
             cart: order.cart,
             paymentProof: order.paymentProof ? order.paymentProof : [],
@@ -92,10 +92,43 @@ async function returnAllOrders() {
         })
     return orders
 }
+async function returnOrderById(id) {
+    return db
+        .collection('order')
+        .doc(id)
+        .get()
+        .then(doc => {
+            if (doc.exists) {
+                return doc.data()
+            } else {
+                console.log('Document no existe')
+            }
+        })
+        .catch(error => {
+            return error
+        })
+}
+async function changeOrderStatus(id, status) {
+    console.log(`Request to change order: ${id} to the new status ${status}`)
+    return db
+        .collection('order')
+        .doc(id)
+        .update({status: status})
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 
 module.exports = {
     createOrder,
     updateOrder,
     deleteOrder,
     returnAllOrders,
+    returnOrderById,
+    changeOrderStatus,
 }

@@ -1,33 +1,65 @@
 <template>
     <div>
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="displayAlert = false"
+        ></brewthers-alert>
         <div class="row q-px-md q-py-sm">
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="amber-9" size="sm" class="q-mb-sm">
+                <q-btn
+                    :color="data.status === 'review' ? 'amber-9' : 'grey-6'"
+                    size="sm"
+                    class="q-mb-sm"
+                >
                     <i class="fas fa-box q-mr-xs"></i>Por Revisar
                 </q-btn>
             </div>
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="grey-6" size="sm" class="q-mb-sm">
+                <q-btn
+                    :color="data.status === 'preparation' ? 'yellow-9' : 'grey-6'"
+                    size="sm"
+                    class="q-mb-sm"
+                    @click="changeStatus('preparation')"
+                >
                     <i class="fas fa-boxes q-mr-xs"></i>En Preparacion
                 </q-btn>
             </div>
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="grey-6" size="sm" class="q-mb-sm">
+                <q-btn
+                    :color="data.status === 'onroute' ? 'lime-8' : 'grey-6'"
+                    size="sm"
+                    class="q-mb-sm"
+                    @click="changeStatus('onroute')"
+                >
                     <i class="fas fa-truck q-mr-xs"></i>En Camino
                 </q-btn>
             </div>
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="grey-6" size="sm" class="q-mb-sm">
+                <q-btn
+                    :color="data.status === 'delivered' ? 'light-green-9' : 'grey-6'"
+                    size="sm"
+                    class="q-mb-sm"
+                    @click="changeStatus('delivered')"
+                >
                     <i class="fas fa-truck-loading q-mr-xs"></i>Entregado
                 </q-btn>
             </div>
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="grey-6" size="sm" class="q-mb-sm">
+                <q-btn
+                    :color="data.status === 'completed' ? 'secondary' : 'grey-6'"
+                    size="sm"
+                    class="q-mb-sm"
+                    @click="changeStatus('completed')"
+                >
                     <i class="fas fa-check q-mr-xs"></i>Completado
                 </q-btn>
             </div>
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="red-7" size="sm" @click="cancelationModal = true">
+                <q-btn color="red-7" size="sm" @click="cancelationModal= true">
                     <i class="fas fa-times q-mr-xs"></i>Cancelar
                 </q-btn>
             </div>
@@ -35,9 +67,7 @@
         <q-dialog v-model="cancelationModal">
             <q-card style="width: 700px; max-width: 80vw;" dark>
                 <q-card-section>
-                    <div class="text-h6">
-                        Seleccione los motivos de cancelacion de orden
-                    </div>
+                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -51,27 +81,39 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn label="Confirmar" color="secondary" v-close-popup />
+                    <q-btn
+                        label="Confirmar"
+                        color="secondary"
+                        v-close-popup
+                        @click="changeStatus('cancel')"
+                    />
                     <q-btn label="Cancelar" color="red-7" v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>
-        <!-- <div class="row q-px-md">
-            <q-btn color="red-7" class="on-left" @click="cancelationModal = true">
-                <i class="fas fa-times"></i>
-            </q-btn>
-            <q-btn color="warning" class="on-left">
-                <i class="fas fa-long-arrow-alt-left"></i>
-            </q-btn>
-            <q-btn color="secondary">
-                <i class="fas fa-long-arrow-alt-right"></i>
-            </q-btn>
-        </div>-->
     </div>
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
+    props: {
+        orderId: {
+            type: String,
+            default: '',
+        },
+        data: {
+            type: Object,
+            default: () => {
+                return {}
+            },
+        },
+    },
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
     data() {
         return {
             cancelationModal: false,
@@ -81,7 +123,46 @@ export default {
                 {label: 'This is cancelation reason 2', value: 'friend'},
                 {label: 'This is cancelation reason 3', value: 'upload'},
             ],
+            displayLoading: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
+    },
+    methods: {
+        changeStatus(status) {
+            this.displayLoading = true
+            let obj = this.data.logs
+            obj.push({
+                action: 'Changed Status',
+                section: `from: ${this.data.status} to ${status}`,
+                who: this.user.email,
+                time: Date.now(),
+            })
+            api.changeOrderStatus({id: this.orderId, status})
+                .then(() => {
+                    api.updateOrdersInformation({
+                        id: this.orderId,
+                        Order: {logs: obj},
+                    })
+                })
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha cambiado con exito el estado de la orden'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
     },
 }
 </script>

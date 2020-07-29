@@ -4,7 +4,7 @@
             filled
             dark
             label="Restaurante"
-            value="La Cocina de Pepe"
+            :value="data[0].restaurantName"
             readonly
             type="text"
             class="q-mb-md"
@@ -13,7 +13,7 @@
             filled
             dark
             label="Correo"
-            value="cocina.de.pepe@gmail.com"
+            :value="data[0].email"
             readonly
             type="email"
             class="q-mb-md"
@@ -22,11 +22,41 @@
             filled
             dark
             label="Celular"
-            value="6262622"
+            :value="data[0].contactPhone"
             readonly
-            type="number"
+            type="string"
             class="q-mb-md"
         />
-        <q-input filled dark label="Fecha" value="2020-01-15" readonly type="date" class="q-mb-md" />
+        <q-input
+            filled
+            dark
+            label="Fecha"
+            :value="returnTime(date)"
+            readonly
+            type="sting"
+            class="q-mb-md"
+        />
     </div>
 </template>
+<script>
+import moment from 'moment'
+export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => {
+                return []
+            },
+        },
+        date: {
+            type: Number,
+            default: new Date(),
+        },
+    },
+    methods: {
+        returnTime(time) {
+            return moment(time).format('MMMM DD YYYY')
+        },
+    },
+}
+</script>

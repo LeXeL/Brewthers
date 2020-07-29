@@ -101,3 +101,11 @@ export const returnAllOrders = data =>
     Request.post('/returnAllOrders', data, {
         'Content-Type': 'application/json',
     })
+export const returnOrderById = data =>
+    Request.post('/returnOrderById', data, {
+        'Content-Type': 'application/json',
+    })
+export const changeOrderStatus = data =>
+    Request.post('/changeOrderStatus', data, {
+        'Content-Type': 'application/json',
+    })
