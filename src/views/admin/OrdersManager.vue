@@ -37,13 +37,13 @@
                     <template v-slot:append>
                         <i class="far fa-calendar-alt cursor-pointer">
                             <q-popup-proxy
-                                ref="qDateProxy"
+                                ref="qDateProxyd"
                                 transition-show="scale"
                                 transition-hide="scale"
                             >
                                 <q-date
                                     v-model="dateToday"
-                                    @input="() => $refs.qDateProxy.hide()"
+                                    @input="() => $refs.qDateProxyd.hide()"
                                     dark
                                 />
                             </q-popup-proxy>
@@ -360,14 +360,19 @@ export default {
                 this.dateToday != moment(new Date()).format('YYYY/MM/DD') ||
                 this.dateTomorow != moment(new Date()).format('YYYY/MM/DD')
             ) {
-                console.log('entra')
                 this.data = this.data.filter(data => {
+                    console.log(
+                        moment(data.logs[0]).isSameOrAfter(
+                            moment(this.dateToday)
+                        )
+                    )
+
                     if (
-                        moment(data.logs[0]).isAfter(
-                            moment(this.dateToday).format('YYYY/MM/DD')
+                        moment(data.logs[0]).isSameOrAfter(
+                            moment(this.dateToday)
                         ) &&
-                        moment(data.logs[0]).isBefore(
-                            moment(this.dateTomorow).format('YYYY/MM/DD')
+                        moment(data.logs[0]).isSameOrBefore(
+                            moment(this.dateTomorow)
                         )
                     ) {
                         return data
