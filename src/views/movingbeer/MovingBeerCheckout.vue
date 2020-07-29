@@ -216,7 +216,7 @@ export default {
                 let file = await this.uploadToFirebase(
                     this.file,
                     `users/proofOfPayment/${this.uid}`,
-                    this.file.name
+                    this.file.name + 'T' + new Date()
                 )
                 obj.paymentProof.push(file)
             } else {

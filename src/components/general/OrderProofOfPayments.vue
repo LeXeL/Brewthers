@@ -99,7 +99,7 @@ export default {
                 let file = await this.uploadToFirebase(
                     this.pop,
                     `users/proofOfPayment/${this.restaurantId}`,
-                    this.pop.name
+                    this.pop.name + 'T' + new Date()
                 )
                 files.push(file)
                 let logs = this.fullOrder.logs
