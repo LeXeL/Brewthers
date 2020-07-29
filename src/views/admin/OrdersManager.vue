@@ -276,6 +276,7 @@ export default {
             ],
             data: [],
             status: [
+                {textEs: 'Todos'},
                 {
                     text: 'review',
                     color: 'amber-9',
@@ -306,7 +307,6 @@ export default {
                     color: 'red-7',
                     textEs: 'Cancelada',
                 },
-                {textEs: 'Todos'},
             ],
             displayLoading: false,
             displayAlert: false,
@@ -325,6 +325,7 @@ export default {
             if (this.filteredStatus) {
                 if (this.filteredStatus === 'Todos') {
                     this.data = this.completeData
+                    this.clear()
                     return
                 }
                 let status = this.status.filter(sta => {
