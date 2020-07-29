@@ -175,7 +175,7 @@ export default {
                 })
                 this.total =
                     parseFloat(total.toFixed(2)) + parseFloat(this.ITBM)
-                return this.total
+                return this.total.toFixed(2)
             }
             return '0'
         },
@@ -287,6 +287,7 @@ export default {
     },
     async mounted() {
         this.displayLoading = true
+        window.scrollTo(0, 0)
         let db = firebase.firestore()
         await db
             .collection('users')
