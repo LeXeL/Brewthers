@@ -114,7 +114,7 @@ export default {
         }
     },
     watch: {
-        reason: function() {
+        reason: function () {
             this.form.contactReason = 'Comprar caja o keg'
         },
     },
@@ -139,9 +139,9 @@ export default {
                 emailjs
                     .send(
                         'gmail',
-                        'template_Nldne3t8',
+                        'template_XNXkS0BS',
                         this.form,
-                        'user_l9KYZVj8DNvwXi3kegar5'
+                        'user_bSE3FNhIHYf0qLxRKTyIy'
                     )
                     .then(
                         result => {
