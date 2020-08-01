@@ -71,7 +71,6 @@ export default {
                     label: 'Celular',
                     field: 'contactPhone',
                     align: 'left',
-                    sortable: true,
                 },
             ],
         }
