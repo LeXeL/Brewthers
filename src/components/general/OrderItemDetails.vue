@@ -11,6 +11,11 @@
             <div class="text-subtitle-2" v-if="data.ibu">IBU: {{data.ibu}}</div>
             <div class="text-subtitle-2" v-if="data.price">Precio unitario: $ {{data.price}}</div>
             <div class="text-subtitle-2" v-if="data.amount">Cantidad: {{data.amount}}</div>
+            <div class="text-subtitle-2" v-if="$route.fullPath.includes('order-details')">
+                <q-btn color="red-7" size="xs">
+                    <i class="fas fa-times"></i>
+                </q-btn>
+            </div>
         </div>
     </div>
 </template>
