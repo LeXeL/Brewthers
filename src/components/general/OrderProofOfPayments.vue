@@ -8,7 +8,14 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <q-file filled dark label="Adjuntar comprobante" class="q-mb-md" v-model="pop">
+        <q-file
+            filled
+            dark
+            label="Adjuntar comprobante"
+            class="q-mb-md"
+            v-model="pop"
+            :disable="disableprop"
+        >
             <template v-slot:append></template>
 
             <template v-slot:after>
@@ -65,6 +72,9 @@ export default {
             default: () => {
                 return {}
             },
+        },
+        disableprop: {
+            type: false,
         },
     },
     data() {

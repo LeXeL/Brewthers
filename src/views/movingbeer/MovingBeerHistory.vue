@@ -76,6 +76,7 @@
                                     :fullOrder="order"
                                     :orderId="order.firebaseId"
                                     :restaurantId="order.restaurantId"
+                                    :disableprop="order.status === 'cancel' || order.status === 'completed'"
                                 />
                             </div>
                         </div>
@@ -290,9 +291,10 @@ export default {
                 })
         },
     },
-    mounted() {
+    async mounted() {
         this.displayLoading = true
-        api.returnAllOrdersFromUserId({id: this.uid})
+        await api
+            .returnAllOrdersFromUserId({id: this.uid})
             .then(response => {
                 this.data = response.data.data
                 this.data.sort((a, b) => {
