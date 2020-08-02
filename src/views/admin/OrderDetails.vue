@@ -47,7 +47,7 @@
                             :fullOrder="data"
                             :orderId="this.$route.params.id"
                             :restaurantId="this.data.restaurantId"
-                            :disable="this.data.status === 'cancel'|| this.data.status === 'completed'"
+                            :disableprop="this.data.status === 'cancel'|| this.data.status === 'completed'"
                         />
                     </div>
                 </div>
