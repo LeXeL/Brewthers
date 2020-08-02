@@ -100,10 +100,55 @@
                         color="info"
                         text-color="black"
                         label="Agregar articulos"
+                        @click="addItems = true"
                     />
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col q-pa-md"></div>
+            <div class="col q-pa-md"></div>
+            <div class="col"></div>
+        </div>
+        <q-dialog v-model="addItems" full-width>
+            <q-card dark>
+                <q-card-section class="row items-center q-pb-none">
+                    <q-space />
+                    <q-btn flat round dense v-close-popup>
+                        <i class="fas fa-times"></i>
+                    </q-btn>
+                </q-card-section>
+                <q-card-section v-for="house in 4" :key="house">
+                    <div class="text-h6">Casa Cervecera</div>
+                    <q-separator dark />
+                    <div class="row q-mt-md">
+                        <div
+                            class="col-lg-2 col-sm-3 col-xs-6"
+                            v-for="item in 7"
+                            :key="item"
+                        >
+                            <span>Nombre de la cerveza</span>
+                            <br />
+                            <span>Presentacion: KEG</span>
+                            <br />
+                            <span>Inventario: 5</span>
+                            <br />
+                            <q-btn-group class="q-mb-sm q-mt-sm">
+                                <q-btn color="primary" size="xs">
+                                    <i class="fas fa-minus"></i>
+                                </q-btn>
+                                <q-btn color="primary" disable>0</q-btn>
+                                <q-btn color="primary" size="xs">
+                                    <i class="fas fa-plus"></i>
+                                </q-btn>
+                            </q-btn-group>
+                            <br />
+                            <q-btn color="primary q-mb-md">Agregar</q-btn>
+                        </div>
+                    </div>
+                </q-card-section>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -131,6 +176,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            addItems: true,
         }
     },
     methods: {
