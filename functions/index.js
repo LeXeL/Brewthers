@@ -290,17 +290,21 @@ exports.deleteOrdersInformation = functions.https.onRequest(
         })
     }
 )
-exports.returnAllOrders = functions.https.onRequest(async (req, res) => {
-    cors(req, res, async () => {
-        try {
-            let response = await order.returnAllOrders()
-            res.status(200).send({data: response})
-        } catch (err) {
-            console.log(err)
-            res.status(400).send({err: err})
-        }
-    })
-})
+exports.returnAllOrdersFromUserId = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await order.returnAllOrdersFromUserId(
+                    req.body.id
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
 exports.returnOrderById = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
