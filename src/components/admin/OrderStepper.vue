@@ -68,7 +68,7 @@
                     color="red-7"
                     size="sm"
                     @click="alert= true"
-                    :disable="data.status != 'review'"
+                    :disable="data.status == 'cancel'"
                 >
                     <i class="fas fa-times q-mr-xs"></i>Cancelar
                 </q-btn>

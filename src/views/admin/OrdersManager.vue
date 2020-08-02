@@ -140,7 +140,7 @@
                                     size="xs"
                                     label="Cancelar"
                                     @click="asingWorkingorder(props.row)"
-                                    :disable="props.row.status != 'review'"
+                                    :disable="props.row.status == 'cancel'"
                                 />
                             </q-td>
                         </q-tr>
