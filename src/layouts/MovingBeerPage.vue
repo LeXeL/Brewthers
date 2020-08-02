@@ -151,9 +151,7 @@ export default {
                     }
                     this.editData(doc.id, doc.data())
                 },
-                error => {
-                    console.log(error)
-                }
+                error => {}
             )
     },
     beforeMount() {
