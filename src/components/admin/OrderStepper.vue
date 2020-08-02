@@ -14,6 +14,7 @@
                     :color="data.status === 'review' ? 'amber-9' : 'grey-6'"
                     size="sm"
                     class="q-mb-sm"
+                    :disable="data.status == 'cancel'"
                 >
                     <i class="fas fa-box q-mr-xs"></i>Por Revisar
                 </q-btn>
@@ -23,6 +24,7 @@
                     :color="data.status === 'preparation' ? 'yellow-9' : 'grey-6'"
                     size="sm"
                     class="q-mb-sm"
+                    :disable="data.status == 'cancel'"
                     @click="changeStatus('preparation')"
                 >
                     <i class="fas fa-boxes q-mr-xs"></i>En Preparacion
@@ -33,6 +35,7 @@
                     :color="data.status === 'onroute' ? 'lime-8' : 'grey-6'"
                     size="sm"
                     class="q-mb-sm"
+                    :disable="data.status == 'cancel'"
                     @click="changeStatus('onroute')"
                 >
                     <i class="fas fa-truck q-mr-xs"></i>En Camino
@@ -43,6 +46,7 @@
                     :color="data.status === 'delivered' ? 'light-green-9' : 'grey-6'"
                     size="sm"
                     class="q-mb-sm"
+                    :disable="data.status == 'cancel'"
                     @click="changeStatus('delivered')"
                 >
                     <i class="fas fa-truck-loading q-mr-xs"></i>Entregado
@@ -53,6 +57,7 @@
                     :color="data.status === 'completed' ? 'secondary' : 'grey-6'"
                     size="sm"
                     class="q-mb-sm"
+                    :disable="data.status == 'cancel'"
                     @click="changeStatus('completed')"
                 >
                     <i class="fas fa-check q-mr-xs"></i>Completado
