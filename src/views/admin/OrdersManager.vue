@@ -7,12 +7,6 @@
             :message="alertMessage"
             :type="alertType"
         ></brewthers-alert>
-        <confirm-dialog
-            :display="displayConfirm"
-            :title="alertTitle"
-            :message="alertMessage"
-            @cancel="displayConfirm = false"
-        ></confirm-dialog>
         <div class="text-h5 q-mb-md">Administrador de ordernes</div>
         <div class="row">
             <q-space class="desktop-only" />
@@ -145,8 +139,8 @@
                                     color="red-7"
                                     size="xs"
                                     label="Cancelar"
-                                    @click="alert = true"
-                                    :disable="props.row.status == 5"
+                                    @click="asingWorkingorder(props.row)"
+                                    :disable="props.row.status != 'review'"
                                 />
                             </q-td>
                         </q-tr>
@@ -171,7 +165,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn label="Confirmar" color="secondary" v-close-popup />
+                    <q-btn label="Confirmar" color="secondary" @click="cancelOrder" v-close-popup />
                     <q-btn label="Cancelar" color="red-7" v-close-popup />
                 </q-card-actions>
             </q-card>
@@ -185,6 +179,11 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import moment from 'moment'
 export default {
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
     data() {
         return {
             dateToday: moment(new Date()).format('YYYY/MM/DD'),
@@ -314,7 +313,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
-            workingDeletedId: '',
+            workingOrder: '',
             restaurants: [],
             completeData: [],
         }
@@ -372,6 +371,10 @@ export default {
             }
             this.clear()
         },
+        asingWorkingorder(order) {
+            this.workingOrder = order
+            this.alert = true
+        },
         clear() {
             this.filteredStatus = ''
             this.filteredOrderNumber = ''
@@ -382,13 +385,6 @@ export default {
         returnTime(time) {
             return moment(time).format('MMMM DD YYYY')
         },
-        askForDeleteBrewery(event) {
-            this.displayConfirm = true
-            this.alertTitle = 'Esta seguro?'
-            this.alertMessage =
-                'Se va a proceder a eliminar esta casa cervecera'
-            this.workingDeletedId = event.id
-        },
         addToData(id, data) {
             data.firebaseId = id
             this.completeData.push(data)
@@ -397,7 +393,7 @@ export default {
         editData(id, data) {
             data.firebaseId = id
             this.data.forEach((d, index) => {
-                if (d.id === id) {
+                if (d.firebaseId === id) {
                     this.completeData.splice(index, 1, data)
                     this.data.splice(index, 1, data)
                 }
@@ -410,6 +406,48 @@ export default {
                     this.data.splice(index, 1)
                 }
             })
+        },
+        cancelOrder() {
+            this.displayLoading = true
+            let obj = this.workingOrder.logs
+            api.changeOrderStatus({
+                id: this.workingOrder.firebaseId,
+                status: 'cancel',
+            })
+                .then(() => {
+                    let reasons = []
+                    this.group.forEach(reason => {
+                        this.cancelationReasons.forEach(option => {
+                            if (option.value === reason)
+                                reasons.push(option.label)
+                        })
+                    })
+                    obj.push({
+                        action: 'Cancel Order',
+                        section: reasons,
+                        who: this.user.email,
+                        time: Date.now(),
+                    })
+                    api.updateOrdersInformation({
+                        id: this.workingOrder.firebaseId,
+                        Order: {logs: obj},
+                    })
+                })
+                .then(response => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha creado la casa cerveceras con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
         },
     },
     async mounted() {

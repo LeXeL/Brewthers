@@ -59,12 +59,17 @@
                 </q-btn>
             </div>
             <div class="col-lg-2 col-sm-4 col-xs-6">
-                <q-btn color="red-7" size="sm" @click="cancelationModal= true">
+                <q-btn
+                    color="red-7"
+                    size="sm"
+                    @click="alert= true"
+                    :disable="data.status != 'review'"
+                >
                     <i class="fas fa-times q-mr-xs"></i>Cancelar
                 </q-btn>
             </div>
         </div>
-        <q-dialog v-model="cancelationModal">
+        <q-dialog v-model="alert">
             <q-card style="width: 700px; max-width: 80vw;" dark>
                 <q-card-section>
                     <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
@@ -81,12 +86,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn
-                        label="Confirmar"
-                        color="secondary"
-                        v-close-popup
-                        @click="changeStatus('cancel')"
-                    />
+                    <q-btn label="Confirmar" color="secondary" @click="cancelOrder" v-close-popup />
                     <q-btn label="Cancelar" color="red-7" v-close-popup />
                 </q-card-actions>
             </q-card>
@@ -116,7 +116,7 @@ export default {
     },
     data() {
         return {
-            cancelationModal: false,
+            alert: false,
             group: [],
             cancelationReasons: [
                 {label: 'This is cancelation reason 1', value: 'bat'},
@@ -131,6 +131,49 @@ export default {
         }
     },
     methods: {
+        cancelOrder() {
+            this.displayLoading = true
+            let obj = this.data.logs
+            api.changeOrderStatus({
+                id: this.orderId,
+                status: 'cancel',
+            })
+                .then(() => {
+                    let reasons = []
+                    this.group.forEach(reason => {
+                        this.cancelationReasons.forEach(option => {
+                            if (option.value === reason)
+                                reasons.push(option.label)
+                        })
+                    })
+                    obj.push({
+                        action: 'Cancel Order',
+                        section: reasons,
+                        who: this.user.email,
+                        time: Date.now(),
+                    })
+                    api.updateOrdersInformation({
+                        id: this.orderId,
+                        Order: {logs: obj},
+                    })
+                })
+                .then(response => {
+                    this.data.status = 'cancel'
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha creado la casa cerveceras con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
         changeStatus(status) {
             this.displayLoading = true
             let obj = this.data.logs
@@ -148,6 +191,7 @@ export default {
                     })
                 })
                 .then(() => {
+                    this.data.status = status
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
