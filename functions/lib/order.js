@@ -72,11 +72,11 @@ async function deleteOrder(id) {
             return error
         })
 }
-async function returnAllOrders() {
+async function returnAllOrdersFromUserId(id) {
     let orders = []
     await db
         .collection('order')
-        .where('status', '==', 'active')
+        .where('restaurantId', '==', id)
         .get()
         .then(snapshot => {
             if (snapshot.empty) {
@@ -84,7 +84,7 @@ async function returnAllOrders() {
                 return
             }
             snapshot.forEach(doc => {
-                orders.push({...doc.data(), id: doc.id})
+                orders.push({...doc.data(), firebaseId: doc.id})
             })
         })
         .catch(function(error) {
@@ -128,7 +128,7 @@ module.exports = {
     createOrder,
     updateOrder,
     deleteOrder,
-    returnAllOrders,
+    returnAllOrdersFromUserId,
     returnOrderById,
     changeOrderStatus,
 }

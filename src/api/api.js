@@ -97,8 +97,8 @@ export const deleteOrdersInformation = data =>
     Request.post('/deleteOrdersInformation', data, {
         'Content-Type': 'application/json',
     })
-export const returnAllOrders = data =>
-    Request.post('/returnAllOrders', data, {
+export const returnAllOrdersFromUserId = data =>
+    Request.post('/returnAllOrdersFromUserId', data, {
         'Content-Type': 'application/json',
     })
 export const returnOrderById = data =>
