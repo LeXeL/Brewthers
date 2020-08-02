@@ -31,7 +31,7 @@ async function createOrder(order) {
             paymentProof: order.paymentProof ? order.paymentProof : [],
             total: order.total,
             itbms: order.itbms,
-            logs: [Date.now()],
+            logs: order.logs ? [Date.now(), order.logs] : [Date.now()],
             paymentMethod: order.paymentMethod,
             amount: order.amount,
             status: 'review', //review, preparation, onroute, delivered, completed, cancel
