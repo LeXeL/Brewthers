@@ -85,6 +85,34 @@ exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.updateToAproveUser = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.updateToAproveUser(
+                req.body.uid,
+                req.body.user
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.updateToRejectUser = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.updateToRejectUser(
+                req.body.uid,
+                req.body.user
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
 exports.addToShoppingCart = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {

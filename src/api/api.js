@@ -23,6 +23,14 @@ export const updateuserinformation = data =>
     Request.post('/updateUserInformation', data, {
         'Content-Type': 'application/json',
     })
+export const updateToAproveUser = data =>
+    Request.post('/updateToAproveUser', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateToRejectUser = data =>
+    Request.post('/updateToRejectUser', data, {
+        'Content-Type': 'application/json',
+    })
 export const updateadmininformation = data =>
     Request.post('/updateAdminWithInfo', data, {
         'Content-Type': 'application/json',
