@@ -5,7 +5,8 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
-        "build-firebase": "vue-cli-service build  && firebase deploy --only hosting"
+        "build-firebase": "vue-cli-service build  && firebase deploy --only hosting",
+        "firebase-set": "firebase functions:config:get > functions/.runtimeconfig.json"
     },
     "dependencies": {
         "@quasar/extras": "^1.0.0",

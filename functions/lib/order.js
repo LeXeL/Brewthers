@@ -1,5 +1,8 @@
 const admin = require('firebase-admin')
 const db = admin.firestore()
+const email = require('../lib/emailHandler')
+const product = require('../lib/product')
+const users = require('../lib/users')
 
 async function addToLastId() {
     // Sum the count of each shard in the subcollection
@@ -18,14 +21,22 @@ async function getLastId() {
             return doc.data()
         })
 }
+async function substractAmout(id) {
+    let order = await returnOrderById(id)
+    order.cart.forEach(element => {
+        product.substractInventoryFromProduct(element.id, element.amount)
+    })
+}
 
 async function createOrder(order) {
     let lastId = await getLastId()
+    order.id = parseInt(lastId.lastId)
+
     return db
         .collection('order')
         .doc()
         .set({
-            id: parseInt(lastId.lastId),
+            id: order.id,
             restaurantId: order.restaurantId,
             cart: order.cart,
             paymentProof: order.paymentProof ? order.paymentProof : [],
@@ -36,8 +47,16 @@ async function createOrder(order) {
             amount: order.amount,
             status: 'review', //review, preparation, onroute, delivered, completed, cancel
         })
-        .then(() => {
+        .then(async () => {
             addToLastId()
+            let restaurantInfo = await users.returnUserById(order.restaurantId)
+            order.restaurantId = restaurantInfo
+            let body = await email.templateHandler('Order-01', order)
+            email.sendEmail(
+                order.restaurantId.email,
+                'Hemos recibido tu orden 🍻',
+                body
+            )
             return 'Succesfull'
         })
         .catch(error => {
@@ -45,6 +64,17 @@ async function createOrder(order) {
         })
 }
 async function updateOrder(id, Obj) {
+    if (Obj.logs && Obj.logs[Obj.logs.length - 1].action === 'Cancel Order') {
+        let order = await returnOrderById(id)
+        let restaurantInfo = await users.returnUserById(order.restaurantId)
+        order.restaurantId = restaurantInfo
+        let body = await email.templateHandler('Order-04', order)
+        email.sendEmail(
+            order.restaurantId.email,
+            'Tu orden ha sido rechazada ❌',
+            body
+        )
+    }
     return db
         .collection('order')
         .doc(id)
@@ -110,12 +140,41 @@ async function returnOrderById(id) {
 }
 async function changeOrderStatus(id, status) {
     console.log(`Request to change order: ${id} to the new status ${status}`)
+    var that = status
     return db
         .collection('order')
         .doc(id)
         .update({status: status})
-        .then(() => {
+        .then(async () => {
             console.log('Document successfully written!')
+            if (that === 'preparation') {
+                substractAmout(id)
+                let order = await returnOrderById(id)
+                let restaurantInfo = await users.returnUserById(
+                    order.restaurantId
+                )
+                order.restaurantId = restaurantInfo
+                let body = await email.templateHandler('Order-02', order)
+                email.sendEmail(
+                    order.restaurantId.email,
+                    'Tu orden de Brewthers esta en preparacion 📦',
+                    body
+                )
+            }
+            if (that === 'onroute') {
+                let order = await returnOrderById(id)
+                let restaurantInfo = await users.returnUserById(
+                    order.restaurantId
+                )
+                order.restaurantId = restaurantInfo
+                let body = await email.templateHandler('Order-03', order)
+                email.sendEmail(
+                    order.restaurantId.email,
+                    'Tu orden de Brewthers esta en camino 🚚',
+                    body
+                )
+            }
+
             return 'Succesfull'
         })
         .catch(error => {

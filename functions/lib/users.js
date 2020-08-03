@@ -1,5 +1,6 @@
 const admin = require('firebase-admin')
 const db = admin.firestore()
+const email = require('../lib/emailHandler')
 
 async function createDatabaseWithUserInfo(user) {
     return db
@@ -20,6 +21,12 @@ async function createDatabaseWithUserInfo(user) {
 }
 
 async function updateDatabaseWithUserInfo(uid, obj) {
+    let body = await email.templateHandler('User-01', obj)
+    email.sendEmail(
+        obj.email,
+        'Hemos recibido tu solicitud para unirte a brewthers 😎',
+        body
+    )
     return db
         .collection('users')
         .doc(uid)
@@ -116,6 +123,47 @@ async function updateUserInfo(uid, userObj) {
             return error
         })
 }
+async function updateToAproveUser(uid, userObj) {
+    let body = await email.templateHandler('User-02', userObj)
+    email.sendEmail(
+        userObj.email,
+        'Hey tu cuenta de Brewthers ha sido aprovada ✔',
+        body
+    )
+
+    return db
+        .collection('users')
+        .doc(uid)
+        .update(userObj)
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
+async function updateToRejectUser(uid, userObj) {
+    let body = await email.templateHandler('User-03', userObj)
+    email.sendEmail(
+        userObj.email,
+        'Hey tu cuenta de Brewthers ha sido rechasada 👎🏼',
+        body
+    )
+    return db
+        .collection('users')
+        .doc(uid)
+        .update(userObj)
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 async function addToShoppingCart(uid, itemObj) {
     console.log(
         `el user: ${uid} esta agregando al carrito: ${itemObj.name} con una cantidad de ${itemObj.amount}`
@@ -169,6 +217,8 @@ module.exports = {
     returnUserById,
     returnApprovedUser,
     updateUserInfo,
+    updateToAproveUser,
+    updateToRejectUser,
     addToShoppingCart,
     removeFromShoppingCart,
     clearShoppingCart,
