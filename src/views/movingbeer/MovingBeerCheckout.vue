@@ -219,6 +219,12 @@ export default {
                     this.file.name + 'T' + new Date()
                 )
                 obj.paymentProof.push(file)
+                obj.logs = {
+                    action: 'Upload Proof',
+                    section: '',
+                    who: 'own User',
+                    time: Date.now(),
+                }
             } else {
                 obj.paymentProof = []
             }
@@ -296,7 +302,6 @@ export default {
             .then(doc => {
                 if (doc.exists) {
                     this.addToData(doc.id, doc.data())
-                    console.log('Document data:', doc.data())
                 } else {
                     // doc.data() will be undefined in this case
                     console.log('No such document!')

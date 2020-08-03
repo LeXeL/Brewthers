@@ -47,6 +47,7 @@
                             :fullOrder="data"
                             :orderId="this.$route.params.id"
                             :restaurantId="this.data.restaurantId"
+                            :disableprop="this.data.status === 'cancel'|| this.data.status === 'completed'"
                         />
                     </div>
                 </div>
@@ -108,32 +109,26 @@ export default {
             })
             return cart
         },
-        getOrderInformation() {
-            api.returnOrderById({id: this.$route.params.id})
-                .then(product => {
-                    this.data = product.data.data
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        },
-        getRestaurantInfo() {
-            api.returnApprovedUser()
-                .then(response => {
+    },
+    async mounted() {
+        this.displayLoading = true
+        api.returnOrderById({id: this.$route.params.id})
+            .then(product => {
+                this.data = product.data.data
+                api.returnApprovedUser().then(response => {
                     response.data.data.forEach(element => {
                         this.restaurants.push(element)
                     })
                 })
-                .catch(error => {
-                    console.log(error)
-                })
-        },
-    },
-    async mounted() {
-        this.displayLoading = true
-        await this.getOrderInformation()
-        await this.getRestaurantInfo()
-        this.displayLoading = false
+            })
+            .then(() => {
+                this.displayLoading = false
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        // await this.getOrderInformation()
+        // await this.getRestaurantInfo()
     },
     components: {
         'order-stepper': OrderStepper,
