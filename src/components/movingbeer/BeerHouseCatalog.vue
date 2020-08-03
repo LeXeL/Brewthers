@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pa-lg">
+    <q-page>
         <!-- <div class="row justify-center q-mb-lg">
             <div class="text-h4">Beer House Name</div>
         </div>
@@ -27,8 +27,8 @@
             </div>
             <div class="col"></div>
         </div>-->
-        <q-card class="bg-dark text-white full-width">
-            <q-bar>
+        <q-card class="text-white full-width" style="background-color: #1f2120;">
+            <q-bar class="q-ma-md" style="background-color: #1f2120">
                 <q-space />
                 <q-btn dense flat @click="$emit('closeCatalog')">
                     <i class="fas fa-times" style="font-size: 25px;"></i>

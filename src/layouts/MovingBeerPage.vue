@@ -7,7 +7,6 @@
         <!-- PAGE CONTAINER -->
         <q-page-container>
             <router-view></router-view>
-            <!-- <beer-house-catalog /> -->
         </q-page-container>
         <!-- END PAGE CONTAINER -->
 
