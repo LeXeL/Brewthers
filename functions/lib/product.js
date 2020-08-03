@@ -40,6 +40,20 @@ async function updateProduct(id, Obj) {
             return error
         })
 }
+async function substractInventoryFromProduct(id, amount) {
+    return db
+        .collection('product')
+        .doc(id)
+        .update({inventory: admin.firestore.FieldValue.increment(-amount)})
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 async function deleteProduct(id) {
     return db
         .collection('product')
@@ -94,6 +108,7 @@ async function returnProductById(id) {
 module.exports = {
     createProduct,
     updateProduct,
+    substractInventoryFromProduct,
     deleteProduct,
     returnAllProducts,
     returnProductById,

@@ -1,5 +1,6 @@
 const admin = require('firebase-admin')
 const db = admin.firestore()
+const product = require('../lib/product')
 
 async function addToLastId() {
     // Sum the count of each shard in the subcollection
@@ -17,6 +18,12 @@ async function getLastId() {
         .then(doc => {
             return doc.data()
         })
+}
+async function substractAmout(id) {
+    let order = await returnOrderById(id)
+    order.cart.forEach(element => {
+        product.substractInventoryFromProduct(element.id, element.amount)
+    })
 }
 
 async function createOrder(order) {
@@ -110,6 +117,9 @@ async function returnOrderById(id) {
 }
 async function changeOrderStatus(id, status) {
     console.log(`Request to change order: ${id} to the new status ${status}`)
+    if (status === 'preparation') {
+        substractAmout(id)
+    }
     return db
         .collection('order')
         .doc(id)
