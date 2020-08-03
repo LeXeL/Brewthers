@@ -3,11 +3,6 @@ const admin = require('firebase-admin')
 const db = admin.firestore()
 const nodemailer = require('nodemailer')
 
-const users = require('../lib/users')
-const brewery = require('../lib/brewery')
-const product = require('../lib/product')
-const order = require('../lib/order')
-
 const transporter = nodemailer.createTransport({
     host: functions.config().emailservice.host,
     port: 465,
@@ -57,16 +52,76 @@ function templateUser03(info) {
     </p>
   </div>`
 }
+async function templateOrder01(info) {
+    let cart = ''
+    info.cart.forEach(element => {
+        cart += `<li>${JSON.stringify(element)}</li>`
+    })
+    return `<div class="email-content">
+    <p>
+    Hola ${info.restaurantId.name} ${info.restaurantId.lastName} tu cuenta del restaurante ${info.restaurantId.restaurantName} ha sido Rechasada
 
-async function templateHandler(id, userInformation) {
+    Por las siguientes razones:
+    <ul>
+          ${cart}
+    </ul>
+    </p>
+  </div>`
+}
+async function templateOrder02(info) {
+    return `<div class="email-content">
+    <p>
+    Tu order No ${info.id} esta en preparacion!
+    </p>
+  </div>`
+}
+async function templateOrder03(info) {
+    return `<div class="email-content">
+    <p>
+    Tu order No ${info.id} esta en camino!
+    </p>
+  </div>`
+}
+function templateOrder04(info) {
+    console.log(info)
+    let reason = ''
+    let section = info.logs[info.logs.length - 1].section
+    section.forEach(element => {
+        reason += `<li>${element}</li>`
+    })
+    return `<div class="email-content">
+        <p>
+        Hola ${info.restaurantId.name} ${info.restaurantId.lastName} tu orden No ${info.id} ha sido Rechasada
+
+        Por las siguientes razones:
+        <ol>
+              ${reason}
+            </ol>
+        </p>
+      </div>`
+}
+
+async function templateHandler(id, information) {
     if (id === 'User-01') {
-        return templateUser01(userInformation)
+        return templateUser01(information)
     }
     if (id === 'User-02') {
-        return templateUser02(userInformation)
+        return templateUser02(information)
     }
     if (id === 'User-03') {
-        return templateUser03(userInformation)
+        return templateUser03(information)
+    }
+    if (id === 'Order-01') {
+        return templateOrder01(information)
+    }
+    if (id === 'Order-02') {
+        return templateOrder02(information)
+    }
+    if (id === 'Order-03') {
+        return templateOrder03(information)
+    }
+    if (id === 'Order-04') {
+        return templateOrder04(information)
     }
 }
 
