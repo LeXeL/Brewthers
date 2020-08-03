@@ -7,6 +7,7 @@
         <!-- PAGE CONTAINER -->
         <q-page-container>
             <router-view></router-view>
+            <!-- <beer-house-catalog /> -->
         </q-page-container>
         <!-- END PAGE CONTAINER -->
 
@@ -78,6 +79,7 @@ import * as api from '@/api/api'
 import Navbar from '@/components/movingbeer/Navbar.vue'
 import Footer from '@/components/general/Footer.vue'
 import CartItemTile from '@/components/movingbeer/CartItemTile.vue'
+import BeerHouseCatalog from '@/components/movingbeer/BeerHouseCatalog.vue'
 
 export default {
     computed: {
@@ -160,6 +162,7 @@ export default {
     components: {
         'mb-navbar': Navbar,
         'mb-footer': Footer,
+        'beer-house-catalog': BeerHouseCatalog,
         CartItemTile,
     },
 }
