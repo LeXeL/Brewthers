@@ -8,21 +8,32 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div v-if="Object.keys(data).length !== 0">
-            <div class="text-h5 q-mb-md">Orden No. {{ data.id }}</div>
+        <div class="text-h5 q-mb-md">Orden No. {{ data.id }}</div>
 
-            <div class="row">
-                <div class="col-lg-8 col-xs-12">
-                    <div class="row">
-                        <div class="col">
-                            <div class="text-h6 q-px-md">
-                                Control de estados
-                            </div>
-                            <order-stepper
-                                :orderId="this.$route.params.id"
-                                :data="data"
-                            />
-                        </div>
+        <div class="row">
+            <div class="col-lg-8 col-xs-12">
+                <div class="row">
+                    <div class="col">
+                        <div class="text-h6 q-px-md">Control de estados</div>
+                        <order-stepper
+                            :orderId="this.$route.params.id"
+                            :data="data"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
+                        <div class="text-h6 q-mb-sm">Datos de orden</div>
+                        <order-info
+                            v-if="restaurants.length > 0"
+                            :data="
+                                restaurants.filter(rest => {
+                                    if (rest.id === data.restaurantId)
+                                        return rest
+                                })
+                            "
+                            :date="data.logs[0]"
+                        />
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
@@ -43,42 +54,32 @@
                             <order-amounts :data="data" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
-                            <div class="text-h6 q-mb-sm">Entrega</div>
-                            <order-address
-                                v-if="restaurants.length > 0"
-                                :data="
-                                    restaurants.filter(rest => {
-                                        if (rest.id === data.restaurantId)
-                                            return rest
-                                    })
-                                "
-                            />
-                        </div>
-                        <div class="col q-pa-md">
-                            <div class="text-h6 q-mb-sm">
-                                Comprobantes de pago
-                            </div>
-                            <order-proof-of-payments
-                                :data="data.paymentProof"
-                                :fullOrder="data"
-                                :orderId="this.$route.params.id"
-                                :restaurantId="this.data.restaurantId"
-                                :disableprop="
-                                    this.data.status === 'cancel' ||
-                                        this.data.status === 'completed'
-                                "
-                            />
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
+                        <div class="text-h6 q-mb-sm">Entrega</div>
+                        <order-address
+                            v-if="restaurants.length > 0"
+                            :data="
+                                restaurants.filter(rest => {
+                                    if (rest.id === data.restaurantId)
+                                        return rest
+                                })
+                            "
+                        />
                     </div>
-                    <div class="row">
-                        <div
-                            class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md"
-                        >
-                            <div class="text-h6 q-mb-sm">Log de orden</div>
-                            <order-log :data="data.logs" />
-                        </div>
+                    <div class="col q-pa-md">
+                        <div class="text-h6 q-mb-sm">Comprobantes de pago</div>
+                        <order-proof-of-payments
+                            :data="data.paymentProof"
+                            :fullOrder="data"
+                            :orderId="this.$route.params.id"
+                            :restaurantId="this.data.restaurantId"
+                            :disableprop="
+                                this.data.status === 'cancel' ||
+                                    this.data.status === 'completed'
+                            "
+                        />
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xs-12">
@@ -110,29 +111,46 @@
             <div class="col q-pa-md"></div>
             <div class="col"></div>
         </div>
-        <q-dialog v-model="addItems" full-width>
-            <q-card dark>
+        <q-dialog v-model="addItems">
+            <q-card dark style="width: 700px; max-width: 80vw;">
                 <q-card-section class="row items-center q-pb-none">
                     <q-space />
                     <q-btn flat round dense v-close-popup>
                         <i class="fas fa-times"></i>
                     </q-btn>
                 </q-card-section>
-                <q-card-section v-for="house in 4" :key="house">
-                    <div class="text-h6">Casa Cervecera</div>
-                    <q-separator dark />
-                    <div class="row q-mt-md">
-                        <div
-                            class="col-lg-2 col-sm-3 col-xs-6"
-                            v-for="item in 7"
-                            :key="item"
-                        >
-                            <span>Nombre de la cerveza</span>
-                            <br />
-                            <span>Presentacion: KEG</span>
-                            <br />
-                            <span>Inventario: 5</span>
-                            <br />
+                <q-card-section>
+                    <q-select
+                        filled
+                        v-model="model"
+                        use-input
+                        hide-selected
+                        fill-input
+                        input-debounce="0"
+                        :options="options"
+                        @filter="filterFn"
+                        label="Cerveza o casa cervecera"
+                        dark
+                    >
+                        <template v-slot:no-option>
+                            <q-item>
+                                <q-item-section class="text-grey">
+                                    No hay resultados.
+                                </q-item-section>
+                            </q-item>
+                        </template>
+                    </q-select>
+                </q-card-section>
+                <q-card-section>
+                    <div class="row">
+                        <div class="col-4">
+                            <q-img :src="require('@/assets/beer.jpg')" />
+                        </div>
+                        <div class="col-8 q-px-md">
+                            <div class="text-h6">Nombre de la pinta</div>
+                            <p class="q-mb-none">Casa: Nombre de la casa</p>
+                            <p class="q-mb-none">Presentacion: KEG</p>
+                            <p class="q-mb-none">Precio: $ 12.50</p>
                             <q-btn-group class="q-mb-sm q-mt-sm">
                                 <q-btn color="primary" size="xs">
                                     <i class="fas fa-minus"></i>
@@ -153,6 +171,8 @@
 </template>
 
 <script>
+const stringOptions = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle']
+
 import * as api from '@/api/api'
 
 import OrderStepper from '@/components/admin/OrderStepper'
@@ -177,6 +197,8 @@ export default {
             alertMessage: '',
             alertType: '',
             addItems: true,
+            model: null,
+            options: stringOptions,
         }
     },
     methods: {
@@ -187,6 +209,14 @@ export default {
                 delete element.abv
             })
             return cart
+        },
+        filterFn(val, update, abort) {
+            update(() => {
+                const needle = val.toLowerCase()
+                this.options = stringOptions.filter(
+                    v => v.toLowerCase().indexOf(needle) > -1
+                )
+            })
         },
     },
     async mounted() {
