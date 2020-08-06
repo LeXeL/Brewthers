@@ -106,11 +106,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col q-pa-md"></div>
-            <div class="col q-pa-md"></div>
-            <div class="col"></div>
-        </div>
         <q-dialog v-model="addItems">
             <q-card dark style="width: 700px; max-width: 80vw;">
                 <q-card-section class="row items-center q-pb-none">
