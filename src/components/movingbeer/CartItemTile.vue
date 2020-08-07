@@ -12,6 +12,7 @@
                     <i
                         class="fas fa-plus on-right q-ml-sm"
                         style="color: #27a3c3; cursor: pointer;"
+                        @click="addToAmount(item,item.amount)"
                     ></i>
                 </span>
             </q-item-section>
@@ -41,6 +42,10 @@ export default {
                 return {}
             },
         },
+        resetSpinner: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -48,9 +53,20 @@ export default {
         }
     },
     methods: {
+        addToAmount(item, amount) {
+            this.spinner = true
+            this.$emit('addAmountToItemInCart', {item, amount})
+        },
         deleteItemFromCart(item) {
             this.spinner = true
             this.$emit('deleteItemFromCart', item)
+        },
+    },
+    watch: {
+        resetSpinner(newValue, oldValue) {
+            if (newValue) {
+                this.spinner = false
+            }
         },
     },
 }

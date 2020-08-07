@@ -29,7 +29,12 @@
                     <div class="text-h5 text-center">CARRITO DE COMPRAS</div>
                 </div>
                 <div v-for="(item, i) in data[0].cart" :key="i">
-                    <CartItemTile :item="item" @deleteItemFromCart="deleteFromCart" />
+                    <CartItemTile
+                        :item="item"
+                        @deleteItemFromCart="deleteFromCart"
+                        @addAmountToItemInCart="addAmountToItem"
+                        :resetSpinner="reset"
+                    />
                 </div>
                 <div
                     class="row text-center"
@@ -93,9 +98,33 @@ export default {
             mobileDrawer: false,
             drawerRight: false,
             data: [],
+            reset: false,
         }
     },
     methods: {
+        addAmountToItem(event) {
+            this.reset = false
+            let itemIndex = this.data[0].cart.filter((c, index) => {
+                if (c.id === event.item.id) {
+                    console.log('entro')
+                    return index
+                }
+            })
+            console.log(itemIndex)
+            if (parseInt(event.amount + 1) <= parseInt(event.item.inventory)) {
+                event.item.amount += api
+                    .updateShoppingCart({
+                        uid: this.uid,
+                        product: event.item,
+                        itemIndex: itemIndex,
+                    })
+                    .then(() => {
+                        this.reset = true
+                    })
+            } else {
+                console.log('no se puede agregar')
+            }
+        },
         calculateTotal() {
             let total = 0
             if (this.data[0].cart) {
@@ -108,8 +137,14 @@ export default {
             return '0'
         },
         deleteFromCart(product) {
+            this.reset = false
             try {
-                api.removeFromShoppingCart({uid: this.uid, product: product})
+                api.removeFromShoppingCart({
+                    uid: this.uid,
+                    product: product,
+                }).then(() => {
+                    this.reset = true
+                })
             } catch (error) {
                 console.log(error)
             }

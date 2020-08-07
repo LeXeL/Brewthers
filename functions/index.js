@@ -152,6 +152,21 @@ exports.clearShoppingCart = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.updateShoppingCart = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await users.updateShoppingCart(
+                req.body.uid,
+                req.body.product,
+                req.body.itemIndex
+            )
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
 
 //Handle BREWERY
 exports.createBreweryOnDatabase = functions.https.onRequest(

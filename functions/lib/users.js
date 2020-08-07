@@ -209,6 +209,21 @@ async function clearShoppingCart(uid) {
             return error
         })
 }
+async function updateShoppingCart(uid, itemObj, itemIndex) {
+    console.log(itemIndex)
+    // return db
+    //     .collection('users')
+    //     .doc(uid)
+    //     .update({cart: itemObj})
+    //     .then(() => {
+    //         console.log('Document successfully added!')
+    //         return 'Succesfull'
+    //     })
+    //     .catch(error => {
+    //         console.error('Error writing document: ', error)
+    //         return error
+    //     })
+}
 
 module.exports = {
     createDatabaseWithUserInfo,
@@ -222,4 +237,5 @@ module.exports = {
     addToShoppingCart,
     removeFromShoppingCart,
     clearShoppingCart,
+    updateShoppingCart,
 }
