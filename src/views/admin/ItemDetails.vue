@@ -109,12 +109,6 @@
                                 color="info"
                                 :label="editInformation ? 'Guardar' : 'Editar'"
                             />
-
-                            <!-- <q-btn color="info" class="on-left" >
-                            {{
-                            editInformation ? 'Guardar' : 'Editar'
-                            }}
-                            </q-btn>-->
                         </q-form>
                     </div>
                 </div>
@@ -130,6 +124,7 @@
                         class="q-mb-md"
                         label="Agregar a inventario"
                         type="number"
+                        :rules="[val => !!val || 'El campo es obligatorio', val => val > 0 || 'El valor debe ser mayor a 0']"
                     >
                         <template v-slot:after>
                             <q-btn
@@ -148,6 +143,7 @@
                         class="q-mb-md"
                         label="Disminuir de inventario"
                         type="number"
+                        :rules="[val => !!val || 'El campo es obligatorio', val => val > 0 || 'El valor debe ser mayor a 0']"
                     >
                         <template v-slot:after>
                             <q-btn
@@ -267,6 +263,7 @@ export default {
                 })
         },
         addToInventory(inventory) {
+            if (inventory < 0) return
             this.displayLoading = true
             this.displayAlert = false
             this.data.inventory += inventory
@@ -295,6 +292,7 @@ export default {
                 })
         },
         subtractToInventory(inventory) {
+            if (inventory < 0) return
             this.displayLoading = true
             this.displayAlert = false
             let count = this.data.inventory - inventory
