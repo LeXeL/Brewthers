@@ -14,12 +14,19 @@
                     {{ props.row.name }}
                     <q-popup-edit
                         v-model="props.row.name"
-                        @save="$emit('namechange',{id:props.row.id,newName:props.row.name})"
+                        @save="validateInput({id:props.row.id,newName:props.row.name})"
                         title="Actualizar nombre"
                         buttons
                         dark
                     >
-                        <q-input type="text" v-model="props.row.name" dense autofocus dark />
+                        <q-input
+                            type="text"
+                            v-model="props.row.name"
+                            dense
+                            autofocus
+                            dark
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
                     </q-popup-edit>
                 </q-td>
                 <q-td key="status" :props="props">
@@ -77,6 +84,13 @@ export default {
                 },
             ],
         }
+    },
+    methods: {
+        validateInput(event) {
+            if (event.newName.length > 0) {
+                this.$emit('namechange', {id: event.id, newName: event.newName})
+            }
+        },
     },
 }
 </script>
