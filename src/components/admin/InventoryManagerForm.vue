@@ -1,69 +1,114 @@
 <template>
     <q-card class="my-card text-white full-width" dark>
-        <loading-alert :display="displayLoading"></loading-alert>
-        <brewthers-alert
-            :display="displayAlert"
-            :title="alertTitle"
-            :message="alertMessage"
-            :type="alertType"
-        ></brewthers-alert>
-        <q-card-section>
-            <div class="text-h6">Nuevo articulo</div>
-        </q-card-section>
+        <q-form @submit="create">
+            <loading-alert :display="displayLoading"></loading-alert>
+            <brewthers-alert
+                :display="displayAlert"
+                :title="alertTitle"
+                :message="alertMessage"
+                :type="alertType"
+            ></brewthers-alert>
+            <q-card-section>
+                <div class="text-h6">Nuevo articulo</div>
+            </q-card-section>
 
-        <q-card-section>
-            <q-input filled dark label="Nombre" type="text" class="q-mb-md" v-model="form.name" />
-            <q-select
-                filled
-                class="q-mb-md"
-                dark
-                :options="styles"
-                label="Estilo"
-                v-model="form.style"
-            />
-            <q-select
-                filled
-                class="q-mb-md"
-                dark
-                :options="presentations"
-                label="Presentacion"
-                v-model="form.type"
-            />
-            <q-select
-                filled
-                class="q-mb-md"
-                dark
-                :options="brewerys.map(brewery=>{
+            <q-card-section>
+                <q-input
+                    filled
+                    dark
+                    label="Nombre"
+                    type="text"
+                    class="q-mb-md"
+                    v-model="form.name"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-select
+                    filled
+                    class="q-mb-md"
+                    dark
+                    :options="styles"
+                    label="Estilo"
+                    v-model="form.style"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-select
+                    filled
+                    class="q-mb-md"
+                    dark
+                    :options="presentations"
+                    label="Presentacion"
+                    v-model="form.type"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-select
+                    filled
+                    class="q-mb-md"
+                    dark
+                    :options="brewerys.map(brewery=>{
                     return brewery.name
                 })"
-                label="Casa"
-                v-model="form.brewery"
-            />
-            <q-input filled dark label="ABV" type="number" class="q-mb-md" v-model="form.abv" />
-            <q-input filled dark label="IBU" type="number" class="q-mb-md" v-model="form.ibu" />
-            <q-input
-                filled
-                dark
-                label="Descripcion"
-                type="textarea"
-                class="q-mb-md"
-                v-model="form.description"
-            />
-            <q-file filled dark label="Foto" class="q-mb-md" v-model="file">
-                <template v-slot:prepend>
-                    <i class="fas fa-paperclip"></i>
-                </template>
-            </q-file>
-            <q-input filled dark label="Precio" type="number" class="q-mb-md" v-model="form.price" />
-        </q-card-section>
+                    label="Casa"
+                    v-model="form.brewery"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-input
+                    filled
+                    dark
+                    label="ABV"
+                    type="number"
+                    class="q-mb-md"
+                    v-model="form.abv"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-input
+                    filled
+                    dark
+                    label="IBU"
+                    type="number"
+                    class="q-mb-md"
+                    v-model="form.ibu"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-input
+                    filled
+                    dark
+                    label="Descripcion"
+                    type="textarea"
+                    class="q-mb-md"
+                    v-model="form.description"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-file
+                    filled
+                    dark
+                    label="Foto"
+                    class="q-mb-md"
+                    v-model="file"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                >
+                    <template v-slot:prepend>
+                        <i class="fas fa-paperclip"></i>
+                    </template>
+                </q-file>
+                <q-input
+                    filled
+                    dark
+                    label="Precio"
+                    type="number"
+                    class="q-mb-md"
+                    v-model="form.price"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+            </q-card-section>
 
-        <q-separator dark />
+            <q-separator dark />
 
-        <q-card-actions>
-            <q-space />
-            <q-btn color="secondary" @click="create()">Guardar</q-btn>
-            <q-btn color="red-7" @click="clear()">Cancelar</q-btn>
-        </q-card-actions>
+            <q-card-actions>
+                <q-space />
+                <q-btn color="secondary" type="submit">Guardar</q-btn>
+                <q-btn color="red-7" @click="clear()">Cancelar</q-btn>
+            </q-card-actions>
+        </q-form>
     </q-card>
 </template>
 
@@ -148,7 +193,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -157,7 +202,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function(snapshot) {
+                    function (snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -170,17 +215,17 @@ export default {
                                 break
                         }
                     },
-                    function(error) {
+                    function (error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function() {
+                    function () {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function(downloadURL) {
+                            .then(function (downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })

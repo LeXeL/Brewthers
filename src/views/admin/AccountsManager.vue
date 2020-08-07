@@ -47,37 +47,38 @@
         </div>
         <q-dialog v-model="prompt" persistent>
             <q-card style="min-width: 350px" dark>
-                <q-card-section>
-                    <div class="text-h6">Nueva cuenta de administrador</div>
-                </q-card-section>
+                <q-form @submit="createadmin">
+                    <q-card-section>
+                        <div class="text-h6">Nueva cuenta de administrador</div>
+                    </q-card-section>
 
-                <q-card-section class="q-pt-none">
-                    <q-input
-                        label="Nombre"
-                        class="q-mb-md"
-                        dark
-                        filled
-                        type="text"
-                        v-model="adminName"
-                        :rules="[val => !!val || 'El campo es obligatorio']"
-                    />
-                    <q-input
-                        label="Apellido"
-                        class="q-mb-md"
-                        dark
-                        filled
-                        type="text"
-                        v-model="adminLastName"
-                        :rules="[val => !!val || 'El campo es obligatorio']"
-                    />
-                    <q-input
-                        label="Correo"
-                        class="q-mb-md"
-                        dark
-                        filled
-                        type="email"
-                        v-model="adminEmail"
-                        :rules="[
+                    <q-card-section class="q-pt-none">
+                        <q-input
+                            label="Nombre"
+                            class="q-mb-md"
+                            dark
+                            filled
+                            type="text"
+                            v-model="adminName"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            label="Apellido"
+                            class="q-mb-md"
+                            dark
+                            filled
+                            type="text"
+                            v-model="adminLastName"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            label="Correo"
+                            class="q-mb-md"
+                            dark
+                            filled
+                            type="email"
+                            v-model="adminEmail"
+                            :rules="[
                             val =>
                                 val.length > 0 ||
                                 'El campo es obligatorio',
@@ -85,15 +86,15 @@
                                 validEmail.test(val) ||
                                 'Formato de correo incorrecto',
                         ]"
-                    />
-                    <q-input
-                        label="Contraseña"
-                        class="q-mb-md"
-                        dark
-                        filled
-                        type="password"
-                        v-model="adminPassword"
-                        :rules="[
+                        />
+                        <q-input
+                            label="Contraseña"
+                            class="q-mb-md"
+                            dark
+                            filled
+                            type="password"
+                            v-model="adminPassword"
+                            :rules="[
                             val =>
                                 val.length > 0 ||
                                 'El campo es obligatorio',
@@ -101,13 +102,14 @@
                                 strongPass.test(val) ||
                                 'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
                         ]"
-                    />
-                </q-card-section>
+                        />
+                    </q-card-section>
 
-                <q-card-actions align="right" class="text-primary">
-                    <q-btn flat label="Cancelar" @click="clearadmin()" v-close-popup />
-                    <q-btn flat label="Crear" @click="createadmin()" />
-                </q-card-actions>
+                    <q-card-actions align="right" class="text-primary">
+                        <q-btn flat label="Cancelar" @click="clearadmin()" v-close-popup />
+                        <q-btn flat label="Crear" type="submit" />
+                    </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
     </div>
