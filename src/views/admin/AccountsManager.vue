@@ -59,6 +59,7 @@
                         filled
                         type="text"
                         v-model="adminName"
+                        :rules="[val => !!val || 'El campo es obligatorio']"
                     />
                     <q-input
                         label="Apellido"
@@ -67,6 +68,7 @@
                         filled
                         type="text"
                         v-model="adminLastName"
+                        :rules="[val => !!val || 'El campo es obligatorio']"
                     />
                     <q-input
                         label="Correo"
@@ -75,6 +77,14 @@
                         filled
                         type="email"
                         v-model="adminEmail"
+                        :rules="[
+                            val =>
+                                val.length > 0 ||
+                                'El campo es obligatorio',
+                            val =>
+                                validEmail.test(val) ||
+                                'Formato de correo incorrecto',
+                        ]"
                     />
                     <q-input
                         label="Contraseña"
@@ -83,6 +93,14 @@
                         filled
                         type="password"
                         v-model="adminPassword"
+                        :rules="[
+                            val =>
+                                val.length > 0 ||
+                                'El campo es obligatorio',
+                            val =>
+                                strongPass.test(val) ||
+                                'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                        ]"
                     />
                 </q-card-section>
 
@@ -120,6 +138,8 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         }
     },
     methods: {
