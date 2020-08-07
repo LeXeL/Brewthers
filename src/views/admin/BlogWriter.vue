@@ -3,7 +3,13 @@
         <div class="text-h5 q-mb-md">Redactar blog</div>
         <div class="row">
             <div class="col q-pa-md">
-                <q-input filled dark type="text" label="Titulo del blog" />
+                <q-input
+                    filled
+                    dark
+                    type="text"
+                    label="Titulo del blog"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
             </div>
             <div class="col q-pa-md">
                 <q-file append filled dark label="Blog banner">
