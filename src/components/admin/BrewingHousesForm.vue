@@ -1,32 +1,48 @@
 <template>
     <q-card class="my-card text-white full-width" dark>
-        <loading-alert :display="displayLoading"></loading-alert>
-        <brewthers-alert
-            :display="displayAlert"
-            :title="alertTitle"
-            :message="alertMessage"
-            :type="alertType"
-        ></brewthers-alert>
-        <q-card-section>
-            <div class="text-h6">Nueva casa cervecera</div>
-        </q-card-section>
+        <q-form @submit="Generate">
+            <loading-alert :display="displayLoading"></loading-alert>
+            <brewthers-alert
+                :display="displayAlert"
+                :title="alertTitle"
+                :message="alertMessage"
+                :type="alertType"
+            ></brewthers-alert>
+            <q-card-section>
+                <div class="text-h6">Nueva casa cervecera</div>
+            </q-card-section>
 
-        <q-card-section>
-            <q-input filled dark label="Nombre" class="q-mb-md" v-model="form.name" />
-            <q-file append filled dark label="Logo" v-model="breweryImage">
-                <template v-slot:prepend>
-                    <i class="fas fa-paperclip"></i>
-                </template>
-            </q-file>
-        </q-card-section>
+            <q-card-section>
+                <q-input
+                    filled
+                    dark
+                    label="Nombre"
+                    class="q-mb-md"
+                    v-model="form.name"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                />
+                <q-file
+                    append
+                    filled
+                    dark
+                    label="Logo"
+                    v-model="breweryImage"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                >
+                    <template v-slot:prepend>
+                        <i class="fas fa-paperclip"></i>
+                    </template>
+                </q-file>
+            </q-card-section>
 
-        <q-separator dark />
+            <q-separator dark />
 
-        <q-card-actions>
-            <q-space />
-            <q-btn color="secondary" @click="Generate()">Guardar</q-btn>
-            <q-btn color="red-7" @click="Cancel()">Cancelar</q-btn>
-        </q-card-actions>
+            <q-card-actions>
+                <q-space />
+                <q-btn color="secondary" type="submit">Guardar</q-btn>
+                <q-btn color="red-7" @click="Cancel()">Cancelar</q-btn>
+            </q-card-actions>
+        </q-form>
     </q-card>
 </template>
 <script>
@@ -89,7 +105,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -98,7 +114,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function(snapshot) {
+                    function (snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -111,17 +127,17 @@ export default {
                                 break
                         }
                     },
-                    function(error) {
+                    function (error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function() {
+                    function () {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function(downloadURL) {
+                            .then(function (downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })
