@@ -8,32 +8,21 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div class="text-h5 q-mb-md">Orden No. {{ data.id }}</div>
+        <div v-if="Object.keys(data).length !== 0">
+            <div class="text-h5 q-mb-md">Orden No. {{ data.id }}</div>
 
-        <div class="row">
-            <div class="col-lg-8 col-xs-12">
-                <div class="row">
-                    <div class="col">
-                        <div class="text-h6 q-px-md">Control de estados</div>
-                        <order-stepper
-                            :orderId="this.$route.params.id"
-                            :data="data"
-                        />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
-                        <div class="text-h6 q-mb-sm">Datos de orden</div>
-                        <order-info
-                            v-if="restaurants.length > 0"
-                            :data="
-                                restaurants.filter(rest => {
-                                    if (rest.id === data.restaurantId)
-                                        return rest
-                                })
-                            "
-                            :date="data.logs[0]"
-                        />
+            <div class="row">
+                <div class="col-lg-8 col-xs-12">
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-h6 q-px-md">
+                                Control de estados
+                            </div>
+                            <order-stepper
+                                :orderId="this.$route.params.id"
+                                :data="data"
+                            />
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
@@ -54,32 +43,42 @@
                             <order-amounts :data="data" />
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
-                        <div class="text-h6 q-mb-sm">Entrega</div>
-                        <order-address
-                            v-if="restaurants.length > 0"
-                            :data="
-                                restaurants.filter(rest => {
-                                    if (rest.id === data.restaurantId)
-                                        return rest
-                                })
-                            "
-                        />
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-xs-12 q-pa-md">
+                            <div class="text-h6 q-mb-sm">Entrega</div>
+                            <order-address
+                                v-if="restaurants.length > 0"
+                                :data="
+                                    restaurants.filter(rest => {
+                                        if (rest.id === data.restaurantId)
+                                            return rest
+                                    })
+                                "
+                            />
+                        </div>
+                        <div class="col q-pa-md">
+                            <div class="text-h6 q-mb-sm">
+                                Comprobantes de pago
+                            </div>
+                            <order-proof-of-payments
+                                :data="data.paymentProof"
+                                :fullOrder="data"
+                                :orderId="this.$route.params.id"
+                                :restaurantId="this.data.restaurantId"
+                                :disableprop="
+                                    this.data.status === 'cancel' ||
+                                        this.data.status === 'completed'
+                                "
+                            />
+                        </div>
                     </div>
-                    <div class="col q-pa-md">
-                        <div class="text-h6 q-mb-sm">Comprobantes de pago</div>
-                        <order-proof-of-payments
-                            :data="data.paymentProof"
-                            :fullOrder="data"
-                            :orderId="this.$route.params.id"
-                            :restaurantId="this.data.restaurantId"
-                            :disableprop="
-                                this.data.status === 'cancel' ||
-                                    this.data.status === 'completed'
-                            "
-                        />
+                    <div class="row">
+                        <div
+                            class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md"
+                        >
+                            <div class="text-h6 q-mb-sm">Log de orden</div>
+                            <order-log :data="data.logs" />
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xs-12">
@@ -88,22 +87,20 @@
                         v-for="(item, i) in removeElementsFromObject(data.cart)"
                         :key="i"
                     />
+                    <div class="q-px-md">
+                        <q-btn
+                            color="info"
+                            text-color="black"
+                            label="Agregar articulos"
+                            @click="addItems = true"
+                        />
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-xs-12">
-                <order-item-details
-                    :data="item"
-                    v-for="(item, i) in removeElementsFromObject(data.cart)"
-                    :key="i"
-                />
-                <div class="q-px-md">
-                    <q-btn
-                        color="info"
-                        text-color="black"
-                        label="Agregar articulos"
-                        @click="addItems = true"
-                    />
-                </div>
+            <div class="row">
+                <div class="col q-pa-md"></div>
+                <div class="col q-pa-md"></div>
+                <div class="col"></div>
             </div>
         </div>
         <q-dialog v-model="addItems">
@@ -146,6 +143,7 @@
                             <p class="q-mb-none">Casa: Nombre de la casa</p>
                             <p class="q-mb-none">Presentacion: KEG</p>
                             <p class="q-mb-none">Precio: $ 12.50</p>
+                            <p class="q-mb-none">Inventario: 10</p>
                             <q-btn-group class="q-mb-sm q-mt-sm">
                                 <q-btn color="primary" size="xs">
                                     <i class="fas fa-minus"></i>
@@ -191,7 +189,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
-            addItems: true,
+            addItems: false,
             model: null,
             options: stringOptions,
         }
