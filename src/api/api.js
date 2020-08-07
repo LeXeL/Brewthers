@@ -51,6 +51,10 @@ export const returnApprovedUser = data =>
     Request.post('/returnApprovedUser', data, {
         'Content-Type': 'application/json',
     })
+export const updateShoppingCart = data =>
+    Request.post('/updateShoppingCart', data, {
+        'Content-Type': 'application/json',
+    })
 
 //BREWERY
 export const createBreweryOnDatabase = data =>
