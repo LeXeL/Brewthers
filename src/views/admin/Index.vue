@@ -2,7 +2,7 @@
     <div class="q-pa-md">
         <div class="text-h5 q-mb-md">Bienvenido, Fulanito</div>
         <div class="row q-mb-lg">
-            <div class="col-lg-3 col-sm-3 q-pa-md">
+            <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
                 <q-card flat dark class="full-width bg-grey-9">
                     <q-card-section>
                         <div class="text-h6">
@@ -15,7 +15,7 @@
                     </q-card-section>
                 </q-card>
             </div>
-            <div class="col-lg-3 col-sm-3 q-pa-md">
+            <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
                 <q-card flat dark class="full-width bg-grey-9">
                     <q-card-section>
                         <div class="text-h6">
@@ -28,7 +28,7 @@
                     </q-card-section>
                 </q-card>
             </div>
-            <div class="col-lg-3 col-sm-3 q-pa-md">
+            <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
                 <q-card flat dark class="full-width bg-grey-9">
                     <q-card-section>
                         <div class="text-h6">
@@ -41,7 +41,7 @@
                     </q-card-section>
                 </q-card>
             </div>
-            <div class="col-lg-3 col-sm-3 q-pa-md">
+            <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
                 <q-card flat dark class="full-width bg-grey-9">
                     <q-card-section>
                         <div class="text-h6">
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 q-pa-md">
+            <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
                 <q-card class="full-width" flat dark>
                     <q-item>
                         <q-item-section>
@@ -79,7 +79,7 @@
                     </q-list>
                 </q-card>
             </div>
-            <div class="col-lg-4 q-pa-md">
+            <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
                 <q-card class="full-width" flat dark>
                     <q-item>
                         <q-item-section>
