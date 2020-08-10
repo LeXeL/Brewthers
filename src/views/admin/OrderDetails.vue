@@ -15,13 +15,8 @@
                 <div class="col-lg-8 col-xs-12">
                     <div class="row">
                         <div class="col">
-                            <div class="text-h6 q-px-md">
-                                Control de estados
-                            </div>
-                            <order-stepper
-                                :orderId="this.$route.params.id"
-                                :data="data"
-                            />
+                            <div class="text-h6 q-px-md">Control de estados</div>
+                            <order-stepper :orderId="this.$route.params.id" :data="data" />
                         </div>
                     </div>
                     <div class="row">
@@ -57,9 +52,7 @@
                             />
                         </div>
                         <div class="col q-pa-md">
-                            <div class="text-h6 q-mb-sm">
-                                Comprobantes de pago
-                            </div>
+                            <div class="text-h6 q-mb-sm">Comprobantes de pago</div>
                             <order-proof-of-payments
                                 :data="data.paymentProof"
                                 :fullOrder="data"
@@ -73,9 +66,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div
-                            class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md"
-                        >
+                        <div class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md">
                             <div class="text-h6 q-mb-sm">Log de orden</div>
                             <order-log :data="data.logs" />
                         </div>
@@ -92,7 +83,7 @@
                             color="info"
                             text-color="black"
                             label="Agregar articulos"
-                            @click="addItems = true"
+                            @click="openModal"
                         />
                     </div>
                 </div>
@@ -126,9 +117,7 @@
                     >
                         <template v-slot:no-option>
                             <q-item>
-                                <q-item-section class="text-grey">
-                                    No hay resultados.
-                                </q-item-section>
+                                <q-item-section class="text-grey">No hay resultados.</q-item-section>
                             </q-item>
                         </template>
                     </q-select>
@@ -211,7 +200,38 @@ export default {
                 )
             })
         },
+        async openModal() {
+            this.displayLoading = true
+            api.returnAllBrewerys()
+                .then(response => {
+                    return response.data.data
+                })
+                .then(async data => {
+                    let products = await api.returnAllProducts()
+                    products = products.data.data
+                    console.log(products)
+                    data.forEach(brewery => {
+                        let productsOnBrewery = products.filter(product => {
+                            if (product.brewery === brewery.id) {
+                                return product
+                            }
+                        })
+                        console.log(
+                            `On brewery: ${
+                                brewery.name
+                            } hay estos productos ${JSON.stringify(
+                                productsOnBrewery
+                            )}`
+                        )
+                    })
+                })
+                .then(() => {
+                    this.addItems = true
+                    this.displayLoading = false
+                })
+        },
     },
+
     async mounted() {
         this.displayLoading = true
         api.returnOrderById({id: this.$route.params.id})
@@ -229,8 +249,6 @@ export default {
             .catch(error => {
                 console.log(error)
             })
-        // await this.getOrderInformation()
-        // await this.getRestaurantInfo()
     },
     components: {
         'order-stepper': OrderStepper,
