@@ -45,7 +45,7 @@
                         :color="props.row.status == 'inactive' ? 'secondary' : 'warning'"
                         size="xs"
                         :label="props.row.status == 'inactive' ? 'Activar' : 'Desactivar'"
-                        @click="$emit('changeStatus',{id:props.row.id,status:props.row.status})"
+                        @click="$emit('changestatus',{id:props.row.id,status:props.row.status})"
                     />
                 </q-td>
                 <q-td>

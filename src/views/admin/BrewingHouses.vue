@@ -19,7 +19,7 @@
             <div class="col-lg-8 col-xs-12 q-pa-md">
                 <brewing-houses-table
                     :data="data"
-                    @changeStatus="editStatus"
+                    @changestatus="editStatus"
                     @delete="askForDeleteBrewery"
                     @namechange="updateNameChange"
                 ></brewing-houses-table>

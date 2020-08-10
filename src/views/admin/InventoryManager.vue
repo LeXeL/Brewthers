@@ -19,7 +19,7 @@
             <div class="col-lg-8 col-xs-12 q-pa-md">
                 <inventory-manager-table
                     :data="data"
-                    @changeStatus="editStatus"
+                    @changestatus="editStatus"
                     @delete="askForDeleteBrewery"
                     @namechange="updateNameChange"
                 ></inventory-manager-table>
