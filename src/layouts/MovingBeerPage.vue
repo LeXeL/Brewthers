@@ -5,6 +5,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="reset = true; displayAlert = false"
         ></brewthers-alert>
         <!-- NAVBAR -->
         <mb-navbar @toggleCart="drawerRight = !drawerRight" />
@@ -114,6 +115,7 @@ export default {
     },
     methods: {
         addAmountToItem(event) {
+            this.displayAlert = false
             this.reset = false
             let itemIndex = 0
             this.data[0].cart.forEach((element, index) => {
@@ -140,6 +142,7 @@ export default {
             }
         },
         subtractAmountToItem(event) {
+            this.displayAlert = false
             this.reset = false
             let itemIndex = 0
             this.data[0].cart.forEach((element, index) => {
