@@ -212,20 +212,19 @@ async function clearShoppingCart(uid) {
 async function updateShoppingCart(uid, itemObj, itemIndex) {
     let userInformation = await returnUserById(uid)
     let itemInCart = userInformation.cart[itemIndex]
-    await removeFromShoppingCart(uid, itemInCart)
-    await addToShoppingCart(uid, itemObj)
-    // return db
-    //     .collection('users')
-    //     .doc(uid)
-    //     .update({cart[itemIndex].amount: itemInCart.amount + 1})
-    //     .then(() => {
-    //         console.log('Document successfully added!')
-    //         return 'Succesfull'
-    //     })
-    //     .catch(error => {
-    //         console.error('Error writing document: ', error)
-    //         return error
-    //     })
+    itemInCart.amount = itemObj.amount
+    return db
+        .collection('users')
+        .doc(uid)
+        .update({cart: userInformation.cart})
+        .then(() => {
+            console.log('Document successfully added!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
 }
 
 module.exports = {
