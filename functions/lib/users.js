@@ -212,8 +212,8 @@ async function clearShoppingCart(uid) {
 async function updateShoppingCart(uid, itemObj, itemIndex) {
     let userInformation = await returnUserById(uid)
     let itemInCart = userInformation.cart[itemIndex]
-    removeFromShoppingCart(uid, itemInCart)
-    addToShoppingCart(uid, itemObj)
+    await removeFromShoppingCart(uid, itemInCart)
+    await addToShoppingCart(uid, itemObj)
     // return db
     //     .collection('users')
     //     .doc(uid)
