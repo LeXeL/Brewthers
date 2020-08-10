@@ -210,11 +210,14 @@ async function clearShoppingCart(uid) {
         })
 }
 async function updateShoppingCart(uid, itemObj, itemIndex) {
-    console.log(itemIndex)
+    let userInformation = await returnUserById(uid)
+    let itemInCart = userInformation.cart[itemIndex]
+    removeFromShoppingCart(uid, itemInCart)
+    addToShoppingCart(uid, itemObj)
     // return db
     //     .collection('users')
     //     .doc(uid)
-    //     .update({cart: itemObj})
+    //     .update({cart[itemIndex].amount: itemInCart.amount + 1})
     //     .then(() => {
     //         console.log('Document successfully added!')
     //         return 'Succesfull'

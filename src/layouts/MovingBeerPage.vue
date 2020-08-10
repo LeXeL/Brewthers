@@ -1,5 +1,11 @@
 <template>
     <q-layout view="lHh Lpr lFf" class="brewthers-dark-bg">
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+        ></brewthers-alert>
         <!-- NAVBAR -->
         <mb-navbar @toggleCart="drawerRight = !drawerRight" />
         <!-- END NAVBAR -->
@@ -33,6 +39,7 @@
                         :item="item"
                         @deleteItemFromCart="deleteFromCart"
                         @addAmountToItemInCart="addAmountToItem"
+                        @subtractAmountToItemInCart="subtractAmountToItem"
                         :resetSpinner="reset"
                     />
                 </div>
@@ -99,30 +106,64 @@ export default {
             drawerRight: false,
             data: [],
             reset: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
     },
     methods: {
         addAmountToItem(event) {
             this.reset = false
-            let itemIndex = this.data[0].cart.filter((c, index) => {
-                if (c.id === event.item.id) {
-                    console.log('entro')
-                    return index
+            let itemIndex = 0
+            this.data[0].cart.forEach((element, index) => {
+                if (element.id === event.item.id) {
+                    itemIndex = index
                 }
             })
-            console.log(itemIndex)
             if (parseInt(event.amount + 1) <= parseInt(event.item.inventory)) {
-                event.item.amount += api
-                    .updateShoppingCart({
-                        uid: this.uid,
-                        product: event.item,
-                        itemIndex: itemIndex,
-                    })
-                    .then(() => {
-                        this.reset = true
-                    })
+                event.item.amount += 1
+                api.updateShoppingCart({
+                    uid: this.uid,
+                    product: event.item,
+                    itemIndex: itemIndex,
+                }).then(() => {
+                    this.reset = true
+                })
             } else {
-                console.log('no se puede agregar')
+                this.reset = true
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage =
+                    'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
+                this.alertType = 'error'
+                this.displayAlert = true
+            }
+        },
+        subtractAmountToItem(event) {
+            this.reset = false
+            let itemIndex = 0
+            this.data[0].cart.forEach((element, index) => {
+                if (element.id === event.item.id) {
+                    itemIndex = index
+                }
+            })
+
+            if (parseInt(event.amount - 1) > 0) {
+                event.item.amount -= 1
+                api.updateShoppingCart({
+                    uid: this.uid,
+                    product: event.item,
+                    itemIndex: itemIndex,
+                }).then(() => {
+                    this.reset = true
+                })
+            } else {
+                this.reset = true
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage =
+                    'No podemos dejar el item en 0 mejor eliminalo!'
+                this.alertType = 'error'
+                this.displayAlert = true
             }
         },
         calculateTotal() {

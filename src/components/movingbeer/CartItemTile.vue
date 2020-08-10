@@ -7,7 +7,11 @@
             <q-item-section>
                 <span class="on-right">{{item.name}}</span>
                 <span class="on-right">
-                    <i class="fas fa-minus q-mr-sm" style="color: #27a3c3; cursor: pointer;"></i>
+                    <i
+                        class="fas fa-minus q-mr-sm"
+                        style="color: #27a3c3; cursor: pointer;"
+                        @click="subtractToAmount(item,item.amount)"
+                    ></i>
                     {{item.amount}}
                     <i
                         class="fas fa-plus on-right q-ml-sm"
@@ -56,6 +60,10 @@ export default {
         addToAmount(item, amount) {
             this.spinner = true
             this.$emit('addAmountToItemInCart', {item, amount})
+        },
+        subtractToAmount(item, amount) {
+            this.spinner = true
+            this.$emit('subtractAmountToItemInCart', {item, amount})
         },
         deleteItemFromCart(item) {
             this.spinner = true
