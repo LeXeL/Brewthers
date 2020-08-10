@@ -372,20 +372,19 @@ export default {
                 )
             })
         },
-        getProductInformation() {
-            api.getProductInformationById({id: this.$route.params.id})
-                .then(product => {
-                    this.data = product.data.data
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        },
     },
     async mounted() {
         this.displayLoading = true
-        await this.getProductInformation()
-        this.displayLoading = false
+        api.getProductInformationById({id: this.$route.params.id})
+            .then(product => {
+                this.data = product.data.data
+            })
+            .then(() => {
+                this.displayLoading = false
+            })
+            .catch(error => {
+                console.log(error)
+            })
     },
 }
 </script>
