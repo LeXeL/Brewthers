@@ -1,5 +1,12 @@
 <template>
     <q-layout view="lHh Lpr lFf" class="brewthers-dark-bg">
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="reset = true; displayAlert = false"
+        ></brewthers-alert>
         <!-- NAVBAR -->
         <mb-navbar @toggleCart="drawerRight = !drawerRight" />
         <!-- END NAVBAR -->
@@ -29,7 +36,13 @@
                     <div class="text-h5 text-center">CARRITO DE COMPRAS</div>
                 </div>
                 <div v-for="(item, i) in data[0].cart" :key="i">
-                    <CartItemTile :item="item" @deleteItemFromCart="deleteFromCart" />
+                    <CartItemTile
+                        :item="item"
+                        @deleteItemFromCart="deleteFromCart"
+                        @addAmountToItemInCart="addAmountToItem"
+                        @subtractAmountToItemInCart="subtractAmountToItem"
+                        :resetSpinner="reset"
+                    />
                 </div>
                 <div
                     class="row text-center"
@@ -93,9 +106,69 @@ export default {
             mobileDrawer: false,
             drawerRight: false,
             data: [],
+            reset: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
     },
     methods: {
+        addAmountToItem(event) {
+            this.displayAlert = false
+            this.reset = false
+            let itemIndex = 0
+            this.data[0].cart.forEach((element, index) => {
+                if (element.id === event.item.id) {
+                    itemIndex = index
+                }
+            })
+            if (parseInt(event.amount + 1) <= parseInt(event.item.inventory)) {
+                event.item.amount += 1
+                api.updateShoppingCart({
+                    uid: this.uid,
+                    product: event.item,
+                    itemIndex: itemIndex,
+                }).then(() => {
+                    this.reset = true
+                })
+            } else {
+                this.reset = true
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage =
+                    'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
+                this.alertType = 'error'
+                this.displayAlert = true
+            }
+        },
+        subtractAmountToItem(event) {
+            this.displayAlert = false
+            this.reset = false
+            let itemIndex = 0
+            this.data[0].cart.forEach((element, index) => {
+                if (element.id === event.item.id) {
+                    itemIndex = index
+                }
+            })
+
+            if (parseInt(event.amount - 1) > 0) {
+                event.item.amount -= 1
+                api.updateShoppingCart({
+                    uid: this.uid,
+                    product: event.item,
+                    itemIndex: itemIndex,
+                }).then(() => {
+                    this.reset = true
+                })
+            } else {
+                this.reset = true
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage =
+                    'No podemos dejar el item en 0 mejor eliminalo!'
+                this.alertType = 'error'
+                this.displayAlert = true
+            }
+        },
         calculateTotal() {
             let total = 0
             if (this.data[0].cart) {
@@ -108,8 +181,14 @@ export default {
             return '0'
         },
         deleteFromCart(product) {
+            this.reset = false
             try {
-                api.removeFromShoppingCart({uid: this.uid, product: product})
+                api.removeFromShoppingCart({
+                    uid: this.uid,
+                    product: product,
+                }).then(() => {
+                    this.reset = true
+                })
             } catch (error) {
                 console.log(error)
             }

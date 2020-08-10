@@ -71,7 +71,6 @@ export default {
             this.dialog = true
         },
         closeOpenCatalog() {
-            console.log('entra  ')
             this.dialog = false
         },
     },

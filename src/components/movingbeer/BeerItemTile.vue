@@ -96,9 +96,7 @@ export default {
             this.showAddedOverlay = true
             this.product.amount = this.amount
             api.addToShoppingCart({uid: this.uid, product: this.product})
-                .then(response => {
-                    this.amount = 0
-                })
+                .then(response => {})
                 .catch(error => {
                     this.alertTitle = 'Hey AWANTA!'
                     this.alertMessage =
@@ -106,6 +104,7 @@ export default {
                     this.alertType = 'error'
                     this.displayAlert = true
                 })
+            this.amount = 0
         },
         addAmount() {
             this.displayAlert = false
