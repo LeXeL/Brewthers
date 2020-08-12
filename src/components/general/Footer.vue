@@ -39,7 +39,7 @@
                     <a
                         href="#"
                         style="color: #27a3c3; text-decoration: none;"
-                    >BlueBaloon Inc.</a>
+                    >BlueBalloon Inc.</a>
                 </span>
             </div>
         </div>

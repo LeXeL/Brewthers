@@ -9,7 +9,10 @@
             >¡Llegaste donde tenemos pa’ ti y pa’ regala’!</div>
         </div>
 
-        <p class="title-section-link absolute-bottom q-pb-xl" @click="$emit('toggleSection')">
+        <p
+            class="title-section-link absolute-bottom q-pb-xl bounce-content bounce"
+            @click="$emit('toggleSection')"
+        >
             <span style="font-family: GilroyExtraBold; text-transform: uppercase;">Explora más</span>
             <br />
             <i class="fas fa-chevron-down" style="font-size: 40px;"></i>
