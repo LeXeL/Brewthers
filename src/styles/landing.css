@@ -114,7 +114,7 @@ q-toolbar a {
 .blog-bg {
     background-image: url('../assets/blog-bg.jpg');
     background-position: center;
-    height: 1080px;
+    height: 980px;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -132,7 +132,7 @@ q-toolbar a {
 .movingbeer-bg {
     background-image: url('../assets/movingbeer-bg.jpg');
     background-position: center;
-    height: 1080px;
+    height: 980px;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
