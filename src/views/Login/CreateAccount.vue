@@ -1,8 +1,5 @@
 <template>
-    <q-page
-        class="pattern-bg q-pa-xl"
-        style="height: auto; background-repeat: repeat-y;"
-    >
+    <q-page class="pattern-bg q-pa-xl" style="height: auto; background-repeat: repeat-y;">
         <loading-alert :display="displayLoading"></loading-alert>
 
         <div class="row">
@@ -186,18 +183,12 @@
                 </q-card>
                 <div class="row">
                     <q-space />
-                    <q-btn class="q-mt-md" color="primary" @click="createuser"
-                        >Registrar</q-btn
-                    >
+                    <q-btn class="q-mt-md" color="primary" @click="createuser">Registrar</q-btn>
                 </div>
             </div>
         </div>
         <q-dialog v-model="confirmationDialog">
-            <q-card
-                dark
-                class="text-white"
-                style="width: 700px; max-width: 80vw;"
-            >
+            <q-card dark class="text-white" style="width: 700px; max-width: 80vw;">
                 <q-card-section>
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
@@ -212,12 +203,7 @@
 
                 <q-card-actions align="right">
                     <router-link to="/movingbeer">
-                        <q-btn
-                            flat
-                            label="Aceptar"
-                            color="primary"
-                            v-close-popup
-                        />
+                        <q-btn flat label="Aceptar" color="primary" v-close-popup />
                     </router-link>
                 </q-card-actions>
             </q-card>
@@ -230,10 +216,12 @@ import * as api from '@/api/api'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import GoogleMaps from '@/components/general/GoogleMaps'
+import GenericNavbar from '@/components/general/GenericNavbar'
 
 export default {
     components: {
         GoogleMaps,
+        GenericNavbar,
     },
     data() {
         return {
