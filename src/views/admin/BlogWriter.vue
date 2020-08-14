@@ -12,10 +12,11 @@
                 />
             </div>
             <div class="col q-pa-md">
-                <q-file append filled dark label="Blog banner">
+                <q-file bottom-slots filled dark label="Blog banner">
                     <template v-slot:prepend>
                         <i class="fas fa-paperclip"></i>
                     </template>
+                    <template v-slot:hint>Tamaño recomendado: 1920 x 400 (px)</template>
                 </q-file>
             </div>
         </div>
