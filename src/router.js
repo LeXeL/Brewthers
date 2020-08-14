@@ -6,6 +6,7 @@ import HomePage from './layouts/HomePage.vue'
 import LoginPage from './layouts/LoginPage.vue'
 import AdminPage from './layouts/AdminPage.vue'
 import MovingBeerPage from './layouts/MovingBeerPage.vue'
+import BlogPage from './layouts/BlogPage'
 //Views
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
@@ -26,6 +27,8 @@ import OrderDetails from './views/admin/OrderDetails'
 import AdminReports from './views/admin/AdminReports'
 import BlogManager from './views/admin/BlogManager'
 import BlogWriter from './views/admin/BlogWriter'
+
+import BlogIndex from './views/Blog/BlogIndex'
 
 Vue.use(Router)
 
@@ -154,6 +157,17 @@ export default new Router({
                     path: '/historial',
                     name: 'movingbeerhistory',
                     component: MovingBeerHistory,
+                },
+            ],
+        },
+        {
+            path: '/blog',
+            component: BlogPage,
+            children: [
+                {
+                    path: '',
+                    name: 'blog-index',
+                    component: BlogIndex,
                 },
             ],
         },
