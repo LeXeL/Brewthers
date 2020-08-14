@@ -1,5 +1,6 @@
 <template>
     <q-page class="pattern-bg q-pa-xl" style="height: auto; background-repeat: repeat-y;">
+        <generic-navbar />
         <loading-alert :display="displayLoading"></loading-alert>
 
         <div class="row">
