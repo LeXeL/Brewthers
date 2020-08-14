@@ -29,6 +29,7 @@ import BlogManager from './views/admin/BlogManager'
 import BlogWriter from './views/admin/BlogWriter'
 
 import BlogIndex from './views/Blog/BlogIndex'
+import BlogView from './views/Blog/BlogView'
 
 Vue.use(Router)
 
@@ -168,6 +169,11 @@ export default new Router({
                     path: '',
                     name: 'blog-index',
                     component: BlogIndex,
+                },
+                {
+                    path: '/blog/id',
+                    name: 'blog-view',
+                    component: BlogView,
                 },
             ],
         },

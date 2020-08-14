@@ -24,7 +24,13 @@
                     >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat at mauris id venenatis. Suspendisse potenti. Praesent ornare, eros et sodales ornare, nisi ex ullamcorper libero, sit amet luctus massa turpis ut turpis. Vestibulum tincidunt arcu a sapien suscipit, quis porttitor orci accumsan. Nullam enim purus, imperdiet a nunc et, pellentesque pellentesque sapien.</div>
                     <div class="row">
                         <q-space />
-                        <q-btn class="q-mt-md" color="info" label="leer mas" size="sm" />
+                        <q-btn
+                            class="q-mt-md"
+                            color="info"
+                            label="leer mas"
+                            size="sm"
+                            :to="`blog/id`"
+                        />
                     </div>
                 </div>
             </div>
