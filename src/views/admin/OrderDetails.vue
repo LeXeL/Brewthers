@@ -218,6 +218,11 @@ export default {
             }
         },
     },
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
     methods: {
         removeFromCartInOrder(event) {
             this.displayLoading = true
@@ -230,6 +235,17 @@ export default {
                         if (d.id === event.id) {
                             this.data.cart.splice(index, 1)
                         }
+                    })
+                    let obj = this.data.logs
+                    obj.push({
+                        action: 'Item Deleted',
+                        section: `Producto: ${event.name} (${event.amount}) x ${event.price}`,
+                        who: this.user.email,
+                        time: Date.now(),
+                    })
+                    api.updateOrdersInformation({
+                        id: this.$route.params.id,
+                        Order: {logs: obj},
                     })
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
@@ -255,6 +271,17 @@ export default {
             })
                 .then(response => {
                     this.data.cart.push(this.product)
+                    let obj = this.data.logs
+                    obj.push({
+                        action: 'Item Added',
+                        section: `Producto: ${this.product.name} (${this.product.amount}) x ${this.product.price}`,
+                        who: this.user.email,
+                        time: Date.now(),
+                    })
+                    api.updateOrdersInformation({
+                        id: this.$route.params.id,
+                        Order: {logs: obj},
+                    })
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
