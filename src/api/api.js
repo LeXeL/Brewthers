@@ -121,3 +121,11 @@ export const changeOrderStatus = data =>
     Request.post('/changeOrderStatus', data, {
         'Content-Type': 'application/json',
     })
+export const addToShoppingCartInOrder = data =>
+    Request.post('/addToShoppingCartInOrder', data, {
+        'Content-Type': 'application/json',
+    })
+export const removeFromShoppingCartInOrder = data =>
+    Request.post('/removeFromShoppingCartInOrder', data, {
+        'Content-Type': 'application/json',
+    })

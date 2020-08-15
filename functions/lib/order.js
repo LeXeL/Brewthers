@@ -182,6 +182,34 @@ async function changeOrderStatus(id, status) {
             return error
         })
 }
+async function addToShoppingCartInOrder(uid, itemObj) {
+    return db
+        .collection('order')
+        .doc(uid)
+        .update({cart: admin.firestore.FieldValue.arrayUnion(itemObj)})
+        .then(() => {
+            console.log('Document successfully added!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
+async function removeFromShoppingCartInOrder(uid, itemObj) {
+    return db
+        .collection('order')
+        .doc(uid)
+        .update({cart: admin.firestore.FieldValue.arrayRemove(itemObj)})
+        .then(() => {
+            console.log('Document successfully removed!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 
 module.exports = {
     createOrder,
@@ -190,4 +218,6 @@ module.exports = {
     returnAllOrdersFromUserId,
     returnOrderById,
     changeOrderStatus,
+    addToShoppingCartInOrder,
+    removeFromShoppingCartInOrder,
 }
