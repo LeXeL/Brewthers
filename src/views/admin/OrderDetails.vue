@@ -76,10 +76,13 @@
                     <order-item-details
                         :data="item"
                         v-for="(item, i) in removeElementsFromObject(data.cart)"
+                        @remove="removeFromCartInOrder"
                         :key="i"
+                        :disableprop="data.status !== 'review'"
                     />
                     <div class="q-px-md">
                         <q-btn
+                            :disable="data.status !== 'review'"
                             color="info"
                             text-color="black"
                             label="Agregar articulos"
@@ -122,28 +125,37 @@
                         </template>
                     </q-select>
                 </q-card-section>
-                <q-card-section>
+                <q-card-section v-if="Object.keys(selectedItemFromInput).length !== 0">
                     <div class="row">
                         <div class="col-4">
-                            <q-img :src="require('@/assets/beer.jpg')" />
+                            <q-img :src="selectedItemFromInput.photoLocation" />
                         </div>
                         <div class="col-8 q-px-md">
-                            <div class="text-h6">Nombre de la pinta</div>
-                            <p class="q-mb-none">Casa: Nombre de la casa</p>
-                            <p class="q-mb-none">Presentacion: KEG</p>
-                            <p class="q-mb-none">Precio: $ 12.50</p>
-                            <p class="q-mb-none">Inventario: 10</p>
+                            <div class="text-h6">{{selectedItemFromInput.name}}</div>
+                            <p class="q-mb-none">Casa: {{selectedItemFromInput.brewery}}</p>
+                            <p class="q-mb-none">Presentacion: {{selectedItemFromInput.type}}</p>
+                            <p class="q-mb-none">Precio: $ {{selectedItemFromInput.price}}</p>
+                            <p class="q-mb-none">Inventario: {{selectedItemFromInput.inventory}}</p>
                             <q-btn-group class="q-mb-sm q-mt-sm">
-                                <q-btn color="primary" size="xs">
+                                <q-btn
+                                    color="primary"
+                                    size="xs"
+                                    :disable="amount == 0 ? true : false"
+                                    @click="subtractAmount"
+                                >
                                     <i class="fas fa-minus"></i>
                                 </q-btn>
-                                <q-btn color="primary" disable>0</q-btn>
-                                <q-btn color="primary" size="xs">
+                                <q-btn color="primary" disable>{{this.amount}}</q-btn>
+                                <q-btn color="primary" size="xs" @click="addAmount">
                                     <i class="fas fa-plus"></i>
                                 </q-btn>
                             </q-btn-group>
                             <br />
-                            <q-btn color="primary q-mb-md">Agregar</q-btn>
+                            <q-btn
+                                color="primary q-mb-md"
+                                @click="addToCart"
+                                :disabled="!amount"
+                            >Agregar</q-btn>
                         </div>
                     </div>
                 </q-card-section>
@@ -153,8 +165,6 @@
 </template>
 
 <script>
-const stringOptions = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle']
-
 import * as api from '@/api/api'
 
 import OrderStepper from '@/components/admin/OrderStepper'
@@ -170,9 +180,6 @@ export default {
         return {
             data: '',
             restaurants: [],
-            addInventory: '',
-            substractInventory: '',
-            editInformation: false,
             displayLoading: false,
             displayAlert: false,
             alertTitle: '',
@@ -180,10 +187,106 @@ export default {
             alertType: '',
             addItems: false,
             model: null,
-            options: stringOptions,
+            options: [],
+            product: '',
+            completeBreweryWithProducts: [],
+            selectInputOptions: [],
+            selectedItemFromInput: {},
+            amount: 0,
         }
     },
+    watch: {
+        model(newValue, oldValue) {
+            //sacar la info del elemento seleccionado.
+            if (newValue) {
+                let selectedItem = newValue.split(' - ')
+                let breweryItem = this.completeBreweryWithProducts.filter(
+                    brewery => {
+                        if (brewery.name === selectedItem[1]) return brewery
+                    }
+                )
+                let productItem = breweryItem[0].products.filter(product => {
+                    if (
+                        product.name === selectedItem[0] &&
+                        product.type === selectedItem[2]
+                    )
+                        return product
+                })
+                this.product = productItem[0]
+                productItem[0].brewery = breweryItem[0].name
+                this.selectedItemFromInput = productItem[0]
+            }
+        },
+    },
     methods: {
+        removeFromCartInOrder(event) {
+            this.displayLoading = true
+            api.removeFromShoppingCartInOrder({
+                uid: this.$route.params.id,
+                product: this.product,
+            })
+                .then(response => {
+                    this.data.cart.forEach((d, index) => {
+                        if (d.id === event.id) {
+                            this.data.cart.splice(index, 1)
+                        }
+                    })
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado con exito la informacion'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    this.alertTitle = 'Hey AWANTA!'
+                    this.alertMessage =
+                        'Hubo un error con tu peticion por favor intentalo mas tarde'
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
+        addToCart() {
+            this.displayLoading = true
+            this.product.amount = this.amount
+            api.addToShoppingCartInOrder({
+                uid: this.$route.params.id,
+                product: this.product,
+            })
+                .then(response => {
+                    this.data.cart.push(this.product)
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado con exito la informacion'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    this.alertTitle = 'Hey AWANTA!'
+                    this.alertMessage =
+                        'Hubo un error con tu peticion por favor intentalo mas tarde'
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+            this.amount = 0
+        },
+        addAmount() {
+            this.displayAlert = false
+            if (this.amount < this.product.inventory) {
+                return this.amount++
+            }
+            this.alertTitle = 'Hey AWANTA!'
+            this.alertMessage =
+                'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
+            this.alertType = 'error'
+            this.displayAlert = true
+        },
+        subtractAmount() {
+            if (this.amount > 0) {
+                return this.amount--
+            }
+        },
         removeElementsFromObject(cart) {
             cart.forEach(element => {
                 delete element.style
@@ -195,13 +298,18 @@ export default {
         filterFn(val, update, abort) {
             update(() => {
                 const needle = val.toLowerCase()
-                this.options = stringOptions.filter(
+                this.options = this.selectInputOptions.filter(
                     v => v.toLowerCase().indexOf(needle) > -1
                 )
             })
         },
         async openModal() {
             this.displayLoading = true
+            this.selectInputOptions = []
+            this.completeBreweryWithProducts = []
+            this.model = null
+            this.amount = 0
+            this.selectedItemFromInput = {}
             api.returnAllBrewerys()
                 .then(response => {
                     return response.data.data
@@ -209,25 +317,31 @@ export default {
                 .then(async data => {
                     let products = await api.returnAllProducts()
                     products = products.data.data
-                    console.log(products)
                     data.forEach(brewery => {
                         let productsOnBrewery = products.filter(product => {
-                            if (product.brewery === brewery.id) {
+                            if (
+                                product.brewery === brewery.id &&
+                                product.inventory > 0
+                            ) {
                                 return product
                             }
                         })
-                        console.log(
-                            `On brewery: ${
-                                brewery.name
-                            } hay estos productos ${JSON.stringify(
-                                productsOnBrewery
-                            )}`
-                        )
+                        if (productsOnBrewery.length > 0) {
+                            brewery.products = productsOnBrewery
+                            this.completeBreweryWithProducts.push(brewery)
+                        }
                     })
                 })
                 .then(() => {
                     this.addItems = true
                     this.displayLoading = false
+                    this.completeBreweryWithProducts.map(brewery => {
+                        brewery.products.forEach(product => {
+                            this.selectInputOptions.push(
+                                `${product.name} - ${brewery.name} - ${product.type}`
+                            )
+                        })
+                    })
                 })
         },
     },

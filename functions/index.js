@@ -373,3 +373,35 @@ exports.changeOrderStatus = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.addToShoppingCartInOrder = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await order.addToShoppingCartInOrder(
+                    req.body.uid,
+                    req.body.product
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.removeFromShoppingCartInOrder = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await order.removeFromShoppingCartInOrder(
+                    req.body.uid,
+                    req.body.product
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
