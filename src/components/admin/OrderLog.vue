@@ -11,6 +11,7 @@
     </q-list>
 </template>
 <script>
+import moment from 'moment'
 export default {
     props: {
         data: {
@@ -23,25 +24,41 @@ export default {
     methods: {
         formatLog(el) {
             if (typeof el == 'number') {
-                let s = `Orden creada: ${new Date(el)}`
+                let s = `Orden creada: ${moment(el).format(
+                    'DD/MM/YYYY HH:MM:SS'
+                )}`
                 return s
             } else {
                 if (el.action == 'Changed Status') {
                     let s = `Cambio de estado: ${el.section} - por: ${
                         el.who
-                    } - Fecha: ${new Date(el.time)}`
+                    } - Fecha: ${moment(el.time).format('DD/MM/YYYY HH:MM:SS')}`
                     return s
                 }
                 if (el.action == 'Upload Proof') {
                     let s = ` Se subio un comprobante de pago - Por: ${
                         el.who
-                    } - Fecha: ${new Date(el.time)}`
+                    } - Fecha: ${moment(el.time).format('DD/MM/YYYY HH:MM:SS')}`
+                    return s
+                }
+                if (el.action == 'Item Added') {
+                    let s = ` Se agrego el articulo ${el.section} - Por: ${
+                        el.who
+                    } - Fecha: ${moment(el.time).format('DD/MM/YYYY HH:MM:SS')}`
+                    return s
+                }
+                if (el.action == 'Item Deleted') {
+                    let s = ` Se quito el articulo ${el.section} - Por: ${
+                        el.who
+                    } - Fecha: ${moment(el.time).format('DD/MM/YYYY HH:MM:SS')}`
                     return s
                 } else {
                     if (el.action == 'Cancel Order') {
                         let s = `Se cancelo la orden - Por: ${
                             el.who
-                        } - Fecha: ${new Date(el.time)}`
+                        } - Fecha: ${moment(el.time).format(
+                            'DD/MM/YYYY HH:MM:SS'
+                        )}`
                         return s
                     }
                 }
