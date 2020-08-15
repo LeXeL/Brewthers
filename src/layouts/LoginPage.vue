@@ -1,6 +1,6 @@
 <template>
     <q-layout class="brewthers-dark-bg">
-        <q-page-container>
+        <q-page-container style="padding-top: 0">
             <router-view></router-view>
         </q-page-container>
     </q-layout>
