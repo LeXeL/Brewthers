@@ -253,13 +253,22 @@ export default {
     },
     methods: {
         geolocate() {
-            navigator.geolocation.getCurrentPosition(position => {
-                this.center = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    this.center = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    }
+                    this.markers.push({position: this.center})
+                },
+                error => {
+                    this.center = {
+                        lat: 8.965975885948076,
+                        lng: -79.53750488336794,
+                    }
+                    this.markers.push({position: this.center})
                 }
-                this.markers.push({position: this.center})
-            })
+            )
         },
         setMarkerPosition(event) {
             this.form.location = event
@@ -283,6 +292,11 @@ export default {
                             .then(() => {
                                 this.displayLoading = false
                                 this.confirmationDialog = true
+                                if (this.form.location === null)
+                                    this.form.location = {
+                                        lat: 8.965975885948076,
+                                        lng: -79.53750488336794,
+                                    }
                                 api.updateuserwithinfo({
                                     uid: user.user.uid,
                                     obj: this.form,
