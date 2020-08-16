@@ -83,8 +83,14 @@ export default {
                 firebase
                     .auth()
                     .confirmPasswordReset(this.actionCode, this.newPassword)
-                    .then(resp => {
-                        alert('Contraseña cambiada con éxito')
+                    .then(() => {
+                        this.displayLoading = false
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage = 'Contraseña cambiada con exito!'
+                        this.alertType = 'success'
+                        this.displayAlert = true
+                    })
+                    .then(() => {
                         firebase
                             .auth()
                             .signOut()
