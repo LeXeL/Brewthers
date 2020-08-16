@@ -331,6 +331,15 @@ export default {
                     })
             }
         },
+        getProductInformation() {
+            api.getProductInformationById({id: this.$route.params.id})
+                .then(product => {
+                    this.data = product.data.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
         uploadToFirebase(imageFile, fullDirectory, filename) {
             return new Promise(function (resolve, reject) {
                 var storageRef = firebase
