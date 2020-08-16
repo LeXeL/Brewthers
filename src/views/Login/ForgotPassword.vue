@@ -33,7 +33,7 @@
                             color="primary"
                             size="lg"
                             class="full-width"
-                            label="Enviar Correo Cambio de Contraseña"
+                            label="Enviar Correo"
                             @click="resetPassword"
                         />
                     </q-card-actions>
