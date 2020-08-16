@@ -75,7 +75,7 @@
                     :data="data"
                     :columns="columns"
                     row-key="name"
-                    :pagination="{rowsPerPage: 15}"
+                    :pagination.sync="initialPagination"
                     binary-state-sort
                     dark
                     v-if="restaurants.length > 0"
@@ -186,6 +186,13 @@ export default {
     },
     data() {
         return {
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 50,
+                // rowsNumber: xx if getting data from a server
+            },
             dateToday: moment(new Date()).format('YYYY/MM/DD'),
             dateTomorow: moment(new Date()).format('YYYY/MM/DD'),
             alert: false,

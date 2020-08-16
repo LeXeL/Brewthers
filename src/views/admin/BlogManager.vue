@@ -12,7 +12,7 @@
                     :data="data"
                     :columns="columns"
                     row-key="name"
-                    :pagination="initialPagination"
+                    :pagination.sync="initialPagination"
                     binary-state-sort
                     dark
                 >
@@ -51,7 +51,13 @@
 export default {
     data() {
         return {
-            initialPagination: {rowsPerPage: 15},
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 15,
+                // rowsNumber: xx if getting data from a server
+            },
             columns: [
                 {
                     name: 'name',

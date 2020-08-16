@@ -6,7 +6,7 @@
         row-key="name"
         binary-state-sort
         dark
-        :pagination="{rowsPerPage: 50}"
+        :pagination.sync="initialPagination"
     >
         <template v-slot:body="props">
             <q-tr :props="props">
@@ -86,6 +86,13 @@ export default {
     },
     data() {
         return {
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 50,
+                // rowsNumber: xx if getting data from a server
+            },
             columns: [
                 {
                     name: 'name',

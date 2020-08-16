@@ -5,7 +5,7 @@
         :columns="columns"
         row-key="name"
         class="full-width q-mb-lg"
-        :pagination="initialPagination"
+        :pagination.sync="initialPagination"
         dark
     >
         <template v-slot:header="props">
