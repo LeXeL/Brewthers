@@ -39,9 +39,6 @@ export default {
         markers: {
             type: Array,
         },
-        markers: {
-            type: Array,
-        },
     },
     data() {
         return {
