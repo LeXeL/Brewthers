@@ -6,7 +6,7 @@
         row-key="name"
         class="full-width"
         dark
-        :pagination="{rowsPerPage: 50}"
+        :pagination.sync="initialPagination"
     >
         <template v-slot:header="props">
             <q-tr :props="props">
@@ -44,6 +44,13 @@ export default {
     },
     data() {
         return {
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 15,
+                // rowsNumber: xx if getting data from a server
+            },
             columns: [
                 {
                     name: 'restaurantName',
@@ -71,7 +78,6 @@ export default {
                     label: 'Celular',
                     field: 'contactPhone',
                     align: 'left',
-                    sortable: true,
                 },
             ],
         }

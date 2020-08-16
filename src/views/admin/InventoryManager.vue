@@ -133,10 +133,12 @@ export default {
         },
         addToData(id, data) {
             data.id = id
+            data.inventory = parseInt(data.inventory)
             this.data.push(data)
         },
         editData(id, data) {
             data.id = id
+            data.inventory = parseInt(data.inventory)
             this.data.forEach((d, index) => {
                 if (d.id === id) {
                     this.data.splice(index, 1, data)

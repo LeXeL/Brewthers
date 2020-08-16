@@ -6,7 +6,7 @@
         row-key="name"
         binary-state-sort
         dark
-        :pagination="{rowsPerPage: 50}"
+        :pagination.sync="initialPagination"
     >
         <template v-slot:body="props">
             <q-tr :props="props">
@@ -29,14 +29,14 @@
                         />
                     </q-popup-edit>
                 </q-td>
-                <q-td key="presentation" :props="props">
+                <q-td key="type" :props="props">
                     {{
                     props.row.type
                     }}
                 </q-td>
-                <q-td key="stock" :props="props">{{ props.row.inventory }}</q-td>
+                <q-td key="inventory" :props="props">{{ props.row.inventory }}</q-td>
                 <q-td
-                    key="house"
+                    key="brewery"
                     :props="props"
                     v-if="brewerys"
                 >{{ brewerys.filter(brewery=> {if(brewery.id === props.row.brewery) return brewery})[0].name }}</q-td>
@@ -86,6 +86,13 @@ export default {
     },
     data() {
         return {
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 50,
+                // rowsNumber: xx if getting data from a server
+            },
             columns: [
                 {
                     name: 'name',
@@ -93,28 +100,26 @@ export default {
                     label: 'Nombre',
                     align: 'left',
                     field: 'name',
-                    sortable: true,
                 },
                 {
-                    name: 'presentation',
+                    name: 'type',
                     align: 'left',
-                    label: 'Presentacion',
-                    field: 'presentation',
+                    label: 'Tipo',
+                    field: 'type',
                     sortable: true,
                 },
                 {
-                    name: 'stock',
+                    name: 'inventory',
                     align: 'left',
                     label: 'Inventario',
-                    field: 'stock',
+                    field: 'inventory',
                     sortable: true,
                 },
                 {
-                    name: 'house',
+                    name: 'brewery',
                     align: 'left',
                     label: 'Casa',
-                    field: 'house',
-                    sortable: true,
+                    field: 'brewery',
                 },
                 {
                     name: 'status',
