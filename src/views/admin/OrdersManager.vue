@@ -102,12 +102,12 @@
                                 restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].contactPhone
                                 }}
                             </q-td>
-                            <q-td key="items" :props="props">
+                            <q-td key="amount" :props="props">
                                 {{
                                 props.row.amount
                                 }}
                             </q-td>
-                            <q-td key="amount" :props="props">$ {{ props.row.total }}</q-td>
+                            <q-td key="total" :props="props">$ {{ props.row.total }}</q-td>
                             <q-td key="paymentMethod" :props="props">
                                 {{
                                 props.row.paymentMethod
@@ -220,34 +220,31 @@ export default {
                     label: 'Restaurante',
                     align: 'left',
                     field: 'restName',
-                    sortable: true,
                 },
                 {
                     name: 'email',
                     align: 'left',
                     label: 'Correo',
                     field: 'email',
-                    sortable: true,
                 },
                 {
                     name: 'phone',
                     align: 'left',
                     label: 'Celular',
                     field: 'phone',
-                    sortable: true,
-                },
-                {
-                    name: 'items',
-                    align: 'left',
-                    label: 'Articulos',
-                    field: 'items',
-                    sortable: true,
                 },
                 {
                     name: 'amount',
                     align: 'left',
-                    label: 'Total',
+                    label: 'Articulos',
                     field: 'amount',
+                    sortable: true,
+                },
+                {
+                    name: 'total',
+                    align: 'left',
+                    label: 'Total',
+                    field: 'total',
                     sortable: true,
                 },
                 {
@@ -395,6 +392,8 @@ export default {
         addToData(id, data) {
             data.firebaseId = id
             this.completeData.push(data)
+            data.amount = parseInt(data.amount)
+            data.total = parseFloat(data.total)
             this.data.push(data)
             this.data.sort((a, b) => {
                 return moment(b.logs[0]).diff(a.logs[0])
@@ -402,6 +401,8 @@ export default {
         },
         editData(id, data) {
             data.firebaseId = id
+            data.amount = parseInt(data.amount)
+            data.total = parseFloat(data.total)
             this.data.forEach((d, index) => {
                 if (d.firebaseId === id) {
                     this.completeData.splice(index, 1, data)
