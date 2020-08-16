@@ -389,6 +389,9 @@ export default {
             data.firebaseId = id
             this.completeData.push(data)
             this.data.push(data)
+            this.data.sort((a, b) => {
+                return moment(b.logs[0]).diff(a.logs[0])
+            })
         },
         editData(id, data) {
             data.firebaseId = id
@@ -398,6 +401,9 @@ export default {
                     this.data.splice(index, 1, data)
                 }
             })
+            this.data.sort((a, b) => {
+                return moment(b.logs[0]).diff(a.logs[0])
+            })
         },
         removeData(id) {
             this.data.forEach((d, index) => {
@@ -405,6 +411,9 @@ export default {
                     this.completeData.splice(index, 1)
                     this.data.splice(index, 1)
                 }
+            })
+            this.data.sort((a, b) => {
+                return moment(b.logs[0]).diff(a.logs[0])
             })
         },
         cancelOrder() {
