@@ -1,9 +1,5 @@
 <template>
-    <q-page
-        class="pattern-bg"
-        v-if="Object.keys(user).length !== 0"
-        style="height: auto; background-repeat: repeat-y;"
-    >
+    <q-page class="pattern-bg" style="height: auto; background-repeat: repeat-y;">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -11,125 +7,125 @@
             :message="alertMessage"
             :type="alertType"
         ></brewthers-alert>
-        <div class="row">
-            <div class="col q-pa-lg">
-                <div class="text-h4">{{ restName }}</div>
-                <div class="text-h6">
-                    Estatus:
-                    <span style="color: #27a3c3">{{
-                        user.status ? user.status : 'pending'
-                    }}</span>
+        <div v-if="Object.keys(user).length !== 0">
+            <div class="row">
+                <div class="col q-pa-lg">
+                    <div class="text-h4">{{ restName }}</div>
+                    <div class="text-h6">
+                        Estatus:
+                        <span style="color: #27a3c3">
+                            {{
+                            user.status ? user.status : 'pending'
+                            }}
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col col-lg-4 col-xs-12 q-pa-lg">
-                <q-card flat bordered dark class="text-white full-width">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-h6">Informacion general:</div>
+            <div class="row">
+                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                    <q-card flat bordered dark class="text-white full-width">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-h6">Informacion general:</div>
+                                </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-form>
-                            <q-input
-                                outlined
-                                v-model="userData.restaurantName"
-                                class="q-mb-md"
-                                label="Nombre del restaurante"
-                                dark
-                                :disable="!editGeneralInfo"
-                            />
-                            <q-input
-                                outlined
-                                v-model="userData.name"
-                                class="q-mb-md"
-                                label="Nombre"
-                                dark
-                                :disable="!editGeneralInfo"
-                            />
-                            <q-input
-                                outlined
-                                v-model="userData.lastName"
-                                class="q-mb-md"
-                                label="Apellido"
-                                dark
-                                :disable="!editGeneralInfo"
-                            />
-                            <q-input
-                                outlined
-                                v-model="userData.contactPhone"
-                                class="q-mb-md"
-                                label="Celular"
-                                dark
-                                :disable="!editGeneralInfo"
-                            />
-                        </q-form>
-                    </q-card-section>
-                    <q-separator dark />
-                    <q-card-actions>
-                        <q-btn
-                            color="primary"
-                            @click="handleData('GeneralInfo')"
-                            >{{ editGeneralInfo ? 'Guardar' : 'Editar' }}</q-btn
-                        >
-                    </q-card-actions>
-                </q-card>
-            </div>
-            <div class="col col-lg-4 col-xs-12 q-pa-lg">
-                <q-card flat bordered dark class="text-white full-width">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-h6">Direccion:</div>
+                        </q-card-section>
+                        <q-card-section>
+                            <q-form>
+                                <q-input
+                                    outlined
+                                    v-model="userData.restaurantName"
+                                    class="q-mb-md"
+                                    label="Nombre del restaurante"
+                                    dark
+                                    :disable="!editGeneralInfo"
+                                />
+                                <q-input
+                                    outlined
+                                    v-model="userData.name"
+                                    class="q-mb-md"
+                                    label="Nombre"
+                                    dark
+                                    :disable="!editGeneralInfo"
+                                />
+                                <q-input
+                                    outlined
+                                    v-model="userData.lastName"
+                                    class="q-mb-md"
+                                    label="Apellido"
+                                    dark
+                                    :disable="!editGeneralInfo"
+                                />
+                                <q-input
+                                    outlined
+                                    v-model="userData.contactPhone"
+                                    class="q-mb-md"
+                                    label="Celular"
+                                    dark
+                                    :disable="!editGeneralInfo"
+                                />
+                            </q-form>
+                        </q-card-section>
+                        <q-separator dark />
+                        <q-card-actions>
+                            <q-btn
+                                color="primary"
+                                @click="handleData('GeneralInfo')"
+                            >{{ editGeneralInfo ? 'Guardar' : 'Editar' }}</q-btn>
+                        </q-card-actions>
+                    </q-card>
+                </div>
+                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                    <q-card flat bordered dark class="text-white full-width">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-h6">Direccion:</div>
+                                </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-form>
-                            <q-input
-                                outlined
-                                v-model="userData.address"
-                                class="q-mb-md"
-                                label="Direccion"
-                                dark
-                                :disable="!editAddressInfo"
-                            />
-                            <GoogleMaps
-                                @markerPosition="setMarkerPosition"
-                                :editable="editAddressInfo"
-                                :mapCenter="center"
-                                :markers="markers"
-                            ></GoogleMaps>
-                        </q-form>
-                    </q-card-section>
-                    <q-separator dark />
-                    <q-card-actions>
-                        <q-btn
-                            color="primary"
-                            @click="handleData('AddressInfo')"
-                            >{{ editAddressInfo ? 'Guardar' : 'Editar' }}</q-btn
-                        >
-                    </q-card-actions>
-                </q-card>
-            </div>
-            <div class="col col-lg-4 col-xs-12 q-pa-lg">
-                <q-card flat bordered dark class="text-white full-width">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-h6">Seguridad</div>
+                        </q-card-section>
+                        <q-card-section>
+                            <q-form>
+                                <q-input
+                                    outlined
+                                    v-model="userData.address"
+                                    class="q-mb-md"
+                                    label="Direccion"
+                                    dark
+                                    :disable="!editAddressInfo"
+                                />
+                                <GoogleMaps
+                                    @markerPosition="setMarkerPosition"
+                                    :editable="editAddressInfo"
+                                    :mapCenter="center"
+                                    :markers="markers"
+                                ></GoogleMaps>
+                            </q-form>
+                        </q-card-section>
+                        <q-separator dark />
+                        <q-card-actions>
+                            <q-btn
+                                color="primary"
+                                @click="handleData('AddressInfo')"
+                            >{{ editAddressInfo ? 'Guardar' : 'Editar' }}</q-btn>
+                        </q-card-actions>
+                    </q-card>
+                </div>
+                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                    <q-card flat bordered dark class="text-white full-width">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-h6">Seguridad</div>
+                                </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-actions>
-                        <q-btn @click="resetPassword()" color="primary"
-                            >Reiniciar Contraseña</q-btn
-                        >
-                    </q-card-actions>
-                </q-card>
+                        </q-card-section>
+                        <q-card-actions>
+                            <q-btn @click="resetPassword()" color="primary">Reiniciar Contraseña</q-btn>
+                        </q-card-actions>
+                    </q-card>
+                </div>
             </div>
         </div>
     </q-page>
@@ -184,13 +180,21 @@ export default {
             firebase
                 .auth()
                 .sendPasswordResetEmail(this.user.email)
-                .then(function() {
-                    alert(
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
                         'Hemos enviado a tu correo un email para resetear la contraseña'
-                    )
+                    this.alertType = 'success'
+                    this.displayAlert = true
                 })
-                .catch(function(error) {
+                .catch(error => {
                     console.log(error)
+                    this.alertTitle = 'Hey AWANTA!'
+                    this.alertMessage =
+                        'Hubo un error con tu peticion por favor intentalo mas tarde'
+                    this.alertType = 'error'
+                    this.displayAlert = true
                 })
         },
         setMarkerPosition(event) {

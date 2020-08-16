@@ -11,6 +11,7 @@ import BlogPage from './layouts/BlogPage'
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
 import ResetPassword from './views/Login/ResetPassword.vue'
+import ForgotPassword from './views/Login/ForgotPassword.vue'
 import MovingBeerIndex from './views/movingbeer/MovingBeerIndex.vue'
 import MovingBeerCheckout from './views/movingbeer/MovingBeerCheckout.vue'
 import MovingBeerAccount from './views/movingbeer/MovingBeerAccount.vue'
@@ -128,6 +129,11 @@ export default new Router({
                     path: '/resetpassword',
                     name: 'reset password',
                     component: ResetPassword,
+                },
+                {
+                    path: '/forgotpassword',
+                    name: 'forgot password',
+                    component: ForgotPassword,
                 },
             ],
         },
