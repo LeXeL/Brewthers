@@ -50,6 +50,10 @@
                             Necesitas una cuenta?
                             <router-link class="text-grey-9" to="createaccount">Creala Aquí</router-link>
                         </p>
+                        <p class="text-grey-6">
+                            Olvidaste tu contraseña?
+                            <router-link class="text-grey-9" to="forgotpassword">Solicitala Aquí</router-link>
+                        </p>
                         <p style="color: #111">Espacio exclusivo para locales comerciales.</p>
                         <router-link to="/" style="color: #27a3c3">Volver al inicio</router-link>
                     </q-card-section>
