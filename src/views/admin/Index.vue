@@ -168,7 +168,7 @@ export default {
         },
         returnFilteredOrders() {
             return this.data.filter(order => {
-                if (order.status === 'review') {
+                if (order.status !== 'cancel' && order.status !== 'completed') {
                     return order
                 }
             })
