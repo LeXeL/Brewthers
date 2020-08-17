@@ -152,7 +152,7 @@ export default {
             let orders = this.returnFilteredOrderCompletedInAMonth()
             let total = 0
             orders.forEach(order => {
-                total += order.total
+                total += parseFloat(order.total)
             })
             return parseFloat(total)
         },
