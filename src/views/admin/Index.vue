@@ -86,7 +86,9 @@
                                 v-for="(order, i) in returnFilteredOrders()"
                                 :key="i"
                             >
-                                <q-item-section>
+                                <q-item-section
+                                    @click="$router.push(`/order-details/${order.firebaseId}`)"
+                                >
                                     <q-item-label>{{ restaurants.filter(res => { if(res.id === order.restaurantId) return res} )[0].restaurantName}}</q-item-label>
                                     <q-item-label caption>No. {{order.id}}</q-item-label>
                                 </q-item-section>
@@ -113,7 +115,9 @@
                                 v-for="(user, i) in returnFilteredUsers()"
                                 :key="i"
                             >
-                                <q-item-section>
+                                <q-item-section
+                                    @click="$router.push(`/account-details/${user.id}`)"
+                                >
                                     <q-item-label>{{user.restaurantName}}</q-item-label>
                                     <q-item-label caption>{{user.email}}</q-item-label>
                                 </q-item-section>
