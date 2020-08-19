@@ -27,6 +27,19 @@ async function substractAmout(id) {
         product.substractInventoryFromProduct(element.id, element.amount)
     })
 }
+async function reCalculateTotalAndAmount(id) {
+    let order = await returnOrderById(id)
+    let total = 0
+    let amount = 0
+    order.cart.forEach(element => {
+        total += parseFloat(element.price) * element.amount
+        amount += element.amount
+    })
+    updateOrder(id, {
+        total: parseFloat(total) + parseFloat(order.itbms),
+        amount: amount,
+    })
+}
 
 async function createOrder(order) {
     let lastId = await getLastId()
@@ -182,6 +195,7 @@ async function changeOrderStatus(id, status) {
             return error
         })
 }
+
 async function addToShoppingCartInOrder(uid, itemObj) {
     return db
         .collection('order')
@@ -189,6 +203,7 @@ async function addToShoppingCartInOrder(uid, itemObj) {
         .update({cart: admin.firestore.FieldValue.arrayUnion(itemObj)})
         .then(() => {
             console.log('Document successfully added!')
+            reCalculateTotalAndAmount(uid)
             return 'Succesfull'
         })
         .catch(error => {
@@ -197,12 +212,20 @@ async function addToShoppingCartInOrder(uid, itemObj) {
         })
 }
 async function removeFromShoppingCartInOrder(uid, itemObj) {
+    let workingOrder = await returnOrderById(uid)
     return db
         .collection('order')
         .doc(uid)
-        .update({cart: admin.firestore.FieldValue.arrayRemove(itemObj)})
+        .update({
+            cart: workingOrder.cart.filter(order => {
+                if (order.id !== itemObj.id) {
+                    return order
+                }
+            }),
+        })
         .then(() => {
             console.log('Document successfully removed!')
+            reCalculateTotalAndAmount(uid)
             return 'Succesfull'
         })
         .catch(error => {

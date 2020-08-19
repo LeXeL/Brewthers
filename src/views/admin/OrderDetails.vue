@@ -224,11 +224,21 @@ export default {
         },
     },
     methods: {
+        reCalculateOrderTotalAndAmount() {
+            let total = 0
+            let amount = 0
+            this.data.cart.forEach(order => {
+                total += parseFloat(order.price) * order.amount
+                amount += order.amount
+            })
+            this.data.total = total + this.data.itbms
+            this.data.amount = amount
+        },
         removeFromCartInOrder(event) {
             this.displayLoading = true
             api.removeFromShoppingCartInOrder({
                 uid: this.$route.params.id,
-                product: this.product,
+                product: event,
             })
                 .then(response => {
                     this.data.cart.forEach((d, index) => {
@@ -236,6 +246,7 @@ export default {
                             this.data.cart.splice(index, 1)
                         }
                     })
+                    this.reCalculateOrderTotalAndAmount()
                     let obj = this.data.logs
                     obj.push({
                         action: 'Item Deleted',
@@ -271,6 +282,7 @@ export default {
             })
                 .then(response => {
                     this.data.cart.push(this.product)
+                    this.reCalculateOrderTotalAndAmount()
                     let obj = this.data.logs
                     obj.push({
                         action: 'Item Added',
