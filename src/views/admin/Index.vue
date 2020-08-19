@@ -189,6 +189,9 @@ export default {
         addToData(id, data) {
             data.firebaseId = id
             this.data.push(data)
+            this.data.sort((a, b) => {
+                return parseInt(a.id) - parseInt(b.id)
+            })
         },
         editData(id, data) {
             data.firebaseId = id
@@ -197,12 +200,18 @@ export default {
                     this.data.splice(index, 1, data)
                 }
             })
+            this.data.sort((a, b) => {
+                return parseInt(a.id) - parseInt(b.id)
+            })
         },
         removeData(id) {
             this.data.forEach((d, index) => {
                 if (d.firebaseId === id) {
                     this.data.splice(index, 1)
                 }
+            })
+            this.data.sort((a, b) => {
+                return parseInt(a.id) - parseInt(b.id)
             })
         },
         addToUsers(id, data) {
