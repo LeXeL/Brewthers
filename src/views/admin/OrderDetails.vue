@@ -294,6 +294,7 @@ export default {
                         id: this.$route.params.id,
                         Order: {logs: obj},
                     })
+                    this.addItems = false
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
