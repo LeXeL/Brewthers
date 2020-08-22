@@ -27,8 +27,10 @@
                 numero de
                 <i
                     class="fab fa-whatsapp"
-                ></i> Whatsapp o
-                <i class="fab fa-instagram"></i> Instagram.
+                ></i>&nbsp;
+                <a href="https://wa.me/50768585745">Whatsapp</a> o
+                <i class="fab fa-instagram"></i>&nbsp;
+                <a href="https://www.instagram.com/brew.thers/" target="_blank">Instagram</a>.
             </div>
             <div
                 class="text-h6 text-center full-width"
