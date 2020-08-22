@@ -124,9 +124,14 @@ export default {
             alert: false,
             group: [],
             cancelationReasons: [
-                {label: 'This is cancelation reason 1', value: 'bat'},
-                {label: 'This is cancelation reason 2', value: 'friend'},
-                {label: 'This is cancelation reason 3', value: 'upload'},
+                {
+                    label: 'Por solicitud del usuario',
+                    value: 'Por solicitud del usuario',
+                },
+                {
+                    label: 'Pago rebotado',
+                    value: 'Pago rebotado',
+                },
             ],
             displayLoading: false,
             displayAlert: false,
