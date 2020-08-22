@@ -173,9 +173,28 @@ export default {
             group: [],
             data: '',
             options: [
-                {label: 'Motivo de rechazo 1', value: 'op1'},
-                {label: 'Motivo de rechazo 2', value: 'op2'},
-                {label: 'Motivo de rechazo 3', value: 'op3'},
+                {
+                    label: 'No representa un comercio',
+                    value: 'No representa un comercio',
+                },
+                {
+                    label:
+                        'El RUC brindado no existe en la base de datos de la Republica de Panama',
+                    value:
+                        'El RUC brindado no existe en la base de datos de la Republica de Panama',
+                },
+                {
+                    label:
+                        'El comercio se encuentra fuera de las areas de entrega (Ciudad de Panama)',
+                    value:
+                        'El comercio se encuentra fuera de las areas de entrega (Ciudad de Panama)',
+                },
+                {
+                    label:
+                        'Ya existe un representante de ese comercio (Duplicado)',
+                    value:
+                        'Ya existe un representante de ese comercio (Duplicado)',
+                },
             ],
             displayLoading: false,
             displayAlert: false,
