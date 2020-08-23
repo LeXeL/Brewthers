@@ -27,8 +27,10 @@
                 numero de
                 <i
                     class="fab fa-whatsapp"
-                ></i> Whatsapp o
-                <i class="fab fa-instagram"></i> Instagram.
+                ></i>&nbsp;
+                <a href="https://wa.me/50768585745">Whatsapp</a> o
+                <i class="fab fa-instagram"></i>&nbsp;
+                <a href="https://www.instagram.com/brew.thers/" target="_blank">Instagram</a>.
             </div>
             <div
                 class="text-h6 text-center full-width"
@@ -50,7 +52,11 @@
                 v-for="(item, i) in categoryFilter"
                 :key="i"
             >
-                <img :src="require(`@/assets/tiendita-items/${item.photo}`)" width="100%" />
+                <q-img
+                    :src="require(`@/assets/tiendita-items/${item.photo}`)"
+                    width="100%"
+                    class="rounded-borders"
+                />
                 <div
                     class="text-h6 text-center"
                     style="font-family: GilroyExtraBold;"
@@ -106,6 +112,42 @@ export default {
             ],
             items: [
                 {
+                    name: 'Einstein Pack',
+                    price: 17,
+                    photo: 'einstein.jpg',
+                    category: 'beer',
+                },
+                {
+                    name: 'Sócrates Pack',
+                    price: 17,
+                    photo: 'socrates.jpg',
+                    category: 'beer',
+                },
+                {
+                    name: 'René D. Pack',
+                    price: 17,
+                    photo: 'rene.jpg',
+                    category: 'beer',
+                },
+                {
+                    name: 'Platón Pack',
+                    price: 17,
+                    photo: 'platon.jpg',
+                    category: 'beer',
+                },
+                {
+                    name: 'Nietzsche Pack',
+                    price: 17,
+                    photo: 'nietzsche.jpg',
+                    category: 'beer',
+                },
+                {
+                    name: 'Da Vinci Pack',
+                    price: 17,
+                    photo: 'davinci.jpg',
+                    category: 'beer',
+                },
+                {
                     name: 'Logo Brewthers',
                     price: 17,
                     photo: 'item_1.jpg',
@@ -121,19 +163,19 @@ export default {
                     name: 'Brewthers',
                     price: 17,
                     photo: 'item_3.jpg',
-                    category: 'beer',
+                    category: 'tshirt',
                 },
                 {
                     name: 'Brewthers Owl',
                     price: 17,
                     photo: 'item_4.jpg',
-                    category: 'cap',
+                    category: 'tshirt',
                 },
                 {
                     name: 'Brewthers Owl',
                     price: 17,
                     photo: 'item_5.jpg',
-                    category: 'cup',
+                    category: 'tshirt',
                 },
             ],
         }
