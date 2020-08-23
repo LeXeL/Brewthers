@@ -81,6 +81,7 @@ async function updateOrder(id, Obj) {
         let order = await returnOrderById(id)
         let restaurantInfo = await users.returnUserById(order.restaurantId)
         order.restaurantId = restaurantInfo
+        order.logs = Obj.logs
         let body = await email.templateHandler('Order-04', order)
         email.sendEmail(
             order.restaurantId.email,

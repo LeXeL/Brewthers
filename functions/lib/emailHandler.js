@@ -83,7 +83,6 @@ async function templateOrder03(info) {
   </div>`
 }
 function templateOrder04(info) {
-    console.log(info)
     let reason = ''
     let section = info.logs[info.logs.length - 1].section
     section.forEach(element => {
@@ -127,7 +126,7 @@ async function templateHandler(id, information) {
 
 async function sendEmail(to, subject, template) {
     let info = await transporter.sendMail({
-        from: '"Brewthers App " <brewthers3@gmail.com>', // sender address
+        from: '"Brewthers App " <no-reply@brewthersco.com>', // sender address
         to: `${to}, ${to}`, // list of receivers
         subject: `${subject}`, // Subject line
         html: `<!DOCTYPE html>
