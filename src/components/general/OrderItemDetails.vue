@@ -13,7 +13,27 @@
                 class="text-subtitle-2"
                 v-if="data.price"
             >Precio unitario: $ {{parseFloat(data.price).toFixed(2) }}</div>
-            <div class="text-subtitle-2" v-if="data.amount">Cantidad: {{data.amount}}</div>
+            <div
+                class="text-subtitle-2"
+                v-if="data.amount && !$route.fullPath.includes('order-details')"
+            >Cantidad: {{data.amount}}</div>
+            <div
+                class="text-subtitle-2"
+                v-if="data.amount && $route.fullPath.includes('order-details')"
+            >
+                Cantidad:
+                <i
+                    class="fas fa-minus q-mr-sm"
+                    style="color: #27a3c3; cursor: pointer;"
+                    @click="subtractToAmount(data,data.amount)"
+                ></i>
+                {{data.amount}}
+                <i
+                    class="fas fa-plus on-right q-ml-sm"
+                    style="color: #27a3c3; cursor: pointer;"
+                    @click="addToAmount(data,data.amount)"
+                ></i>
+            </div>
             <div class="text-subtitle-2" v-if="$route.fullPath.includes('order-details') ">
                 <q-btn color="red-7" size="xs" @click="$emit('remove',data)" :disable="disableprop">
                     <i class="fas fa-times"></i>
@@ -35,6 +55,14 @@ export default {
         disableprop: {
             type: Boolean,
             default: false,
+        },
+    },
+    methods: {
+        addToAmount(item, amount) {
+            this.$emit('addAmountToItemInCart', {item, amount})
+        },
+        subtractToAmount(item, amount) {
+            this.$emit('subtractAmountToItemInCart', {item, amount})
         },
     },
 }

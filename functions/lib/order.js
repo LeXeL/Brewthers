@@ -234,6 +234,24 @@ async function removeFromShoppingCartInOrder(uid, itemObj) {
             return error
         })
 }
+async function updateShoppingCartInOrder(uid, itemObj, itemIndex) {
+    let workingOrder = await returnOrderById(uid)
+    let itemInCart = workingOrder.cart[itemIndex]
+    itemInCart.amount = itemObj.amount
+    return db
+        .collection('order')
+        .doc(uid)
+        .update({cart: workingOrder.cart})
+        .then(() => {
+            console.log('Document successfully added!')
+            reCalculateTotalAndAmount(uid)
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 
 module.exports = {
     createOrder,
@@ -244,4 +262,5 @@ module.exports = {
     changeOrderStatus,
     addToShoppingCartInOrder,
     removeFromShoppingCartInOrder,
+    updateShoppingCartInOrder,
 }

@@ -405,3 +405,20 @@ exports.removeFromShoppingCartInOrder = functions.https.onRequest(
         })
     }
 )
+exports.updateShoppingCartInOrder = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await order.updateShoppingCartInOrder(
+                    req.body.uid,
+                    req.body.product,
+                    req.body.itemIndex
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)

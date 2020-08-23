@@ -77,6 +77,8 @@
                         :data="item"
                         v-for="(item, i) in removeElementsFromObject(data.cart)"
                         @remove="removeFromCartInOrder"
+                        @addAmountToItemInCart="addAmountToItem"
+                        @subtractAmountToItemInCart="subtractAmountToItem"
                         :key="i"
                         :disableprop="data.status !== 'review'"
                     />
@@ -224,6 +226,91 @@ export default {
         },
     },
     methods: {
+        addAmountToItem(event) {
+            this.displayLoading = true
+            let itemIndex = 0
+            this.data.cart.forEach((element, index) => {
+                if (element.id === event.item.id) {
+                    itemIndex = index
+                }
+            })
+            if (parseInt(event.amount + 1) <= parseInt(event.item.inventory)) {
+                event.item.amount += 1
+                api.updateShoppingCartInOrder({
+                    uid: this.$route.params.id,
+                    product: event.item,
+                    itemIndex: itemIndex,
+                }).then(() => {
+                    this.reCalculateOrderTotalAndAmount()
+                    let obj = this.data.logs
+                    obj.push({
+                        action: 'Item Modified',
+                        section: `Producto: ${event.item.name} => (${event.item.amount}) `,
+                        who: this.user.email,
+                        time: Date.now(),
+                    })
+                    api.updateOrdersInformation({
+                        id: this.$route.params.id,
+                        Order: {logs: obj},
+                    })
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado con exito la informacion'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+            } else {
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage =
+                    'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
+                this.alertType = 'error'
+                this.displayAlert = true
+            }
+        },
+        subtractAmountToItem(event) {
+            this.displayLoading = true
+            let itemIndex = 0
+            this.data.cart.forEach((element, index) => {
+                if (element.id === event.item.id) {
+                    itemIndex = index
+                }
+            })
+
+            if (parseInt(event.amount - 1) > 0) {
+                event.item.amount -= 1
+                api.updateShoppingCartInOrder({
+                    uid: this.$route.params.id,
+                    product: event.item,
+                    itemIndex: itemIndex,
+                }).then(() => {
+                    this.reCalculateOrderTotalAndAmount()
+                    let obj = this.data.logs
+                    obj.push({
+                        action: 'Item Modified',
+                        section: `Producto: ${event.item.name} => (${event.item.amount}) `,
+                        who: this.user.email,
+                        time: Date.now(),
+                    })
+                    api.updateOrdersInformation({
+                        id: this.$route.params.id,
+                        Order: {logs: obj},
+                    })
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado con exito la informacion'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+            } else {
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage =
+                    'No podemos dejar el item en 0 mejor eliminalo!'
+                this.alertType = 'error'
+                this.displayAlert = true
+            }
+        },
         reCalculateOrderTotalAndAmount() {
             let total = 0
             let amount = 0

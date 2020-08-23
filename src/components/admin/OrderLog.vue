@@ -47,6 +47,12 @@ export default {
                     } - Fecha: ${moment(el.time).format('DD/MM/YYYY HH:MM:SS')}`
                     return s
                 }
+                if (el.action == 'Item Modified') {
+                    let s = ` Se edito el articulo ${el.section} - Por: ${
+                        el.who
+                    } - Fecha: ${moment(el.time).format('DD/MM/YYYY HH:MM:SS')}`
+                    return s
+                }
                 if (el.action == 'Item Deleted') {
                     let s = ` Se quito el articulo ${el.section} - Por: ${
                         el.who

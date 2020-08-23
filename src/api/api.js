@@ -129,3 +129,7 @@ export const removeFromShoppingCartInOrder = data =>
     Request.post('/removeFromShoppingCartInOrder', data, {
         'Content-Type': 'application/json',
     })
+export const updateShoppingCartInOrder = data =>
+    Request.post('/updateShoppingCartInOrder', data, {
+        'Content-Type': 'application/json',
+    })
