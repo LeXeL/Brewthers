@@ -91,8 +91,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn label="Confirmar" color="secondary" @click="cancelOrder" v-close-popup />
-                    <q-btn label="Cancelar" color="red-7" v-close-popup />
+                    <q-btn label="Confirmar" flat @click="cancelOrder" v-close-popup />
+                    <q-btn label="Cancelar" flat v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -124,9 +124,14 @@ export default {
             alert: false,
             group: [],
             cancelationReasons: [
-                {label: 'This is cancelation reason 1', value: 'bat'},
-                {label: 'This is cancelation reason 2', value: 'friend'},
-                {label: 'This is cancelation reason 3', value: 'upload'},
+                {
+                    label: 'Por solicitud del usuario',
+                    value: 'Por solicitud del usuario',
+                },
+                {
+                    label: 'Pago rebotado',
+                    value: 'Pago rebotado',
+                },
             ],
             displayLoading: false,
             displayAlert: false,
