@@ -261,6 +261,7 @@ export default {
                     this.displayAlert = true
                 })
             } else {
+                this.displayLoading = false
                 this.alertTitle = 'Hey AWANTA!'
                 this.alertMessage =
                     'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
@@ -304,6 +305,7 @@ export default {
                     this.displayAlert = true
                 })
             } else {
+                this.displayLoading = false
                 this.alertTitle = 'Hey AWANTA!'
                 this.alertMessage =
                     'No podemos dejar el item en 0 mejor eliminalo!'
