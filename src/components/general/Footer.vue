@@ -96,7 +96,7 @@ export default {
                 },
                 {
                     text: 'terminos & condiciones',
-                    landing: '#',
+                    landing: '/terminos-y-condiciones',
                     movingbeer: '#',
                     name: 'tab8',
                 },

@@ -178,6 +178,12 @@
                                             'Las contraseñas no coinciden',
                                     ]"
                                 />
+                                <q-checkbox v-model="terms">Acepto los terminos y condiciones.</q-checkbox>
+                                <a
+                                    class="on-right"
+                                    href="/terminos-y-condiciones"
+                                    target="_blank"
+                                >Leer aqui.</a>
                             </q-form>
                         </q-form>
                     </q-card-section>
@@ -227,6 +233,7 @@ export default {
     data() {
         return {
             markers: [],
+            terms: false,
             center: {},
             displayLoading: false,
             confirmationDialog: false,

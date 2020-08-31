@@ -50,6 +50,10 @@
                         <div
                             class="text-body2"
                         >Para realizar un pedido, deberá seguir todos los pasos de compra online, y hacer clic en el botón “Completar compra”; posteriormente, recibirá un correo electrónico con acuse de recibo de su pedido (“Orden de compra”). Al momento de efectuar el pago de la compra, le enviaremos un correo en el que le informaremos acerca de todos los detalles del envío de la mercancía comprada.</div>
+                        <div class="text-h5">5- DESCRIPCIÓN DE LOS PRODUCTOS</div>
+                        <div
+                            class="text-body2"
+                        >La información que se encuentra en el sitio web, así como las fotos de los productos, son verídicas y se deben tomar como la mejor aproximación al producto real. El cliente debe verificar toda la información concerniente al producto antes de tomar su decisión de compra. Las decisiones de compra de los clientes son finales. BREWTHERS no aceptará reclamo por mala interpretación de la información presentada.</div>
                     </div>
                     <div class="col"></div>
                 </div>
