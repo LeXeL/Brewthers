@@ -78,6 +78,9 @@ export default {
         uid() {
             return this.$store.getters.uid
         },
+        cart() {
+            return this.$store.getters.cart
+        },
     },
     data() {
         return {
@@ -95,6 +98,7 @@ export default {
         addToCart() {
             this.showAddedOverlay = true
             this.product.amount = this.amount
+            this.$store.commit('ADD_CART', this.product)
             api.addToShoppingCart({uid: this.uid, product: this.product})
                 .then(response => {})
                 .catch(error => {

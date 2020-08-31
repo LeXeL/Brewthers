@@ -16,6 +16,9 @@ export default {
         SET_TOEKN: (state, payload) => {
             state.token = payload
         },
+        ADD_CART: (state, payload) => {
+            state.user.cart.push(payload)
+        },
     },
     actions: {
         setCurrentUser: async ({commit, dispatch}, user) => {
@@ -43,5 +46,6 @@ export default {
         uid: state => state.uid,
         isAuthenticated: state => !!state.token,
         role: state => state.user.role,
+        cart: state => (state.user.cart ? state.user.cart : []),
     },
 }
