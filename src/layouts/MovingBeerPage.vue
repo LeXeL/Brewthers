@@ -118,7 +118,6 @@ export default {
     },
     watch: {
         cart(newValue, oldValue) {
-            console.log(newValue[newValue.length - 1])
             this.data[0].cart.push(newValue[newValue.length - 1])
         },
     },
