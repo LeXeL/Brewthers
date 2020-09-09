@@ -118,10 +118,33 @@ export default {
     },
     watch: {
         cart(newValue, oldValue) {
-            this.data[0].cart.push(newValue[newValue.length - 1])
+            if (
+                newValue &&
+                newValue.length > 0 &&
+                this.data.length > 0 &&
+                !this.checkIfDuplicate(newValue)
+            ) {
+                this.data[0].cart.push(newValue[newValue.length - 1])
+            }
         },
     },
     methods: {
+        checkIfDuplicate(product) {
+            let isDuplicate = false
+            if (this.cart.length <= 0) {
+                isDuplicate = false
+            }
+            this.cart.forEach(c => {
+                if (
+                    c.id === product.id &&
+                    c.type === product.type &&
+                    c.price === product.price
+                ) {
+                    isDuplicate = true
+                }
+            })
+            return isDuplicate
+        },
         addAmountToItem(event) {
             this.displayAlert = false
             this.reset = false
@@ -133,6 +156,7 @@ export default {
             })
             if (parseInt(event.amount + 1) <= parseInt(event.item.inventory)) {
                 event.item.amount += 1
+                this.$store.dispatch('AddToAmountInItemCart', event.item)
                 api.updateShoppingCart({
                     uid: this.uid,
                     product: event.item,
@@ -161,11 +185,14 @@ export default {
 
             if (parseInt(event.amount - 1) > 0) {
                 event.item.amount -= 1
+                this.$store.dispatch('SubtractToAmountInItemCart', event.item)
                 api.updateShoppingCart({
                     uid: this.uid,
                     product: event.item,
                     itemIndex: itemIndex,
                 }).then(() => {
+                    this.$store.dispatch('UpdateAmountInItemCart', itemIndex)
+
                     this.reset = true
                 })
             } else {
@@ -190,6 +217,7 @@ export default {
         },
         deleteFromCart(product) {
             this.reset = false
+            this.$store.dispatch('RemoveItemInCart', product)
             try {
                 api.removeFromShoppingCart({
                     uid: this.uid,

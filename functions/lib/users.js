@@ -210,6 +210,7 @@ async function clearShoppingCart(uid) {
         })
 }
 async function updateShoppingCart(uid, itemObj, itemIndex) {
+    console.log(itemObj)
     let userInformation = await returnUserById(uid)
     let itemInCart = userInformation.cart[itemIndex]
     itemInCart.amount = itemObj.amount

@@ -95,20 +95,121 @@ export default {
         }
     },
     methods: {
-        addToCart() {
-            this.showAddedOverlay = true
-            this.product.amount = this.amount
-            this.$store.commit('ADD_CART', this.product)
-            api.addToShoppingCart({uid: this.uid, product: this.product})
-                .then(response => {})
-                .catch(error => {
-                    this.alertTitle = 'Hey AWANTA!'
+        checkIfDuplicate(product) {
+            let isDuplicate = false
+            if (this.cart.length <= 0) {
+                isDuplicate = false
+            }
+            this.cart.forEach(c => {
+                if (
+                    c.id === product.id &&
+                    c.type === product.type &&
+                    c.price === product.price
+                ) {
+                    isDuplicate = true
+                }
+            })
+            return isDuplicate
+        },
+        async addToCart() {
+            let workingProduct = Object.assign({}, this.product)
+            workingProduct.amount = this.amount
+            if (this.checkIfDuplicate(workingProduct)) {
+                let ItemInCart = {}
+                let ItemIndex = 0
+                this.cart.filter((c, i) => {
+                    if (
+                        c.id === workingProduct.id &&
+                        c.type === workingProduct.type &&
+                        c.price === workingProduct.price
+                    ) {
+                        ItemInCart = c
+                        ItemIndex = i
+                    }
+                })
+                if (
+                    parseInt(ItemInCart.amount + workingProduct.amount) <=
+                    parseInt(ItemInCart.inventory)
+                ) {
+                    console.log(
+                        `workingProduct amount:${workingProduct.amount} y ItemInCart amount: ${ItemInCart.amount}`
+                    )
+                    workingProduct.amount =
+                        ItemInCart.amount + workingProduct.amount
+
+                    api.updateShoppingCart({
+                        uid: this.uid,
+                        product: workingProduct,
+                        itemIndex: ItemIndex,
+                    }).then(async () => {
+                        console.log(workingProduct)
+                        this.$store.dispatch(
+                            'UpdateAmountInItemCart',
+                            workingProduct
+                        )
+                        this.showAddedOverlay = true
+                        this.amount = 0
+                    })
+                } else {
+                    this.reset = true
+                    this.alertTitle = 'Hey AWANTA! x2'
                     this.alertMessage =
-                        'Hubo un error con tu peticion por favor intentalo mas tarde'
+                        'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
                     this.alertType = 'error'
                     this.displayAlert = true
-                })
-            this.amount = 0
+                }
+                // this.cart.forEach(async (c, itemIndex) => {
+                //     if (
+                //         c.id === workingProduct.id &&
+                //         c.type === workingProduct.type &&
+                //         c.price === workingProduct.price
+                //     ) {
+                //         console.log(`CART ITEM: ${c}`)
+                //         var amount = c.amount
+                //         console.log(`product.amount: ${workingProduct.amount}`)
+                //         if (
+                //             parseInt(c.amount + workingProduct.amount) <=
+                //             parseInt(c.inventory)
+                //         ) {
+                //             workingProduct.amount += amount
+                //             api.updateShoppingCart({
+                //                 uid: this.uid,
+                //                 product: workingProduct,
+                //                 itemIndex: itemIndex,
+                //             }).then(async () => {
+                //                 await this.$store.dispatch(
+                //                     'UpdateAmountInItemCart',
+                //                     workingProduct
+                //                 )
+                //                 this.showAddedOverlay = true
+                //                 workingProduct.amount = 0
+                //                 this.amount = 0
+                //             })
+                //         } else {
+                //             this.reset = true
+                //             this.alertTitle = 'Hey AWANTA! x2'
+                //             this.alertMessage =
+                //                 'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
+                //             this.alertType = 'error'
+                //             this.displayAlert = true
+                //         }
+                //     }
+                // })
+            } else {
+                await this.$store.commit('ADD_CART', workingProduct)
+                api.addToShoppingCart({uid: this.uid, product: workingProduct})
+                    .then(response => {
+                        this.showAddedOverlay = true
+                    })
+                    .catch(error => {
+                        this.alertTitle = 'Hey AWANTA!'
+                        this.alertMessage =
+                            'Hubo un error con tu peticion por favor intentalo mas tarde'
+                        this.alertType = 'error'
+                        this.displayAlert = true
+                    })
+                this.amount = 0
+            }
         },
         addAmount() {
             this.displayAlert = false
