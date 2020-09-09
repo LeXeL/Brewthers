@@ -131,9 +131,6 @@ export default {
                     parseInt(ItemInCart.amount + workingProduct.amount) <=
                     parseInt(ItemInCart.inventory)
                 ) {
-                    console.log(
-                        `workingProduct amount:${workingProduct.amount} y ItemInCart amount: ${ItemInCart.amount}`
-                    )
                     workingProduct.amount =
                         ItemInCart.amount + workingProduct.amount
 
@@ -142,7 +139,6 @@ export default {
                         product: workingProduct,
                         itemIndex: ItemIndex,
                     }).then(async () => {
-                        console.log(workingProduct)
                         this.$store.dispatch(
                             'UpdateAmountInItemCart',
                             workingProduct
@@ -152,49 +148,12 @@ export default {
                     })
                 } else {
                     this.reset = true
-                    this.alertTitle = 'Hey AWANTA! x2'
+                    this.alertTitle = 'Hey AWANTA!'
                     this.alertMessage =
                         'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
                     this.alertType = 'error'
                     this.displayAlert = true
                 }
-                // this.cart.forEach(async (c, itemIndex) => {
-                //     if (
-                //         c.id === workingProduct.id &&
-                //         c.type === workingProduct.type &&
-                //         c.price === workingProduct.price
-                //     ) {
-                //         console.log(`CART ITEM: ${c}`)
-                //         var amount = c.amount
-                //         console.log(`product.amount: ${workingProduct.amount}`)
-                //         if (
-                //             parseInt(c.amount + workingProduct.amount) <=
-                //             parseInt(c.inventory)
-                //         ) {
-                //             workingProduct.amount += amount
-                //             api.updateShoppingCart({
-                //                 uid: this.uid,
-                //                 product: workingProduct,
-                //                 itemIndex: itemIndex,
-                //             }).then(async () => {
-                //                 await this.$store.dispatch(
-                //                     'UpdateAmountInItemCart',
-                //                     workingProduct
-                //                 )
-                //                 this.showAddedOverlay = true
-                //                 workingProduct.amount = 0
-                //                 this.amount = 0
-                //             })
-                //         } else {
-                //             this.reset = true
-                //             this.alertTitle = 'Hey AWANTA! x2'
-                //             this.alertMessage =
-                //                 'No podemos aumentar tanto tu orden por que no tenemos tanto inventario!'
-                //             this.alertType = 'error'
-                //             this.displayAlert = true
-                //         }
-                //     }
-                // })
             } else {
                 await this.$store.commit('ADD_CART', workingProduct)
                 api.addToShoppingCart({uid: this.uid, product: workingProduct})
