@@ -12,7 +12,6 @@ import './quasar'
 import firebase from 'firebase/app'
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
-
 Vue.config.productionTip = false
 
 Vue.component('brewthers-alert', BrewthersAlert)
@@ -23,7 +22,7 @@ Vue.use(vueSmoothScroll)
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyBQ9QbePVZeAjzIlUSyaT7fMUJZNLMFtwA',
+        key: 'AIzaSyDA7NamvIWUUuwXN610gjBRehC8rzWUrkg',
         libraries: 'places', // necessary for places input
     },
 })
@@ -38,7 +37,6 @@ const configOptions = {
     appId: '1:545233478991:web:d4b8d225cbb86efcf5513a',
     measurementId: 'G-9YG0XVM4J4',
 }
-
 firebase.initializeApp(configOptions)
 
 firebase.auth().onAuthStateChanged(user => {

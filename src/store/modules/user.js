@@ -16,6 +16,9 @@ export default {
         SET_TOEKN: (state, payload) => {
             state.token = payload
         },
+        ADD_CART: (state, payload) => {
+            state.user.cart.push(payload)
+        },
     },
     actions: {
         setCurrentUser: async ({commit, dispatch}, user) => {
@@ -37,11 +40,56 @@ export default {
             localStorage.removeItem('user-token')
             localStorage.removeItem('uid')
         },
+        UpdateAmountInItemCart: async ({commit, dispatch, state}, item) => {
+            state.user.cart.forEach((c, index) => {
+                if (
+                    c.id === item.id &&
+                    c.type === item.type &&
+                    c.price === item.price
+                ) {
+                    state.user.cart[index].amount = item.amount
+                }
+            })
+        },
+        AddToAmountInItemCart: async ({commit, dispatch, state}, item) => {
+            state.user.cart.forEach((c, index) => {
+                if (
+                    c.id === item.id &&
+                    c.type === item.type &&
+                    c.price === item.price
+                ) {
+                    state.user.cart[index].amount += 1
+                }
+            })
+        },
+        SubtractToAmountInItemCart: async ({commit, dispatch, state}, item) => {
+            state.user.cart.forEach((c, index) => {
+                if (
+                    c.id === item.id &&
+                    c.type === item.type &&
+                    c.price === item.price
+                ) {
+                    state.user.cart[index].amount -= 1
+                }
+            })
+        },
+        RemoveItemInCart: async ({commit, dispatch, state}, item) => {
+            state.user.cart.forEach((c, index) => {
+                if (
+                    c.id === item.id &&
+                    c.type === item.type &&
+                    c.price === item.price
+                ) {
+                    state.user.cart.splice(index, 1)
+                }
+            })
+        },
     },
     getters: {
         user: state => state.user,
         uid: state => state.uid,
         isAuthenticated: state => !!state.token,
         role: state => state.user.role,
+        cart: state => (state.user.cart ? state.user.cart : []),
     },
 }
