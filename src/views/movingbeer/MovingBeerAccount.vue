@@ -16,7 +16,7 @@
                         Estatus:
                         <span style="color: #27a3c3">
                             {{
-                            user.status ? accountStatus(user.status) : 'Pendiente'
+                            accountStatus(user.status)
                             }}
                         </span>
                     </div>
@@ -179,7 +179,8 @@ export default {
     methods: {
         accountStatus(status) {
             if (status == 'approved') return 'Aprobada'
-            else return 'Rechazada'
+            if (status == 'rejected') return 'Rechazada'
+            else return 'Pendiente'
         },
         resetPassword() {
             firebase
