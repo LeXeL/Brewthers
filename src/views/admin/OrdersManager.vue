@@ -90,17 +90,17 @@
                             </q-td>
                             <q-td key="restName" :props="props">
                                 {{
-                                restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].restaurantName
+                                returnRestaurantName(props.row)
                                 }}
                             </q-td>
                             <q-td key="email" :props="props">
                                 {{
-                                restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].email
+                                returnRestaurantEmail(props.row)
                                 }}
                             </q-td>
                             <q-td key="phone" :props="props">
                                 {{
-                                restaurants.filter(res => { if(res.id === props.row.restaurantId) return res} )[0].contactPhone
+                                returnRestaurantContactPhone(props.row)
                                 }}
                             </q-td>
                             <q-td key="amount" :props="props">
@@ -329,6 +329,30 @@ export default {
         }
     },
     methods: {
+        returnRestaurantName(order) {
+            let value = this.restaurants.filter(res => {
+                if (res.id === order.restaurantId) return res
+            })
+
+            if (value.length > 0) return value[0].restaurantName
+            return 'NaN'
+        },
+        returnRestaurantEmail(order) {
+            let value = this.restaurants.filter(res => {
+                if (res.id === order.restaurantId) return res
+            })
+
+            if (value.length > 0) return value[0].email
+            return 'NaN'
+        },
+        returnRestaurantContactPhone(order) {
+            let value = this.restaurants.filter(res => {
+                if (res.id === order.restaurantId) return res
+            })
+
+            if (value.length > 0) return value[0].contactPhone
+            return 'NaN'
+        },
         filterContent() {
             this.data = this.completeData
             if (this.filteredStatus) {

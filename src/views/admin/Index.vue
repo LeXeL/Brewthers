@@ -90,7 +90,7 @@
                                 <q-item-section
                                     @click="$router.push(`/order-details/${order.firebaseId}`)"
                                 >
-                                    <q-item-label>{{ restaurants.filter(res => { if(res.id === order.restaurantId) return res} )[0].restaurantName}}</q-item-label>
+                                    <q-item-label>{{ returnRestaurantName(order)}}</q-item-label>
                                     <q-item-label caption>No. {{order.id}}</q-item-label>
                                 </q-item-section>
                             </q-item>
@@ -119,7 +119,7 @@
                                 <q-item-section
                                     @click="$router.push(`/account-details/${user.id}`)"
                                 >
-                                    <q-item-label>{{user.restaurantName}}</q-item-label>
+                                    <q-item-label>{{user.restaurantName ? user.restaurantName : 'NaN' }}</q-item-label>
                                     <q-item-label caption>{{user.email}}</q-item-label>
                                 </q-item-section>
                             </q-item>
@@ -186,6 +186,14 @@ export default {
                     return user
                 }
             })
+        },
+        returnRestaurantName(order) {
+            let value = this.restaurants.filter(res => {
+                if (res.id === order.restaurantId) return res
+            })
+
+            if (value.length > 0) return value[0].restaurantName
+            return 'NaN'
         },
         addToData(id, data) {
             data.firebaseId = id
