@@ -1,5 +1,6 @@
-<template>
-    <div>
+<template
+>
+    <div v-if="data.length > 0">
         <q-input
             filled
             dark
