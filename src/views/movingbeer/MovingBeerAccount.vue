@@ -16,7 +16,7 @@
                         Estatus:
                         <span style="color: #27a3c3">
                             {{
-                            user.status ? user.status : 'pending'
+                            user.status ? 'Aprobada' : 'Pendiente'
                             }}
                         </span>
                     </div>
