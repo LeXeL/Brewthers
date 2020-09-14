@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert=false"
         ></brewthers-alert>
         <div v-if="Object.keys(user).length !== 0">
             <div class="row">

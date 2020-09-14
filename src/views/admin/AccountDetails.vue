@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert=false"
         ></brewthers-alert>
         <div v-if="!!data">
             <div class="text-h5 q-mb-md">Detalles de cuenta</div>

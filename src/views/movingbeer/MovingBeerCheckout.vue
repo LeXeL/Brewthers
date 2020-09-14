@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert=false"
         ></brewthers-alert>
         <div class="row q-pt-xl">
             <div class="col desktop-only"></div>
@@ -164,6 +165,9 @@ export default {
         uid() {
             return this.$store.getters.uid
         },
+        user() {
+            return this.$store.getters.user
+        },
     },
     methods: {
         calculateTotal() {
@@ -203,6 +207,14 @@ export default {
             return '0'
         },
         async sendOrder() {
+            if (this.user.role === 'admin') {
+                this.alertTitle = 'Hey AWANTA'
+                this.alertMessage =
+                    'Los administradores no pueden hacer ordenes'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
             if (this.paymentMethod === '') {
                 this.alertTitle = 'Hey AWANTA'
                 this.alertMessage = 'Tienes que escoger un metodo de pago!'

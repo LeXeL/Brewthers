@@ -7,6 +7,7 @@
                 :title="alertTitle"
                 :message="alertMessage"
                 :type="alertType"
+                @accept="displayAlert=false"
             ></brewthers-alert>
             <q-card-section>
                 <div class="text-h6">Nuevo articulo</div>

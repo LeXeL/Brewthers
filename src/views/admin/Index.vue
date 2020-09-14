@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert=false"
         ></brewthers-alert>
         <div
             v-if="Object.keys(data).length !== 0 && Object.keys(users).length !== 0 && restaurants.length > 0"
