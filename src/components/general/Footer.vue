@@ -14,6 +14,12 @@
                             }}
                         </a>
                     </li>
+                    <li>
+                        <router-link
+                            to="/terminos-y-condiciones"
+                            style="text-decoration: none;"
+                        >Terminos & Condiciones</router-link>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 q-pr-md">
@@ -93,12 +99,6 @@ export default {
                     landing: '#contact',
                     movingbeer: '#',
                     name: 'tab7',
-                },
-                {
-                    text: 'terminos & condiciones',
-                    landing: '/terminos-y-condiciones',
-                    movingbeer: '#',
-                    name: 'tab8',
                 },
             ],
         }
