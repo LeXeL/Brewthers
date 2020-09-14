@@ -203,6 +203,13 @@ export default {
             return '0'
         },
         async sendOrder() {
+            if (this.paymentMethod === '') {
+                this.alertTitle = 'Hey AWANTA'
+                this.alertMessage = 'Tienes que escoger un metodo de pago!'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
             this.displayLoading = true
             let obj = {}
             obj.restaurantId = this.data[0].id
