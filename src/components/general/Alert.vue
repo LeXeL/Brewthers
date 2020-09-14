@@ -1,5 +1,5 @@
 <template>
-    <q-dialog v-model="alert">
+    <q-dialog v-model="alert" persistent>
         <q-card dark>
             <q-card-section>
                 <i
@@ -48,7 +48,7 @@ export default {
         }
     },
     watch: {
-        display: function() {
+        display: function () {
             this.alert = true
         },
     },
