@@ -107,9 +107,7 @@ export default {
             })
         }
         let currentDay = moment(new Date()).format('dddd')
-        if (!localStorage.getItem('mydate')) {
-            localStorage.setItem('mydate', currentDay)
-        }
+
         if (currentDay === localStorage.getItem('mydate')) {
             this.ageDialog = false
         } else {
