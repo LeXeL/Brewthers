@@ -7,6 +7,7 @@ import LoginPage from './layouts/LoginPage.vue'
 import AdminPage from './layouts/AdminPage.vue'
 import MovingBeerPage from './layouts/MovingBeerPage.vue'
 import BlogPage from './layouts/BlogPage'
+import TermsAndConditionsPage from './layouts/TermsAndConditionsPage'
 //Views
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
@@ -182,6 +183,11 @@ export default new Router({
                     component: BlogView,
                 },
             ],
+        },
+        {
+            path: '/terminos-y-condiciones',
+            component: TermsAndConditionsPage,
+            name: 'terms-and-conditions',
         },
     ],
 })

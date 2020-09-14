@@ -60,7 +60,7 @@ export default {
                 {
                     q: '¿Cuáles son sus Términos y Condiciones?',
                     a:
-                        'Para leer sobre nuestros terminos de condiciones, puedes entrar <strong><a href="#" style="color: #27a3c3">aquí</a></strong>.',
+                        'Para leer sobre nuestros terminos de condiciones, puedes entrar <strong><a href="/terminos-y-condiciones" style="color: #27a3c3">aquí</a></strong>.',
                     show: false,
                 },
             ],

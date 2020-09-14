@@ -2,7 +2,13 @@
     <q-page class="pattern-bg q-pa-xl" style="height: auto; background-repeat: repeat-y;">
         <generic-navbar />
         <loading-alert :display="displayLoading"></loading-alert>
-
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="displayAlert = false"
+        ></brewthers-alert>
         <div class="row">
             <div class="col q-pa-lg">
                 <div class="text-h3">Crea tu cuenta</div>
@@ -178,6 +184,12 @@
                                             'Las contraseñas no coinciden',
                                     ]"
                                 />
+                                <q-checkbox v-model="terms">Acepto los terminos y condiciones.</q-checkbox>
+                                <a
+                                    class="on-right"
+                                    href="/terminos-y-condiciones"
+                                    target="_blank"
+                                >Leer aqui.</a>
                             </q-form>
                         </q-form>
                     </q-card-section>
@@ -227,9 +239,14 @@ export default {
     data() {
         return {
             markers: [],
+            terms: false,
             center: {},
             displayLoading: false,
             confirmationDialog: false,
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
             form: {
                 name: '',
                 lastName: '',
@@ -274,6 +291,14 @@ export default {
             this.form.location = event
         },
         createuser() {
+            if (!this.terms) {
+                this.alertTitle = 'Error'
+                this.alertMessage =
+                    'Debes llenar todos los campos y aceptar los terminos y condiciones.'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
             this.dismissCountDown = 0
             this.displayLoading = true
             if (this.form.password === this.form.repassword) {
