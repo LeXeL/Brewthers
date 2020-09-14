@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert=false"
         ></brewthers-alert>
         <div class="text-h5 q-mb-md">Administrador de ordernes</div>
         <div class="row">

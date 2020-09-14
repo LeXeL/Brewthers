@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            @accept="displayAlert=false"
         ></brewthers-alert>
         <confirm-dialog
             :display="displayConfirm"
