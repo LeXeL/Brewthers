@@ -81,6 +81,7 @@ import Navbar from '@/components/landing/Navbar'
 import Footer from '@/components/general/Footer'
 
 import * as api from '@/api/api'
+import moment from 'moment'
 
 export default {
     data() {
@@ -104,6 +105,14 @@ export default {
             api.returnAllBrewerys().then(response => {
                 this.$store.dispatch('setBrewerys', response.data.data)
             })
+        }
+        let currentDay = moment(new Date()).format('dddd')
+
+        if (currentDay === localStorage.getItem('mydate')) {
+            this.ageDialog = false
+        } else {
+            this.ageDialog = true
+            localStorage.setItem('mydate', currentDay)
         }
     },
     components: {
