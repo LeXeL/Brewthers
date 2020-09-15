@@ -4,7 +4,7 @@
             filled
             dark
             label="Restaurante"
-            :value="data[0].restaurantName"
+            :value="data.length > 0 ? data[0].restaurantName : 'NaN'"
             readonly
             type="text"
             class="q-mb-md"
@@ -13,7 +13,7 @@
             filled
             dark
             label="Correo"
-            :value="data[0].email"
+            :value="data.length > 0 ? data[0].email : 'NaN'"
             readonly
             type="email"
             class="q-mb-md"
@@ -22,7 +22,7 @@
             filled
             dark
             label="Celular"
-            :value="data[0].contactPhone"
+            :value="data.length > 0 ? data[0].contactPhone : 'NaN'"
             readonly
             type="string"
             class="q-mb-md"
@@ -31,7 +31,7 @@
             filled
             dark
             label="Fecha"
-            :value="returnTime(date)"
+            :value="date ? returnTime(date) : 'NaN'"
             readonly
             type="sting"
             class="q-mb-md"

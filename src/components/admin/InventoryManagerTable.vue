@@ -100,6 +100,7 @@ export default {
                     label: 'Nombre',
                     align: 'left',
                     field: 'name',
+                    sortable: true,
                 },
                 {
                     name: 'type',
@@ -120,6 +121,7 @@ export default {
                     align: 'left',
                     label: 'Casa',
                     field: 'brewery',
+                    sortable: true,
                 },
                 {
                     name: 'status',
