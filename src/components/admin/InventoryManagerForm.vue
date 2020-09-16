@@ -55,7 +55,7 @@
                     filled
                     dark
                     label="ABV"
-                    type="number"
+                    type="text"
                     class="q-mb-md"
                     v-model="form.abv"
                     :rules="[val => !!val || 'El campo es obligatorio']"
