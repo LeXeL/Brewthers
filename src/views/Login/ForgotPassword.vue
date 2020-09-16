@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            :redirect="redirect"
             @accept="displayAlert=false"
         ></brewthers-alert>
         <div class="absolute-bottom"></div>
@@ -56,6 +57,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            redirect: '',
         }
     },
     methods: {
@@ -71,6 +73,7 @@ export default {
                         'Hemos enviado a tu correo un email para resetear la contraseña. Porfavor tambien verifica en tu carpeta de SPAM.'
                     this.alertType = 'success'
                     this.displayAlert = true
+                    this.redirect = '/'
                 })
                 .catch(error => {
                     this.displayLoading = false
