@@ -68,7 +68,7 @@ export default {
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
-                        'Hemos enviado a tu correo un email para resetear la contraseña'
+                        'Hemos enviado a tu correo un email para resetear la contraseña. Porfavor tambien verifica en tu carpeta de SPAM.'
                     this.alertType = 'success'
                     this.displayAlert = true
                 })
