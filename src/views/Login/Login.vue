@@ -22,6 +22,7 @@
                                 v-model="password"
                                 type="password"
                                 label="Contraseña"
+                                @keyup.enter="login"
                             />
                         </q-form>
                     </q-card-section>
