@@ -106,7 +106,7 @@ export default new Router({
                     component: BlogManager,
                 },
                 {
-                    path: '/blog-writer',
+                    path: '/blog-writer/:id?',
                     name: 'blog-writer',
                     component: BlogWriter,
                 },

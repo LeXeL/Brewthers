@@ -18,9 +18,9 @@
                 >
                     <template v-slot:body="props">
                         <q-tr :props="props">
-                            <q-td key="name" :props="props">{{ props.row.name }}</q-td>
-                            <q-td key="author" :props="props">{{ props.row.author }}</q-td>
-                            <q-td key="date" :props="props">{{ props.row.date }}</q-td>
+                            <q-td key="name" :props="props">{{ props.row.title }}</q-td>
+                            <q-td key="author" :props="props">{{ props.row.by.name }}</q-td>
+                            <q-td key="date" :props="props">{{ returnTime(props.row.createdTime) }}</q-td>
                             <q-td key="status" :props="props">
                                 <q-badge
                                     :color="props.row.status == 'draft' ? 'warning' : 'secondary'"
@@ -33,7 +33,7 @@
                                     size="xs"
                                     :props="props"
                                     label="editar"
-                                    to="/blog-writer"
+                                    :to="`/blog-writer/${props.row.id}`"
                                 />
                             </q-td>
                             <q-td>
@@ -48,6 +48,11 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import moment from 'moment'
+
+import * as api from '@/api/api'
 export default {
     data() {
         return {
@@ -98,20 +103,7 @@ export default {
                     align: 'left',
                 },
             ],
-            data: [
-                {
-                    name: 'Titulo del blog',
-                    author: 'Fulanito Cuevas',
-                    date: '10-10-20',
-                    status: 'draft',
-                },
-                {
-                    name: 'Titulo del blog',
-                    author: 'Fulanito Cuevas',
-                    date: '10-10-20',
-                    status: 'public',
-                },
-            ],
+            data: [],
             status: [
                 {
                     text: 'Por revisar',
@@ -139,6 +131,53 @@ export default {
                 },
             ],
         }
+    },
+    methods: {
+        returnTime(time) {
+            return moment(time).format('MMMM DD YYYY')
+        },
+        addToData(id, data) {
+            data.id = id
+            data.inventory = parseInt(data.inventory)
+            this.data.push(data)
+        },
+        editData(id, data) {
+            data.id = id
+            data.inventory = parseInt(data.inventory)
+            this.data.forEach((d, index) => {
+                if (d.id === id) {
+                    this.data.splice(index, 1, data)
+                }
+            })
+        },
+        removeData(id) {
+            this.data.forEach((d, index) => {
+                if (d.id === id) {
+                    this.data.splice(index, 1)
+                }
+            })
+        },
+    },
+    mounted() {
+        let db = firebase.firestore()
+        db.collection('blog').onSnapshot(
+            snapshot => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        this.addToData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'modified') {
+                        this.editData(change.doc.id, change.doc.data())
+                    }
+                    if (change.type === 'removed') {
+                        this.removeData(change.doc.id)
+                    }
+                })
+            },
+            error => {
+                console.log(error)
+            }
+        )
     },
 }
 </script>
