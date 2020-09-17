@@ -25,27 +25,6 @@
                         }}
                     </q-tooltip>
                 </div>
-                <q-btn-group class="q-mb-lg" v-if="user.status === 'approved'">
-                    <q-btn
-                        color="primary"
-                        :disable="amount == 0 ? true : false"
-                        size="xs"
-                        @click="subtractAmount"
-                    >
-                        <i class="fas fa-minus"></i>
-                    </q-btn>
-                    <q-btn color="primary" disable>{{ amount }}</q-btn>
-                    <q-btn color="primary" size="xs" @click="addAmount">
-                        <i class="fas fa-plus"></i>
-                    </q-btn>
-                </q-btn-group>
-                <br />
-                <q-btn
-                    color="primary"
-                    @click="addToCart"
-                    :disabled="!amount"
-                    v-if="user.status === 'approved'"
-                >Agregar</q-btn>
             </div>
             <div class="movingbeer-item-overlay" v-if="showAddedOverlay">
                 <div class="text-body-1 absolute-center">
@@ -55,8 +34,30 @@
             </div>
         </div>
 
-        <div class="text-h6 text-center">{{ product.name }}</div>
-        <div class="text-subtitle-2 text-center">$ {{ product.price }}</div>
+        <div class="text-h6 text-center q-mt-sm">{{ product.name }}</div>
+        <div class="text-subtitle-2 text-center q-mb-sm">$ {{ product.price }}</div>
+        <q-btn-group class="q-mb-sm" v-if="user.status === 'approved'">
+            <q-btn
+                color="primary"
+                :disable="amount == 0 ? true : false"
+                size="sm"
+                @click="subtractAmount"
+            >
+                <i class="fas fa-minus"></i>
+            </q-btn>
+            <q-btn color="primary" size="sm" disable>{{ amount }}</q-btn>
+            <q-btn color="primary" size="sm" @click="addAmount">
+                <i class="fas fa-plus"></i>
+            </q-btn>
+        </q-btn-group>
+        <br />
+        <q-btn
+            color="primary"
+            size="sm"
+            @click="addToCart"
+            :disabled="!amount"
+            v-if="user.status === 'approved'"
+        >Agregar</q-btn>
     </div>
 </template>
 
