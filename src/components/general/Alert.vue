@@ -20,7 +20,14 @@
             <q-card-section class="q-pt-none text-center">{{ message }}</q-card-section>
 
             <q-card-actions align="right">
-                <q-btn flat label="ACEPTAR" @click="$emit('accept')" color="primary" v-close-popup />
+                <q-btn
+                    flat
+                    label="ACEPTAR"
+                    @click="$emit('accept')"
+                    :to="redirect"
+                    color="primary"
+                    v-close-popup
+                />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -39,6 +46,9 @@ export default {
             type: String,
         },
         type: {
+            type: String,
+        },
+        redirect: {
             type: String,
         },
     },

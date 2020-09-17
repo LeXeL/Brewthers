@@ -6,6 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
+            :redirect="redirect"
             @accept="displayAlert=false"
         ></brewthers-alert>
         <div class="absolute-bottom"></div>
@@ -13,8 +14,8 @@
             <div class="row">
                 <q-img :src="require('@/assets/logo-horizontal.png')" class="q-mb-lg" />
                 <q-card dark square class="q-pa-lg shadow-1">
-                    <q-card-section>
-                        <q-form class="q-gutter-md">
+                    <q-form @submit="resetPassword">
+                        <q-card-section>
                             <q-input
                                 dark
                                 square
@@ -26,18 +27,18 @@
                                         val => val.length > 0 || 'El campo es obligatorio',
                                     ]"
                             ></q-input>
-                        </q-form>
-                    </q-card-section>
-                    <q-card-actions class="q-px-md">
-                        <q-btn
-                            unelevated
-                            color="primary"
-                            size="lg"
-                            class="full-width"
-                            label="Enviar Correo"
-                            @click="resetPassword"
-                        />
-                    </q-card-actions>
+                        </q-card-section>
+                        <q-card-actions class="q-px-md">
+                            <q-btn
+                                unelevated
+                                color="primary"
+                                size="lg"
+                                class="full-width"
+                                label="Enviar Correo"
+                                type="submit"
+                            />
+                        </q-card-actions>
+                    </q-form>
                 </q-card>
             </div>
         </div>
@@ -56,6 +57,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            redirect: '',
         }
     },
     methods: {
@@ -68,15 +70,17 @@ export default {
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
                     this.alertMessage =
-                        'Hemos enviado a tu correo un email para resetear la contraseña'
+                        'Hemos enviado a tu correo un email para resetear la contraseña. Porfavor tambien verifica en tu carpeta de SPAM.'
                     this.alertType = 'success'
                     this.displayAlert = true
+                    this.redirect = '/'
                 })
                 .catch(error => {
+                    this.displayLoading = false
                     console.log(error)
                     this.alertTitle = 'Hey AWANTA!'
                     this.alertMessage =
-                        'Hubo un error con tu peticion por favor intentalo mas tarde'
+                        'Hubo un error con tu peticion por favor intentalo mas tarde.'
                     this.alertType = 'error'
                     this.displayAlert = true
                 })
