@@ -6,7 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <confirm-dialog
             :display="displayConfirm"
@@ -17,7 +17,7 @@
         ></confirm-dialog>
         <div class="text-h5 q-mb-md">Administrador de inventario</div>
         <div class="row">
-            <div class="col-lg-8 col-xs-12 q-pa-md">
+            <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                 <inventory-manager-table
                     :data="data"
                     @changestatus="editStatus"
@@ -25,7 +25,7 @@
                     @namechange="updateNameChange"
                 ></inventory-manager-table>
             </div>
-            <div class="col-lg-4 col-xs-12 q-pa-md">
+            <div class="col-lg-4 col-md-4 col-xs-12 q-pa-md">
                 <inventory-manager-form />
             </div>
         </div>

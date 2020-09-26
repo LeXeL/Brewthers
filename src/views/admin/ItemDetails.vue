@@ -11,7 +11,7 @@
         <div v-if="Object.keys(data).length !== 0">
             <div class="text-h5 q-mb-md">Detalles de articulo</div>
             <div class="row">
-                <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
                     <div class="row q-mb-md">
                         <q-form @submit="handleData" class="full-width">
                             <q-input
@@ -22,7 +22,9 @@
                                 class="q-mb-md full-width"
                                 v-model="data.name"
                                 :disable="!editInformation"
-                                :rules="[val => !!val || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => !!val || 'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -46,10 +48,11 @@
                                 dark
                                 label="Casa"
                                 :value="
-                            brewerys.filter(brewery => {
-                                if (brewery.id === data.brewery) return brewery
-                            })[0].name
-                        "
+                                    brewerys.filter(brewery => {
+                                        if (brewery.id === data.brewery)
+                                            return brewery
+                                    })[0].name
+                                "
                                 readonly
                             />
                             <q-input
@@ -60,7 +63,9 @@
                                 class="q-mb-md full-width"
                                 v-model="data.abv"
                                 :disable="!editInformation"
-                                :rules="[val => !!val || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => !!val || 'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -70,7 +75,9 @@
                                 class="q-mb-md full-width"
                                 v-model="data.ibu"
                                 :disable="!editInformation"
-                                :rules="[val => !!val || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => !!val || 'El campo es obligatorio',
+                                ]"
                             />
                             <q-input
                                 filled
@@ -80,7 +87,9 @@
                                 class="q-mb-md full-width"
                                 v-model="data.description"
                                 :disable="!editInformation"
-                                :rules="[val => !!val || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => !!val || 'El campo es obligatorio',
+                                ]"
                             />
                             <q-file
                                 filled
@@ -102,7 +111,9 @@
                                 class="q-mb-md full-width"
                                 v-model="data.price"
                                 :disable="!editInformation"
-                                :rules="[val => !!val || 'El campo es obligatorio']"
+                                :rules="[
+                                    val => !!val || 'El campo es obligatorio',
+                                ]"
                             />
                             <q-btn
                                 type="submit"
@@ -112,11 +123,13 @@
                         </q-form>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
                     <q-img :src="data.photoLocation" />
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12 q-pa-md">
-                    <div class="text-h6 q-mb-md">Cantidad en inventario: {{ data.inventory }}</div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
+                    <div class="text-h6 q-mb-md">
+                        Cantidad en inventario: {{ data.inventory }}
+                    </div>
                     <q-input
                         dark
                         filled
@@ -124,7 +137,10 @@
                         class="q-mb-md"
                         label="Agregar a inventario"
                         type="number"
-                        :rules="[val => !!val || 'El campo es obligatorio', val => val > 0 || 'El valor debe ser mayor a 0']"
+                        :rules="[
+                            val => !!val || 'El campo es obligatorio',
+                            val => val > 0 || 'El valor debe ser mayor a 0',
+                        ]"
                     >
                         <template v-slot:after>
                             <q-btn
@@ -143,17 +159,20 @@
                         class="q-mb-md"
                         label="Disminuir de inventario"
                         type="number"
-                        :rules="[val => !!val || 'El campo es obligatorio', val => val > 0 || 'El valor debe ser mayor a 0']"
+                        :rules="[
+                            val => !!val || 'El campo es obligatorio',
+                            val => val > 0 || 'El valor debe ser mayor a 0',
+                        ]"
                     >
                         <template v-slot:after>
                             <q-btn
                                 round
                                 color="red-7"
                                 @click="
-                                subtractToInventory(
-                                    parseInt(substractInventory)
-                                )
-                            "
+                                    subtractToInventory(
+                                        parseInt(substractInventory)
+                                    )
+                                "
                             >
                                 <i class="fas fa-minus"></i>
                             </q-btn>

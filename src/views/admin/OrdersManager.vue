@@ -6,29 +6,52 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div class="text-h5 q-mb-md">Administrador de ordernes</div>
         <div class="row">
             <q-space class="desktop-only" />
-            <div class="col-lg-2 col-xs-12 q-pa-md">
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
                 <q-select
                     filled
                     v-model="filteredStatus"
-                    :options="status.map(st=>{return st.textEs})"
+                    :options="
+                        status.map(st => {
+                            return st.textEs
+                        })
+                    "
                     label="Estatus"
                     dark
                     dense
                 />
             </div>
-            <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled label="No. de Orden" dark dense v-model="filteredOrderNumber" />
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-input
+                    filled
+                    label="No. de Orden"
+                    dark
+                    dense
+                    v-model="filteredOrderNumber"
+                />
             </div>
-            <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled label="Restaurante" dark dense v-model="filteredRestaurantName" />
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-input
+                    filled
+                    label="Restaurante"
+                    dark
+                    dense
+                    v-model="filteredRestaurantName"
+                />
             </div>
-            <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled mask="date" label="Fecha inicial" v-model="dateToday" dark dense>
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-input
+                    filled
+                    mask="date"
+                    label="Fecha inicial"
+                    v-model="dateToday"
+                    dark
+                    dense
+                >
                     <template v-slot:append>
                         <i class="far fa-calendar-alt cursor-pointer">
                             <q-popup-proxy
@@ -46,8 +69,15 @@
                     </template>
                 </q-input>
             </div>
-            <div class="col-lg-2 col-xs-12 q-pa-md">
-                <q-input filled mask="date" label="Fecha final" dark dense v-model="dateTomorow">
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-input
+                    filled
+                    mask="date"
+                    label="Fecha final"
+                    dark
+                    dense
+                    v-model="dateTomorow"
+                >
                     <template v-slot:append>
                         <i class="far fa-calendar-alt cursor-pointer">
                             <q-popup-proxy
@@ -65,8 +95,13 @@
                     </template>
                 </q-input>
             </div>
-            <div class="col-lg-1 q-pa-md">
-                <q-btn class="full-height" color="primary" label="Buscar" @click="filterContent()" />
+            <div class="col-lg-1 col-md-1 q-pa-md">
+                <q-btn
+                    class="full-height"
+                    color="primary"
+                    label="Buscar"
+                    @click="filterContent()"
+                />
             </div>
         </div>
         <div class="row">
@@ -84,47 +119,45 @@
                     <template v-slot:body="props">
                         <q-tr :props="props">
                             <q-td key="orderNo" :props="props">
-                                {{
-                                props.row.id
-                                }}
+                                {{ props.row.id }}
                             </q-td>
                             <q-td key="restName" :props="props">
-                                {{
-                                returnRestaurantName(props.row)
-                                }}
+                                {{ returnRestaurantName(props.row) }}
                             </q-td>
                             <q-td key="email" :props="props">
-                                {{
-                                returnRestaurantEmail(props.row)
-                                }}
+                                {{ returnRestaurantEmail(props.row) }}
                             </q-td>
                             <q-td key="phone" :props="props">
-                                {{
-                                returnRestaurantContactPhone(props.row)
-                                }}
+                                {{ returnRestaurantContactPhone(props.row) }}
                             </q-td>
                             <q-td key="amount" :props="props">
-                                {{
-                                props.row.amount
-                                }}
+                                {{ props.row.amount }}
                             </q-td>
-                            <q-td key="total" :props="props">$ {{ props.row.total }}</q-td>
+                            <q-td key="total" :props="props"
+                                >$ {{ props.row.total }}</q-td
+                            >
                             <q-td key="paymentMethod" :props="props">
-                                {{
-                                props.row.paymentMethod
-                                }}
+                                {{ props.row.paymentMethod }}
                             </q-td>
                             <q-td key="date" :props="props">
-                                {{
-                                returnTime(props.row.logs[0])
-                                }}
+                                {{ returnTime(props.row.logs[0]) }}
                             </q-td>
 
                             <q-td>
                                 <q-badge
-                                    :color="status.filter(st =>{ if(st.text === props.row.status) return st})[0].color"
+                                    :color="
+                                        status.filter(st => {
+                                            if (st.text === props.row.status)
+                                                return st
+                                        })[0].color
+                                    "
                                     size="xs"
-                                    :label="status.filter(st =>{ if(st.text === props.row.status) return st})[0].textEs"
+                                    :label="
+                                        status.filter(st => {
+                                            if (st.text === props.row.status)
+                                                return st
+                                        })[0].textEs
+                                    "
                                 />
                             </q-td>
                             <q-td>
@@ -141,7 +174,10 @@
                                     size="xs"
                                     label="Cancelar"
                                     @click="asingWorkingorder(props.row)"
-                                    :disable="props.row.status == 'cancel' || props.row.status === 'completed'"
+                                    :disable="
+                                        props.row.status == 'cancel' ||
+                                        props.row.status === 'completed'
+                                    "
                                 />
                             </q-td>
                         </q-tr>
@@ -150,9 +186,11 @@
             </div>
         </div>
         <q-dialog v-model="alert">
-            <q-card style="width: 700px; max-width: 80vw;" dark>
+            <q-card style="width: 700px; max-width: 80vw" dark>
                 <q-card-section>
-                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
+                    <div class="text-h6">
+                        Seleccione los motivos de cancelacion de orden
+                    </div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -166,7 +204,12 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn label="Confirmar" flat @click="cancelOrder" v-close-popup />
+                    <q-btn
+                        label="Confirmar"
+                        flat
+                        @click="cancelOrder"
+                        v-close-popup
+                    />
                     <q-btn label="Cancelar" flat v-close-popup />
                 </q-card-actions>
             </q-card>

@@ -6,12 +6,12 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div v-if="!!data">
             <div class="text-h5 q-mb-md">Detalles de cuenta</div>
             <div class="row">
-                <div class="col-lg-4 q-pa-md">
+                <div class="col-lg-4 col-md-4 q-pa-md">
                     <div class="row q-mb-md">
                         <q-input
                             filled
@@ -94,14 +94,19 @@
                                     {{ returnTime(log.time) }}
                                     <br />
                                     <ul v-if="Array.isArray(log.section)">
-                                        <li v-for="(reason, i) in log.section" :key="i">{{ reason }}</li>
+                                        <li
+                                            v-for="(reason, i) in log.section"
+                                            :key="i"
+                                        >
+                                            {{ reason }}
+                                        </li>
                                     </ul>
                                 </q-item-section>
                             </q-item>
                         </q-list>
                     </div>
                 </div>
-                <div class="col-lg-8 col-xs-12 q-pa-md">
+                <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                     <GoogleMaps
                         class="full-width q-mb-md"
                         :editable="false"
@@ -128,7 +133,7 @@
                 </div>
             </div>
             <q-dialog v-model="rejectDialog" persistent>
-                <q-card style="width: 700px; max-width: 80vw;" dark>
+                <q-card style="width: 700px; max-width: 80vw" dark>
                     <q-card-section>
                         <div class="text-h6">Motivos</div>
                     </q-card-section>
@@ -145,7 +150,12 @@
 
                     <q-card-actions align="right" class="text-primary">
                         <q-btn flat label="Cancelar" v-close-popup />
-                        <q-btn flat label="Confirmar" @click="addRejectedReasons()" v-close-popup />
+                        <q-btn
+                            flat
+                            label="Confirmar"
+                            @click="addRejectedReasons()"
+                            v-close-popup
+                        />
                     </q-card-actions>
                 </q-card>
             </q-dialog>

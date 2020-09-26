@@ -6,62 +6,85 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div
-            v-if="Object.keys(data).length !== 0 && Object.keys(users).length !== 0 && restaurants.length > 0"
+            v-if="
+                Object.keys(data).length !== 0 &&
+                Object.keys(users).length !== 0 &&
+                restaurants.length > 0
+            "
         >
-            <div class="text-h5 q-mb-md">Bienvenido, {{`${user.name} ${user.lastName}`}}</div>
+            <div class="text-h5 q-mb-md">
+                Bienvenido, {{ `${user.name} ${user.lastName}` }}
+            </div>
             <div class="row q-mb-lg">
-                <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 q-pa-md">
                     <q-card flat dark class="full-width bg-grey-9">
                         <q-card-section>
                             <div class="text-h6">
-                                <i class="fas fa-box-open text-amber-9"></i> Ordenes abiertas
+                                <i class="fas fa-box-open text-amber-9"></i>
+                                Ordenes abiertas
                             </div>
                         </q-card-section>
 
                         <q-card-section class="q-pt-none">
-                            <div class="text-h3">{{returnFilteredOrders().length}}</div>
+                            <div class="text-h3">
+                                {{ returnFilteredOrders().length }}
+                            </div>
                         </q-card-section>
                     </q-card>
                 </div>
-                <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 q-pa-md">
                     <q-card flat dark class="full-width bg-grey-9">
                         <q-card-section>
                             <div class="text-h6">
-                                <i class="fas fa-dolly text-info"></i> Ordenes completadas (mes)
+                                <i class="fas fa-dolly text-info"></i> Ordenes
+                                completas (mes)
                             </div>
                         </q-card-section>
 
                         <q-card-section class="q-pt-none">
-                            <div class="text-h3">{{returnFilteredOrderCompletedInAMonth().length}}</div>
+                            <div class="text-h3">
+                                {{
+                                    returnFilteredOrderCompletedInAMonth()
+                                        .length
+                                }}
+                            </div>
                         </q-card-section>
                     </q-card>
                 </div>
-                <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 q-pa-md">
                     <q-card flat dark class="full-width bg-grey-9">
                         <q-card-section>
                             <div class="text-h6">
-                                <i class="fas fa-dollar-sign text-secondary"></i> Vendido (mes)
+                                <i
+                                    class="fas fa-dollar-sign text-secondary"
+                                ></i>
+                                Vendido (mes)
                             </div>
                         </q-card-section>
 
                         <q-card-section class="q-pt-none">
-                            <div class="text-h3">$ {{returnTotalInOrderCompletedInAMonth()}}</div>
+                            <div class="text-h3">
+                                $ {{ returnTotalInOrderCompletedInAMonth() }}
+                            </div>
                         </q-card-section>
                     </q-card>
                 </div>
-                <div class="col-lg-3 col-sm-6 col-xs-12 q-pa-md">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 q-pa-md">
                     <q-card flat dark class="full-width bg-grey-9">
                         <q-card-section>
                             <div class="text-h6">
-                                <i class="fas fa-user text-lime-8"></i> Solicitudes pendientes
+                                <i class="fas fa-user text-lime-8"></i>
+                                Solicitudes pendientes
                             </div>
                         </q-card-section>
 
                         <q-card-section class="q-pt-none">
-                            <div class="text-h3">{{returnFilteredUsers().length}}</div>
+                            <div class="text-h3">
+                                {{ returnFilteredUsers().length }}
+                            </div>
                         </q-card-section>
                     </q-card>
                 </div>
@@ -71,10 +94,17 @@
                     <q-card class="full-width" flat dark>
                         <q-item>
                             <q-item-section>
-                                <div class="text-h6" size="xs">Ordenes recientes</div>
+                                <div class="text-h6" size="xs">
+                                    Ordenes recientes
+                                </div>
                             </q-item-section>
                             <q-item-section avatar>
-                                <q-btn round color="secondary" size="sm" to="/orders-manager">
+                                <q-btn
+                                    round
+                                    color="secondary"
+                                    size="sm"
+                                    to="/orders-manager"
+                                >
                                     <i class="fas fa-angle-double-right"></i>
                                 </q-btn>
                             </q-item-section>
@@ -88,11 +118,22 @@
                                 :key="i"
                             >
                                 <q-item-section
-                                    @click="$router.push(`/order-details/${order.firebaseId}`)"
+                                    @click="
+                                        $router.push(
+                                            `/order-details/${order.firebaseId}`
+                                        )
+                                    "
                                 >
-                                    <q-item-label>{{ returnRestaurantName(order)}}</q-item-label>
-                                    <q-item-label caption>No. {{order.id}}</q-item-label>
+                                    <q-item-label>{{
+                                        returnRestaurantName(order)
+                                    }}</q-item-label>
+                                    <q-item-label caption
+                                        >No. {{ order.id }}</q-item-label
+                                    >
                                 </q-item-section>
+                                <q-item-section side style="font-size: 11px"
+                                    >hace 10 semanas</q-item-section
+                                >
                             </q-item>
                         </q-list>
                     </q-card>
@@ -101,10 +142,17 @@
                     <q-card class="full-width" flat dark>
                         <q-item>
                             <q-item-section>
-                                <div class="text-h6" size="xs">Solicitudes recientes</div>
+                                <div class="text-h6" size="xs">
+                                    Solicitudes recientes
+                                </div>
                             </q-item-section>
                             <q-item-section avatar>
-                                <q-btn round color="secondary" size="sm" to="/accounts-manager">
+                                <q-btn
+                                    round
+                                    color="secondary"
+                                    size="sm"
+                                    to="/accounts-manager"
+                                >
                                     <i class="fas fa-angle-double-right"></i>
                                 </q-btn>
                             </q-item-section>
@@ -117,11 +165,24 @@
                                 :key="i"
                             >
                                 <q-item-section
-                                    @click="$router.push(`/account-details/${user.id}`)"
+                                    @click="
+                                        $router.push(
+                                            `/account-details/${user.id}`
+                                        )
+                                    "
                                 >
-                                    <q-item-label>{{user.restaurantName ? user.restaurantName : 'NaN' }}</q-item-label>
-                                    <q-item-label caption>{{user.email}}</q-item-label>
+                                    <q-item-label>{{
+                                        user.restaurantName
+                                            ? user.restaurantName
+                                            : 'NaN'
+                                    }}</q-item-label>
+                                    <q-item-label caption>{{
+                                        user.email
+                                    }}</q-item-label>
                                 </q-item-section>
+                                <q-item-section side style="font-size: 11px"
+                                    >hace 10 semanas</q-item-section
+                                >
                             </q-item>
                         </q-list>
                     </q-card>
