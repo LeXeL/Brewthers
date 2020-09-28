@@ -23,11 +23,10 @@
                     v-model="form.name"
                     :rules="[val => !!val || 'El campo es obligatorio']"
                 />
-                <q-select
+                <q-input
                     filled
                     class="q-mb-md"
                     dark
-                    :options="styles"
                     label="Estilo"
                     v-model="form.style"
                     :rules="[val => !!val || 'El campo es obligatorio']"
@@ -56,7 +55,7 @@
                     filled
                     dark
                     label="ABV"
-                    type="number"
+                    type="text"
                     class="q-mb-md"
                     v-model="form.abv"
                     :rules="[val => !!val || 'El campo es obligatorio']"
@@ -127,7 +126,6 @@ export default {
     data() {
         return {
             file: null,
-            styles: ['style 1', 'style 2', 'style 3', 'style 4', 'style 5'],
             presentations: ['KEG', 'Caja'],
             form: {
                 name: '',

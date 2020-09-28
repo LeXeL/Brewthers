@@ -90,7 +90,7 @@ export default {
                 sortBy: 'desc',
                 descending: false,
                 page: 1,
-                rowsPerPage: 50,
+                rowsPerPage: 10,
                 // rowsNumber: xx if getting data from a server
             },
             columns: [

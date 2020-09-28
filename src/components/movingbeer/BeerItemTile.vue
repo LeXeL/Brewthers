@@ -9,20 +9,23 @@
         ></brewthers-alert>
         <div
             class="movingbeer-item"
-            style="position: relative;"
+            style="position: relative"
             @mouseleave="showAddedOverlay = false"
         >
             <q-img :src="product.photoLocation" class="rounded-borders" />
-            <div class="movingbeer-item-overlay q-pa-md" v-if="!showAddedOverlay">
-                <div class="q-mb-sm q-mt-lg">Estilo: {{ product.style }}</div>
+            <div
+                class="movingbeer-item-overlay q-pa-md"
+                v-if="!showAddedOverlay"
+            >
+                <div class="q-mb-sm q-mt-lg" style="text-transform: uppercase">
+                    Estilo: {{ product.style }}
+                </div>
                 <div class="q-mb-sm">ABV: {{ product.abv }}%</div>
                 <div class="q-mb-sm">IBU: {{ product.ibu }}</div>
-                <div class="q-mb-sm" style="color:#27a3c3; cursor: pointer;">
+                <div class="q-mb-sm" style="color: #27a3c3; cursor: pointer">
                     Descripción
                     <q-tooltip content-style="font-size: 16px; width: 250px;">
-                        {{
-                        product.description
-                        }}
+                        {{ product.description }}
                     </q-tooltip>
                 </div>
             </div>
@@ -35,7 +38,9 @@
         </div>
 
         <div class="text-h6 text-center q-mt-sm">{{ product.name }}</div>
-        <div class="text-subtitle-2 text-center q-mb-sm">$ {{ product.price }}</div>
+        <div class="text-subtitle-2 text-center q-mb-sm">
+            $ {{ product.price }}
+        </div>
         <q-btn-group class="q-mb-sm" v-if="user.status === 'approved'">
             <q-btn
                 color="primary"
@@ -57,7 +62,8 @@
             @click="addToCart"
             :disabled="!amount"
             v-if="user.status === 'approved'"
-        >Agregar</q-btn>
+            >Agregar</q-btn
+        >
     </div>
 </template>
 
