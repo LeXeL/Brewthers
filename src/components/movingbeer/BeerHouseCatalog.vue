@@ -94,15 +94,13 @@
                     style="margin-top: 100px"
                     v-if="productsInHouse.length == 0"
                 >
-                    <div class="col">
-                        <i
-                            class="fas fa-beer"
-                            style="color: #5c5c5c; font-size: 100px"
-                        ></i>
-                        <p style="color: #5c5c5c; font-size: 18px">
-                            Lo sentimos, por el momento no tenemos inventario de
-                            esta presentación.
-                        </p>
+                    <div class="col q-mb-xl">
+                        <i class="fas fa-beer" style="color: #5c5c5c; font-size: 100px;"></i>
+                        <p
+                            style="color: #5c5c5c; font-size: 18px;"
+                        >Lo sentimos, por el momento no tenemos inventario de esta presentación.</p>
+
+
                     </div>
                 </div>
             </q-card-section>
