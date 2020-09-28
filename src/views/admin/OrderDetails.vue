@@ -12,11 +12,16 @@
             <div class="text-h5 q-mb-md">Orden No. {{ data.id }}</div>
 
             <div class="row">
-                <div class="col-lg-8 col-xs-12">
+                <div class="col-lg-8 col-md-8 col-xs-12">
                     <div class="row">
                         <div class="col">
-                            <div class="text-h6 q-px-md">Control de estados</div>
-                            <order-stepper :orderId="this.$route.params.id" :data="data" />
+                            <div class="text-h6 q-px-md">
+                                Control de estados
+                            </div>
+                            <order-stepper
+                                :orderId="this.$route.params.id"
+                                :data="data"
+                            />
                         </div>
                     </div>
                     <div class="row">
@@ -52,7 +57,9 @@
                             />
                         </div>
                         <div class="col q-pa-md">
-                            <div class="text-h6 q-mb-sm">Comprobantes de pago</div>
+                            <div class="text-h6 q-mb-sm">
+                                Comprobantes de pago
+                            </div>
                             <order-proof-of-payments
                                 :data="data.paymentProof"
                                 :fullOrder="data"
@@ -60,19 +67,21 @@
                                 :restaurantId="this.data.restaurantId"
                                 :disableprop="
                                     this.data.status === 'cancel' ||
-                                        this.data.status === 'completed'
+                                    this.data.status === 'completed'
                                 "
                             />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md">
+                        <div
+                            class="col-lg-6 col-sm-6 col-xs-12 col-sm-6 q-pa-md"
+                        >
                             <div class="text-h6 q-mb-sm">Log de orden</div>
                             <order-log :data="data.logs" />
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <order-item-details
                         :data="item"
                         v-for="(item, i) in removeElementsFromObject(data.cart)"
@@ -100,7 +109,7 @@
             </div>
         </div>
         <q-dialog v-model="addItems">
-            <q-card dark style="width: 700px; max-width: 80vw;">
+            <q-card dark style="width: 700px; max-width: 80vw">
                 <q-card-section class="row items-center q-pb-none">
                     <q-space />
                     <q-btn flat round dense v-close-popup>
@@ -122,22 +131,37 @@
                     >
                         <template v-slot:no-option>
                             <q-item>
-                                <q-item-section class="text-grey">No hay resultados.</q-item-section>
+                                <q-item-section class="text-grey"
+                                    >No hay resultados.</q-item-section
+                                >
                             </q-item>
                         </template>
                     </q-select>
                 </q-card-section>
-                <q-card-section v-if="Object.keys(selectedItemFromInput).length !== 0">
+                <q-card-section
+                    v-if="Object.keys(selectedItemFromInput).length !== 0"
+                >
                     <div class="row">
                         <div class="col-4">
                             <q-img :src="selectedItemFromInput.photoLocation" />
                         </div>
                         <div class="col-8 q-px-md">
-                            <div class="text-h6">{{selectedItemFromInput.name}}</div>
-                            <p class="q-mb-none">Casa: {{selectedItemFromInput.brewery}}</p>
-                            <p class="q-mb-none">Presentacion: {{selectedItemFromInput.type}}</p>
-                            <p class="q-mb-none">Precio: $ {{selectedItemFromInput.price}}</p>
-                            <p class="q-mb-none">Inventario: {{selectedItemFromInput.inventory}}</p>
+                            <div class="text-h6">
+                                {{ selectedItemFromInput.name }}
+                            </div>
+                            <p class="q-mb-none">
+                                Casa: {{ selectedItemFromInput.brewery }}
+                            </p>
+                            <p class="q-mb-none">
+                                Presentacion: {{ selectedItemFromInput.type }}
+                            </p>
+                            <p class="q-mb-none">
+                                Precio: $ {{ selectedItemFromInput.price }}
+                            </p>
+                            <p class="q-mb-none">
+                                Inventario:
+                                {{ selectedItemFromInput.inventory }}
+                            </p>
                             <q-btn-group class="q-mb-sm q-mt-sm">
                                 <q-btn
                                     color="primary"
@@ -147,8 +171,14 @@
                                 >
                                     <i class="fas fa-minus"></i>
                                 </q-btn>
-                                <q-btn color="primary" disable>{{this.amount}}</q-btn>
-                                <q-btn color="primary" size="xs" @click="addAmount">
+                                <q-btn color="primary" disable>{{
+                                    this.amount
+                                }}</q-btn>
+                                <q-btn
+                                    color="primary"
+                                    size="xs"
+                                    @click="addAmount"
+                                >
                                     <i class="fas fa-plus"></i>
                                 </q-btn>
                             </q-btn-group>
@@ -157,7 +187,8 @@
                                 color="primary q-mb-md"
                                 @click="addToCart"
                                 :disabled="!amount"
-                            >Agregar</q-btn>
+                                >Agregar</q-btn
+                            >
                         </div>
                     </div>
                 </q-card-section>

@@ -6,11 +6,11 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div class="text-h5 q-mb-md">Administrador de cuentas</div>
         <div class="row q-mb-lg">
-            <div class="col-lg-6 col-xs-12 q-pa-md">
+            <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <active-accounts-table
                     :data="
                         users.filter(user => {
@@ -23,7 +23,7 @@
                     "
                 ></active-accounts-table>
             </div>
-            <div class="col-lg-6 col-xs-12 q-pa-md">
+            <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <pending-accounts-table
                     :data="
                         users.filter(user => {
@@ -80,13 +80,12 @@
                             type="email"
                             v-model="adminEmail"
                             :rules="[
-                            val =>
-                                val.length > 0 ||
-                                'El campo es obligatorio',
-                            val =>
-                                validEmail.test(val) ||
-                                'Formato de correo incorrecto',
-                        ]"
+                                val =>
+                                    val.length > 0 || 'El campo es obligatorio',
+                                val =>
+                                    validEmail.test(val) ||
+                                    'Formato de correo incorrecto',
+                            ]"
                         />
                         <q-input
                             label="Contraseña"
@@ -96,18 +95,22 @@
                             type="password"
                             v-model="adminPassword"
                             :rules="[
-                            val =>
-                                val.length > 0 ||
-                                'El campo es obligatorio',
-                            val =>
-                                strongPass.test(val) ||
-                                'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
-                        ]"
+                                val =>
+                                    val.length > 0 || 'El campo es obligatorio',
+                                val =>
+                                    strongPass.test(val) ||
+                                    'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                            ]"
                         />
                     </q-card-section>
 
                     <q-card-actions align="right" class="text-primary">
-                        <q-btn flat label="Cancelar" @click="clearadmin()" v-close-popup />
+                        <q-btn
+                            flat
+                            label="Cancelar"
+                            @click="clearadmin()"
+                            v-close-popup
+                        />
                         <q-btn flat label="Crear" type="submit" />
                     </q-card-actions>
                 </q-form>

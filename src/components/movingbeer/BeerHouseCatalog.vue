@@ -27,21 +27,23 @@
             </div>
             <div class="col"></div>
         </div>-->
-        <q-card class="text-white full-width" style="background-color: #1f2120;">
+        <q-card class="text-white full-width" style="background-color: #1f2120">
             <q-bar class="q-ma-md" style="background-color: #1f2120">
                 <q-space />
                 <q-btn dense flat @click="$emit('closeCatalog')">
-                    <i class="fas fa-times" style="font-size: 25px;"></i>
-                    <q-tooltip content-class="bg-white text-primary">Cerrar</q-tooltip>
+                    <i class="fas fa-times" style="font-size: 25px"></i>
+                    <q-tooltip content-class="bg-white text-primary"
+                        >Cerrar</q-tooltip
+                    >
                 </q-btn>
             </q-bar>
 
             <q-card-section>
                 <div class="text-h4 text-center">
                     {{
-                    allBrewers.filter(brew => {
-                    if (brew.id === breweryId) return brew
-                    })[0].name
+                        allBrewers.filter(brew => {
+                            if (brew.id === breweryId) return brew
+                        })[0].name
                     }}
                 </div>
             </q-card-section>
@@ -49,15 +51,14 @@
             <q-card-section>
                 <div class="row q-mb-md">
                     <div class="col"></div>
-                    <div class="col-lg-1 col-sm-3 col-xs-6">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
                         <q-img
                             class="rounded-borders"
                             :src="
-                                    allBrewers.filter(brew => {
-                                        if (brew.id === breweryId)
-                                            return brew
-                                    })[0].photoLocation
-                                "
+                                allBrewers.filter(brew => {
+                                    if (brew.id === breweryId) return brew
+                                })[0].photoLocation
+                            "
                         />
                     </div>
                     <div class="col"></div>
@@ -66,10 +67,10 @@
             <q-card-section>
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-lg-2 col-sm-8 col-xs-10">
+                    <div class="col-lg-2 col-md-3 col-sm-8 col-xs-10">
                         <q-select
                             v-model="type"
-                            outlined
+                            filled
                             dark
                             :options="['Keg', 'Caja']"
                             label="Selecione un tipo"
@@ -81,7 +82,7 @@
             <q-card-section>
                 <div class="row">
                     <div
-                        class="col-lg-2 col-sm-6 col-xs-12 rounded-corners"
+                        class="col-lg-2 col-md-3 col-sm-6 col-xs-12 rounded-corners"
                         v-for="(product, i) in productsInHouse"
                         :key="i"
                     >
@@ -90,7 +91,7 @@
                 </div>
                 <div
                     class="row text-center"
-                    style="margin-top: 100px;"
+                    style="margin-top: 100px"
                     v-if="productsInHouse.length == 0"
                 >
                     <div class="col q-mb-xl">
@@ -98,6 +99,8 @@
                         <p
                             style="color: #5c5c5c; font-size: 18px;"
                         >Lo sentimos, por el momento no tenemos inventario de esta presentación.</p>
+
+
                     </div>
                 </div>
             </q-card-section>

@@ -13,13 +13,15 @@
                 <div class="col">
                     <div
                         class="text-h3 text-center"
-                        style="text-transform: uppercase;"
-                    >Familia brewthers</div>
+                        style="text-transform: uppercase"
+                    >
+                        Familia brewthers
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div
-                    class="col-lg-3 col-sm-4 col-sm-3 col-xs-12"
+                    class="col-lg-3 col-md-3 col-sm-4 col-sm-3 col-xs-12"
                     v-for="(brew, i) in brewers"
                     :key="i"
                 >

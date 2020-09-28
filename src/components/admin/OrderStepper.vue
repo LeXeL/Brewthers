@@ -9,7 +9,7 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div class="row q-px-md q-py-sm">
-            <div class="col-lg-2 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                 <q-btn
                     :color="data.status === 'review' ? 'amber-9' : 'grey-6'"
                     size="sm"
@@ -19,9 +19,11 @@
                     <i class="fas fa-box q-mr-xs"></i>Por Revisar
                 </q-btn>
             </div>
-            <div class="col-lg-2 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                 <q-btn
-                    :color="data.status === 'preparation' ? 'yellow-9' : 'grey-6'"
+                    :color="
+                        data.status === 'preparation' ? 'yellow-9' : 'grey-6'
+                    "
                     size="sm"
                     class="q-mb-sm"
                     :disable="data.status == 'cancel'"
@@ -30,7 +32,7 @@
                     <i class="fas fa-boxes q-mr-xs"></i>En Preparacion
                 </q-btn>
             </div>
-            <div class="col-lg-2 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                 <q-btn
                     :color="data.status === 'onroute' ? 'lime-8' : 'grey-6'"
                     size="sm"
@@ -41,9 +43,11 @@
                     <i class="fas fa-truck q-mr-xs"></i>En Camino
                 </q-btn>
             </div>
-            <div class="col-lg-2 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                 <q-btn
-                    :color="data.status === 'delivered' ? 'light-green-9' : 'grey-6'"
+                    :color="
+                        data.status === 'delivered' ? 'light-green-9' : 'grey-6'
+                    "
                     size="sm"
                     class="q-mb-sm"
                     :disable="data.status == 'cancel'"
@@ -52,9 +56,11 @@
                     <i class="fas fa-truck-loading q-mr-xs"></i>Entregado
                 </q-btn>
             </div>
-            <div class="col-lg-2 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                 <q-btn
-                    :color="data.status === 'completed' ? 'secondary' : 'grey-6'"
+                    :color="
+                        data.status === 'completed' ? 'secondary' : 'grey-6'
+                    "
                     size="sm"
                     class="q-mb-sm"
                     :disable="data.status == 'cancel'"
@@ -63,21 +69,25 @@
                     <i class="fas fa-check q-mr-xs"></i>Completado
                 </q-btn>
             </div>
-            <div class="col-lg-2 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                 <q-btn
                     color="red-7"
                     size="sm"
-                    @click="alert= true"
-                    :disable="data.status == 'cancel' || data.status ==='completed'"
+                    @click="alert = true"
+                    :disable="
+                        data.status == 'cancel' || data.status === 'completed'
+                    "
                 >
                     <i class="fas fa-times q-mr-xs"></i>Cancelar
                 </q-btn>
             </div>
         </div>
         <q-dialog v-model="alert">
-            <q-card style="width: 700px; max-width: 80vw;" dark>
+            <q-card style="width: 700px; max-width: 80vw" dark>
                 <q-card-section>
-                    <div class="text-h6">Seleccione los motivos de cancelacion de orden</div>
+                    <div class="text-h6">
+                        Seleccione los motivos de cancelacion de orden
+                    </div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -91,7 +101,12 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn label="Confirmar" flat @click="cancelOrder" v-close-popup />
+                    <q-btn
+                        label="Confirmar"
+                        flat
+                        @click="cancelOrder"
+                        v-close-popup
+                    />
                     <q-btn label="Cancelar" flat v-close-popup />
                 </q-card-actions>
             </q-card>
