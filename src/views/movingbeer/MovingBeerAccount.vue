@@ -1,12 +1,15 @@
 <template>
-    <q-page class="pattern-bg" style="height: auto; background-repeat: repeat-y;">
+    <q-page
+        class="pattern-bg"
+        style="height: auto; background-repeat: repeat-y"
+    >
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div v-if="Object.keys(user).length !== 0">
             <div class="row">
@@ -15,20 +18,20 @@
                     <div class="text-h6">
                         Estatus:
                         <span style="color: #27a3c3">
-                            {{
-                            accountStatus(user.status)
-                            }}
+                            {{ accountStatus(user.status) }}
                         </span>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                <div class="col-lg-4 col-md-4 col-xs-12 q-pa-lg">
                     <q-card flat bordered dark class="text-white full-width">
                         <q-card-section>
                             <div class="row">
                                 <div class="col">
-                                    <div class="text-h6">Informacion general:</div>
+                                    <div class="text-h6">
+                                        Informacion general:
+                                    </div>
                                 </div>
                             </div>
                         </q-card-section>
@@ -73,11 +76,14 @@
                             <q-btn
                                 color="primary"
                                 @click="handleData('GeneralInfo')"
-                            >{{ editGeneralInfo ? 'Guardar' : 'Editar' }}</q-btn>
+                                >{{
+                                    editGeneralInfo ? 'Guardar' : 'Editar'
+                                }}</q-btn
+                            >
                         </q-card-actions>
                     </q-card>
                 </div>
-                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                <div class="col-lg-4 col-md-4 col-xs-12 q-pa-lg">
                     <q-card flat bordered dark class="text-white full-width">
                         <q-card-section>
                             <div class="row">
@@ -109,11 +115,14 @@
                             <q-btn
                                 color="primary"
                                 @click="handleData('AddressInfo')"
-                            >{{ editAddressInfo ? 'Guardar' : 'Editar' }}</q-btn>
+                                >{{
+                                    editAddressInfo ? 'Guardar' : 'Editar'
+                                }}</q-btn
+                            >
                         </q-card-actions>
                     </q-card>
                 </div>
-                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                <div class="col-lg-4 col-md-4 col-xs-12 q-pa-lg">
                     <q-card flat bordered dark class="text-white full-width">
                         <q-card-section>
                             <div class="row">
@@ -123,7 +132,9 @@
                             </div>
                         </q-card-section>
                         <q-card-actions>
-                            <q-btn @click="resetPassword()" color="primary">Reiniciar Contraseña</q-btn>
+                            <q-btn @click="resetPassword()" color="primary"
+                                >Reiniciar Contraseña</q-btn
+                            >
                         </q-card-actions>
                     </q-card>
                 </div>
