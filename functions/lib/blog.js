@@ -1,6 +1,21 @@
 const admin = require('firebase-admin')
 const db = admin.firestore()
 
+async function addToNewsletter(userEmail) {
+    console.log(userEmail)
+    return db
+        .collection('general')
+        .doc('newsletter')
+        .set({
+            user: {email: userEmail, status: 'active'}, //active, inactive
+        })
+        .then(() => {
+            return 'Succesfull'
+        })
+        .catch(error => {
+            return error
+        })
+}
 async function createDraftBlog(blogInfo) {
     return db
         .collection('blog')
@@ -85,10 +100,32 @@ async function updatePublicBlog(id, Obj) {
             return error
         })
 }
+async function returnPublicBlogs() {
+    let blogs = []
+    await db
+        .collection('blog')
+        .where('status', '==', 'public')
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.')
+                return
+            }
+            snapshot.forEach(doc => {
+                blogs.push({...doc.data(), id: doc.id})
+            })
+        })
+        .catch(function(error) {
+            console.log('Error getting documents: ', error)
+        })
+    return blogs
+}
 module.exports = {
+    addToNewsletter,
     createDraftBlog,
     createPublictBlog,
     returnBlogById,
     updateDraftBlog,
     updatePublicBlog,
+    returnPublicBlogs,
 }

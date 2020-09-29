@@ -479,3 +479,25 @@ exports.updateBlog = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.returnPublicBlogs = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await blog.returnPublicBlogs()
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.addToNewsletter = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await blog.addToNewsletter(req.body.userEmail)
+            res.status(200).send({status: 'Created'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})

@@ -178,7 +178,7 @@ export default new Router({
                     component: BlogIndex,
                 },
                 {
-                    path: '/blog/id',
+                    path: '/blog/:id',
                     name: 'blog-view',
                     component: BlogView,
                 },

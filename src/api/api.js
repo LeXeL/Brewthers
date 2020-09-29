@@ -151,3 +151,11 @@ export const updateBlog = data =>
     Request.post('/updateBlog', data, {
         'Content-Type': 'application/json',
     })
+export const returnPublicBlogs = data =>
+    Request.post('/returnPublicBlogs', data, {
+        'Content-Type': 'application/json',
+    })
+export const addToNewsletter = data =>
+    Request.post('/addToNewsletter', data, {
+        'Content-Type': 'application/json',
+    })
