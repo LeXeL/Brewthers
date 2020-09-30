@@ -2,7 +2,6 @@ const admin = require('firebase-admin')
 const db = admin.firestore()
 
 async function addToNewsletter(userEmail) {
-    console.log(userEmail)
     return db
         .collection('general')
         .doc('newsletter')
