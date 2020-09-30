@@ -17,6 +17,7 @@
                 dense
                 label="Suscribete a nuestro news letter."
                 style="width: 400px; max-width: 80vw"
+                @keyup.enter="addToEmailToNewsLetter"
             >
                 <template v-slot:after>
                     <q-btn round dense flat @click="addToEmailToNewsLetter()"
