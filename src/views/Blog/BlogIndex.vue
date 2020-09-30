@@ -29,7 +29,11 @@
                         }}</span>
                     </div>
                     <br />
-                    <div class="text-body2" v-html="blog.body"></div>
+                    <div
+                        class="text-body2"
+                        v-html="blog.body"
+                        style="height: 60px; overflow: hidden"
+                    ></div>
                     <div class="row">
                         <q-space />
                         <q-btn

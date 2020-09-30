@@ -2,13 +2,9 @@
     <q-page>
         <loading-alert :display="displayLoading"></loading-alert>
         <div v-if="Object.keys(data).length !== 0">
-            <div
-                class="blog-bg"
-                :style="{
-                    backgroundImage: `url(${data.bannerLocation})`,
-                    height: `400px`,
-                }"
-            ></div>
+            <div class="row">
+                <q-img :src="data.bannerLocation" />
+            </div>
             <div class="row q-pa-md">
                 <div class="col desktop-only"></div>
                 <div class="col-lg-6 col-sm-12 col-xs-12 q-mb-xl">
