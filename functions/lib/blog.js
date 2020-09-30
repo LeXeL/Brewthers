@@ -7,7 +7,10 @@ async function addToNewsletter(userEmail) {
         .collection('general')
         .doc('newsletter')
         .set({
-            user: {email: userEmail, status: 'active'}, //active, inactive
+            users: admin.firestore.FieldValue.arrayUnion({
+                email: userEmail,
+                status: 'active',
+            }), //active, inactive
         })
         .then(() => {
             return 'Succesfull'
