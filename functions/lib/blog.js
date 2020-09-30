@@ -6,7 +6,7 @@ async function addToNewsletter(userEmail) {
     return db
         .collection('general')
         .doc('newsletter')
-        .set({
+        .update({
             users: admin.firestore.FieldValue.arrayUnion({
                 email: userEmail,
                 status: 'active',
