@@ -131,9 +131,9 @@
                                         >No. {{ order.id }}</q-item-label
                                     >
                                 </q-item-section>
-                                <q-item-section side style="font-size: 11px"
-                                    >hace 10 semanas</q-item-section
-                                >
+                                <q-item-section side style="font-size: 11px">{{
+                                    returnTimeAgo(order.logs[0])
+                                }}</q-item-section>
                             </q-item>
                         </q-list>
                     </q-card>
@@ -180,9 +180,9 @@
                                         user.email
                                     }}</q-item-label>
                                 </q-item-section>
-                                <q-item-section side style="font-size: 11px"
-                                    >hace 10 semanas</q-item-section
-                                >
+                                <q-item-section side style="font-size: 11px">{{
+                                    returnTimeAgo(user.creationTime)
+                                }}</q-item-section>
                             </q-item>
                         </q-list>
                     </q-card>
@@ -223,6 +223,9 @@ export default {
                 total += parseFloat(order.total)
             })
             return parseFloat(total)
+        },
+        returnTimeAgo(time) {
+            return moment(time).fromNow()
         },
         returnFilteredOrderCompletedInAMonth() {
             return this.data.filter(order => {

@@ -55,6 +55,11 @@ export default {
             brewerWorkingId: '',
         }
     },
+    computed: {
+        movingbeerXY() {
+            return this.$store.getters.movingbeerXY
+        },
+    },
     async mounted() {
         if (this.$store.getters.brewerys.length > 1) {
             this.brewers = this.$store.getters.brewerys
@@ -69,11 +74,15 @@ export default {
     },
     methods: {
         beerHouseDialog(event) {
+            this.$store.commit('SET_MOVINGBEERXY', window.scrollY)
             this.brewerWorkingId = event
             this.dialog = true
         },
         closeOpenCatalog() {
             this.dialog = false
+            if (this.movingbeerXY != 0) {
+                window.scrollTo(0, 615)
+            }
         },
     },
     components: {
