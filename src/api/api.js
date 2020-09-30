@@ -133,3 +133,33 @@ export const updateShoppingCartInOrder = data =>
     Request.post('/updateShoppingCartInOrder', data, {
         'Content-Type': 'application/json',
     })
+
+//BLOG
+export const createDraftBlogInDataBase = data =>
+    Request.post('/createDraftBlogInDataBase', data, {
+        'Content-Type': 'application/json',
+    })
+export const createPublicBlogInDataBase = data =>
+    Request.post('/createPublicBlogInDataBase', data, {
+        'Content-Type': 'application/json',
+    })
+export const getBlogById = data =>
+    Request.post('/getBlogById', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateBlog = data =>
+    Request.post('/updateBlog', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateDeletedBlog = data =>
+    Request.post('/updateDeletedBlog', data, {
+        'Content-Type': 'application/json',
+    })
+export const returnPublicBlogs = data =>
+    Request.post('/returnPublicBlogs', data, {
+        'Content-Type': 'application/json',
+    })
+export const addToNewsletter = data =>
+    Request.post('/addToNewsletter', data, {
+        'Content-Type': 'application/json',
+    })

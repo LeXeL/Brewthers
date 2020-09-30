@@ -6,7 +6,7 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div class="row">
             <div class="col desktop-only"></div>
@@ -19,68 +19,111 @@
                     </div>
 
                     <div class="row q-px-md">
-                        <div class="col-12" v-if="Object.keys(data).length !== 0">
+                        <div
+                            class="col-12"
+                            v-if="Object.keys(data).length !== 0"
+                        >
                             <q-card
                                 dark
                                 class="full-width q-mb-lg"
-                                v-for="(order,index) in data"
+                                v-for="(order, index) in data"
                                 :key="index"
                             >
                                 <q-card-section>
                                     <div class="text-h5">
-                                        <span style="color: #27a3c3">No. de pedido:</span>
-                                        {{order.id}} -
-                                        <span
-                                            style="color: #27a3c3"
-                                        >Estado:</span>
-                                        {{returnStatus(order.status)}}
+                                        <span style="color: #27a3c3"
+                                            >No. de pedido:</span
+                                        >
+                                        {{ order.id }} -
+                                        <span style="color: #27a3c3"
+                                            >Estado:</span
+                                        >
+                                        {{ returnStatus(order.status) }}
                                     </div>
                                     <div class="text-subtitle-2">
-                                        <span style="color: #27a3c3">Fecha:</span>
-                                        {{returnTime(order.logs[0])}}
+                                        <span style="color: #27a3c3"
+                                            >Fecha:</span
+                                        >
+                                        {{ returnTime(order.logs[0]) }}
                                     </div>
                                 </q-card-section>
                                 <q-separator dark />
                                 <q-card-section>
                                     <div class="row">
-                                        <div class="col-lg-9 col-sm-12 col-xs-12">
+                                        <div
+                                            class="col-lg-9 col-sm-12 col-xs-12"
+                                        >
                                             <div
                                                 class="row"
-                                                v-for="(item,index) in order.cart"
+                                                v-for="(item,
+                                                index) in order.cart"
                                                 :key="index"
                                             >
-                                                <div class="col-lg-7 col-sm-6 col-xs-12">
+                                                <div
+                                                    class="col-lg-7 col-sm-6 col-xs-12"
+                                                >
                                                     <order-item-details
-                                                        :data="removeUnUsedItem(item)"
+                                                        :data="
+                                                            removeUnUsedItem(
+                                                                item
+                                                            )
+                                                        "
                                                     />
                                                 </div>
-                                                <div class="col-lg-2 col-sm-2 col-xs-6 q-mb-md">
+                                                <div
+                                                    class="col-lg-2 col-sm-2 col-xs-6 q-mb-md"
+                                                >
                                                     <div
                                                         class="text-h6"
                                                         style="color: #27a3c3"
-                                                    >Cantidad</div>
-                                                    <div class="text-subtitle-3">{{item.amount}}</div>
+                                                    >
+                                                        Cantidad
+                                                    </div>
+                                                    <div
+                                                        class="text-subtitle-3"
+                                                    >
+                                                        {{ item.amount }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-2 col-sm-4 col-xs-6 q-mb-md">
+                                                <div
+                                                    class="col-lg-2 col-sm-4 col-xs-6 q-mb-md"
+                                                >
                                                     <div
                                                         class="text-h6"
                                                         style="color: #27a3c3"
-                                                    >Precio unitario</div>
-                                                    <div class="text-subtitle-2">$ {{item.price}}</div>
+                                                    >
+                                                        Precio unitario
+                                                    </div>
+                                                    <div
+                                                        class="text-subtitle-2"
+                                                    >
+                                                        $ {{ item.price }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div
                                             class="col-lg-3 col-xs-12"
-                                            v-if="order.paymentMethod === 'nequi' || order.paymentMethod === 'yappy' || order.paymentMethod ===  'ach'"
+                                            v-if="
+                                                order.paymentMethod ===
+                                                    'nequi' ||
+                                                order.paymentMethod ===
+                                                    'yappy' ||
+                                                order.paymentMethod === 'ach'
+                                            "
                                         >
                                             <order-proof-of-payment
                                                 :data="order.paymentProof"
                                                 :fullOrder="order"
                                                 :orderId="order.firebaseId"
-                                                :restaurantId="order.restaurantId"
-                                                :disableprop="order.status === 'cancel' || order.status === 'completed'"
+                                                :restaurantId="
+                                                    order.restaurantId
+                                                "
+                                                :disableprop="
+                                                    order.status === 'cancel' ||
+                                                    order.status === 'completed'
+                                                "
                                             />
                                         </div>
                                     </div>
@@ -89,15 +132,18 @@
                                 <q-card-actions class="q-pa-md">
                                     <q-space />
                                     <div class="text-h6 on-left">
-                                        <span style="color: #27a3c3">Total:</span>
-                                        $ {{order.total}}
+                                        <span style="color: #27a3c3"
+                                            >Total:</span
+                                        >
+                                        $ {{ order.total }}
                                     </div>
                                     <q-btn
                                         v-if="order.status === 'review'"
                                         class="on-right"
                                         color="primary"
                                         @click="cancelOrder(order)"
-                                    >Cancelar</q-btn>
+                                        >Cancelar</q-btn
+                                    >
                                 </q-card-actions>
                             </q-card>
                         </div>
@@ -107,7 +153,9 @@
                                     <div class="text-h1 q-mb-md">
                                         <i class="fas fa-boxes text-grey-8"></i>
                                     </div>
-                                    <div class="text-h5 text-grey-8">Aun no has realizado pedidos.</div>
+                                    <div class="text-h5 text-grey-8">
+                                        Aun no has realizado pedidos.
+                                    </div>
                                 </q-card-section>
                             </q-card>
                         </div>

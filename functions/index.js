@@ -13,6 +13,7 @@ const users = require('./lib/users')
 const brewery = require('./lib/brewery')
 const product = require('./lib/product')
 const order = require('./lib/order')
+const blog = require('./lib/blog')
 
 //Handle USERS
 exports.createUserOnDatabase = functions.https.onRequest(async (req, res) => {
@@ -422,3 +423,93 @@ exports.updateShoppingCartInOrder = functions.https.onRequest(
         })
     }
 )
+
+//Handle BLOG
+exports.createDraftBlogInDataBase = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await blog.createDraftBlog(req.body.blogInfo)
+                res.status(200).send({status: 'Created'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.createPublicBlogInDataBase = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await blog.createPublictBlog(req.body.blogInfo)
+                res.status(200).send({status: 'Created'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+exports.getBlogById = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await blog.returnBlogById(req.body.id)
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.updateBlog = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            if (req.body.type === 'draft') {
+                await blog.updateDraftBlog(req.body.id, req.body.blogInfo)
+                res.status(200).send({status: 'Updated'})
+            }
+            if (req.body.type === 'public') {
+                await blog.updatePublicBlog(req.body.id, req.body.blogInfo)
+                res.status(200).send({status: 'Updated'})
+            }
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+
+exports.updateDeletedBlog = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await blog.updateDeletedBlog(req.body.id, req.body.blogInfo)
+            res.status(200).send({status: 'deleted'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.returnPublicBlogs = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            let response = await blog.returnPublicBlogs()
+            res.status(200).send({data: response})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
+exports.addToNewsletter = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await blog.addToNewsletter(req.body.userEmail)
+            res.status(200).send({status: 'Created'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
