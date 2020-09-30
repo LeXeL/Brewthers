@@ -17,7 +17,7 @@
                 dense
                 label="Suscribete a nuestro news letter."
                 style="width: 400px; max-width: 80vw"
-                @keyup.enter="addToEmailToNewsLetter"
+                @keyup.enter="addToEmailToNewsLetter()"
             >
                 <template v-slot:after>
                     <q-btn round dense flat @click="addToEmailToNewsLetter()"
@@ -45,11 +45,13 @@ export default {
             alertMessage: '',
             alertType: '',
             displayLoading: false,
+            validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         }
     },
     methods: {
         addToEmailToNewsLetter() {
-            if (this.email != '') {
+            this.displayAlert = false
+            if (this.email != '' && this.validEmail.test(this.email)) {
                 this.displayLoading = true
                 api.addToNewsletter({userEmail: this.email})
                     .then(response => {
@@ -68,6 +70,12 @@ export default {
                         this.alertType = 'error'
                         this.displayAlert = true
                     })
+            } else {
+                this.displayLoading = false
+                this.alertTitle = 'Error'
+                this.alertMessage = 'Por favor introduce un email valido'
+                this.alertType = 'error'
+                this.displayAlert = true
             }
         },
     },
