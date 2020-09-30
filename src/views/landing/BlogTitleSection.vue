@@ -1,5 +1,6 @@
 <template>
     <div class="blog-bg" style="position: relative">
+        <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
             :title="alertTitle"
@@ -42,20 +43,25 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            displayLoading: false,
         }
     },
     methods: {
         addToEmailToNewsLetter() {
             if (this.email != '') {
+                this.displayLoading = true
                 api.addToNewsletter({userEmail: this.email})
                     .then(response => {
+                        this.displayLoading = false
                         this.alertTitle = 'QUE XOPA'
                         this.alertMessage =
                             'Gracias por registrarte en nuestro newsletter'
                         this.alertType = 'success'
                         this.displayAlert = true
+                        this.email = ''
                     })
                     .catch(error => {
+                        this.displayLoading = false
                         this.alertTitle = 'Error'
                         this.alertMessage = 'error'
                         this.alertType = 'error'
