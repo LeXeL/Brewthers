@@ -100,6 +100,21 @@ async function updatePublicBlog(id, Obj) {
             return error
         })
 }
+async function updateDeletedBlog(id, Obj) {
+    Obj.status = 'deleted'
+    return db
+        .collection('blog')
+        .doc(id)
+        .update(Obj)
+        .then(() => {
+            console.log('Document successfully written!')
+            return 'Succesfull'
+        })
+        .catch(error => {
+            console.error('Error writing document: ', error)
+            return error
+        })
+}
 async function returnPublicBlogs() {
     let blogs = []
     await db
@@ -127,5 +142,6 @@ module.exports = {
     returnBlogById,
     updateDraftBlog,
     updatePublicBlog,
+    updateDeletedBlog,
     returnPublicBlogs,
 }

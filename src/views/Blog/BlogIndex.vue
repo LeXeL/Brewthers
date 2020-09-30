@@ -67,6 +67,15 @@ export default {
             return moment(time).format('DD/MM/YYYY')
         },
     },
+    watch: {
+        blogs(newValue, oldValue) {
+            if (newValue.length > 0) {
+                this.sortedBlogs = newValue.sort((a, b) => {
+                    return moment(b.createdTime).diff(a.createdTime)
+                })
+            }
+        },
+    },
     mounted() {
         this.displayLoading = true
         api.returnPublicBlogs()

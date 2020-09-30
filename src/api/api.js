@@ -136,7 +136,7 @@ export const updateShoppingCartInOrder = data =>
 
 //BLOG
 export const createDraftBlogInDataBase = data =>
-    Request.post('/createBlogInDataBase', data, {
+    Request.post('/createDraftBlogInDataBase', data, {
         'Content-Type': 'application/json',
     })
 export const createPublicBlogInDataBase = data =>
@@ -149,6 +149,10 @@ export const getBlogById = data =>
     })
 export const updateBlog = data =>
     Request.post('/updateBlog', data, {
+        'Content-Type': 'application/json',
+    })
+export const updateDeletedBlog = data =>
+    Request.post('/updateDeletedBlog', data, {
         'Content-Type': 'application/json',
     })
 export const returnPublicBlogs = data =>

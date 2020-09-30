@@ -479,6 +479,18 @@ exports.updateBlog = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+
+exports.updateDeletedBlog = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await blog.updateDeletedBlog(req.body.id, req.body.blogInfo)
+            res.status(200).send({status: 'deleted'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
 exports.returnPublicBlogs = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {
