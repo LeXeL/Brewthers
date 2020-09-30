@@ -7,21 +7,24 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <h2 class="title-section absolute-center">blog</h2>
-        <q-input
-            rounded
-            standout
-            v-model="email"
-            label="Rounded standout"
-            class="title-section absolute-center"
-        />
-        <q-btn
-            class="q-mt-md title-section absolute-center"
-            color="info"
-            label="leer mas"
-            size="sm"
-            @click="addToEmailToNewsLetter()"
-        />
+        <div class="title-section absolute-center">
+            <h2 class="q-mb-md">blog</h2>
+            <q-input
+                filled
+                v-model="email"
+                dark
+                dense
+                label="Suscribete a nuestro news letter."
+                style="width: 400px; max-width: 80vw"
+            >
+                <template v-slot:after>
+                    <q-btn round dense flat @click="addToEmailToNewsLetter()"
+                        ><i class="far fa-paper-plane"></i
+                    ></q-btn>
+                </template>
+            </q-input>
+        </div>
+
         <router-link
             to="/blog"
             class="title-section-link absolute-bottom q-pb-xl"
