@@ -1,5 +1,12 @@
 <template>
     <div class="blog-bg" style="position: relative">
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="displayAlert = false"
+        ></brewthers-alert>
         <h2 class="title-section absolute-center">blog</h2>
         <q-input
             rounded
@@ -28,14 +35,29 @@ export default {
     data() {
         return {
             email: '',
+            displayAlert: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
         }
     },
     methods: {
         addToEmailToNewsLetter() {
             if (this.email != '') {
-                api.addToNewsletter({userEmail: this.email}).then(response => {
-                    console.log(response)
-                })
+                api.addToNewsletter({userEmail: this.email})
+                    .then(response => {
+                        this.alertTitle = 'QUE XOPA'
+                        this.alertMessage =
+                            'Gracias por registrarte en nuestro newsletter'
+                        this.alertType = 'success'
+                        this.displayAlert = true
+                    })
+                    .catch(error => {
+                        this.alertTitle = 'Error'
+                        this.alertMessage = 'error'
+                        this.alertType = 'error'
+                        this.displayAlert = true
+                    })
             }
         },
     },
