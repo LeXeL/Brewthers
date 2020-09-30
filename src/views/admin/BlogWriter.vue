@@ -33,7 +33,9 @@
                         <template v-slot:prepend>
                             <i class="fas fa-paperclip"></i>
                         </template>
-                        <template v-slot:hint>Tamaño recomendado: 1920 x 400 (px)</template>
+                        <template v-slot:hint
+                            >Tamaño recomendado: 1920 x 400 (px)</template
+                        >
                     </q-file>
                 </div>
             </div>
@@ -45,56 +47,67 @@
                         toolbar-bg="grey-9"
                         :dense="$q.screen.lt.md"
                         :toolbar="[
-                        [
-                        {
-                            label: $q.lang.editor.align,
-                            icon: $q.iconSet.editor.align,
-                            fixedLabel: true,
-                            list: 'only-icons',
-                            options: ['left', 'center', 'right', 'justify']
-                        },
-                        ],
-                        ['hr', 'link'],
-                        ['fullscreen'],
-                        [
-                        {
-                            label: $q.lang.editor.formatting,
-                            icon: $q.iconSet.editor.formatting,
-                            list: 'no-icons',
-                            options: [
-                            'p',
-                            'h1',
-                            'h2',
-                            'h3',
-                            'h4',
-                            'h5',
-                            'h6',
-                            'code'
-                            ]
-                        },
-                        {
-                            label: $q.lang.editor.fontSize,
-                            icon: $q.iconSet.editor.fontSize,
-                            fixedLabel: true,
-                            fixedIcon: true,
-                            list: 'no-icons',
-                            options: [
-                            'size-1',
-                            'size-2',
-                            'size-3',
-                            'size-4',
-                            'size-5',
-                            'size-6',
-                            'size-7'
-                            ]
-                        },
-                        'removeFormat'
-                        ],
-                        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
+                            [
+                                {
+                                    label: $q.lang.editor.align,
+                                    icon: $q.iconSet.editor.align,
+                                    fixedLabel: true,
+                                    list: 'only-icons',
+                                    options: [
+                                        'left',
+                                        'center',
+                                        'right',
+                                        'justify',
+                                    ],
+                                },
+                            ],
+                            ['hr', 'link'],
+                            ['fullscreen'],
+                            [
+                                {
+                                    label: $q.lang.editor.formatting,
+                                    icon: $q.iconSet.editor.formatting,
+                                    list: 'no-icons',
+                                    options: [
+                                        'p',
+                                        'h1',
+                                        'h2',
+                                        'h3',
+                                        'h4',
+                                        'h5',
+                                        'h6',
+                                        'code',
+                                    ],
+                                },
+                                {
+                                    label: $q.lang.editor.fontSize,
+                                    icon: $q.iconSet.editor.fontSize,
+                                    fixedLabel: true,
+                                    fixedIcon: true,
+                                    list: 'no-icons',
+                                    options: [
+                                        'size-1',
+                                        'size-2',
+                                        'size-3',
+                                        'size-4',
+                                        'size-5',
+                                        'size-6',
+                                        'size-7',
+                                    ],
+                                },
+                                'removeFormat',
+                            ],
+                            [
+                                'quote',
+                                'unordered',
+                                'ordered',
+                                'outdent',
+                                'indent',
+                            ],
 
-                        ['undo', 'redo'],
-                        ['viewsource']
-                    ]"
+                            ['undo', 'redo'],
+                            ['viewsource'],
+                        ]"
                     />
                 </div>
             </div>
@@ -103,12 +116,16 @@
                 <q-btn
                     class="on-left"
                     color="warning"
-                    :label="!isEditing ? 'Guardar como borrador': 'Actualizar como borrador'"
+                    :label="
+                        !isEditing
+                            ? 'Guardar como borrador'
+                            : 'Actualizar como borrador'
+                    "
                     @click="saveAsDraft()"
                 />
                 <q-btn
                     color="secondary"
-                    :label="!isEditing ? 'Guardar y Publicar': 'Actualizar'"
+                    :label="!isEditing ? 'Guardar y Publicar' : 'Actualizar'"
                     @click="saveAsPublic()"
                 />
             </div>
@@ -159,7 +176,7 @@ export default {
                         this.displayLoading = false
                         this.alertTitle = 'Exito!'
                         this.alertMessage =
-                            'Se ha creado el blog en modo draft con exito'
+                            'Se ha actualizado el blog en modo draft con exito'
                         this.alertType = 'success'
                         this.displayAlert = true
                     })
@@ -217,7 +234,7 @@ export default {
                         this.displayLoading = false
                         this.alertTitle = 'Exito!'
                         this.alertMessage =
-                            'Se ha creado el blog en modo draft con exito'
+                            'Se ha actualizado el blog en modo publico con exito'
                         this.alertType = 'success'
                         this.displayAlert = true
                     })
