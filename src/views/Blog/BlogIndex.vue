@@ -16,7 +16,7 @@
                 <q-separator dark />
                 <div
                     style="padding: 35px 0; border-bottom: solid 2px #27a3c3"
-                    v-for="(blog, i) in this.blogs"
+                    v-for="(blog, i) in blogs"
                     :key="i"
                 >
                     <div class="text-h5">{{ blog.title }}</div>
@@ -67,20 +67,14 @@ export default {
             return moment(time).format('DD/MM/YYYY')
         },
     },
-    watch: {
-        blogs(newValue, oldValue) {
-            if (newValue.length > 0) {
-                this.sortedBlogs = newValue.sort((a, b) => {
-                    return moment(b.createdTime).diff(a.createdTime)
-                })
-            }
-        },
-    },
     mounted() {
         this.displayLoading = true
         api.returnPublicBlogs()
             .then(response => {
                 this.blogs = response.data.data
+                this.blogs = this.blogs.sort((a, b) => {
+                    return moment(b.createdTime).diff(a.createdTime)
+                })
             })
             .then(() => {
                 this.displayLoading = false
