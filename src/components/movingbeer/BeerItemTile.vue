@@ -119,6 +119,7 @@ export default {
             return isDuplicate
         },
         async addToCart() {
+            this.$store.commit('SET_DRAWER', true)
             let workingProduct = Object.assign({}, this.product)
             workingProduct.amount = this.amount
             if (this.checkIfDuplicate(workingProduct)) {

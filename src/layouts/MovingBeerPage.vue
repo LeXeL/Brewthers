@@ -5,10 +5,13 @@
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="reset = true; displayAlert = false"
+            @accept="
+                reset = true
+                displayAlert = false
+            "
         ></brewthers-alert>
         <!-- NAVBAR -->
-        <mb-navbar @toggleCart="drawerRight = !drawerRight" />
+        <mb-navbar />
         <!-- END NAVBAR -->
 
         <!-- PAGE CONTAINER -->
@@ -24,7 +27,7 @@
         <!-- SHOPPING CART -->
         <q-drawer
             side="right"
-            v-model="drawerRight"
+            v-model="showDrawer"
             :overlay="mobileDrawer"
             :width="400"
             :breakpoint="500"
@@ -46,24 +49,28 @@
                 </div>
                 <div
                     class="row text-center"
-                    style="margin-top: 300px;"
+                    style="margin-top: 300px"
                     v-if="!data[0].cart || data[0].cart.length == 0"
                 >
                     <div class="col">
-                        <i class="fas fa-beer" style="color: #5c5c5c; font-size: 65px;"></i>
-                        <p
-                            style="color: #5c5c5c; font-size: 18px;"
-                        >Parece que la marea esta baja y no tienes artículos en tu carrito.</p>
+                        <i
+                            class="fas fa-beer"
+                            style="color: #5c5c5c; font-size: 65px"
+                        ></i>
+                        <p style="color: #5c5c5c; font-size: 18px">
+                            Parece que la marea esta baja y no tienes artículos
+                            en tu carrito.
+                        </p>
                     </div>
                 </div>
                 <div
                     class="text-h6 text-right on-left fixed-bottom"
-                    style="bottom: 65px;"
+                    style="bottom: 65px"
                     v-if="data[0].cart.length > 0"
                 >
                     Sub-total
                     <br />
-                    ${{calculateTotal()}}
+                    ${{ calculateTotal() }}
                 </div>
                 <div class="fixed-bottom">
                     <q-btn
@@ -72,8 +79,14 @@
                         label="Checkout"
                         size="lg"
                         square
-                        v-if="data[0].cart.length > 0 && user.status === 'approved'"
-                        @click="$router.push('/checkout'); drawerRight = false"
+                        v-if="
+                            data[0].cart.length > 0 &&
+                            user.status === 'approved'
+                        "
+                        @click="
+                            $router.push('/checkout')
+                            drawerRight = false
+                        "
                     />
                 </div>
             </q-scroll-area>
@@ -102,6 +115,9 @@ export default {
         },
         cart() {
             return this.$store.getters.cart
+        },
+        showDrawer() {
+            return this.$store.getters.showDrawer
         },
     },
     data() {
