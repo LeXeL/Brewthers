@@ -10,6 +10,8 @@ import Confirm from '@/components/general/Confirm'
 //Librerias extras
 import './quasar'
 import firebase from 'firebase/app'
+import 'firebase/analytics'
+
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.config.productionTip = false
@@ -22,23 +24,23 @@ Vue.use(vueSmoothScroll)
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyDA7NamvIWUUuwXN610gjBRehC8rzWUrkg',
+        key: 'AIzaSyARu8fqFprNvVeM2d4I8zy3outjv3G92ko',
         libraries: 'places', // necessary for places input
     },
 })
 
 const configOptions = {
-    apiKey: 'AIzaSyAVLt18TcglgsGFV2Z0ixaZnq-jIUNtmzw',
-    authDomain: 'brewthers-374c0.firebaseapp.com',
-    databaseURL: 'https://brewthers-374c0.firebaseio.com',
-    projectId: 'brewthers-374c0',
-    storageBucket: 'brewthers-374c0.appspot.com',
-    messagingSenderId: '545233478991',
-    appId: '1:545233478991:web:d4b8d225cbb86efcf5513a',
-    measurementId: 'G-9YG0XVM4J4',
+    apiKey: 'AIzaSyCrNwUC-Qae_iVNrkKHxPkQtmhFszGsnv8',
+    authDomain: 'brewthers-91a52.firebaseapp.com',
+    databaseURL: 'https://brewthers-91a52.firebaseio.com',
+    projectId: 'brewthers-91a52',
+    storageBucket: 'brewthers-91a52.appspot.com',
+    messagingSenderId: '802948873878',
+    appId: '1:802948873878:web:5410f25803629ded258cb7',
+    measurementId: 'G-FSTF3WL646',
 }
 firebase.initializeApp(configOptions)
-
+firebase.analytics()
 firebase.auth().onAuthStateChanged(user => {
     // store.dispatch('fetchUser', user)
     if (user && store.getters.user === '') {
