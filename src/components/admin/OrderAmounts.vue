@@ -13,7 +13,7 @@
             filled
             dark
             label="Monto de venta"
-            :value="data.total.toFixed(2)"
+            :value="parseInt(data.total).toFixed(2)"
             readonly
             type="number"
             class="q-mb-md"
