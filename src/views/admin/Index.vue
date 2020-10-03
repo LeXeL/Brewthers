@@ -222,7 +222,7 @@ export default {
             orders.forEach(order => {
                 total += parseFloat(order.total)
             })
-            return parseFloat(total)
+            return parseFloat(total).toFixed(2)
         },
         returnTimeAgo(time) {
             return moment(time).fromNow()
