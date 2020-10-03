@@ -101,13 +101,13 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
+                    <q-btn label="Cancelar" color="red-7" v-close-popup />
                     <q-btn
                         label="Confirmar"
-                        flat
+                        color="secondary"
                         @click="cancelOrder"
                         v-close-popup
                     />
-                    <q-btn label="Cancelar" flat v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>

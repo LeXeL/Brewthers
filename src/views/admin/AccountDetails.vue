@@ -149,9 +149,9 @@
                     </q-card-section>
 
                     <q-card-actions align="right" class="text-primary">
-                        <q-btn flat label="Cancelar" v-close-popup />
+                        <q-btn color="red-7" label="Cancelar" v-close-popup />
                         <q-btn
-                            flat
+                            color="secondary"
                             label="Confirmar"
                             @click="addRejectedReasons()"
                             v-close-popup

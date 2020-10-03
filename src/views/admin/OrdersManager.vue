@@ -134,7 +134,7 @@
                                 {{ props.row.amount }}
                             </q-td>
                             <q-td key="total" :props="props"
-                                >$ {{ props.row.total }}</q-td
+                                >$ {{ props.row.total.toFixed(2) }}</q-td
                             >
                             <q-td key="paymentMethod" :props="props">
                                 {{ props.row.paymentMethod }}
@@ -204,13 +204,13 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
+                    <q-btn label="Cancelar" color="red-7" v-close-popup />
                     <q-btn
                         label="Confirmar"
-                        flat
+                        color="secondary"
                         @click="cancelOrder"
                         v-close-popup
                     />
-                    <q-btn label="Cancelar" flat v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>
