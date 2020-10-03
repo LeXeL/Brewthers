@@ -85,7 +85,7 @@
                         "
                         @click="
                             $router.push('/checkout')
-                            drawerRight = false
+                            $store.commit('SET_DRAWER', false)
                         "
                     />
                 </div>
