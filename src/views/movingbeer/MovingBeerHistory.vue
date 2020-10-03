@@ -135,7 +135,7 @@
                                         <span style="color: #27a3c3"
                                             >Total:</span
                                         >
-                                        $ {{ order.total.toFixed(2) }}
+                                        $ {{ parseInt(order.total).toFixed(2) }}
                                     </div>
                                     <q-btn
                                         v-if="order.status === 'review'"
