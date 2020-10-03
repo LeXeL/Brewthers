@@ -1,0 +1,59 @@
+@font-face {
+    font-family: GilroyExtraBold;
+    src: url('../assets/Gilroy-ExtraBold.otf');
+}
+@font-face {
+    font-family: GilroyLight;
+    src: url('../assets/Gilroy-Light.otf');
+}
+
+.movingbeer-pattern-bg {
+    background-image: url('../assets/pattern.png');
+}
+
+.movingbeer-hero {
+    background-image: url('../assets/movingbeer-bg.jpg');
+    background-position: center;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.custom-caption {
+    text-align: center;
+    padding: 12px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.movingbeer-tile {
+    font-family: GilroyExtraBold;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.movingbeer-tile:hover {
+    cursor: pointer;
+}
+
+.movingbeer-tile:hover .movingbeer-tile-overlay {
+    display: block;
+}
+
+.movingbeer-tile-overlay {
+    display: none;
+}
+
+.movingbeer-item-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.movingbeer-item:hover .movingbeer-item-overlay {
+    display: block;
+}
