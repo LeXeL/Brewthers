@@ -67,7 +67,7 @@ async function createOrder(order) {
             let body = await email.templateHandler('Order-01', order)
             email.sendEmail(
                 order.restaurantId.email,
-                'Hemos recibido tu orden 🍻',
+                'Hemos recibido tu orden 🍺',
                 body
             )
             return 'Succesfull'
@@ -85,7 +85,7 @@ async function updateOrder(id, Obj) {
         let body = await email.templateHandler('Order-04', order)
         email.sendEmail(
             order.restaurantId.email,
-            'Tu orden ha sido rechazada ❌',
+            `Tu orden ${order.id} ha sido rechazada ❌`,
             body
         )
     }
@@ -171,7 +171,7 @@ async function changeOrderStatus(id, status) {
                 let body = await email.templateHandler('Order-02', order)
                 email.sendEmail(
                     order.restaurantId.email,
-                    'Tu orden de Brewthers esta en preparacion 📦',
+                    `Tu orden ${order.id} está siendo preparada 📦`,
                     body
                 )
             }
@@ -184,7 +184,7 @@ async function changeOrderStatus(id, status) {
                 let body = await email.templateHandler('Order-03', order)
                 email.sendEmail(
                     order.restaurantId.email,
-                    'Tu orden de Brewthers esta en camino 🚚',
+                    `Tu orden ${order.id} está en camino 🚚`,
                     body
                 )
             }
