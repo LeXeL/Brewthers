@@ -22,11 +22,7 @@ async function createDatabaseWithUserInfo(user) {
 
 async function updateDatabaseWithUserInfo(uid, obj) {
     let body = await email.templateHandler('User-01', obj)
-    email.sendEmail(
-        obj.email,
-        'Hemos recibido tu solicitud para unirte a brewthers 😎',
-        body
-    )
+    email.sendEmail(obj.email, 'Solicitud – MovingBeer 😎', body)
     return db
         .collection('users')
         .doc(uid)
@@ -127,7 +123,7 @@ async function updateToAproveUser(uid, userObj) {
     let body = await email.templateHandler('User-02', userObj)
     email.sendEmail(
         userObj.email,
-        'Hey tu cuenta de Brewthers ha sido aprovada ✔',
+        'Su cuenta de MovingBeer ha sido aprobada 🙌🏼',
         body
     )
 
@@ -148,7 +144,7 @@ async function updateToRejectUser(uid, userObj) {
     let body = await email.templateHandler('User-03', userObj)
     email.sendEmail(
         userObj.email,
-        'Hey tu cuenta de Brewthers ha sido rechasada 👎🏼',
+        'Su cuenta de MovingBeer ha sido rechazada 😭',
         body
     )
     return db

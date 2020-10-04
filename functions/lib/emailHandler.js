@@ -15,23 +15,26 @@ const transporter = nodemailer.createTransport({
 function templateUser01(info) {
     return `<div class="email-content">
     <p>
-    Hola ${info.name} ${info.lastName} 
-
-    Te damos la bienvenida a la aplicacion de Brewthers.
-
-    Pronto un administrador revisara tu solicitud, si llegara a existir algo que cambiar
-    te llegara un correo con los datos que pide el administrador y los podras cambiar en tu perfil dentro de la aplicacion.
-
-    De lo contrario te enviaremos un correo cuando tu cuenta este lista y activada para que puedas realizar tus pedidos.
-
-    Muchas Gracias.
+        Bienvenido a nuestro servicio de Moving Beer,
+    Pronto estaremos atendiendo su solicitud, de necesitar alguna corrección se lo indicaremos al
+    correo electrónico suministrado. De lo contrario, le llegará un correo indicando que su cuenta esta
+    activa y lista para ser usada.
+    Gracias ${info.restaurantName} por elegir MovingBeer, es un gusto para nosotros suministrarte la
+    cerveza.
+    Salud!
     </p>
   </div>`
 }
 function templateUser02(info) {
     return `<div class="email-content">
     <p>
-    Hola ${info.name} ${info.lastName} tu cuenta del restaurante ${info.restaurantName} ha sido Aprovada
+    Su cuenta de ${info.restaurantName} ha sido aprobada y está lista para pedir cerveza.
+    Estamos contentos de poder contar con ustedes como parte de nuestros clientes, nos
+    encargaremos que la cerveza no les falte y que lo más complicado sea decidir cuál elegir. Del resto
+    nos encargamos nosotros.
+    Atentamente,
+    
+    Equipo Brewthers
     </p>
   </div>`
 }
@@ -43,12 +46,18 @@ function templateUser03(info) {
     })
     return `<div class="email-content">
     <p>
-    Hola ${info.name} ${info.lastName} tu cuenta del restaurante ${info.restaurantName} ha sido Rechasada
-
-    Por las siguientes razones:
+    Su cuenta de (nombre comercio) ha sido rechazada porque 
+   
     <ol>
           ${reason}
         </ol>
+
+    Por favor realizar la corrección señalada dentro de su perfil creado en nuestra página web.
+    En caso de existir un error, pedimos disculpas por el inconveniente y puede contactarse con
+    nosotros a movingbeer3@gmail.com.
+    Atentamente,
+
+    Equipo Brewthers
     </p>
   </div>`
 }
@@ -59,26 +68,34 @@ async function templateOrder01(info) {
     })
     return `<div class="email-content">
     <p>
-    Hola ${info.restaurantId.name} ${info.restaurantId.lastName} tu cuenta del restaurante ${info.restaurantId.restaurantName} ha sido Rechasada
+    En breve le estaremos contactando al número de teléfono suministrado en su perfil, para que
+    juntos revisemos y validemos la orden generada y pasar a la preparación.
+    Saludos,
 
-    Por las siguientes razones:
-    <ul>
-          ${cart}
-    </ul>
+    Equipo Bewthers
     </p>
   </div>`
 }
 async function templateOrder02(info) {
     return `<div class="email-content">
     <p>
-    Tu order No ${info.id} esta en preparacion!
+    Ya estamos preparando tu orden ${info.id}.
+    Puedes revisar el estado de tu pedido dentro de nuestra página web, pronto nos estaremos
+    contactando para coordinar la entrega.
+    Saludos,
+
+    Equipo Brewthers
     </p>
   </div>`
 }
 async function templateOrder03(info) {
     return `<div class="email-content">
     <p>
-    Tu order No ${info.id} esta en camino!
+    Estamos felices de poder decirte que la cerveza está en camino, contamos con la dirección del
+    local pero puede que nuestro conductor se contacte para confirmar la hora de entrega.
+    Gracias por elegir MovingBeer.
+
+    Equipo Bewthers
     </p>
   </div>`
 }
@@ -90,12 +107,12 @@ function templateOrder04(info) {
     })
     return `<div class="email-content">
         <p>
-        Hola ${info.restaurantId.name} ${info.restaurantId.lastName} tu orden No ${info.id} ha sido Rechasada
+        Agradecemos tu compresión y te pedimos disculpas por los inconvenientes que hayan podido
+    ocasionar este rechazo. Trataremos de hacer todo lo posible para que no vuelva a suceder.
+    En caso ya hayas sido contactado para verificar tu orden, favor ignorar este correo.
+    Saludos,
 
-        Por las siguientes razones:
-        <ol>
-              ${reason}
-            </ol>
+    Equipo Brewthers
         </p>
       </div>`
 }
