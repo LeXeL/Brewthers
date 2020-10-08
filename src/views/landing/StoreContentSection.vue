@@ -1,15 +1,48 @@
 <template>
     <div
         class="pattern-bg q-pa-xl"
-        style="height: auto; background-repeat: repeat-y; background-position: top;"
+        style="
+            height: auto;
+            background-repeat: repeat-y;
+            background-position: top;
+        "
     >
         <div class="row q-mb-lg q-mt-xl justify-center">
-            <q-btn-group push class="desktop-only" style="font-family: GilroyExtraBold;">
-                <q-btn color="primary" push label="Cervezas" @click="categorySelected = 'beer'" />
-                <q-btn color="primary" push label="T-shirts" @click="categorySelected = 'tshirt'" />
-                <q-btn color="primary" push label="Gorras" @click="categorySelected = 'cap'" />
-                <q-btn color="primary" push label="Vasos" @click="categorySelected = 'cup'" />
-                <q-btn color="primary" push label="Todo" @click="categorySelected = 'all'" />
+            <q-btn-group
+                push
+                class="desktop-only"
+                style="font-family: GilroyExtraBold"
+            >
+                <q-btn
+                    color="primary"
+                    push
+                    label="Cervezas"
+                    @click="categorySelected = 'beer'"
+                />
+                <q-btn
+                    color="primary"
+                    push
+                    label="T-shirts"
+                    @click="categorySelected = 'tshirt'"
+                />
+                <q-btn
+                    color="primary"
+                    push
+                    label="Gorras"
+                    @click="categorySelected = 'cap'"
+                />
+                <q-btn
+                    color="primary"
+                    push
+                    label="Vasos"
+                    @click="categorySelected = 'cup'"
+                />
+                <q-btn
+                    color="primary"
+                    push
+                    label="Todo"
+                    @click="categorySelected = 'all'"
+                />
             </q-btn-group>
             <q-select
                 filled
@@ -25,16 +58,16 @@
             <div class="text-h6 text-center full-width">
                 Todo pedido de mercancia debe ser realizado a traves denuestro
                 numero de
-                <i
-                    class="fab fa-whatsapp"
-                ></i>&nbsp;
+                <i class="fab fa-whatsapp"></i>&nbsp;
                 <a href="https://wa.me/50768585745">Whatsapp</a> o
                 <i class="fab fa-instagram"></i>&nbsp;
-                <a href="https://www.instagram.com/brew.thers/" target="_blank">Instagram</a>.
+                <a href="https://www.instagram.com/brew.thers/" target="_blank"
+                    >Instagram</a
+                >.
             </div>
             <div
                 class="text-h6 text-center full-width"
-                style="font-family: GilroyLight; font-size: 15px;"
+                style="font-family: GilroyLight; font-size: 15px"
                 v-if="categorySelected == 'beer'"
             >
                 ¿Interesado en comprar caja o keg? ¡Dirígete a
@@ -43,7 +76,8 @@
                     style="color: #27a3c3"
                     v-smooth-scroll
                     @click="$emit('setContactReason')"
-                >Contáctanos!</a>
+                    >Contáctanos!</a
+                >
             </div>
         </div>
         <div class="row">
@@ -59,15 +93,20 @@
                 />
                 <div
                     class="text-h6 text-center"
-                    style="font-family: GilroyExtraBold;"
-                >{{ item.name }} - ${{ item.price.toFixed(2) }}</div>
+                    style="font-family: GilroyExtraBold"
+                >
+                    {{ item.name }}
+                    {{
+                        item.price !== 0 ? ' - $ ' + item.price.toFixed(2) : ''
+                    }}
+                </div>
             </div>
         </div>
         <div class="row">
             <p class="title-section-link full-width" style="text-align: center">
                 <i
                     class="fas fa-chevron-up"
-                    style="font-size: 40px;"
+                    style="font-size: 40px"
                     @click="$emit('toggleSection')"
                 ></i>
             </p>
@@ -113,67 +152,67 @@ export default {
             items: [
                 {
                     name: 'Einstein Pack',
-                    price: 17,
+                    price: 18,
                     photo: 'einstein.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'Sócrates Pack',
-                    price: 17,
+                    price: 18,
                     photo: 'socrates.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'René D. Pack',
-                    price: 17,
+                    price: 18,
                     photo: 'rene.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'Platón Pack',
-                    price: 17,
+                    price: 18,
                     photo: 'platon.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'Nietzsche Pack',
-                    price: 17,
+                    price: 18,
                     photo: 'nietzsche.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'Da Vinci Pack',
-                    price: 17,
+                    price: 18,
                     photo: 'davinci.jpg',
                     category: 'beer',
                 },
                 {
                     name: 'Logo Brewthers',
-                    price: 17,
+                    price: 0,
                     photo: 'item_1.jpg',
                     category: 'tshirt',
                 },
                 {
                     name: 'Una es Ninguna',
-                    price: 17,
+                    price: 0,
                     photo: 'item_2.jpg',
                     category: 'tshirt',
                 },
                 {
                     name: 'Brewthers',
-                    price: 17,
+                    price: 0,
                     photo: 'item_3.jpg',
                     category: 'tshirt',
                 },
                 {
                     name: 'Brewthers Owl',
-                    price: 17,
+                    price: 0,
                     photo: 'item_4.jpg',
                     category: 'tshirt',
                 },
                 {
                     name: 'Brewthers Owl',
-                    price: 17,
+                    price: 0,
                     photo: 'item_5.jpg',
                     category: 'tshirt',
                 },
