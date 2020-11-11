@@ -62,10 +62,14 @@ export default {
     },
     async mounted() {
         if (this.$store.getters.brewerys.length > 1) {
-            this.brewers = this.$store.getters.brewerys
+            this.brewers = this.$store.getters.brewerys.filter(
+                brewery => brewery.status === 'active'
+            )
         } else {
             await api.returnAllBrewerys().then(response => {
-                this.brewers = response.data.data
+                this.brewers = response.data.data.filter(
+                    brewery => brewery.status === 'active'
+                )
             })
         }
         await api.returnAllProducts().then(response => {

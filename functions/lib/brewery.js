@@ -49,7 +49,7 @@ async function returnAllBrewerys() {
     let brewery = []
     await db
         .collection('brewery')
-        .where('status', '==', 'active')
+        // .where('status', '==', 'active')
         .get()
         .then(snapshot => {
             if (snapshot.empty) {

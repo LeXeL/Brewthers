@@ -47,12 +47,7 @@
                                 class="q-mb-md full-width"
                                 dark
                                 label="Casa"
-                                :value="
-                                    brewerys.filter(brewery => {
-                                        if (brewery.id === data.brewery)
-                                            return brewery
-                                    })[0].name
-                                "
+                                :value="returnBreweryName(data.brewery)"
                                 readonly
                             />
                             <q-input
@@ -210,6 +205,11 @@ export default {
         }
     },
     methods: {
+        returnBreweryName(breweryId) {
+            let brewery = ''
+            brewery = this.brewerys.find(brewery => brewery.id === breweryId)
+            return !!brewery ? brewery.name : 'NaN'
+        },
         handleData() {
             //Si editGeneralInfo es falso ponlo true y ya.
             if (!this.editInformation) {
