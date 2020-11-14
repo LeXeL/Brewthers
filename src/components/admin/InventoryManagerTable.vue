@@ -13,7 +13,12 @@
                 <q-td key="name" :props="props">
                     {{ props.row.name }}
                     <q-popup-edit
-                        @save="validateInput({id:props.row.id,newName:props.row.name})"
+                        @save="
+                            validateInput({
+                                id: props.row.id,
+                                newName: props.row.name,
+                            })
+                        "
                         v-model="props.row.name"
                         title="Actualizar nombre"
                         buttons
@@ -30,22 +35,33 @@
                     </q-popup-edit>
                 </q-td>
                 <q-td key="type" :props="props">
-                    {{
-                    props.row.type
-                    }}
+                    {{ props.row.type }}
                 </q-td>
-                <q-td key="inventory" :props="props">{{ props.row.inventory }}</q-td>
-                <q-td
-                    key="brewery"
-                    :props="props"
-                    v-if="brewerys"
-                >{{ brewerys.filter(brewery=> {if(brewery.id === props.row.brewery) return brewery})[0].name }}</q-td>
+                <q-td key="inventory" :props="props">{{
+                    props.row.inventory
+                }}</q-td>
+                <q-td key="brewery" :props="props" v-if="brewerys">{{
+                    returnBreweryName(props.row.brewery)
+                }}</q-td>
                 <q-td key="status" :props="props">
                     <q-btn
-                        :color="props.row.status == 'inactive' ? 'secondary' : 'warning'"
+                        :color="
+                            props.row.status == 'inactive'
+                                ? 'secondary'
+                                : 'warning'
+                        "
                         size="xs"
-                        :label="props.row.status == 'inactive' ? 'Activar' : 'Desactivar'"
-                        @click="$emit('changestatus',{id:props.row.id,status:props.row.status})"
+                        :label="
+                            props.row.status == 'inactive'
+                                ? 'Activar'
+                                : 'Desactivar'
+                        "
+                        @click="
+                            $emit('changestatus', {
+                                id: props.row.id,
+                                status: props.row.status,
+                            })
+                        "
                     />
                 </q-td>
                 <q-td>
@@ -61,7 +77,7 @@
                         color="red-7"
                         size="xs"
                         label="Eliminar"
-                        @click="$emit('delete',{id:props.row.id})"
+                        @click="$emit('delete', {id: props.row.id})"
                     />
                 </q-td>
             </q-tr>
@@ -142,6 +158,11 @@ export default {
         }
     },
     methods: {
+        returnBreweryName(breweryId) {
+            let brewery = ''
+            brewery = this.brewerys.find(brewery => brewery.id === breweryId)
+            return !!brewery ? brewery.name : 'NaN'
+        },
         validateInput(event) {
             if (event.newName.length > 0) {
                 this.$emit('namechange', {id: event.id, newName: event.newName})

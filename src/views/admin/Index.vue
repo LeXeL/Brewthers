@@ -8,13 +8,7 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div
-            v-if="
-                Object.keys(data).length !== 0 &&
-                Object.keys(users).length !== 0 &&
-                restaurants.length > 0
-            "
-        >
+        <div v-if="Object.keys(users).length !== 0 && restaurants.length > 0">
             <div class="text-h5 q-mb-md">
                 Bienvenido, {{ `${user.name} ${user.lastName}` }}
             </div>

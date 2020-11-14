@@ -2,7 +2,11 @@
     <div v-if="!!brewerys.length">
         <VueSlickCarousel v-bind="carouselSettings">
             <div v-for="(brewery, i) in brewerys" :key="i">
-                <img :src="brewery.photoLocation" width="100%" class="q-pa-md carousel-img" />
+                <img
+                    :src="brewery.photoLocation"
+                    width="100%"
+                    class="q-pa-md carousel-img"
+                />
             </div>
         </VueSlickCarousel>
     </div>
@@ -15,7 +19,9 @@ import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 export default {
     computed: {
         brewerys() {
-            return this.$store.getters.brewerys
+            return this.$store.getters.brewerys.filter(
+                brewery => brewery.status === 'active'
+            )
         },
     },
     data() {
