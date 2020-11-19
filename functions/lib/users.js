@@ -53,6 +53,7 @@ async function updateDatabaseWithAdminInfo(uid, obj) {
         .collection('users')
         .doc(uid)
         .update({
+            cart: [],
             name: obj.name,
             lastName: obj.lastName,
             role: 'admin',
