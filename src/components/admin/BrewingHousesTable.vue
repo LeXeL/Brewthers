@@ -1,6 +1,6 @@
 <template>
     <q-table
-        title="Treats"
+        title="Casas cerveceras"
         :data="data"
         :columns="columns"
         row-key="name"
