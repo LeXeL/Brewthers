@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div>
     <q-table
       title="Casas cerveceras activas"
       :data="data"

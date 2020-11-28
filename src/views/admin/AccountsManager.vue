@@ -12,7 +12,7 @@
         <div class="row q-mb-lg">
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
             
-                <active-accounts-table
+                <active-accounts-table class="q-mb-md"
                     :data="
                         users.filter(user => {
                             if (
