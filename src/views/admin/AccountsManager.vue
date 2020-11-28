@@ -11,6 +11,7 @@
         <div class="text-h5 q-mb-md">Administrador de cuentas</div>
         <div class="row q-mb-lg">
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
+            
                 <active-accounts-table
                     :data="
                         users.filter(user => {
@@ -22,6 +23,7 @@
                         })
                     "
                 ></active-accounts-table>
+                <active-brewing-houses-table></active-brewing-houses-table>
             </div>
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <pending-accounts-table
@@ -125,6 +127,7 @@ import * as api from '@/api/api'
 import ActiveAccountsTable from '@/components/admin/ActiveAccountsTable'
 import PendingAccoutsTable from '@/components/admin/PendingAccountsTable'
 import AdminAccountsTable from '@/components/admin/AdminAccountsTable'
+import ActiveBrewingHousesTable from '@/components/admin/ActiveBrewingHousesTable'
 
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -234,6 +237,7 @@ export default {
         'active-accounts-table': ActiveAccountsTable,
         'pending-accounts-table': PendingAccoutsTable,
         'admin-accounts-table': AdminAccountsTable,
+        'active-brewing-houses-table': ActiveBrewingHousesTable,
     },
     mounted() {
         let db = firebase.firestore()
