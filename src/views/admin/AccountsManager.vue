@@ -11,21 +11,6 @@
         <div class="text-h5 q-mb-md">Administrador de cuentas</div>
         <div class="row q-mb-lg">
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
-            
-                <active-accounts-table class="q-mb-md"
-                    :data="
-                        users.filter(user => {
-                            if (
-                                user.status === 'approved' &&
-                                user.role !== 'admin'
-                            )
-                                return user
-                        })
-                    "
-                ></active-accounts-table>
-                <active-brewing-houses-table></active-brewing-houses-table>
-            </div>
-            <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <pending-accounts-table
                     :data="
                         users.filter(user => {
@@ -38,6 +23,20 @@
                         })
                     "
                 ></pending-accounts-table>
+                <active-accounts-table class="q-mb-md"
+                    :data="
+                        users.filter(user => {
+                            if (
+                                user.status === 'approved' &&
+                                user.role !== 'admin'
+                            )
+                                return user
+                        })
+                    "
+                ></active-accounts-table>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
+                <active-brewing-houses-table class="q-mb-md"></active-brewing-houses-table>
                 <admin-accounts-table
                     :data="
                         users.filter(user => {
