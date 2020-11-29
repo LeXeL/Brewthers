@@ -221,6 +221,21 @@
                 </q-card-actions>
             </q-card>
         </q-dialog>
+        <q-dialog v-model="brewingHouseRegisterDialog">
+            <q-card dark>
+                <q-card-section class="text-center">
+                    <q-img :src="require('@/assets/brewthers-logo.png')" style="width: 150px"/>
+                </q-card-section>
+                <q-card-section>
+                    <div class="text-h5 text-center">¿Quieres vender tus productos con nosotros?</div>
+                </q-card-section>
+                <q-card-actions>
+                    <q-space/>
+                    <q-btn color="primary" flat label="registro de restaurantes" v-close-popup/>
+                    <q-btn color="secondary" label="vender" @click="$router.push('/create-account-brewing-house')"/>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </q-page>
 </template>
 
@@ -259,6 +274,7 @@ export default {
                 location: null,
                 ruc: '',
             },
+            brewingHouseRegisterDialog: true,
             dismissSecs: 15,
             dismissCountDown: 0,
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
