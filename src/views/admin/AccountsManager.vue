@@ -35,8 +35,9 @@
                     "
                 ></active-accounts-table>
             </div>
+
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
-                <active-brewing-houses-table class="q-mb-md"></active-brewing-houses-table>
+                <active-brewing-houses-table class="q-mb-md" @open-new-brewing-houses="openNewBrewingHouses()"></active-brewing-houses-table>
                 <admin-accounts-table
                     :data="
                         users.filter(user => {
@@ -117,6 +118,31 @@
                 </q-form>
             </q-card>
         </q-dialog>
+
+        <q-dialog v-model="brewingHousesRegisterDialog" persistent>
+            <q-card dark>
+                <q-card-section>
+                    <div class="text-h6">Nueva cuenta de casa cervecera</div>
+                </q-card-section>
+    
+                <q-card-section>
+                    <q-input dark filled label="Nombre de casa cervecera" color="primary" class="q-mb-md" />
+                    <q-input dark filled label="RUC" color="primary" class="q-mb-md" />
+                    <q-input dark filled label="Nombre" color="primary" class="q-mb-md" />
+                    <q-input dark filled label="Apellido" color="primary" class="q-mb-md" />
+                    <q-input dark filled label="Correo" color="primary" class="q-mb-md" />
+                    <q-input dark filled label="Celular" color="primary" class="q-mb-md" mask="####-####" fill-mask />
+                    <q-input dark filled label="Contraseña" color="primary" class="q-mb-md" />
+                    <q-input dark filled label="Repetir la contraseña" color="primary" class="q-mb-md" />
+                </q-card-section>
+                <q-card-actions>
+                    <q-btn flat color="secondary" label="Registrar"/>
+                    <q-btn flat color="red-7" label="Cancelar" @click="brewingHousesRegisterDialog = false" />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
     </div>
 </template>
 
@@ -148,9 +174,16 @@ export default {
             alertType: '',
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            brewingHousesRegisterDialog: false
         }
+
     },
     methods: {
+
+        openNewBrewingHouses(){
+            this.brewingHousesRegisterDialog = true
+        },
+
         openNewAdminAccountDialog() {
             this.prompt = true
         },
