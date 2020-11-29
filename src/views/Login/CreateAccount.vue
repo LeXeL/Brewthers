@@ -207,7 +207,7 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    Hemos recivido tu información satisfactoriamente. Uno de
+                    Hemos recibido tu información satisfactoriamente. Uno de
                     nuestros administradores aprobará tu cuenta para que
                     empieces a realizar pedidos.
                     <br />
