@@ -15,8 +15,16 @@
                     <div class="row q-mb-md">
                         <q-input
                             filled
-                            label="Nombre del restaurante"
+                            label="Nombre del comercio"
                             :value="data.restaurantName"
+                            class="q-mb-md full-width"
+                            dark
+                            readonly
+                        />
+                        <q-input
+                            filled
+                            label="Tipo de cuenta"
+                            :value="data.role"
                             class="q-mb-md full-width"
                             dark
                             readonly
@@ -113,9 +121,17 @@
                         :markers="[{position: data.location}]"
                         :mapCenter="data.location"
                     ></GoogleMaps>
-
                     <div class="row">
-                        <q-space />
+                        <q-select
+                            :options="['Casa Bruja', 'Central', 'Rana Dorada']"
+                            label="Seleccione casa cervecera a enlazar"
+                            class="full-width q-mb-md"
+                            v-model="linkBrewingHouse"
+                            dark
+                            filled
+                        />
+                    </div>
+                    <div class="row">
                         <q-btn
                             v-if="data.status != 'approved'"
                             color="secondary"
@@ -183,6 +199,7 @@ export default {
             rejectDialog: false,
             group: [],
             data: '',
+            linkBrewingHouse: '',
             options: [
                 {
                     label: 'No representa un comercio',
