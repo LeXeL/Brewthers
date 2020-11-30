@@ -11,6 +11,7 @@ import TermsAndConditionsPage from './layouts/TermsAndConditionsPage'
 //Views
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
+import CreateBrewingHouseAccount from './views/Login/CreateBrewingHouseAccount'
 import ResetPassword from './views/Login/ResetPassword.vue'
 import ForgotPassword from './views/Login/ForgotPassword.vue'
 import MovingBeerIndex from './views/movingbeer/MovingBeerIndex.vue'
@@ -125,6 +126,11 @@ export default new Router({
                     path: '/createaccount',
                     name: 'create account',
                     component: CreateAccount,
+                },
+                {
+                    path: '/create-account-brewing-house',
+                    name: 'create account brewing house',
+                    component: CreateBrewingHouseAccount,
                 },
                 {
                     path: '/resetpassword',
