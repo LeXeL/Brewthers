@@ -17,6 +17,7 @@
                     v-for="(link, i) in drawerLinks"
                     :key="i"
                     :to="link.link"
+                    class="text-white"
                 >
                     <q-avatar rounded>
                         <i :class="link.icon" style="font-size: 15px;"></i>

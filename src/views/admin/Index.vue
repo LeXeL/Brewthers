@@ -9,7 +9,7 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div v-if="Object.keys(users).length !== 0 && restaurants.length > 0">
-            <div class="text-h5 q-mb-md">
+            <div class="text-h5 q-mb-md text-white">
                 Bienvenido, {{ `${user.name} ${user.lastName}` }}
             </div>
             <div class="row q-mb-lg">
