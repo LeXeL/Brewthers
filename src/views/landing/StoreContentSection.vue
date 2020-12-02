@@ -1,6 +1,6 @@
 <template>
     <div
-        class="pattern-bg q-pa-xl"
+        class="pattern-bg q-pa-xl text-white"
         style="
             height: auto;
             background-repeat: repeat-y;
@@ -59,9 +59,14 @@
                 Todo pedido de mercancia debe ser realizado a traves denuestro
                 numero de
                 <i class="fab fa-whatsapp"></i>&nbsp;
-                <a href="https://wa.me/50768585745">Whatsapp</a> o
-                <i class="fab fa-instagram"></i>&nbsp;
-                <a href="https://www.instagram.com/brew.thers/" target="_blank"
+                <a href="https://wa.me/50768585745" class="text-white"
+                    >Whatsapp</a
+                >
+                o <i class="fab fa-instagram"></i>&nbsp;
+                <a
+                    href="https://www.instagram.com/brew.thers/"
+                    class="text-white"
+                    target="_blank"
                     >Instagram</a
                 >.
             </div>

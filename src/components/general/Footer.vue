@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div class="row">
+        <div class="row text-white">
             <div class="col-lg-3 col-md-4 desktop-only">
                 <img src="@/assets/brewthers-logo.png" width="60%" />
             </div>
@@ -14,6 +14,7 @@
                             :href="link.landing"
                             v-smooth-scroll
                             style="text-decoration: none;"
+                            class="text-white"
                         >
                             {{ link.text }}
                         </a>
@@ -22,6 +23,7 @@
                         <router-link
                             to="/terminos-y-condiciones"
                             style="text-decoration: none;"
+                            class="text-white"
                             >Terminos & Condiciones</router-link
                         >
                     </li>
@@ -32,7 +34,9 @@
                     Contacto
                 </div>
                 <p style="margin-top: 12px;">(+507) 6216-6095</p>
-                <a href="mailto:brewthers3@gmail.com">brewthers3@gmail.com</a>
+                <a href="mailto:brewthers3@gmail.com" class="text-white"
+                    >brewthers3@gmail.com</a
+                >
             </div>
             <div class="col-lg-3 col-md-4 q-pr-md">
                 <div
@@ -42,14 +46,20 @@
                     Conectate
                 </div>
                 <a href="https://www.instagram.com/brew.thers/" target="_blank">
-                    <i class="fab fa-instagram" style="font-size: 40px;"></i>
+                    <i
+                        class="fab fa-instagram text-white"
+                        style="font-size: 40px;"
+                    ></i>
                 </a>
                 <a
                     href="https://www.facebook.com/brew.thers3/"
                     class="on-right"
                     target="_blank"
                 >
-                    <i class="fab fa-facebook" style="font-size: 40px;"></i>
+                    <i
+                        class="fab fa-facebook text-white"
+                        style="font-size: 40px;"
+                    ></i>
                 </a>
                 <br />
                 <br />

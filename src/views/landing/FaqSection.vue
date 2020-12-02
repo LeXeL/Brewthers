@@ -1,13 +1,17 @@
 <template>
-    <div class="pattern-bg faq-section">
+    <div class="pattern-bg faq-section text-white">
         <h2 class="title-section">FAQ</h2>
         <h4 class="desktop-only">
             ¿Tienes alguna duda o necesitas ayuda? Chequea estas preguntas
             frecuentes para ver si encuentras la información que estas buscando.
         </h4>
         <div v-for="(faq, i) in faqs" :key="i">
-            <h5 @click="hideAllQuestionExceptSelected(i)" class="desktop-only">{{ faq.q }}</h5>
-            <h5 @click="displayFaqPrompt(i)" class="mobile-only">{{ faq.q }}</h5>
+            <h5 @click="hideAllQuestionExceptSelected(i)" class="desktop-only">
+                {{ faq.q }}
+            </h5>
+            <h5 @click="displayFaqPrompt(i)" class="mobile-only">
+                {{ faq.q }}
+            </h5>
             <q-slide-transition class="desktop-only">
                 <div v-show="faq.show">
                     <p v-html="faq.a">{{ faq.a }}</p>
@@ -16,7 +20,9 @@
         </div>
         <q-dialog v-model="faqPrompt">
             <q-card dark style="background-color: #111;">
-                <q-card-section v-html="faqs[promptAns].a">{{ faqs[promptAns].a }}</q-card-section>
+                <q-card-section v-html="faqs[promptAns].a">{{
+                    faqs[promptAns].a
+                }}</q-card-section>
                 <q-card-actions align="right">
                     <q-btn flat label="¡Fino!" color="primary" v-close-popup />
                 </q-card-actions>
