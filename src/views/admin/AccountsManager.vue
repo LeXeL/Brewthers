@@ -190,6 +190,7 @@
                     />
                 </q-card-section>
                 <q-card-actions>
+                    <q-space />
                     <q-btn flat color="secondary" label="Registrar" />
                     <q-btn
                         flat

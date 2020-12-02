@@ -4,7 +4,7 @@
             Exclusividad y precios - Restaurant Name
         </div>
         <div class="row q-px-md">
-            <div class="col-lg-6">
+            <div class="col-lg-6 q-pa-md">
                 <q-table
                     title="Casas cerveceras"
                     :data="data"
@@ -23,7 +23,6 @@
                                     v-model="props.row.canBuy"
                                     color="primary"
                                 />
-                                <!-- <q-checkbox v-model="props.row.canBuy" /> -->
                             </q-td>
                             <q-td>
                                 <q-btn
@@ -36,6 +35,46 @@
                         </q-tr>
                     </template>
                 </q-table>
+            </div>
+            <div class="col-lg-6 q-pa-md">
+                <q-card class="full-width" dark>
+                    <q-card-section>
+                        <div class="text-h6">Cervezas - Beer House Name</div>
+                    </q-card-section>
+                    <q-card-section>
+                        <div
+                            class="row q-mb-lg"
+                            v-for="(beer, i) in beers"
+                            :key="i"
+                        >
+                            <div class="col">
+                                <div class="text-subtitle1">
+                                    {{ beer.name }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="text-subtitle1 text-center">
+                                    $ {{ beer.basePrice.toFixed(2) }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <q-input
+                                    filled
+                                    dark
+                                    dense
+                                    type="number"
+                                    color="primary"
+                                    label="Precio especial"
+                                    :value="beer.basePrice.toFixed(2)"
+                                />
+                            </div>
+                        </div>
+                    </q-card-section>
+                    <q-card-actions>
+                        <q-space />
+                        <q-btn flat color="primary" label="Guardar" />
+                    </q-card-actions>
+                </q-card>
             </div>
         </div>
     </q-page>
@@ -66,20 +105,38 @@ export default {
             ],
             data: [
                 {
-                    name: 'Brewing House Name',
+                    name: 'Casa Bruja',
                     canBuy: true,
                 },
                 {
-                    name: 'Brewing House Name',
+                    name: 'Boquete Brewing Co.',
                     canBuy: true,
                 },
                 {
-                    name: 'Brewing House Name',
+                    name: 'Cerveceria Central',
                     canBuy: true,
                 },
                 {
-                    name: 'Brewing House Name',
+                    name: 'La Murga',
                     canBuy: true,
+                },
+            ],
+            beers: [
+                {
+                    name: 'Nombre de la cerveza',
+                    basePrice: 15.5,
+                },
+                {
+                    name: 'Nombre de la cerveza',
+                    basePrice: 15.5,
+                },
+                {
+                    name: 'Nombre de la cerveza',
+                    basePrice: 15.5,
+                },
+                {
+                    name: 'Nombre de la cerveza',
+                    basePrice: 15.5,
                 },
             ],
         }
