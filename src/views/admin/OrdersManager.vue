@@ -8,7 +8,7 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div class="text-h5 q-mb-md">Administrador de ordernes</div>
+        <div class="text-h5 q-mb-md text-white">Administrador de ordernes</div>
         <div class="row">
             <q-space class="desktop-only" />
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
@@ -165,7 +165,9 @@
                                     color="info"
                                     size="xs"
                                     label="Detalles"
-                                    :to="`/order-details/${props.row.firebaseId}`"
+                                    :to="
+                                        `/order-details/${props.row.firebaseId}`
+                                    "
                                 />
                             </q-td>
                             <q-td>
@@ -176,7 +178,7 @@
                                     @click="asingWorkingorder(props.row)"
                                     :disable="
                                         props.row.status == 'cancel' ||
-                                        props.row.status === 'completed'
+                                            props.row.status === 'completed'
                                     "
                                 />
                             </q-td>

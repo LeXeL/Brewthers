@@ -1,5 +1,5 @@
 <template>
-    <q-page>
+    <q-page class="text-white">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -92,4 +92,3 @@ export default {
     },
 }
 </script>
-

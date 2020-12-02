@@ -1,6 +1,6 @@
 <template>
     <q-page class="q-pa-md">
-        <div class="text-h5 q-mb-md">Reportes Brewthers</div>
+        <div class="text-h5 q-mb-md text-white">Reportes Brewthers</div>
         <div class="row">
             <div class="col">
                 <q-table
@@ -15,13 +15,15 @@
                     <template v-slot:body="props">
                         <q-tr :props="props">
                             <q-td key="name" :props="props">
-                                {{
-                                props.row.name
-                                }}
+                                {{ props.row.name }}
                             </q-td>
 
                             <q-td>
-                                <q-btn color="info" size="sm" label="EXPORTAR CSV" />
+                                <q-btn
+                                    color="info"
+                                    size="sm"
+                                    label="EXPORTAR CSV"
+                                />
                             </q-td>
                         </q-tr>
                     </template>

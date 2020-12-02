@@ -8,7 +8,7 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div class="text-h5 q-mb-md">Administrador de cuentas</div>
+        <div class="text-h5 q-mb-md text-white">Administrador de cuentas</div>
         <div class="row q-mb-lg">
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <pending-accounts-table
@@ -23,7 +23,8 @@
                         })
                     "
                 ></pending-accounts-table>
-                <active-accounts-table class="q-mb-md"
+                <active-accounts-table
+                    class="q-mb-md"
                     :data="
                         users.filter(user => {
                             if (
@@ -37,7 +38,10 @@
             </div>
 
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
-                <active-brewing-houses-table class="q-mb-md" @open-new-brewing-houses="openNewBrewingHouses()"></active-brewing-houses-table>
+                <active-brewing-houses-table
+                    class="q-mb-md"
+                    @open-new-brewing-houses="openNewBrewingHouses()"
+                ></active-brewing-houses-table>
                 <admin-accounts-table
                     :data="
                         users.filter(user => {
@@ -124,25 +128,79 @@
                 <q-card-section>
                     <div class="text-h6">Nueva cuenta de casa cervecera</div>
                 </q-card-section>
-    
+
                 <q-card-section>
-                    <q-input dark filled label="Nombre de casa cervecera" color="primary" class="q-mb-md" />
-                    <q-input dark filled label="RUC" color="primary" class="q-mb-md" />
-                    <q-input dark filled label="Nombre" color="primary" class="q-mb-md" />
-                    <q-input dark filled label="Apellido" color="primary" class="q-mb-md" />
-                    <q-input dark filled label="Correo" color="primary" class="q-mb-md" />
-                    <q-input dark filled label="Celular" color="primary" class="q-mb-md" mask="####-####" fill-mask />
-                    <q-input dark filled label="Contraseña" color="primary" class="q-mb-md" />
-                    <q-input dark filled label="Repetir la contraseña" color="primary" class="q-mb-md" />
+                    <q-input
+                        dark
+                        filled
+                        label="Nombre de casa cervecera"
+                        color="primary"
+                        class="q-mb-md"
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="RUC"
+                        color="primary"
+                        class="q-mb-md"
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="Nombre"
+                        color="primary"
+                        class="q-mb-md"
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="Apellido"
+                        color="primary"
+                        class="q-mb-md"
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="Correo"
+                        color="primary"
+                        class="q-mb-md"
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="Celular"
+                        color="primary"
+                        class="q-mb-md"
+                        mask="####-####"
+                        fill-mask
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="Contraseña"
+                        color="primary"
+                        class="q-mb-md"
+                    />
+                    <q-input
+                        dark
+                        filled
+                        label="Repetir la contraseña"
+                        color="primary"
+                        class="q-mb-md"
+                    />
                 </q-card-section>
                 <q-card-actions>
-                    <q-btn flat color="secondary" label="Registrar"/>
-                    <q-btn flat color="red-7" label="Cancelar" @click="brewingHousesRegisterDialog = false" />
+                    <q-space />
+                    <q-btn flat color="secondary" label="Registrar" />
+                    <q-btn
+                        flat
+                        color="red-7"
+                        label="Cancelar"
+                        @click="brewingHousesRegisterDialog = false"
+                    />
                 </q-card-actions>
-
             </q-card>
         </q-dialog>
-
     </div>
 </template>
 
@@ -174,13 +232,11 @@ export default {
             alertType: '',
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            brewingHousesRegisterDialog: false
+            brewingHousesRegisterDialog: false,
         }
-
     },
     methods: {
-
-        openNewBrewingHouses(){
+        openNewBrewingHouses() {
             this.brewingHousesRegisterDialog = true
         },
 

@@ -9,7 +9,7 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div v-if="!!data">
-            <div class="text-h5 q-mb-md">Detalles de cuenta</div>
+            <div class="text-h5 q-mb-md text-white">Detalles de cuenta</div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 q-pa-md">
                     <div class="row q-mb-md">
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="row" v-if="data.logs">
-                        <div class="text-h6">Log de cuenta:</div>
+                        <div class="text-h6 text-white">Log de cuenta:</div>
                         <q-list dark padding class="full-width">
                             <q-item
                                 clickable

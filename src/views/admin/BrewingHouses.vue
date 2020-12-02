@@ -15,7 +15,9 @@
             @accept="deleteBrewery"
             @cancel="displayConfirm = false"
         ></confirm-dialog>
-        <div class="text-h5 q-mb-md">Administrador de casas cerveceras</div>
+        <div class="text-h5 q-mb-md text-white">
+            Administrador de casas cerveceras
+        </div>
         <div class="row">
             <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                 <brewing-houses-table

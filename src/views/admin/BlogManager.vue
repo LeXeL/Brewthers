@@ -15,7 +15,7 @@
             @accept="deleteBlogPost"
             @cancel="displayConfirm = false"
         ></confirm-dialog>
-        <div class="text-h5 q-mb-md">Administrador de blog</div>
+        <div class="text-h5 q-mb-md text-white">Administrador de blog</div>
         <div class="row q-pa-md">
             <q-space />
             <q-btn color="secondary" label="Redactar" to="/blog-writer" />

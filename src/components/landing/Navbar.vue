@@ -1,7 +1,10 @@
 <template>
     <div>
         <q-header elevated>
-            <q-toolbar class="text-white shadow-2 desktop-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 desktop-only"
+                style="background-color: #111"
+            >
                 <img
                     src="@/assets/logo-horizontal.png"
                     width="10%"
@@ -18,15 +21,20 @@
                         v-smooth-scroll
                         style="text-decoration: none;"
                     >
-                        <q-tab :name="navlink.name">
+                        <q-tab :name="navlink.name" class="text-white">
                             <span>{{ navlink.text }}</span>
                         </q-tab>
                     </a>
                 </q-tabs>
                 <q-space />
-                <q-btn class="on-right" color="primary" :to="'/login'">iniciar sesión</q-btn>
+                <q-btn class="on-right" color="primary" :to="'/login'"
+                    >iniciar sesión</q-btn
+                >
             </q-toolbar>
-            <q-toolbar class="text-white shadow-2 mobile-only" style="background-color: #111">
+            <q-toolbar
+                class="text-white shadow-2 mobile-only"
+                style="background-color: #111"
+            >
                 <img src="@/assets/logo-horizontal.png" width="30%" />
                 <q-space />
                 <q-btn flat round dense @click="dialog = !dialog">
@@ -46,25 +54,36 @@
                     <ul class="q-mr-md">
                         <li class="q-pb-lg">
                             <a href="#" @click="dialog = false">
-                                <i class="fas fa-times"></i>
+                                <i class="fas fa-times text-white"></i>
                             </a>
                         </li>
                         <li v-for="(navlink, i) in navLinks" :key="i">
-                            <a :href="navlink.ref" @click="dialog = false">
-                                {{
-                                navlink.text
-                                }}
+                            <a
+                                class="text-white"
+                                :href="navlink.ref"
+                                @click="dialog = false"
+                            >
+                                {{ navlink.text }}
                             </a>
                         </li>
                         <li>
-                            <a href="/login" @click="dialog = false">iniciar sesion</a>
+                            <a
+                                href="/login"
+                                @click="dialog = false"
+                                class="text-white"
+                                >iniciar sesion</a
+                            >
                         </li>
                         <li class="q-mt-md">
                             <a href="#" @click="dialog = false">
-                                <i class="fab fa-facebook"></i>
+                                <i class="fab fa-facebook text-white"></i>
                             </a>
-                            <a href="#" class="on-right" @click="dialog = false">
-                                <i class="fab fa-instagram"></i>
+                            <a
+                                href="#"
+                                class="on-right"
+                                @click="dialog = false"
+                            >
+                                <i class="fab fa-instagram text-white"></i>
                             </a>
                         </li>
                     </ul>

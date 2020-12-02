@@ -1,5 +1,5 @@
 <template>
-    <q-page>
+    <q-page class="text-white">
         <loading-alert :display="displayLoading"></loading-alert>
         <div v-if="Object.keys(data).length !== 0">
             <div class="row">

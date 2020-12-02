@@ -17,6 +17,7 @@
                     v-for="(link, i) in drawerLinks"
                     :key="i"
                     :to="link.link"
+                    class="text-white"
                 >
                     <q-avatar rounded>
                         <i :class="link.icon" style="font-size: 15px;"></i>
@@ -45,6 +46,11 @@ export default {
                     name: 'Cuentas',
                     link: '/accounts-manager',
                     icon: 'fas fa-user-circle',
+                },
+                {
+                    name: 'Exclusividad y precios',
+                    link: '/exclusiveness-and-prices',
+                    icon: 'fas fa-dollar-sign',
                 },
                 {
                     name: 'Ordenes',

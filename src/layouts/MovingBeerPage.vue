@@ -1,5 +1,5 @@
 <template>
-    <q-layout view="lHh Lpr lFf" class="brewthers-dark-bg">
+    <q-layout view="lHh Lpr lFf" class="brewthers-dark-bg text-white">
         <brewthers-alert
             :display="displayAlert"
             :title="alertTitle"
@@ -81,7 +81,7 @@
                         square
                         v-if="
                             data[0].cart.length > 0 &&
-                            user.status === 'approved'
+                                user.status === 'approved'
                         "
                         @click="
                             $router.push('/checkout')
