@@ -30,6 +30,7 @@ import OrderDetails from './views/admin/OrderDetails'
 import AdminReports from './views/admin/AdminReports'
 import BlogManager from './views/admin/BlogManager'
 import BlogWriter from './views/admin/BlogWriter'
+import ExclusivenessAndPrices from './views/admin/ExclusivenessAndPrices'
 
 import BlogIndex from './views/Blog/BlogIndex'
 import BlogView from './views/Blog/BlogView'
@@ -110,6 +111,11 @@ export default new Router({
                     path: '/blog-writer/:id?',
                     name: 'blog-writer',
                     component: BlogWriter,
+                },
+                {
+                    path: '/exclusiveness-and-prices',
+                    name: 'exclusiveness-and-prices',
+                    component: ExclusivenessAndPrices,
                 },
             ],
         },

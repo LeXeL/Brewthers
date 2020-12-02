@@ -47,6 +47,11 @@ export default {
                     icon: 'fas fa-user-circle',
                 },
                 {
+                    name: 'Exclusividad y precios',
+                    link: '/exclusiveness-and-prices',
+                    icon: 'fas fa-dollar-sign',
+                },
+                {
                     name: 'Ordenes',
                     link: '/orders-manager',
                     icon: 'fas fa-dolly',
