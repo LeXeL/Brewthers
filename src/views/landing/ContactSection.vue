@@ -1,5 +1,5 @@
 <template>
-    <div class="pattern-bg contact-form">
+    <div class="pattern-bg contact-form text-white">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -114,7 +114,7 @@ export default {
         }
     },
     watch: {
-        reason: function () {
+        reason: function() {
             this.form.contactReason = 'Comprar caja o keg'
         },
     },

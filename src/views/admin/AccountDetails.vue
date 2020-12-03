@@ -9,14 +9,22 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div v-if="!!data">
-            <div class="text-h5 q-mb-md">Detalles de cuenta</div>
+            <div class="text-h5 q-mb-md text-white">Detalles de cuenta</div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 q-pa-md">
                     <div class="row q-mb-md">
                         <q-input
                             filled
-                            label="Nombre del restaurante"
+                            label="Nombre del comercio"
                             :value="data.restaurantName"
+                            class="q-mb-md full-width"
+                            dark
+                            readonly
+                        />
+                        <q-input
+                            filled
+                            label="Tipo de cuenta"
+                            :value="data.role"
                             class="q-mb-md full-width"
                             dark
                             readonly
@@ -72,7 +80,7 @@
                     </div>
 
                     <div class="row" v-if="data.logs">
-                        <div class="text-h6">Log de cuenta:</div>
+                        <div class="text-h6 text-white">Log de cuenta:</div>
                         <q-list dark padding class="full-width">
                             <q-item
                                 clickable
@@ -113,9 +121,17 @@
                         :markers="[{position: data.location}]"
                         :mapCenter="data.location"
                     ></GoogleMaps>
-
                     <div class="row">
-                        <q-space />
+                        <q-select
+                            :options="['Casa Bruja', 'Central', 'Rana Dorada']"
+                            label="Seleccione casa cervecera a enlazar"
+                            class="full-width q-mb-md"
+                            v-model="linkBrewingHouse"
+                            dark
+                            filled
+                        />
+                    </div>
+                    <div class="row">
                         <q-btn
                             v-if="data.status != 'approved'"
                             color="secondary"
@@ -183,6 +199,7 @@ export default {
             rejectDialog: false,
             group: [],
             data: '',
+            linkBrewingHouse: '',
             options: [
                 {
                     label: 'No representa un comercio',

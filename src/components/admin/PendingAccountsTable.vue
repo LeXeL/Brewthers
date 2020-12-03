@@ -11,7 +11,12 @@
         <template v-slot:header="props">
             <q-tr :props="props">
                 <q-th auto-width />
-                <q-th v-for="col in props.cols" :key="col.name" :props="props">{{ col.label }}</q-th>
+                <q-th
+                    v-for="col in props.cols"
+                    :key="col.name"
+                    :props="props"
+                    >{{ col.label }}</q-th
+                >
             </q-tr>
         </template>
 
@@ -35,11 +40,19 @@
                     >{{ col.value }}</q-td
                 >-->
                 <q-td :prop="props">{{ props.row.restaurantName }}</q-td>
+                <q-td :prop="props">{{ props.row.role }}</q-td>
                 <q-td :prop="props">{{ props.row.email }}</q-td>
                 <q-td :prop="props">
                     <q-badge
-                        :color="props.row.status == 'pending' ? 'warning' : 'red-7'"
-                    >{{ props.row.status == 'pending' ? 'Pendiente' : 'Rechazado' }}</q-badge>
+                        :color="
+                            props.row.status == 'pending' ? 'warning' : 'red-7'
+                        "
+                        >{{
+                            props.row.status == 'pending'
+                                ? 'Pendiente'
+                                : 'Rechazado'
+                        }}</q-badge
+                    >
                 </q-td>
             </q-tr>
         </template>
@@ -63,9 +76,17 @@ export default {
             columns: [
                 {
                     name: 'restaurantName',
-                    label: 'Restaurante',
+                    label: 'Comercio',
                     align: 'left',
                     field: 'restaurantName',
+                    sortable: true,
+                },
+
+                {
+                    name: 'accountType',
+                    label: 'Tipo de cuenta',
+                    align: 'left',
+                    field: 'accountType',
                     sortable: true,
                 },
 

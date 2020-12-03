@@ -1,9 +1,9 @@
 <template>
-    <q-page>
+    <q-page class="text-white">
         <loading-alert :display="displayLoading"></loading-alert>
         <div v-if="Object.keys(data).length !== 0">
             <div class="row">
-                <q-img :src="data.bannerLocation" />
+                <q-img :src="data.bannerLocation" style="max-height: 400px;" />
             </div>
             <div class="row q-pa-md">
                 <div class="col desktop-only"></div>
@@ -27,7 +27,10 @@
                         }}</span>
                     </div>
                     <q-separator dark class="q-mb-md" />
-                    <div class="text-body2 q-mb-md" v-html="data.body"></div>
+                    <div
+                        class="text-body2 q-mb-md blog-content"
+                        v-html="data.body"
+                    ></div>
                 </div>
                 <div class="col desktop-only"></div>
             </div>
@@ -69,3 +72,9 @@ export default {
     },
 }
 </script>
+
+<style>
+.blog-content * {
+    color: #fff;
+}
+</style>

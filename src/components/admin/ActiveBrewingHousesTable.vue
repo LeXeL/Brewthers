@@ -7,6 +7,13 @@
       row-key="name"
       dark
     >
+
+        <template v-slot:top-right>
+            <q-btn color="primary" size="sm" no-caps @click="$emit('open-new-brewing-houses')">
+                <i class="fas fa-plus"></i>
+            </q-btn>
+        </template>
+
       <template v-slot:header="props">
         <q-tr :props="props">
           <q-th auto-width />

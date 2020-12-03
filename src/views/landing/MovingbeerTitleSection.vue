@@ -1,9 +1,16 @@
 <template>
-    <div class="movingbeer-bg flex" style="position: relative">
+    <div class="movingbeer-bg flex text-white" style="position: relative">
         <div class="absolute-center">
-            <div class="text-h2 title-section desktop-only q-mb-md">movingbeer</div>
-            <div class="text-h3 title-section mobile-only q-mb-md">movingbeer</div>
-            <div class="text-h6 q-mb-lg" style="font-family: GilroyExtraBold; text-align: center;">
+            <div class="text-h2 title-section desktop-only q-mb-md">
+                movingbeer
+            </div>
+            <div class="text-h3 title-section mobile-only q-mb-md">
+                movingbeer
+            </div>
+            <div
+                class="text-h6 q-mb-lg"
+                style="font-family: GilroyExtraBold; text-align: center;"
+            >
                 Espacio para conectar y facilitar el comercio entre las Casas
                 Cerveceras y tu negocio.
             </div>
@@ -17,7 +24,8 @@
                     <span class="q-btn__wrapper col row q-anchor--skip">
                         <span
                             class="q-btn__content text-center col items-center q-anchor--skip justify-center row"
-                        >acceder</span>
+                            >acceder</span
+                        >
                     </span>
                 </a>
             </div>

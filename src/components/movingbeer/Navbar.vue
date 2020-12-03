@@ -20,7 +20,7 @@
                     <q-list style="width: 150px; font-family: GilroyExtraBold">
                         <q-item clickable v-close-popup>
                             <q-item-section @click="$router.push('/mi-cuenta')">
-                                <span>
+                                <span class="text-white">
                                     <i class="fas fa-user on-left"></i>Mi cuenta
                                 </span>
                             </q-item-section>
@@ -31,7 +31,7 @@
                             v-if="user.role === 'admin'"
                         >
                             <q-item-section @click="$router.push('/admin')">
-                                <span>
+                                <span class="text-white">
                                     <i class="fas fa-user-shield on-left"></i
                                     >Admin
                                 </span>
@@ -39,7 +39,7 @@
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section @click="$router.push('/historial')">
-                                <span>
+                                <span class="text-white">
                                     <i class="fas fa-box-open on-left"></i
                                     >Historial
                                 </span>
@@ -48,7 +48,7 @@
                         <q-separator />
                         <q-item clickable v-close-popup>
                             <q-item-section @click="logout()">
-                                <span>
+                                <span class="text-white">
                                     <i class="fas fa-sign-out-alt on-left"></i
                                     >Cerrar sesion
                                 </span>

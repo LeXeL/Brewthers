@@ -9,9 +9,9 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div>
-            <div class="text-h5 q-mb-md">Redactar blog</div>
+            <div class="text-h5 q-mb-md text-white">Redactar blog</div>
             <div class="row">
-                <div class="col q-pa-md">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-pa-md">
                     <q-input
                         filled
                         dark
@@ -21,7 +21,7 @@
                         :rules="[val => !!val || 'El campo es obligatorio']"
                     />
                 </div>
-                <div class="col q-pa-md">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-pa-md">
                     <q-file
                         bottom-slots
                         filled
@@ -111,23 +111,31 @@
                     />
                 </div>
             </div>
-            <div class="row q-pa-md">
+            <div class="row text-right">
                 <q-space />
-                <q-btn
-                    class="on-left"
-                    color="warning"
-                    :label="
-                        !isEditing
-                            ? 'Guardar como borrador'
-                            : 'Actualizar como borrador'
-                    "
-                    @click="saveAsDraft()"
-                />
-                <q-btn
-                    color="secondary"
-                    :label="!isEditing ? 'Guardar y Publicar' : 'Actualizar'"
-                    @click="saveAsPublic()"
-                />
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 q-pa-md">
+                    <q-btn
+                        color="warning"
+                        class="full-width"
+                        :label="
+                            !isEditing
+                                ? 'Guardar borrador'
+                                : 'Actualizar borrador'
+                        "
+                        @click="saveAsDraft()"
+                    />
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 q-pa-md">
+                    <q-btn
+                        color="secondary"
+                        class="full-width"
+                        :label="
+                            !isEditing ? 'Guardar y Publicar' : 'Actualizar'
+                        "
+                        @click="saveAsPublic()"
+                    />
+                </div>
             </div>
         </div>
     </q-page>
@@ -276,7 +284,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function (resolve, reject) {
+            return new Promise(function(resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -285,7 +293,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function (snapshot) {
+                    function(snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -298,17 +306,17 @@ export default {
                                 break
                         }
                     },
-                    function (error) {
+                    function(error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function () {
+                    function() {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function (downloadURL) {
+                            .then(function(downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })

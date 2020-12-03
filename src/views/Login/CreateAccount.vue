@@ -207,7 +207,7 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    Hemos recivido tu información satisfactoriamente. Uno de
+                    Hemos recibido tu información satisfactoriamente. Uno de
                     nuestros administradores aprobará tu cuenta para que
                     empieces a realizar pedidos.
                     <br />
@@ -218,6 +218,21 @@
                     <router-link to="/movingbeer">
                         <q-btn flat label="Aceptar" color="primary" v-close-popup />
                     </router-link>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
+        <q-dialog v-model="brewingHouseRegisterDialog">
+            <q-card dark>
+                <q-card-section class="text-center">
+                    <q-img :src="require('@/assets/brewthers-logo.png')" style="width: 150px"/>
+                </q-card-section>
+                <q-card-section>
+                    <div class="text-h5 text-center">¿Quieres vender tus productos con nosotros?</div>
+                </q-card-section>
+                <q-card-actions>
+                    <q-space/>
+                    <q-btn color="primary" flat label="registro de restaurantes" v-close-popup/>
+                    <q-btn color="secondary" label="vender" @click="$router.push('/create-account-brewing-house')"/>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -259,6 +274,7 @@ export default {
                 location: null,
                 ruc: '',
             },
+            brewingHouseRegisterDialog: true,
             dismissSecs: 15,
             dismissCountDown: 0,
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,

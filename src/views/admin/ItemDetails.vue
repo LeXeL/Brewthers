@@ -9,7 +9,7 @@
             @accept="displayAlert = false"
         ></brewthers-alert>
         <div v-if="Object.keys(data).length !== 0">
-            <div class="text-h5 q-mb-md">Detalles de articulo</div>
+            <div class="text-h5 q-mb-md text-white">Detalles de articulo</div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
                     <div class="row q-mb-md">
@@ -122,7 +122,7 @@
                     <q-img :src="data.photoLocation" />
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
-                    <div class="text-h6 q-mb-md">
+                    <div class="text-h6 q-mb-md text-white">
                         Cantidad en inventario: {{ data.inventory }}
                     </div>
                     <q-input
@@ -360,7 +360,7 @@ export default {
                 })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function (resolve, reject) {
+            return new Promise(function(resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -369,7 +369,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function (snapshot) {
+                    function(snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -382,17 +382,17 @@ export default {
                                 break
                         }
                     },
-                    function (error) {
+                    function(error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function () {
+                    function() {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function (downloadURL) {
+                            .then(function(downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })

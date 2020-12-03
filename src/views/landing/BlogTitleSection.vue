@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-bg" style="position: relative">
+    <div class="blog-bg text-white" style="position: relative">
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
@@ -29,7 +29,7 @@
 
         <router-link
             to="/blog"
-            class="title-section-link absolute-bottom q-pb-xl"
+            class="title-section-link absolute-bottom q-pb-xl text-white"
             >leer más</router-link
         >
     </div>
