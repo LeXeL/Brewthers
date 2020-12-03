@@ -30,7 +30,7 @@
                     </div>
                     <br />
                     <div
-                        class="text-body2"
+                        class="text-body2 blog-content"
                         v-html="blog.body"
                         style="height: 60px; overflow: hidden"
                     ></div>

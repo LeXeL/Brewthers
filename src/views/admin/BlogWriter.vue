@@ -120,7 +120,7 @@
                         :label="
                             !isEditing
                                 ? 'Guardar borrador'
-                                : 'Actualizar como borrador'
+                                : 'Actualizar borrador'
                         "
                         @click="saveAsDraft()"
                     />
