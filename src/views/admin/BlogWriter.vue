@@ -11,7 +11,7 @@
         <div>
             <div class="text-h5 q-mb-md text-white">Redactar blog</div>
             <div class="row">
-                <div class="col q-pa-md">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-pa-md">
                     <q-input
                         filled
                         dark
@@ -21,7 +21,7 @@
                         :rules="[val => !!val || 'El campo es obligatorio']"
                     />
                 </div>
-                <div class="col q-pa-md">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-pa-md">
                     <q-file
                         bottom-slots
                         filled
@@ -111,23 +111,31 @@
                     />
                 </div>
             </div>
-            <div class="row q-pa-md">
+            <div class="row text-right">
                 <q-space />
-                <q-btn
-                    class="on-left"
-                    color="warning"
-                    :label="
-                        !isEditing
-                            ? 'Guardar como borrador'
-                            : 'Actualizar como borrador'
-                    "
-                    @click="saveAsDraft()"
-                />
-                <q-btn
-                    color="secondary"
-                    :label="!isEditing ? 'Guardar y Publicar' : 'Actualizar'"
-                    @click="saveAsPublic()"
-                />
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 q-pa-md">
+                    <q-btn
+                        color="warning"
+                        class="full-width"
+                        :label="
+                            !isEditing
+                                ? 'Guardar borrador'
+                                : 'Actualizar como borrador'
+                        "
+                        @click="saveAsDraft()"
+                    />
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 q-pa-md">
+                    <q-btn
+                        color="secondary"
+                        class="full-width"
+                        :label="
+                            !isEditing ? 'Guardar y Publicar' : 'Actualizar'
+                        "
+                        @click="saveAsPublic()"
+                    />
+                </div>
             </div>
         </div>
     </q-page>
