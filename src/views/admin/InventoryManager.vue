@@ -18,6 +18,42 @@
         <div class="text-h5 q-mb-md text-white">
             Administrador de inventario
         </div>
+
+        <!-- *********************************************************************************************************** -->
+        
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-input 
+                    dark
+                    dense
+                    filled 
+                    v-model="text" 
+                    label="Nombre" 
+                />
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-select 
+                    dark
+                    dense
+                    filled 
+                    v-model="model" :options="options" 
+                    label="Tipo" 
+                />
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
+                <q-select 
+                    dark
+                    dense
+                    filled 
+                    v-model="model" :options="options2" 
+                    label="Casa cervecera" 
+                />
+            </div>
+        </div>
+
+
+        <!-- *********************************************************************************************************** -->
+
         <div class="row">
             <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                 <inventory-manager-table
@@ -54,6 +90,13 @@ export default {
             alertMessage: '',
             alertType: '',
             workingDeletedId: '',
+
+            
+            model: null,
+            options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
+
+            model: null,
+            options2: ['Sun', 'Moon', 'Stars', 'Planets', 'Asteroids'],
         }
     },
     methods: {
