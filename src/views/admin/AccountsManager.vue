@@ -177,7 +177,7 @@
                     <q-select 
                         dark
                         filled v-model="model" :options="options"
-                        label="Filled" 
+                        label="Casa cervecera" 
                         color="primary" 
                         class="q-mb-md"  
                     />
@@ -242,7 +242,7 @@ export default {
             brewingHousesRegisterDialog: false,
 
             model: null, 
-            options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
+            options: ['Casa Bruja', 'Rana Dorada', 'Cerveceria Central', 'La Murga'],
         }
     },
     methods: {
