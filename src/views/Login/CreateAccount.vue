@@ -184,7 +184,7 @@
                                             'Las contraseñas no coinciden',
                                     ]"
                                 />
-                                <q-checkbox dark v-model="terms" class="text-primary">Acepto los terminos y condiciones.</q-checkbox>
+                                <q-checkbox dark v-model="terms">Acepto los terminos y condiciones.</q-checkbox>
                                 <a
                                     class="on-right text-primary"
                                     href="/terminos-y-condiciones"
