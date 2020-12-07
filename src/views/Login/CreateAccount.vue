@@ -11,7 +11,7 @@
         ></brewthers-alert>
         <div class="row">
             <div class="col q-pa-lg">
-                <div class="text-h3">Crea tu cuenta</div>
+                <div class="text-h3 text-white">Crea tu cuenta</div>
             </div>
         </div>
         <div class="row">
@@ -184,9 +184,9 @@
                                             'Las contraseñas no coinciden',
                                     ]"
                                 />
-                                <q-checkbox v-model="terms">Acepto los terminos y condiciones.</q-checkbox>
+                                <q-checkbox dark v-model="terms">Acepto los terminos y condiciones.</q-checkbox>
                                 <a
-                                    class="on-right"
+                                    class="on-right text-primary"
                                     href="/terminos-y-condiciones"
                                     target="_blank"
                                 >Leer aqui.</a>
