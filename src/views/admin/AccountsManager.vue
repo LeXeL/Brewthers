@@ -174,6 +174,13 @@
                         mask="####-####"
                         fill-mask
                     />
+                    <q-select 
+                        dark
+                        filled v-model="model" :options="options"
+                        label="Casa cervecera" 
+                        color="primary" 
+                        class="q-mb-md"  
+                    />
                     <q-input
                         dark
                         filled
@@ -233,6 +240,9 @@ export default {
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             brewingHousesRegisterDialog: false,
+
+            model: null, 
+            options: ['Casa Bruja', 'Rana Dorada', 'Cerveceria Central', 'La Murga'],
         }
     },
     methods: {

@@ -142,7 +142,7 @@
                         <q-btn
                             v-if="data.status === 'pending'"
                             color="red-7"
-                            label="Reachazar"
+                            label="Rechazar"
                             @click="rejectDialog = true"
                         />
                     </div>
