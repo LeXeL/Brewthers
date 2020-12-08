@@ -56,7 +56,12 @@
                     />
                 </q-td>
                 <q-td>
-                    <q-btn color="primary" size="xs" label="Editar" />
+                    <q-btn
+                        color="primary"
+                        size="xs"
+                        label="Editar"
+                        @click="editBrewingHouse(props.row)"
+                    />
                 </q-td>
                 <q-td>
                     <q-btn
@@ -120,6 +125,9 @@ export default {
             if (event.newName.length > 0) {
                 this.$emit('namechange', {id: event.id, newName: event.newName})
             }
+        },
+        editBrewingHouse(event) {
+            this.$emit('editBrewingHouse', event)
         },
     },
 }

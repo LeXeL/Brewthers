@@ -1,13 +1,13 @@
 <template>
     <q-card class="my-card text-white full-width" dark>
-        <q-form @submit="Generate">
+        <q-form @submit="handleSubmitedContent()">
             <loading-alert :display="displayLoading"></loading-alert>
             <brewthers-alert
                 :display="displayAlert"
                 :title="alertTitle"
                 :message="alertMessage"
                 :type="alertType"
-                @accept="displayAlert=false"
+                @accept="displayAlert = false"
             ></brewthers-alert>
             <q-card-section>
                 <div class="text-h6">Nueva casa cervecera</div>
@@ -53,6 +53,19 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 
 export default {
+    props: ['editBrewingHouse'],
+    watch: {
+        editBrewingHouse(newValue, oldValue) {
+            if (Object.keys(newValue).length > 0) {
+                this.editingBrewing = true
+                this.form.name = newValue.name
+                this.breweryImage = new File(
+                    ['foo', 'bar'],
+                    newValue.photoLocation
+                )
+            }
+        },
+    },
     data() {
         return {
             breweryImage: null,
@@ -65,13 +78,57 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            editingBrewing: false,
         }
     },
     methods: {
+        handleSubmitedContent() {
+            if (this.editingBrewing) {
+                this.EditBrewery()
+                return
+            }
+            this.Generate()
+        },
         Cancel() {
             this.breweryImage = null
             this.form.name = ''
             this.form.photoLocation = ''
+            this.editingBrewing = false
+        },
+        async EditBrewery() {
+            this.displayLoading = true
+            let db = firebase.firestore()
+            await this.uploadToFirebase(
+                this.breweryImage,
+                `brewery/${this.form.name}`,
+                this.form.name
+            ).then(async filename => {
+                this.form.photoLocation = filename
+                api.updateBreweryInformation({
+                    id: this.editBrewingHouse.id,
+                    brewery: this.form,
+                })
+                    .then(response => {
+                        this.displayLoading = false
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage =
+                            'Se ha creado la casa cerveceras con exito'
+                        this.alertType = 'success'
+                        this.displayAlert = true
+                        this.breweryImage = null
+                        this.form = {
+                            name: '',
+                            photoLocation: '',
+                        }
+                    })
+                    .catch(error => {
+                        this.displayLoading = false
+                        this.alertTitle = 'Error'
+                        this.alertMessage = error
+                        this.alertType = 'error'
+                        this.displayAlert = true
+                    })
+            })
         },
         async Generate() {
             this.displayLoading = true
