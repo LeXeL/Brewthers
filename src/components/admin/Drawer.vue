@@ -77,6 +77,11 @@ export default {
                     link: '/blog-manager',
                     icon: 'fas fa-rss',
                 },
+                {
+                    name: 'Mi inventario',
+                    link: '/my-inventory',
+                    icon: 'fas fa-boxes',
+                },
             ],
         }
     },
