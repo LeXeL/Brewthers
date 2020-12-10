@@ -22,12 +22,29 @@
                     v-model="form.name"
                     :rules="[val => !!val || 'El campo es obligatorio']"
                 />
-                <q-file append filled dark label="Logo" v-model="breweryImage">
+                <q-file
+                    v-if="isEditingBrewery"
+                    append
+                    filled
+                    dark
+                    label="Editar Logo"
+                    v-model="breweryImage"
+                >
                     <template v-slot:prepend>
                         <i class="fas fa-paperclip"></i>
                     </template>
-                    <template v-slot:error>
-                        'El campo es obligatorio'
+                </q-file>
+                <q-file
+                    v-if="!isEditingBrewery"
+                    append
+                    filled
+                    dark
+                    label="Logo"
+                    v-model="breweryImage"
+                    :rules="[val => !!val || 'El campo es obligatorio']"
+                >
+                    <template v-slot:prepend>
+                        <i class="fas fa-paperclip"></i>
                     </template>
                 </q-file>
             </q-card-section>
