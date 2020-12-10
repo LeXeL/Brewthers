@@ -22,16 +22,12 @@
                     v-model="form.name"
                     :rules="[val => !!val || 'El campo es obligatorio']"
                 />
-                <q-file
-                    append
-                    filled
-                    dark
-                    label="Logo"
-                    v-model="breweryImage"
-                    :rules="[val => !!val || 'El campo es obligatorio']"
-                >
+                <q-file append filled dark label="Logo" v-model="breweryImage">
                     <template v-slot:prepend>
                         <i class="fas fa-paperclip"></i>
+                    </template>
+                    <template v-slot:error>
+                        'El campo es obligatorio'
                     </template>
                 </q-file>
             </q-card-section>
@@ -57,13 +53,14 @@ export default {
     watch: {
         editBrewingHouse(newValue, oldValue) {
             if (Object.keys(newValue).length > 0) {
-                this.editingBrewing = true
+                this.isEditingBrewery = true
                 this.form.name = newValue.name
-                this.breweryImage = new File(
-                    ['foo', 'bar'],
-                    newValue.photoLocation
-                )
             }
+        },
+    },
+    computed: {
+        isValid() {
+            return !!this.breweryImage
         },
     },
     data() {
@@ -78,12 +75,12 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
-            editingBrewing: false,
+            isEditingBrewery: false,
         }
     },
     methods: {
         handleSubmitedContent() {
-            if (this.editingBrewing) {
+            if (this.isEditingBrewery) {
                 this.EditBrewery()
                 return
             }
@@ -93,42 +90,64 @@ export default {
             this.breweryImage = null
             this.form.name = ''
             this.form.photoLocation = ''
-            this.editingBrewing = false
+            this.isEditingBrewery = false
         },
         async EditBrewery() {
+            //Si el logo esta vacio no se cambia, si el logo tiene un archivo nuevo se overlapea y se cambia.
             this.displayLoading = true
             let db = firebase.firestore()
-            await this.uploadToFirebase(
-                this.breweryImage,
-                `brewery/${this.form.name}`,
-                this.form.name
-            ).then(async filename => {
-                this.form.photoLocation = filename
-                api.updateBreweryInformation({
-                    id: this.editBrewingHouse.id,
-                    brewery: this.form,
+            if (this.breweryImage !== null) {
+                await this.uploadToFirebase(
+                    this.breweryImage,
+                    `brewery/${this.form.name}`,
+                    this.form.name
+                ).then(async filename => {
+                    this.form.photoLocation = filename
+                    api.updateBreweryInformation({
+                        id: this.editBrewingHouse.id,
+                        brewery: this.form,
+                    })
+                        .then(response => {
+                            this.displayLoading = false
+                            this.alertTitle = 'Exito!'
+                            this.alertMessage =
+                                'Se ha actualizado la casa cerveceras con exito'
+                            this.alertType = 'success'
+                            this.displayAlert = true
+                            this.Cancel()
+                        })
+                        .catch(error => {
+                            this.displayLoading = false
+                            this.alertTitle = 'Error'
+                            this.alertMessage = error
+                            this.alertType = 'error'
+                            this.displayAlert = true
+                        })
                 })
-                    .then(response => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage =
-                            'Se ha creado la casa cerveceras con exito'
-                        this.alertType = 'success'
-                        this.displayAlert = true
-                        this.breweryImage = null
-                        this.form = {
-                            name: '',
-                            photoLocation: '',
-                        }
-                    })
-                    .catch(error => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Error'
-                        this.alertMessage = error
-                        this.alertType = 'error'
-                        this.displayAlert = true
-                    })
+                return
+            }
+            let obj = this.form
+            delete obj.photoLocation
+            api.updateBreweryInformation({
+                id: this.editBrewingHouse.id,
+                brewery: obj,
             })
+                .then(response => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado la casa cerveceras con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.Cancel()
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
         },
         async Generate() {
             this.displayLoading = true
@@ -147,11 +166,7 @@ export default {
                             'Se ha creado la casa cerveceras con exito'
                         this.alertType = 'success'
                         this.displayAlert = true
-                        this.breweryImage = null
-                        this.form = {
-                            name: '',
-                            photoLocation: '',
-                        }
+                        this.Cancel()
                     })
                     .catch(error => {
                         this.displayLoading = false
