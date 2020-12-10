@@ -91,6 +91,7 @@ export default {
             this.form.name = ''
             this.form.photoLocation = ''
             this.isEditingBrewery = false
+            this.$emit('clear')
         },
         async EditBrewery() {
             //Si el logo esta vacio no se cambia, si el logo tiene un archivo nuevo se overlapea y se cambia.

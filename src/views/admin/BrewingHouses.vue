@@ -31,6 +31,7 @@
             <div class="col-lg-4 col-md-4 col-xs-12 q-pa-md">
                 <brewing-houses-form
                     :editBrewingHouse="selectedEditingBrewingHouse"
+                    @clear="clearEditingBrewinghouse()"
                 ></brewing-houses-form>
             </div>
         </div>
@@ -86,6 +87,9 @@ export default {
         )
     },
     methods: {
+        clearEditingBrewinghouse() {
+            this.selectedEditingBrewingHouse = ''
+        },
         selectEditingBrewingHouse(event) {
             this.selectedEditingBrewingHouse = event
         },
