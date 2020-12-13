@@ -188,7 +188,6 @@
                         fill-mask
                         v-model="breweryInfo.phone"
                     />
-
                     <q-input
                         dark
                         filled
