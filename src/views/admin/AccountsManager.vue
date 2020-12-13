@@ -54,7 +54,7 @@
         </div>
         <q-dialog v-model="prompt" persistent>
             <q-card style="min-width: 350px" dark>
-                <q-form @submit="createadmin">
+                <q-form @submit="createAdmin">
                     <q-card-section>
                         <div class="text-h6">Nueva cuenta de administrador</div>
                     </q-card-section>
@@ -66,7 +66,7 @@
                             dark
                             filled
                             type="text"
-                            v-model="adminName"
+                            v-model="adminInfo.adminName"
                             :rules="[val => !!val || 'El campo es obligatorio']"
                         />
                         <q-input
@@ -75,7 +75,7 @@
                             dark
                             filled
                             type="text"
-                            v-model="adminLastName"
+                            v-model="adminInfo.adminLastName"
                             :rules="[val => !!val || 'El campo es obligatorio']"
                         />
                         <q-input
@@ -84,7 +84,7 @@
                             dark
                             filled
                             type="email"
-                            v-model="adminEmail"
+                            v-model="adminInfo.adminEmail"
                             :rules="[
                                 val =>
                                     val.length > 0 || 'El campo es obligatorio',
@@ -99,7 +99,7 @@
                             dark
                             filled
                             type="password"
-                            v-model="adminPassword"
+                            v-model="adminInfo.adminPassword"
                             :rules="[
                                 val =>
                                     val.length > 0 || 'El campo es obligatorio',
@@ -114,7 +114,7 @@
                         <q-btn
                             flat
                             label="Cancelar"
-                            @click="clearadmin()"
+                            @click="clearAdminInputs()"
                             v-close-popup
                         />
                         <q-btn flat label="Crear" type="submit" />
@@ -130,10 +130,19 @@
                 </q-card-section>
 
                 <q-card-section>
-                    <q-input
+                    <!-- <q-input
                         dark
                         filled
                         label="Nombre de casa cervecera"
+                        color="primary"
+                        class="q-mb-md"
+                    /> -->
+                    <q-select
+                        dark
+                        filled
+                        v-model="model"
+                        :options="brewingHouseOptions"
+                        label="Casa cervecera"
                         color="primary"
                         class="q-mb-md"
                     />
@@ -174,15 +183,7 @@
                         mask="####-####"
                         fill-mask
                     />
-                    <q-select
-                        dark
-                        filled
-                        v-model="model"
-                        :options="brewingHouseOptions"
-                        label="Casa cervecera"
-                        color="primary"
-                        class="q-mb-md"
-                    />
+
                     <q-input
                         dark
                         filled
@@ -230,10 +231,12 @@ export default {
         return {
             prompt: false,
             users: [],
-            adminName: '',
-            adminLastName: '',
-            adminEmail: '',
-            adminPassword: '',
+            adminInfo: {
+                adminName: '',
+                adminLastName: '',
+                adminEmail: '',
+                adminPassword: '',
+            },
             displayLoading: false,
             displayAlert: false,
             alertTitle: '',
@@ -242,7 +245,6 @@ export default {
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             brewingHousesRegisterDialog: false,
-
             model: null,
             brewingHouseOptions: [],
         }
@@ -261,7 +263,6 @@ export default {
         openNewBrewingHouses() {
             this.brewingHousesRegisterDialog = true
         },
-
         openNewAdminAccountDialog() {
             this.prompt = true
         },
@@ -288,13 +289,13 @@ export default {
                 }
             })
         },
-        clearadmin() {
-            this.adminName = ''
-            this.adminLastName = ''
-            this.adminEmail = ''
-            this.adminPassword = ''
+        clearAdminInputs() {
+            this.adminInfo.adminName = ''
+            this.adminInfo.adminLastName = ''
+            this.adminInfo.adminEmail = ''
+            this.adminInfo.adminPassword = ''
         },
-        createadmin() {
+        createAdmin() {
             this.displayLoading = true
             firebase
                 .auth()
@@ -351,6 +352,9 @@ export default {
     },
     mounted() {
         let db = firebase.firestore()
+        api.returnAllBrewerys().then(response => {
+            this.$store.dispatch('setBrewerys', response.data.data)
+        })
         db.collection('users').onSnapshot(
             snapshot => {
                 snapshot.docChanges().forEach(change => {
