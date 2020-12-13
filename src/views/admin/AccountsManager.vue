@@ -174,12 +174,14 @@
                         mask="####-####"
                         fill-mask
                     />
-                    <q-select 
+                    <q-select
                         dark
-                        filled v-model="model" :options="options"
-                        label="Casa cervecera" 
-                        color="primary" 
-                        class="q-mb-md"  
+                        filled
+                        v-model="model"
+                        :options="brewingHouseOptions"
+                        label="Casa cervecera"
+                        color="primary"
+                        class="q-mb-md"
                     />
                     <q-input
                         dark
@@ -241,9 +243,19 @@ export default {
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             brewingHousesRegisterDialog: false,
 
-            model: null, 
-            options: ['Casa Bruja', 'Rana Dorada', 'Cerveceria Central', 'La Murga'],
+            model: null,
+            brewingHouseOptions: [],
         }
+    },
+    computed: {
+        brewerys() {
+            let brewerys = this.$store.getters.brewerys
+            this.brewingHouseOptions = brewerys
+                .filter(brewery => brewery.status === 'active')
+                .map(brewery => brewery.name)
+
+            return brewerys
+        },
     },
     methods: {
         openNewBrewingHouses() {
