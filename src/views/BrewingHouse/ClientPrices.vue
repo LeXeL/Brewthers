@@ -16,6 +16,9 @@
                             <q-td key="name" :props="props">
                                 {{ props.row.name }}
                             </q-td>
+                            <q-td key="type" :props="props">
+                                {{ props.row.type }}
+                            </q-td>
                             <q-td key="regularPrice" :props="props">
                                 $ {{ props.row.regularPrice.toFixed(2) }}
                             </q-td>
@@ -43,6 +46,13 @@ export default {
                     sortable: true,
                 },
                 {
+                    name: 'type',
+                    label: 'Presentacion',
+                    field: 'type',
+                    align: 'left',
+                    sortable: true,
+                },
+                {
                     name: 'regularPrice',
                     label: 'Precio regular',
                     field: 'regularPrice',
@@ -60,26 +70,31 @@ export default {
             data: [
                 {
                     name: 'Beer Name',
+                    type: 'Caja',
                     regularPrice: 15,
                     specialPrice: 12.25,
                 },
                 {
                     name: 'Beer Name',
+                    type: 'KEG',
                     regularPrice: 15,
                     specialPrice: 12.25,
                 },
                 {
                     name: 'Beer Name',
+                    type: 'KEG',
                     regularPrice: 15,
                     specialPrice: 12.25,
                 },
                 {
                     name: 'Beer Name',
+                    type: 'Caja',
                     regularPrice: 15,
                     specialPrice: 12.25,
                 },
                 {
                     name: 'Beer Name',
+                    type: 'Caja',
                     regularPrice: 15,
                     specialPrice: 12.25,
                 },
