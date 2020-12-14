@@ -24,13 +24,28 @@
                             <q-td key="name" :props="props">
                                 {{ props.row.name }}
                             </q-td>
+                            <q-td key="contact" :props="props">
+                                {{ props.row.contact }}
+                            </q-td>
                             <q-td key="email" :props="props">
                                 {{ props.row.email }}
+                            </q-td>
+                            <q-td key="phone" :props="props">
+                                {{ props.row.phone }}
+                            </q-td>
+                            <q-td key="canBuy" :props="props">
+                                <q-badge
+                                    :color="
+                                        props.row.canBuy ? 'secondary' : 'red-7'
+                                    "
+                                >
+                                    {{ props.row.canBuy ? 'Si' : 'No' }}
+                                </q-badge>
                             </q-td>
                             <q-td>
                                 <q-btn
                                     color="primary"
-                                    label="Administrar"
+                                    label="Ver"
                                     size="xs"
                                     to="/exclusiveness-and-prices/1234"
                                 />
@@ -56,36 +71,70 @@ export default {
                     sortable: true,
                 },
                 {
+                    name: 'contact',
+                    label: 'Contacto',
+                    field: 'contact',
+                    align: 'left',
+                    sortable: true,
+                },
+                {
                     name: 'email',
                     label: 'Correo',
                     align: 'left',
                     field: 'email',
                 },
                 {
-                    label: 'Administrar',
+                    name: 'phone',
+                    label: 'Telefono',
+                    align: 'left',
+                    field: 'phone',
+                },
+                {
+                    name: 'canBuy',
+                    label: 'Puede comprar',
+                    align: 'left',
+                    field: 'canBuy',
+                },
+                {
+                    label: 'Ver',
                     align: 'left',
                 },
             ],
             data: [
                 {
-                    name: 'Frozen Yogurt',
+                    name: 'Restaurant Name',
+                    contact: 'John Doe',
                     email: 'asdf@asdf.com',
+                    phone: '65436786',
+                    canBuy: false,
                 },
                 {
-                    name: 'Frozen Yogurt',
+                    name: 'Restaurant Name',
+                    contact: 'John Doe',
                     email: 'asdf@asdf.com',
+                    phone: '65436786',
+                    canBuy: true,
                 },
                 {
-                    name: 'Frozen Yogurt',
+                    name: 'Restaurant Name',
+                    contact: 'John Doe',
                     email: 'asdf@asdf.com',
+                    phone: '65436786',
+                    canBuy: true,
                 },
                 {
-                    name: 'Frozen Yogurt',
+                    name: 'Restaurant Name',
+                    contact: 'John Doe',
                     email: 'asdf@asdf.com',
+                    phone: '65436786',
+                    canBuy: true,
                 },
                 {
-                    name: 'Frozen Yogurt',
+                    name: 'Restaurant Name',
+                    contact: 'John Doe',
                     email: 'asdf@asdf.com',
+                    phone: '65436786',
+                    canBuy: true,
                 },
             ],
         }
