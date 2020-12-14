@@ -1,13 +1,13 @@
 <template>
     <q-card class="my-card text-white full-width" dark>
-        <q-form @submit="Generate">
+        <q-form @submit="handleSubmitedContent()">
             <loading-alert :display="displayLoading"></loading-alert>
             <brewthers-alert
                 :display="displayAlert"
                 :title="alertTitle"
                 :message="alertMessage"
                 :type="alertType"
-                @accept="displayAlert=false"
+                @accept="displayAlert = false"
             ></brewthers-alert>
             <q-card-section>
                 <div class="text-h6">Nueva casa cervecera</div>
@@ -23,6 +23,19 @@
                     :rules="[val => !!val || 'El campo es obligatorio']"
                 />
                 <q-file
+                    v-if="isEditingBrewery"
+                    append
+                    filled
+                    dark
+                    label="Editar Logo"
+                    v-model="breweryImage"
+                >
+                    <template v-slot:prepend>
+                        <i class="fas fa-paperclip"></i>
+                    </template>
+                </q-file>
+                <q-file
+                    v-if="!isEditingBrewery"
                     append
                     filled
                     dark
@@ -53,6 +66,20 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 
 export default {
+    props: ['editBrewingHouse'],
+    watch: {
+        editBrewingHouse(newValue, oldValue) {
+            if (Object.keys(newValue).length > 0) {
+                this.isEditingBrewery = true
+                this.form.name = newValue.name
+            }
+        },
+    },
+    computed: {
+        isValid() {
+            return !!this.breweryImage
+        },
+    },
     data() {
         return {
             breweryImage: null,
@@ -65,13 +92,80 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            isEditingBrewery: false,
         }
     },
     methods: {
+        handleSubmitedContent() {
+            if (this.isEditingBrewery) {
+                this.EditBrewery()
+                return
+            }
+            this.Generate()
+        },
         Cancel() {
             this.breweryImage = null
             this.form.name = ''
             this.form.photoLocation = ''
+            this.isEditingBrewery = false
+            this.$emit('clear')
+        },
+        async EditBrewery() {
+            //Si el logo esta vacio no se cambia, si el logo tiene un archivo nuevo se overlapea y se cambia.
+            this.displayLoading = true
+            let db = firebase.firestore()
+            if (this.breweryImage !== null) {
+                await this.uploadToFirebase(
+                    this.breweryImage,
+                    `brewery/${this.form.name}`,
+                    this.form.name
+                ).then(async filename => {
+                    this.form.photoLocation = filename
+                    api.updateBreweryInformation({
+                        id: this.editBrewingHouse.id,
+                        brewery: this.form,
+                    })
+                        .then(response => {
+                            this.displayLoading = false
+                            this.alertTitle = 'Exito!'
+                            this.alertMessage =
+                                'Se ha actualizado la casa cerveceras con exito'
+                            this.alertType = 'success'
+                            this.displayAlert = true
+                            this.Cancel()
+                        })
+                        .catch(error => {
+                            this.displayLoading = false
+                            this.alertTitle = 'Error'
+                            this.alertMessage = error
+                            this.alertType = 'error'
+                            this.displayAlert = true
+                        })
+                })
+                return
+            }
+            let obj = this.form
+            delete obj.photoLocation
+            api.updateBreweryInformation({
+                id: this.editBrewingHouse.id,
+                brewery: obj,
+            })
+                .then(response => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha actualizado la casa cerveceras con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.Cancel()
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
         },
         async Generate() {
             this.displayLoading = true
@@ -90,11 +184,7 @@ export default {
                             'Se ha creado la casa cerveceras con exito'
                         this.alertType = 'success'
                         this.displayAlert = true
-                        this.breweryImage = null
-                        this.form = {
-                            name: '',
-                            photoLocation: '',
-                        }
+                        this.Cancel()
                     })
                     .catch(error => {
                         this.displayLoading = false
