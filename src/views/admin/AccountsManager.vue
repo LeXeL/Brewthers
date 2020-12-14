@@ -41,6 +41,15 @@
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <active-brewing-houses-table
                     class="q-mb-md"
+                    :data="
+                        users.filter(user => {
+                            if (
+                                user.status === 'approved' &&
+                                user.role === 'brewery'
+                            )
+                                return user
+                        })
+                    "
                     @open-new-brewing-houses="openNewBrewingHouses()"
                 ></active-brewing-houses-table>
                 <admin-accounts-table
