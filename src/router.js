@@ -34,6 +34,7 @@ import ExclusivenessAndPrices from './views/admin/ExclusivenessAndPrices'
 import ExclusivenessAndPricesDetails from './views/admin/ExclusivenessAndPricesDetails'
 
 import MyInventory from '@/views/BrewingHouse/MyInventory'
+import Clients from '@/views/BrewingHouse/Clients'
 
 import BlogIndex from './views/Blog/BlogIndex'
 import BlogView from './views/Blog/BlogView'
@@ -129,6 +130,11 @@ export default new Router({
                     path: '/my-inventory',
                     name: 'my-inventory',
                     component: MyInventory,
+                },
+                {
+                    path: '/clients',
+                    name: 'clients',
+                    component: Clients,
                 },
             ],
         },

@@ -82,6 +82,11 @@ export default {
                     link: '/my-inventory',
                     icon: 'fas fa-boxes',
                 },
+                {
+                    name: 'Clientes',
+                    link: '/clients',
+                    icon: 'fas fa-utensils',
+                },
             ],
         }
     },
