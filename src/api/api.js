@@ -35,6 +35,10 @@ export const updateadmininformation = data =>
     Request.post('/updateAdminWithInfo', data, {
         'Content-Type': 'application/json',
     })
+export const updatebrewerywithinfo = data =>
+    Request.post('/updateBreweryWithInfo', data, {
+        'Content-Type': 'application/json',
+    })
 export const addToShoppingCart = data =>
     Request.post('/addToShoppingCart', data, {
         'Content-Type': 'application/json',

@@ -51,6 +51,20 @@ exports.updateAdminWithInfo = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.updateBreweryWithInfo = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            await users.updateDatabaseWithBreweryInfo(
+                req.body.uid,
+                req.body.obj
+            )
+            res.status(200).send({status: 'Updated'})
+        } catch (err) {
+            console.log(err)
+            res.status(400).send({err: err})
+        }
+    })
+})
 exports.getUserInformationById = functions.https.onRequest(async (req, res) => {
     cors(req, res, async () => {
         try {

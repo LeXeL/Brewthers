@@ -152,6 +152,7 @@
                         label="RUC"
                         color="primary"
                         class="q-mb-md"
+                        v-model="breweryInfo.ruc"
                     />
                     <q-input
                         dark
@@ -159,6 +160,7 @@
                         label="Nombre"
                         color="primary"
                         class="q-mb-md"
+                        v-model="breweryInfo.name"
                     />
                     <q-input
                         dark
@@ -166,6 +168,7 @@
                         label="Apellido"
                         color="primary"
                         class="q-mb-md"
+                        v-model="breweryInfo.lastName"
                     />
                     <q-input
                         dark
@@ -173,6 +176,7 @@
                         label="Correo"
                         color="primary"
                         class="q-mb-md"
+                        v-model="breweryInfo.email"
                     />
                     <q-input
                         dark
@@ -182,6 +186,7 @@
                         class="q-mb-md"
                         mask="####-####"
                         fill-mask
+                        v-model="breweryInfo.phone"
                     />
 
                     <q-input
@@ -190,6 +195,8 @@
                         label="Contraseña"
                         color="primary"
                         class="q-mb-md"
+                        type="password"
+                        v-model="breweryInfo.password"
                     />
                     <q-input
                         dark
@@ -197,11 +204,18 @@
                         label="Repetir la contraseña"
                         color="primary"
                         class="q-mb-md"
+                        type="password"
+                        v-model="breweryInfo.repassword"
                     />
                 </q-card-section>
                 <q-card-actions>
                     <q-space />
-                    <q-btn flat color="secondary" label="Registrar" />
+                    <q-btn
+                        flat
+                        color="secondary"
+                        label="Registrar"
+                        @click="createBrewery()"
+                    />
                     <q-btn
                         flat
                         color="red-7"
@@ -237,6 +251,16 @@ export default {
                 adminEmail: '',
                 adminPassword: '',
             },
+            breweryInfo: {
+                name: '',
+                lastName: '',
+                ruc: '',
+                email: '',
+                phone: '',
+                breweryId: '',
+                password: '',
+                repassword: '',
+            },
             displayLoading: false,
             displayAlert: false,
             alertTitle: '',
@@ -251,12 +275,14 @@ export default {
     },
     computed: {
         brewerys() {
-            let brewerys = this.$store.getters.brewerys
-            this.brewingHouseOptions = brewerys
+            return this.$store.getters.brewerys
+        },
+    },
+    watch: {
+        brewerys(newValue, oldValue) {
+            this.brewingHouseOptions = newValue
                 .filter(brewery => brewery.status === 'active')
                 .map(brewery => brewery.name)
-
-            return brewerys
         },
     },
     methods: {
@@ -300,8 +326,8 @@ export default {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(
-                    this.adminEmail,
-                    this.adminPassword
+                    this.adminInfo.adminEmail,
+                    this.adminInfo.adminPassword
                 )
                 .then(async user => {
                     await api
@@ -311,9 +337,54 @@ export default {
                                 .updateadmininformation({
                                     uid: user.user.uid,
                                     obj: {
-                                        name: this.adminName,
-                                        lastName: this.adminLastName,
+                                        name: this.adminInfo.adminName,
+                                        lastName: this.adminInfo.adminLastName,
                                     },
+                                })
+                                .then(() => {
+                                    this.displayLoading = false
+                                    this.alertTitle = 'Exito!'
+                                    this.alertMessage =
+                                        'Se ha creado la cuenta con exito'
+                                    this.alertType = 'success'
+                                    this.displayAlert = true
+                                    this.prompt = false
+                                })
+                                .catch(error => {
+                                    this.displayLoading = false
+                                    this.alertTitle = 'Error'
+                                    this.alertMessage = error
+                                    this.alertType = 'error'
+                                    this.displayAlert = true
+                                })
+                        })
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    console.log(error)
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error.message
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
+        createBrewery() {
+            this.displayLoading = true
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                    this.breweryInfo.email,
+                    this.breweryInfo.password
+                )
+                .then(async user => {
+                    await api
+                        .createuserondatabase({user: user.user})
+                        .then(async () => {
+                            await api
+                                .updatebrewerywithinfo({
+                                    uid: user.user.uid,
+                                    obj: this.breweryInfo,
                                 })
                                 .then(() => {
                                     this.displayLoading = false
