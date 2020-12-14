@@ -47,7 +47,7 @@
                                     color="primary"
                                     label="Ver"
                                     size="xs"
-                                    to="/exclusiveness-and-prices/1234"
+                                    to="/clients/1234"
                                 />
                             </q-td>
                         </q-tr>
