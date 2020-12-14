@@ -29,7 +29,8 @@
                         users.filter(user => {
                             if (
                                 user.status === 'approved' &&
-                                user.role !== 'admin'
+                                user.role !== 'admin' &&
+                                user.role !== 'brewery'
                             )
                                 return user
                         })
@@ -140,7 +141,7 @@
                     <q-select
                         dark
                         filled
-                        v-model="model"
+                        v-model="breweryInfo.breweryId"
                         :options="brewingHouseOptions"
                         label="Casa cervecera"
                         color="primary"
@@ -177,6 +178,12 @@
                         color="primary"
                         class="q-mb-md"
                         v-model="breweryInfo.email"
+                        :rules="[
+                            val => val.length > 0 || 'El campo es obligatorio',
+                            val =>
+                                validEmail.test(val) ||
+                                'Formato de correo incorrecto',
+                        ]"
                     />
                     <q-input
                         dark
@@ -196,6 +203,12 @@
                         class="q-mb-md"
                         type="password"
                         v-model="breweryInfo.password"
+                        :rules="[
+                            val => val.length > 0 || 'El campo es obligatorio',
+                            val =>
+                                strongPass.test(val) ||
+                                'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                        ]"
                     />
                     <q-input
                         dark
@@ -219,7 +232,10 @@
                         flat
                         color="red-7"
                         label="Cancelar"
-                        @click="brewingHousesRegisterDialog = false"
+                        @click="
+                            clearBreweryInputs()
+                            brewingHousesRegisterDialog = false
+                        "
                     />
                 </q-card-actions>
             </q-card>
@@ -320,6 +336,18 @@ export default {
             this.adminInfo.adminEmail = ''
             this.adminInfo.adminPassword = ''
         },
+        clearBreweryInputs() {
+            this.breweryInfo = {
+                name: '',
+                lastName: '',
+                ruc: '',
+                email: '',
+                phone: '',
+                breweryId: '',
+                password: '',
+                repassword: '',
+            }
+        },
         createAdmin() {
             this.displayLoading = true
             firebase
@@ -370,45 +398,36 @@ export default {
         },
         createBrewery() {
             this.displayLoading = true
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(
-                    this.breweryInfo.email,
-                    this.breweryInfo.password
-                )
-                .then(async user => {
-                    await api
-                        .createuserondatabase({user: user.user})
-                        .then(async () => {
-                            await api
-                                .updatebrewerywithinfo({
-                                    uid: user.user.uid,
-                                    obj: this.breweryInfo,
-                                })
-                                .then(() => {
-                                    this.displayLoading = false
-                                    this.alertTitle = 'Exito!'
-                                    this.alertMessage =
-                                        'Se ha creado la cuenta con exito'
-                                    this.alertType = 'success'
-                                    this.displayAlert = true
-                                    this.prompt = false
-                                })
-                                .catch(error => {
-                                    this.displayLoading = false
-                                    this.alertTitle = 'Error'
-                                    this.alertMessage = error
-                                    this.alertType = 'error'
-                                    this.displayAlert = true
-                                })
-                        })
+            if (this.breweryInfo.password !== this.breweryInfo.repassword) {
+                this.displayLoading = false
+                this.alertTitle = 'Error'
+                this.alertMessage = 'Las Contraseñas no considen!'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
+
+            this.breweryInfo.breweryId = this.brewerys.find(
+                brewery => brewery.name === this.breweryInfo.breweryId
+            ).id
+            api.createBreweryUserInformation({
+                obj: this.breweryInfo,
+            })
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha creado la cuenta con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.brewingHousesRegisterDialog = false
+                    this.clearBreweryInputs()
                 })
                 .catch(error => {
-                    // Handle Errors here.
                     console.log(error)
                     this.displayLoading = false
                     this.alertTitle = 'Error'
-                    this.alertMessage = error.message
+                    this.alertMessage =
+                        'Error al momento de crear la cuenta de esta casa cervecera'
                     this.alertType = 'error'
                     this.displayAlert = true
                 })

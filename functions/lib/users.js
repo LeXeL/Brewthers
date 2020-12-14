@@ -68,29 +68,42 @@ async function updateDatabaseWithAdminInfo(uid, obj) {
             return error
         })
 }
-async function updateDatabaseWithBreweryInfo(uid, obj) {
-    return db
-        .collection('users')
-        .doc(uid)
-        .update({
-            cart: [],
-            name: obj.name,
-            lastName: obj.lastName,
-            ruc: obj.ruc,
-            email: obj.email,
-            phone: obj.phone,
-            breweryId: obj.breweryId,
-            role: 'brewery',
-            status: 'approved',
-        })
-        .then(() => {
-            console.log('Document successfully written!')
-            return 'Succesfull'
-        })
-        .catch(error => {
-            console.error('Error writing to document: ', error)
-            return error
-        })
+async function createBreweryUserInformation(obj) {
+    console.log(`OBJ: ${JSON.stringify(obj)}`)
+    try {
+        admin
+            .auth()
+            .createUser({
+                email: obj.email,
+                password: obj.password,
+            })
+            .then(userRecord => {
+                console.log('Successfully created new user:', userRecord.uid)
+                db.collection('users')
+                    .doc(userRecord.uid)
+                    .set({
+                        cart: [],
+                        name: obj.name,
+                        lastName: obj.lastName,
+                        ruc: obj.ruc,
+                        email: obj.email,
+                        phone: obj.phone,
+                        breweryId: obj.breweryId,
+                        role: 'brewery',
+                        status: 'approved',
+                    })
+                    .then(() => {
+                        console.log('Document successfully written!')
+                        return 'Succesfull'
+                    })
+            })
+            .catch(error => {
+                console.log('Error creating new user:', error)
+            })
+    } catch (error) {
+        console.log(error)
+        return error
+    }
 }
 async function returnUserById(uid) {
     return db
@@ -253,7 +266,7 @@ module.exports = {
     createDatabaseWithUserInfo,
     updateDatabaseWithUserInfo,
     updateDatabaseWithAdminInfo,
-    updateDatabaseWithBreweryInfo,
+    createBreweryUserInformation,
     returnUserById,
     returnApprovedUser,
     updateUserInfo,
