@@ -82,12 +82,13 @@ async function createBreweryUserInformation(obj) {
                 db.collection('users')
                     .doc(userRecord.uid)
                     .set({
+                        brewingHouseName: obj.brewingHouseName,
                         cart: [],
                         name: obj.name,
                         lastName: obj.lastName,
                         ruc: obj.ruc,
                         email: obj.email,
-                        phone: obj.phone,
+                        contactPhone: obj.phone,
                         breweryId: obj.breweryId,
                         role: 'brewery',
                         status: obj.status,
