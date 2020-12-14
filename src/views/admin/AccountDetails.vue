@@ -114,7 +114,10 @@
                         </q-list>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
+                <div
+                    class="col-lg-8 col-md-8 col-xs-12 q-pa-md"
+                    v-if="data.role !== 'brewery'"
+                >
                     <GoogleMaps
                         class="full-width q-mb-md"
                         :editable="false"

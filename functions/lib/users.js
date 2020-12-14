@@ -90,7 +90,8 @@ async function createBreweryUserInformation(obj) {
                         phone: obj.phone,
                         breweryId: obj.breweryId,
                         role: 'brewery',
-                        status: 'approved',
+                        status: obj.status,
+                        logs: [],
                     })
                     .then(() => {
                         console.log('Document successfully written!')

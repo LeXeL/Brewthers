@@ -419,6 +419,7 @@ export default {
             this.breweryInfo.breweryId = this.brewerys.find(
                 brewery => brewery.name === this.breweryInfo.breweryId
             ).id
+            this.breweryInfo.status = 'approved'
             api.createBreweryUserInformation({
                 obj: this.breweryInfo,
             })
