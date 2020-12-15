@@ -399,7 +399,7 @@ export default {
             let selectedBrewery = this.brewerys.find(
                 brewery => brewery.name === this.breweryInfo.breweryId
             )
-            this.breweryInfo.brewingHouseNameselectedBrewery.name
+            this.breweryInfo.brewingHouseName = selectedBrewery.name
             this.breweryInfo.breweryId = selectedBrewery.id
             this.breweryInfo.status = 'approved'
             api.createBreweryUserInformation({
