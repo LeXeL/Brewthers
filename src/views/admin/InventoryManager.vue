@@ -20,44 +20,49 @@
         </div>
 
         <!-- *********************************************************************************************************** -->
-        
+
         <div class="row">
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
-                <q-input 
+                <q-input
                     dark
                     dense
-                    filled 
-                    v-model="text" 
-                    label="Nombre" 
+                    filled
+                    v-model="searchName"
+                    label="Nombre"
                 />
             </div>
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
-                <q-select 
+                <q-select
                     dark
                     dense
-                    filled 
-                    v-model="model" :options="options" 
-                    label="Tipo" 
+                    filled
+                    v-model="searchType"
+                    :options="searchTypeOptions"
+                    label="Tipo"
+                    emit-value
+                    map-options
                 />
             </div>
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
-                <q-select 
+                <q-select
                     dark
                     dense
-                    filled 
-                    v-model="model" :options="options2" 
-                    label="Casa cervecera" 
+                    filled
+                    :options="searchHouseOptions"
+                    v-model="searchHouse"
+                    label="Casa cervecera"
+                    emit-value
+                    map-options
                 />
             </div>
         </div>
-
 
         <!-- *********************************************************************************************************** -->
 
         <div class="row">
             <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                 <inventory-manager-table
-                    :data="data"
+                    :data="returnFilteredTable"
                     @changestatus="editStatus"
                     @delete="askForDeleteBrewery"
                     @namechange="updateNameChange"
@@ -90,12 +95,24 @@ export default {
             alertMessage: '',
             alertType: '',
             workingDeletedId: '',
-
-            
-            model: null,
-            options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
-
-            model: null,
+            searchName: '',
+            searchType: '',
+            searchTypeOptions: [
+                {
+                    label: 'Todo',
+                    value: '',
+                },
+                {
+                    label: 'Caja',
+                    value: 'Caja',
+                },
+                {
+                    label: 'KEG',
+                    value: 'KEG',
+                },
+            ],
+            searchHouse: '',
+            searchHouseOptions: [],
             options2: ['Sun', 'Moon', 'Stars', 'Planets', 'Asteroids'],
         }
     },
@@ -198,6 +215,34 @@ export default {
                 }
             })
         },
+        formatBreweriesSelect() {
+            let allBreweries = []
+            allBreweries.push({value: '', label: 'Todo'})
+            this.$store.getters.brewerys.forEach(item => {
+                let i = {}
+                i.label = item.name
+                i.value = item.id
+                allBreweries.push(i)
+            })
+            this.searchHouseOptions = allBreweries
+        },
+    },
+    computed: {
+        returnFilteredTable() {
+            let filteredData = []
+            this.data.forEach(item => {
+                if (
+                    item.name
+                        .toLowerCase()
+                        .includes(this.searchName.toLowerCase()) &&
+                    item.type.includes(this.searchType) &&
+                    item.brewery.includes(this.searchHouse)
+                )
+                    filteredData.push(item)
+                console.log(item)
+            })
+            return filteredData
+        },
     },
     mounted() {
         let db = firebase.firestore()
@@ -224,6 +269,8 @@ export default {
                 this.$store.dispatch('setBrewerys', response.data.data)
             })
         }
+        // console.log(this.$store.getters.brewerys)
+        this.formatBreweriesSelect()
     },
     components: {
         'inventory-manager-table': InventoryManagerTable,
