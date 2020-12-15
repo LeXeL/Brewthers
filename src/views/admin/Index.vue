@@ -165,11 +165,19 @@
                                         )
                                     "
                                 >
-                                    <q-item-label>{{
+                                    <q-item-label v-if="user.role === 'user'">{{
                                         user.restaurantName
                                             ? user.restaurantName
                                             : 'NaN'
                                     }}</q-item-label>
+                                    <q-item-label
+                                        v-if="user.role === 'brewery'"
+                                        >{{
+                                            user.brewingHouseName
+                                                ? user.brewingHouseName
+                                                : 'NaN'
+                                        }}</q-item-label
+                                    >
                                     <q-item-label caption>{{
                                         user.email
                                     }}</q-item-label>
@@ -239,11 +247,7 @@ export default {
             })
         },
         returnFilteredUsers() {
-            return this.users.filter(user => {
-                if (user.role === 'user' && user.status === 'pending') {
-                    return user
-                }
-            })
+            return this.users.filter(user => user.status === 'pending')
         },
         returnRestaurantName(order) {
             let value = this.restaurants.filter(res => {
