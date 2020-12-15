@@ -1,5 +1,8 @@
 <template>
-    <q-page class="pattern-bg q-pa-xl" style="height: auto; background-repeat: repeat-y;">
+    <q-page
+        class="pattern-bg q-pa-xl"
+        style="height: auto; background-repeat: repeat-y"
+    >
         <generic-navbar />
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
@@ -14,18 +17,20 @@
                 <div class="text-h3 text-white">Crea tu cuenta</div>
             </div>
         </div>
-        <div class="row">
-            <div class="col col-lg-4 col-xs-12 q-pa-lg">
-                <q-card flat bordered dark class="text-white full-width">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-h6">Informacion general:</div>
+        <q-form @submit="createUser">
+            <div class="row">
+                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                    <q-card flat bordered dark class="text-white full-width">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-h6">
+                                        Informacion general:
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-form>
+                        </q-card-section>
+                        <q-card-section>
                             <q-input
                                 filled
                                 v-model="form.restaurantName"
@@ -103,21 +108,19 @@
                                         'El campo es obligatorio',
                                 ]"
                             />
-                        </q-form>
-                    </q-card-section>
-                </q-card>
-            </div>
-            <div class="col col-lg-4 col-xs-12 q-pa-lg">
-                <q-card flat bordered dark class="text-white full-width">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-h6">Direccion:</div>
+                        </q-card-section>
+                    </q-card>
+                </div>
+                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                    <q-card flat bordered dark class="text-white full-width">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-h6">Direccion:</div>
+                                </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-form>
+                        </q-card-section>
+                        <q-card-section>
                             <q-input
                                 filled
                                 v-model="form.address"
@@ -136,72 +139,77 @@
                                 :markers="markers"
                                 :mapCenter="center"
                             ></GoogleMaps>
-                        </q-form>
-                    </q-card-section>
-                </q-card>
-            </div>
-            <div class="col col-lg-4 col-xs-12 q-pa-lg">
-                <q-card flat bordered dark class="text-white full-width">
-                    <q-card-section>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-h6">Contraseña:</div>
+                        </q-card-section>
+                    </q-card>
+                </div>
+                <div class="col col-lg-4 col-xs-12 q-pa-lg">
+                    <q-card flat bordered dark class="text-white full-width">
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-h6">Contraseña:</div>
+                                </div>
                             </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-form>
-                            <q-form>
-                                <q-input
-                                    filled
-                                    type="password"
-                                    v-model="form.password"
-                                    class="q-mb-md"
-                                    label="Contraseña"
-                                    dark
-                                    :rules="[
-                                        val =>
-                                            val.length > 0 ||
-                                            'El campo es obligatorio',
-                                        val =>
-                                            strongPass.test(val) ||
-                                            'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
-                                    ]"
-                                />
-                                <q-input
-                                    filled
-                                    type="password"
-                                    v-model="form.repassword"
-                                    class="q-mb-md"
-                                    label="Repite la contraseña"
-                                    dark
-                                    :rules="[
-                                        val =>
-                                            val.length > 0 ||
-                                            'El campo es obligatorio',
-                                        val =>
-                                            val == form.password ||
-                                            'Las contraseñas no coinciden',
-                                    ]"
-                                />
-                                <q-checkbox dark v-model="terms">Acepto los terminos y condiciones.</q-checkbox>
-                                <a
-                                    class="on-right text-primary"
-                                    href="/terminos-y-condiciones"
-                                    target="_blank"
-                                >Leer aqui.</a>
-                            </q-form>
-                        </q-form>
-                    </q-card-section>
-                </q-card>
-                <div class="row">
-                    <q-space />
-                    <q-btn class="q-mt-md" color="primary" @click="createuser">Registrar</q-btn>
+                        </q-card-section>
+                        <q-card-section>
+                            <q-input
+                                filled
+                                type="password"
+                                v-model="form.password"
+                                class="q-mb-md"
+                                label="Contraseña"
+                                dark
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                    val =>
+                                        strongPass.test(val) ||
+                                        'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                                ]"
+                            />
+                            <q-input
+                                filled
+                                type="password"
+                                v-model="form.repassword"
+                                class="q-mb-md"
+                                label="Repite la contraseña"
+                                dark
+                                :rules="[
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                    val =>
+                                        val == form.password ||
+                                        'Las contraseñas no coinciden',
+                                ]"
+                            />
+                            <q-checkbox dark v-model="terms"
+                                >Acepto los terminos y condiciones.</q-checkbox
+                            >
+                            <a
+                                class="on-right text-primary"
+                                href="/terminos-y-condiciones"
+                                target="_blank"
+                                >Leer aqui.</a
+                            >
+                        </q-card-section>
+                    </q-card>
+                    <div class="row">
+                        <q-space />
+                        <q-btn class="q-mt-md" color="primary" type="submit"
+                            >Registrar</q-btn
+                        >
+                    </div>
                 </div>
             </div>
-        </div>
+        </q-form>
         <q-dialog v-model="confirmationDialog">
-            <q-card dark class="text-white" style="width: 700px; max-width: 80vw;">
+            <q-card
+                dark
+                class="text-white"
+                style="width: 700px; max-width: 80vw"
+            >
                 <q-card-section>
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
@@ -216,7 +224,12 @@
 
                 <q-card-actions align="right">
                     <router-link to="/movingbeer">
-                        <q-btn flat label="Aceptar" color="primary" v-close-popup />
+                        <q-btn
+                            flat
+                            label="Aceptar"
+                            color="primary"
+                            v-close-popup
+                        />
                     </router-link>
                 </q-card-actions>
             </q-card>
@@ -224,15 +237,29 @@
         <q-dialog v-model="brewingHouseRegisterDialog">
             <q-card dark>
                 <q-card-section class="text-center">
-                    <q-img :src="require('@/assets/brewthers-logo.png')" style="width: 150px"/>
+                    <q-img
+                        :src="require('@/assets/brewthers-logo.png')"
+                        style="width: 150px"
+                    />
                 </q-card-section>
                 <q-card-section>
-                    <div class="text-h5 text-center">¿Quieres vender tus productos con nosotros?</div>
+                    <div class="text-h5 text-center">
+                        ¿Quieres vender tus productos con nosotros?
+                    </div>
                 </q-card-section>
                 <q-card-actions>
-                    <q-space/>
-                    <q-btn color="primary" flat label="registro de restaurantes" v-close-popup/>
-                    <q-btn color="secondary" label="vender" @click="$router.push('/create-account-brewing-house')"/>
+                    <q-space />
+                    <q-btn
+                        color="primary"
+                        flat
+                        label="registro de restaurantes"
+                        v-close-popup
+                    />
+                    <q-btn
+                        color="secondary"
+                        label="vender"
+                        @click="$router.push('/create-account-brewing-house')"
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -306,7 +333,7 @@ export default {
         setMarkerPosition(event) {
             this.form.location = event
         },
-        createuser() {
+        createUser() {
             if (!this.terms) {
                 this.alertTitle = 'Error'
                 this.alertMessage =
