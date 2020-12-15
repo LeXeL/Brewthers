@@ -14,9 +14,26 @@
                 <div class="col-lg-4 col-md-4 q-pa-md">
                     <div class="row q-mb-md">
                         <q-input
+                            v-if="data.role === 'user'"
                             filled
                             label="Nombre del comercio"
                             :value="data.restaurantName"
+                            class="q-mb-md full-width"
+                            dark
+                            readonly
+                        />
+                        <q-input
+                            v-if="data.role === 'brewery'"
+                            filled
+                            label="Nombre de la casa cervezera"
+                            :value="
+                                data.brewingHouseName !== ''
+                                    ? data.brewingHouseName
+                                    : brewerys.find(
+                                          brewery =>
+                                              brewery.id === data.breweryId
+                                      ).name
+                            "
                             class="q-mb-md full-width"
                             dark
                             readonly
@@ -62,6 +79,7 @@
                             readonly
                         />
                         <q-input
+                            v-if="data.role === 'user'"
                             filled
                             label="Direccion"
                             :value="data.address"
@@ -120,16 +138,41 @@
                         :editable="false"
                         :markers="[{position: data.location}]"
                         :mapCenter="data.location"
+                        v-if="data.role !== 'brewery'"
                     ></GoogleMaps>
-                    <div class="row">
+                    <div
+                        class="row"
+                        v-if="
+                            data.role === 'brewery' &&
+                            data.status !== 'approved'
+                        "
+                    >
                         <q-select
-                            :options="['Casa Bruja', 'Central', 'Rana Dorada']"
+                            :options="brewingHouseOptions"
                             label="Seleccione casa cervecera a enlazar"
                             class="full-width q-mb-md"
                             v-model="linkBrewingHouse"
                             dark
                             filled
                         />
+                    </div>
+
+                    <div
+                        class="row"
+                        v-if="
+                            data.role === 'brewery' &&
+                            data.status === 'approved'
+                        "
+                    >
+                        <div class="col-lg-4">
+                            <q-img
+                                :src="
+                                    brewerys.find(
+                                        brewery => brewery.id === data.breweryId
+                                    ).photoLocation
+                                "
+                            />
+                        </div>
                     </div>
                     <div class="row">
                         <q-btn
@@ -193,6 +236,20 @@ export default {
         user() {
             return this.$store.getters.user
         },
+        brewerys() {
+            return this.$store.getters.brewerys
+        },
+    },
+
+    watch: {
+        brewerys: {
+            immediate: true,
+            handler(newValue, oldValue) {
+                this.brewingHouseOptions = newValue
+                    .filter(brewery => brewery.status === 'active')
+                    .map(brewery => brewery.name)
+            },
+        },
     },
     data() {
         return {
@@ -229,6 +286,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
+            brewingHouseOptions: [],
         }
     },
     methods: {
@@ -274,6 +332,22 @@ export default {
         approveUser() {
             this.displayLoading = true
             let data = this.data
+            if (this.linkBrewingHouse === '' && this.data.role === 'brewery') {
+                this.displayLoading = false
+                this.alertTitle = 'Error'
+                this.alertMessage =
+                    'Tienes que escojer una casa cervecera de la lista'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
+            if (this.data.role === 'brewery') {
+                let selectedBrewery = this.brewerys.find(
+                    brewery => brewery.name === this.linkBrewingHouse
+                )
+                data.brewingHouseName = selectedBrewery.name
+                data.breweryId = selectedBrewery.id
+            }
             data.status = 'approved'
             let obj = {}
             obj.time = Date.now()

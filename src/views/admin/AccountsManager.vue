@@ -29,7 +29,8 @@
                         users.filter(user => {
                             if (
                                 user.status === 'approved' &&
-                                user.role !== 'admin'
+                                user.role !== 'admin' &&
+                                user.role !== 'brewery'
                             )
                                 return user
                         })
@@ -40,6 +41,15 @@
             <div class="col-lg-6 col-md-6 col-xs-12 q-pa-md">
                 <active-brewing-houses-table
                     class="q-mb-md"
+                    :data="
+                        users.filter(user => {
+                            if (
+                                user.status === 'approved' &&
+                                user.role === 'brewery'
+                            )
+                                return user
+                        })
+                    "
                     @open-new-brewing-houses="openNewBrewingHouses()"
                 ></active-brewing-houses-table>
                 <admin-accounts-table
@@ -54,7 +64,7 @@
         </div>
         <q-dialog v-model="prompt" persistent>
             <q-card style="min-width: 350px" dark>
-                <q-form @submit="createadmin">
+                <q-form @submit="createAdmin">
                     <q-card-section>
                         <div class="text-h6">Nueva cuenta de administrador</div>
                     </q-card-section>
@@ -66,7 +76,7 @@
                             dark
                             filled
                             type="text"
-                            v-model="adminName"
+                            v-model="adminInfo.name"
                             :rules="[val => !!val || 'El campo es obligatorio']"
                         />
                         <q-input
@@ -75,7 +85,7 @@
                             dark
                             filled
                             type="text"
-                            v-model="adminLastName"
+                            v-model="adminInfo.lastName"
                             :rules="[val => !!val || 'El campo es obligatorio']"
                         />
                         <q-input
@@ -84,7 +94,7 @@
                             dark
                             filled
                             type="email"
-                            v-model="adminEmail"
+                            v-model="adminInfo.email"
                             :rules="[
                                 val =>
                                     val.length > 0 || 'El campo es obligatorio',
@@ -99,7 +109,7 @@
                             dark
                             filled
                             type="password"
-                            v-model="adminPassword"
+                            v-model="adminInfo.password"
                             :rules="[
                                 val =>
                                     val.length > 0 || 'El campo es obligatorio',
@@ -114,7 +124,7 @@
                         <q-btn
                             flat
                             label="Cancelar"
-                            @click="clearadmin()"
+                            @click="clearAdminInputs()"
                             v-close-popup
                         />
                         <q-btn flat label="Crear" type="submit" />
@@ -125,87 +135,121 @@
 
         <q-dialog v-model="brewingHousesRegisterDialog" persistent>
             <q-card dark>
-                <q-card-section>
-                    <div class="text-h6">Nueva cuenta de casa cervecera</div>
-                </q-card-section>
-
-                <q-card-section>
-                    <q-input
-                        dark
-                        filled
-                        label="Nombre de casa cervecera"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="RUC"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Nombre"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Apellido"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Correo"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Celular"
-                        color="primary"
-                        class="q-mb-md"
-                        mask="####-####"
-                        fill-mask
-                    />
-                    <q-select 
-                        dark
-                        filled v-model="model" :options="options"
-                        label="Casa cervecera" 
-                        color="primary" 
-                        class="q-mb-md"  
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Contraseña"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Repetir la contraseña"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                </q-card-section>
-                <q-card-actions>
-                    <q-space />
-                    <q-btn flat color="secondary" label="Registrar" />
-                    <q-btn
-                        flat
-                        color="red-7"
-                        label="Cancelar"
-                        @click="brewingHousesRegisterDialog = false"
-                    />
-                </q-card-actions>
+                <q-form @submit="createBrewery()">
+                    <q-card-section>
+                        <div class="text-h6">
+                            Nueva cuenta de casa cervecera
+                        </div>
+                    </q-card-section>
+                    <q-card-section>
+                        <q-select
+                            dark
+                            filled
+                            v-model="breweryInfo.breweryId"
+                            :options="brewingHouseOptions"
+                            label="Casa cervecera"
+                            color="primary"
+                            class="q-mb-md"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="RUC"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.ruc"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Nombre"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.name"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Apellido"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.lastName"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Correo"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.email"
+                            :rules="[
+                                val =>
+                                    val.length > 0 || 'El campo es obligatorio',
+                                val =>
+                                    validEmail.test(val) ||
+                                    'Formato de correo incorrecto',
+                            ]"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Celular"
+                            color="primary"
+                            class="q-mb-md"
+                            mask="####-####"
+                            fill-mask
+                            v-model="breweryInfo.phone"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Contraseña"
+                            color="primary"
+                            class="q-mb-md"
+                            type="password"
+                            v-model="breweryInfo.password"
+                            :rules="[
+                                val =>
+                                    val.length > 0 || 'El campo es obligatorio',
+                                val =>
+                                    strongPass.test(val) ||
+                                    'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                            ]"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Repetir la contraseña"
+                            color="primary"
+                            class="q-mb-md"
+                            type="password"
+                            v-model="breweryInfo.repassword"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                    </q-card-section>
+                    <q-card-actions>
+                        <q-space />
+                        <q-btn
+                            flat
+                            color="secondary"
+                            label="Registrar"
+                            type="submit"
+                        />
+                        <q-btn
+                            flat
+                            color="red-7"
+                            label="Cancelar"
+                            @click="
+                                clearBreweryInputs()
+                                brewingHousesRegisterDialog = false
+                            "
+                        />
+                    </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
     </div>
@@ -228,10 +272,22 @@ export default {
         return {
             prompt: false,
             users: [],
-            adminName: '',
-            adminLastName: '',
-            adminEmail: '',
-            adminPassword: '',
+            adminInfo: {
+                name: '',
+                lastName: '',
+                email: '',
+                password: '',
+            },
+            breweryInfo: {
+                name: '',
+                lastName: '',
+                ruc: '',
+                email: '',
+                phone: '',
+                breweryId: '',
+                password: '',
+                repassword: '',
+            },
             displayLoading: false,
             displayAlert: false,
             alertTitle: '',
@@ -240,16 +296,26 @@ export default {
             strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             brewingHousesRegisterDialog: false,
-
-            model: null, 
-            options: ['Casa Bruja', 'Rana Dorada', 'Cerveceria Central', 'La Murga'],
+            model: null,
+            brewingHouseOptions: [],
         }
+    },
+    computed: {
+        brewerys() {
+            return this.$store.getters.brewerys
+        },
+    },
+    watch: {
+        brewerys(newValue, oldValue) {
+            this.brewingHouseOptions = newValue
+                .filter(brewery => brewery.status === 'active')
+                .map(brewery => brewery.name)
+        },
     },
     methods: {
         openNewBrewingHouses() {
             this.brewingHousesRegisterDialog = true
         },
-
         openNewAdminAccountDialog() {
             this.prompt = true
         },
@@ -276,56 +342,84 @@ export default {
                 }
             })
         },
-        clearadmin() {
-            this.adminName = ''
-            this.adminLastName = ''
-            this.adminEmail = ''
-            this.adminPassword = ''
+        clearAdminInputs() {
+            this.adminInfo = {
+                name: '',
+                lastName: '',
+                email: '',
+                password: '',
+            }
         },
-        createadmin() {
+        clearBreweryInputs() {
+            this.breweryInfo = {
+                name: '',
+                lastName: '',
+                ruc: '',
+                email: '',
+                phone: '',
+                breweryId: '',
+                password: '',
+                repassword: '',
+            }
+        },
+        createAdmin() {
             this.displayLoading = true
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(
-                    this.adminEmail,
-                    this.adminPassword
-                )
-                .then(async user => {
-                    await api
-                        .createuserondatabase({user: user.user})
-                        .then(async () => {
-                            await api
-                                .updateadmininformation({
-                                    uid: user.user.uid,
-                                    obj: {
-                                        name: this.adminName,
-                                        lastName: this.adminLastName,
-                                    },
-                                })
-                                .then(() => {
-                                    this.displayLoading = false
-                                    this.alertTitle = 'Exito!'
-                                    this.alertMessage =
-                                        'Se ha creado la cuenta con exito'
-                                    this.alertType = 'success'
-                                    this.displayAlert = true
-                                    this.prompt = false
-                                })
-                                .catch(error => {
-                                    this.displayLoading = false
-                                    this.alertTitle = 'Error'
-                                    this.alertMessage = error
-                                    this.alertType = 'error'
-                                    this.displayAlert = true
-                                })
-                        })
+            api.createAdminUserInformation({
+                obj: this.adminInfo,
+            })
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha creado la cuenta con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.clearAdminInputs()
+                    this.prompt = false
                 })
                 .catch(error => {
-                    // Handle Errors here.
                     console.log(error)
                     this.displayLoading = false
                     this.alertTitle = 'Error'
-                    this.alertMessage = error.message
+                    this.alertMessage =
+                        'Error al momento de crear la cuenta de esta casa cervecera'
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
+        createBrewery() {
+            this.displayLoading = true
+            if (this.breweryInfo.password !== this.breweryInfo.repassword) {
+                this.displayLoading = false
+                this.alertTitle = 'Error'
+                this.alertMessage = 'Las Contraseñas no considen!'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
+            let selectedBrewery = this.brewerys.find(
+                brewery => brewery.name === this.breweryInfo.breweryId
+            )
+            this.breweryInfo.brewingHouseName = selectedBrewery.name
+            this.breweryInfo.breweryId = selectedBrewery.id
+            this.breweryInfo.status = 'approved'
+            api.createBreweryUserInformation({
+                obj: this.breweryInfo,
+            })
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha creado la cuenta con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.brewingHousesRegisterDialog = false
+                    this.clearBreweryInputs()
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage =
+                        'Error al momento de crear la cuenta de esta casa cervecera'
                     this.alertType = 'error'
                     this.displayAlert = true
                 })
@@ -339,6 +433,9 @@ export default {
     },
     mounted() {
         let db = firebase.firestore()
+        api.returnAllBrewerys().then(response => {
+            this.$store.dispatch('setBrewerys', response.data.data)
+        })
         db.collection('users').onSnapshot(
             snapshot => {
                 snapshot.docChanges().forEach(change => {

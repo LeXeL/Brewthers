@@ -8,14 +8,24 @@
         dark
     >
         <template v-slot:top-right>
-            <q-btn color="primary" size="sm" no-caps @click="$emit('openDialog')">
+            <q-btn
+                color="primary"
+                size="sm"
+                no-caps
+                @click="$emit('openDialog')"
+            >
                 <i class="fas fa-plus"></i>
             </q-btn>
         </template>
         <template v-slot:header="props">
             <q-tr :props="props">
                 <q-th auto-width />
-                <q-th v-for="col in props.cols" :key="col.name" :props="props">{{ col.label }}</q-th>
+                <q-th
+                    v-for="col in props.cols"
+                    :key="col.name"
+                    :props="props"
+                    >{{ col.label }}</q-th
+                >
             </q-tr>
         </template>
 
@@ -26,7 +36,12 @@
                         <i class="fas fa-user-alt-slash"></i>
                     </q-btn>-->
                 </q-td>
-                <q-td v-for="col in props.cols" :key="col.name" :props="props">{{ col.value }}</q-td>
+                <q-td
+                    v-for="col in props.cols"
+                    :key="col.name"
+                    :props="props"
+                    >{{ col.value }}</q-td
+                >
             </q-tr>
         </template>
     </q-table>
