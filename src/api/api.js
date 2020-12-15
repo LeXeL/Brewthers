@@ -31,8 +31,8 @@ export const updateToRejectUser = data =>
     Request.post('/updateToRejectUser', data, {
         'Content-Type': 'application/json',
     })
-export const updateadmininformation = data =>
-    Request.post('/updateAdminWithInfo', data, {
+export const createAdminUserInformation = data =>
+    Request.post('/createAdminUserInformation', data, {
         'Content-Type': 'application/json',
     })
 export const createBreweryUserInformation = data =>

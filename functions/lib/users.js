@@ -46,27 +46,40 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             return error
         })
 }
-async function updateDatabaseWithAdminInfo(uid, obj) {
-    console.log(`UID: ${uid}`)
-    console.log(`obj: ${obj}`)
-    return db
-        .collection('users')
-        .doc(uid)
-        .update({
-            cart: [],
-            name: obj.name,
-            lastName: obj.lastName,
-            role: 'admin',
-            status: 'approved',
-        })
-        .then(() => {
-            console.log('Document successfully written!')
-            return 'Succesfull'
-        })
-        .catch(error => {
-            console.error('Error writing to document: ', error)
-            return error
-        })
+async function createAdminUserInformation(obj) {
+    try {
+        admin
+            .auth()
+            .createUser({
+                email: obj.email,
+                password: obj.password,
+            })
+            .then(userRecord => {
+                console.log('Successfully created new user:', userRecord.uid)
+                db.collection('users')
+                    .doc(userRecord.uid)
+                    .set({
+                        cart: [],
+                        name: obj.name,
+                        lastName: obj.lastName,
+                        creationTime: Date.now(),
+                        email: obj.email,
+                        role: 'admin',
+                        status: 'approved',
+                        logs: [],
+                    })
+                    .then(() => {
+                        console.log('Document successfully written!')
+                        return 'Succesfull'
+                    })
+            })
+            .catch(error => {
+                console.log('Error creating new user:', error)
+            })
+    } catch (error) {
+        console.log(error)
+        return error
+    }
 }
 async function createBreweryUserInformation(obj) {
     //TODO: enviar correo de bienvenida
@@ -84,6 +97,7 @@ async function createBreweryUserInformation(obj) {
                     .set({
                         brewingHouseName: obj.brewingHouseName,
                         cart: [],
+                        creationTime: Date.now(),
                         name: obj.name,
                         lastName: obj.lastName,
                         ruc: obj.ruc,
@@ -267,7 +281,7 @@ async function updateShoppingCart(uid, itemObj, itemIndex) {
 module.exports = {
     createDatabaseWithUserInfo,
     updateDatabaseWithUserInfo,
-    updateDatabaseWithAdminInfo,
+    createAdminUserInformation,
     createBreweryUserInformation,
     returnUserById,
     returnApprovedUser,

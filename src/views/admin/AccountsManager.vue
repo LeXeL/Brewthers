@@ -76,7 +76,7 @@
                             dark
                             filled
                             type="text"
-                            v-model="adminInfo.adminName"
+                            v-model="adminInfo.name"
                             :rules="[val => !!val || 'El campo es obligatorio']"
                         />
                         <q-input
@@ -85,7 +85,7 @@
                             dark
                             filled
                             type="text"
-                            v-model="adminInfo.adminLastName"
+                            v-model="adminInfo.lastName"
                             :rules="[val => !!val || 'El campo es obligatorio']"
                         />
                         <q-input
@@ -94,7 +94,7 @@
                             dark
                             filled
                             type="email"
-                            v-model="adminInfo.adminEmail"
+                            v-model="adminInfo.email"
                             :rules="[
                                 val =>
                                     val.length > 0 || 'El campo es obligatorio',
@@ -109,7 +109,7 @@
                             dark
                             filled
                             type="password"
-                            v-model="adminInfo.adminPassword"
+                            v-model="adminInfo.password"
                             :rules="[
                                 val =>
                                     val.length > 0 || 'El campo es obligatorio',
@@ -273,10 +273,10 @@ export default {
             prompt: false,
             users: [],
             adminInfo: {
-                adminName: '',
-                adminLastName: '',
-                adminEmail: '',
-                adminPassword: '',
+                name: '',
+                lastName: '',
+                email: '',
+                password: '',
             },
             breweryInfo: {
                 name: '',
@@ -343,10 +343,12 @@ export default {
             })
         },
         clearAdminInputs() {
-            this.adminInfo.adminName = ''
-            this.adminInfo.adminLastName = ''
-            this.adminInfo.adminEmail = ''
-            this.adminInfo.adminPassword = ''
+            this.adminInfo = {
+                name: '',
+                lastName: '',
+                email: '',
+                password: '',
+            }
         },
         clearBreweryInputs() {
             this.breweryInfo = {
@@ -361,50 +363,25 @@ export default {
             }
         },
         createAdmin() {
-            //TODO: Cambiar que la peticion sea en el back y no en el front...
             this.displayLoading = true
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(
-                    this.adminInfo.adminEmail,
-                    this.adminInfo.adminPassword
-                )
-                .then(async user => {
-                    await api
-                        .createuserondatabase({user: user.user})
-                        .then(async () => {
-                            await api
-                                .updateadmininformation({
-                                    uid: user.user.uid,
-                                    obj: {
-                                        name: this.adminInfo.adminName,
-                                        lastName: this.adminInfo.adminLastName,
-                                    },
-                                })
-                                .then(() => {
-                                    this.displayLoading = false
-                                    this.alertTitle = 'Exito!'
-                                    this.alertMessage =
-                                        'Se ha creado la cuenta con exito'
-                                    this.alertType = 'success'
-                                    this.displayAlert = true
-                                    this.prompt = false
-                                })
-                                .catch(error => {
-                                    this.displayLoading = false
-                                    this.alertTitle = 'Error'
-                                    this.alertMessage = error
-                                    this.alertType = 'error'
-                                    this.displayAlert = true
-                                })
-                        })
+            api.createAdminUserInformation({
+                obj: this.adminInfo,
+            })
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha creado la cuenta con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.clearAdminInputs()
+                    this.prompt = false
                 })
                 .catch(error => {
-                    // Handle Errors here.
                     console.log(error)
                     this.displayLoading = false
                     this.alertTitle = 'Error'
-                    this.alertMessage = error.message
+                    this.alertMessage =
+                        'Error al momento de crear la cuenta de esta casa cervecera'
                     this.alertType = 'error'
                     this.displayAlert = true
                 })

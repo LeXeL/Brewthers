@@ -40,17 +40,19 @@ exports.updateUserWithInfo = functions.https.onRequest(async (req, res) => {
         }
     })
 })
-exports.updateAdminWithInfo = functions.https.onRequest(async (req, res) => {
-    cors(req, res, async () => {
-        try {
-            await users.updateDatabaseWithAdminInfo(req.body.uid, req.body.obj)
-            res.status(200).send({status: 'Updated'})
-        } catch (err) {
-            console.log(err)
-            res.status(400).send({err: err})
-        }
-    })
-})
+exports.createAdminUserInformation = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await users.createAdminUserInformation(req.body.obj)
+                res.status(200).send({status: 'Updated'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
 exports.createBreweryUserInformation = functions.https.onRequest(
     async (req, res) => {
         cors(req, res, async () => {
