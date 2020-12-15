@@ -69,7 +69,7 @@ async function updateDatabaseWithAdminInfo(uid, obj) {
         })
 }
 async function createBreweryUserInformation(obj) {
-    console.log(`OBJ: ${JSON.stringify(obj)}`)
+    //TODO: enviar correo de bienvenida
     try {
         admin
             .auth()

@@ -135,118 +135,121 @@
 
         <q-dialog v-model="brewingHousesRegisterDialog" persistent>
             <q-card dark>
-                <q-card-section>
-                    <div class="text-h6">Nueva cuenta de casa cervecera</div>
-                </q-card-section>
-
-                <q-card-section>
-                    <!-- <q-input
-                        dark
-                        filled
-                        label="Nombre de casa cervecera"
-                        color="primary"
-                        class="q-mb-md"
-                    /> -->
-                    <q-select
-                        dark
-                        filled
-                        v-model="breweryInfo.breweryId"
-                        :options="brewingHouseOptions"
-                        label="Casa cervecera"
-                        color="primary"
-                        class="q-mb-md"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="RUC"
-                        color="primary"
-                        class="q-mb-md"
-                        v-model="breweryInfo.ruc"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Nombre"
-                        color="primary"
-                        class="q-mb-md"
-                        v-model="breweryInfo.name"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Apellido"
-                        color="primary"
-                        class="q-mb-md"
-                        v-model="breweryInfo.lastName"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Correo"
-                        color="primary"
-                        class="q-mb-md"
-                        v-model="breweryInfo.email"
-                        :rules="[
-                            val => val.length > 0 || 'El campo es obligatorio',
-                            val =>
-                                validEmail.test(val) ||
-                                'Formato de correo incorrecto',
-                        ]"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Celular"
-                        color="primary"
-                        class="q-mb-md"
-                        mask="####-####"
-                        fill-mask
-                        v-model="breweryInfo.phone"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Contraseña"
-                        color="primary"
-                        class="q-mb-md"
-                        type="password"
-                        v-model="breweryInfo.password"
-                        :rules="[
-                            val => val.length > 0 || 'El campo es obligatorio',
-                            val =>
-                                strongPass.test(val) ||
-                                'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
-                        ]"
-                    />
-                    <q-input
-                        dark
-                        filled
-                        label="Repetir la contraseña"
-                        color="primary"
-                        class="q-mb-md"
-                        type="password"
-                        v-model="breweryInfo.repassword"
-                    />
-                </q-card-section>
-                <q-card-actions>
-                    <q-space />
-                    <q-btn
-                        flat
-                        color="secondary"
-                        label="Registrar"
-                        @click="createBrewery()"
-                    />
-                    <q-btn
-                        flat
-                        color="red-7"
-                        label="Cancelar"
-                        @click="
-                            clearBreweryInputs()
-                            brewingHousesRegisterDialog = false
-                        "
-                    />
-                </q-card-actions>
+                <q-form @submit="createBrewery()">
+                    <q-card-section>
+                        <div class="text-h6">
+                            Nueva cuenta de casa cervecera
+                        </div>
+                    </q-card-section>
+                    <q-card-section>
+                        <q-select
+                            dark
+                            filled
+                            v-model="breweryInfo.breweryId"
+                            :options="brewingHouseOptions"
+                            label="Casa cervecera"
+                            color="primary"
+                            class="q-mb-md"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="RUC"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.ruc"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Nombre"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.name"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Apellido"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.lastName"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Correo"
+                            color="primary"
+                            class="q-mb-md"
+                            v-model="breweryInfo.email"
+                            :rules="[
+                                val =>
+                                    val.length > 0 || 'El campo es obligatorio',
+                                val =>
+                                    validEmail.test(val) ||
+                                    'Formato de correo incorrecto',
+                            ]"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Celular"
+                            color="primary"
+                            class="q-mb-md"
+                            mask="####-####"
+                            fill-mask
+                            v-model="breweryInfo.phone"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Contraseña"
+                            color="primary"
+                            class="q-mb-md"
+                            type="password"
+                            v-model="breweryInfo.password"
+                            :rules="[
+                                val =>
+                                    val.length > 0 || 'El campo es obligatorio',
+                                val =>
+                                    strongPass.test(val) ||
+                                    'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                            ]"
+                        />
+                        <q-input
+                            dark
+                            filled
+                            label="Repetir la contraseña"
+                            color="primary"
+                            class="q-mb-md"
+                            type="password"
+                            v-model="breweryInfo.repassword"
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                    </q-card-section>
+                    <q-card-actions>
+                        <q-space />
+                        <q-btn
+                            flat
+                            color="secondary"
+                            label="Registrar"
+                            type="submit"
+                        />
+                        <q-btn
+                            flat
+                            color="red-7"
+                            label="Cancelar"
+                            @click="
+                                clearBreweryInputs()
+                                brewingHousesRegisterDialog = false
+                            "
+                        />
+                    </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
     </div>
@@ -358,6 +361,7 @@ export default {
             }
         },
         createAdmin() {
+            //TODO: Cambiar que la peticion sea en el back y no en el front...
             this.displayLoading = true
             firebase
                 .auth()
@@ -415,10 +419,11 @@ export default {
                 this.displayAlert = true
                 return
             }
-
-            this.breweryInfo.breweryId = this.brewerys.find(
+            let selectedBrewery = this.brewerys.find(
                 brewery => brewery.name === this.breweryInfo.breweryId
-            ).id
+            )
+            this.breweryInfo.brewingHouseNameselectedBrewery.name
+            this.breweryInfo.breweryId = selectedBrewery.id
             this.breweryInfo.status = 'approved'
             api.createBreweryUserInformation({
                 obj: this.breweryInfo,

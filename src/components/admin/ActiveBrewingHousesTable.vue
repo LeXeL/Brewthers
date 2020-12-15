@@ -52,14 +52,6 @@
                         {{ col.value }}
                     </q-td>
                 </q-tr>
-                <q-tr v-show="props.expand" :props="props">
-                    <q-td colspan="100%">
-                        <div class="text-left">
-                            This is expand slot for row above:
-                            {{ props.row.name }}.
-                        </div>
-                    </q-td>
-                </q-tr>
             </template>
         </q-table>
     </div>
@@ -77,10 +69,10 @@ export default {
         return {
             columns: [
                 {
-                    name: 'name',
+                    name: 'brewingHouseName',
                     align: 'left',
                     label: 'Casa cervecera',
-                    field: 'name',
+                    field: 'brewingHouseName',
                     sortable: true,
                 },
                 {
