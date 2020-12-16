@@ -15,49 +15,54 @@
             @accept="deleteBrewery"
             @cancel="displayConfirm = false"
         ></confirm-dialog>
-        <div class="text-h5 q-mb-md text-white">
+        <div class="text-h5 q-mb-md text-white q-px-md">
             Administrador de inventario
         </div>
 
         <!-- *********************************************************************************************************** -->
-        
+
         <div class="row">
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
-                <q-input 
+                <q-select
                     dark
                     dense
-                    filled 
-                    v-model="text" 
-                    label="Nombre" 
+                    filled
+                    :options="searchHouseOptions"
+                    v-model="searchHouse"
+                    label="Casa cervecera"
+                    emit-value
+                    map-options
                 />
             </div>
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
-                <q-select 
+                <q-select
                     dark
                     dense
-                    filled 
-                    v-model="model" :options="options" 
-                    label="Tipo" 
+                    filled
+                    v-model="searchType"
+                    :options="searchTypeOptions"
+                    label="Tipo"
+                    emit-value
+                    map-options
                 />
             </div>
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
-                <q-select 
+                <q-input
                     dark
                     dense
-                    filled 
-                    v-model="model" :options="options2" 
-                    label="Casa cervecera" 
+                    filled
+                    v-model="searchName"
+                    label="Nombre"
                 />
             </div>
         </div>
-
 
         <!-- *********************************************************************************************************** -->
 
         <div class="row">
             <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                 <inventory-manager-table
-                    :data="data"
+                    :data="returnFilteredTable"
                     @changestatus="editStatus"
                     @delete="askForDeleteBrewery"
                     @namechange="updateNameChange"
@@ -90,12 +95,24 @@ export default {
             alertMessage: '',
             alertType: '',
             workingDeletedId: '',
-
-            
-            model: null,
-            options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
-
-            model: null,
+            searchName: this.$route.query.n ? this.$route.query.n : '',
+            searchType: this.$route.query.t ? this.$route.query.t : '',
+            searchTypeOptions: [
+                {
+                    label: 'Todo',
+                    value: '',
+                },
+                {
+                    label: 'Caja',
+                    value: 'Caja',
+                },
+                {
+                    label: 'KEG',
+                    value: 'KEG',
+                },
+            ],
+            searchHouse: this.$route.query.h ? this.$route.query.h : '',
+            searchHouseOptions: [],
             options2: ['Sun', 'Moon', 'Stars', 'Planets', 'Asteroids'],
         }
     },
@@ -198,6 +215,40 @@ export default {
                 }
             })
         },
+        formatBreweriesSelect() {
+            let allBreweries = []
+            allBreweries.push({value: '', label: 'Todo'})
+            this.$store.getters.brewerys.forEach(item => {
+                let i = {}
+                i.label = item.name
+                i.value = item.id
+                allBreweries.push(i)
+            })
+            this.searchHouseOptions = allBreweries
+        },
+        appendFilterParams() {
+            window.history.replaceState(
+                null,
+                null,
+                `?n=${this.searchName}&t=${this.searchType}&h=${this.searchHouse}`
+            )
+        },
+    },
+    computed: {
+        returnFilteredTable() {
+            let filteredData = []
+            this.data.forEach(item => {
+                if (
+                    item.name
+                        .toLowerCase()
+                        .includes(this.searchName.toLowerCase()) &&
+                    item.type.includes(this.searchType) &&
+                    item.brewery.includes(this.searchHouse)
+                )
+                    filteredData.push(item)
+            })
+            return filteredData
+        },
     },
     mounted() {
         let db = firebase.firestore()
@@ -224,6 +275,18 @@ export default {
                 this.$store.dispatch('setBrewerys', response.data.data)
             })
         }
+        this.formatBreweriesSelect()
+    },
+    watch: {
+        searchName: function() {
+            this.appendFilterParams()
+        },
+        searchType: function() {
+            this.appendFilterParams()
+        },
+        searchHouse: function() {
+            this.appendFilterParams()
+        },
     },
     components: {
         'inventory-manager-table': InventoryManagerTable,
