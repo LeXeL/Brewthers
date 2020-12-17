@@ -39,8 +39,18 @@
                     :props="props"
                     >{{ col.value }}</q-td
                 >-->
-                <q-td :prop="props">{{ props.row.restaurantName }}</q-td>
-                <q-td :prop="props">{{ props.row.role }}</q-td>
+                <q-td v-if="props.row.role === 'user'" :prop="props">{{
+                    props.row.restaurantName
+                }}</q-td>
+                <q-td v-if="props.row.role === 'brewery'" :prop="props">{{
+                    props.row.brewingHouseName
+                }}</q-td>
+                <q-td v-if="props.row.role === 'user'" :prop="props"
+                    >Restaurante</q-td
+                >
+                <q-td v-if="props.row.role === 'brewery'" :prop="props"
+                    >Cerveceria</q-td
+                >
                 <q-td :prop="props">{{ props.row.email }}</q-td>
                 <q-td :prop="props">
                     <q-badge

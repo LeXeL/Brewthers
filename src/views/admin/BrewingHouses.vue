@@ -25,10 +25,14 @@
                     @changestatus="editStatus"
                     @delete="askForDeleteBrewery"
                     @namechange="updateNameChange"
+                    @editBrewingHouse="selectEditingBrewingHouse"
                 ></brewing-houses-table>
             </div>
             <div class="col-lg-4 col-md-4 col-xs-12 q-pa-md">
-                <brewing-houses-form />
+                <brewing-houses-form
+                    :editBrewingHouse="selectedEditingBrewingHouse"
+                    @clear="clearEditingBrewinghouse()"
+                ></brewing-houses-form>
             </div>
         </div>
     </q-page>
@@ -58,6 +62,7 @@ export default {
             alertMessage: '',
             alertType: '',
             workingDeletedId: '',
+            selectedEditingBrewingHouse: '',
         }
     },
     mounted() {
@@ -82,6 +87,12 @@ export default {
         )
     },
     methods: {
+        clearEditingBrewinghouse() {
+            this.selectedEditingBrewingHouse = ''
+        },
+        selectEditingBrewingHouse(event) {
+            this.selectedEditingBrewingHouse = event
+        },
         updateNameChange(event) {
             this.displayLoading = true
             this.displayAlert = false

@@ -124,14 +124,6 @@ export default {
     data() {
         return {
             categorySelected: 'all',
-            // options: ['beer', 'tshirt', 'cap', 'cup', 'all'],
-            // options: {
-            //     camiseta: 'tshirt',
-            //     pitas: 'beer',
-            //     gorras: 'cap',
-            //     vasos: 'cup',
-            //     todo: 'all',
-            // },
             options: [
                 {
                     label: 'Pintas',

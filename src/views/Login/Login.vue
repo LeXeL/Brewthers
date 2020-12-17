@@ -46,11 +46,19 @@
                             </template>
                         </q-banner>
                     </q-card-section>
-                    <q-card-section class="text-center q-pa-none">
-                        <p class="text-grey-6">
-                            Necesitas una cuenta?
-                            <router-link class="text-grey-9" to="createaccount">Creala Aquí</router-link>
-                        </p>
+
+                    <q-card-section class="q-px-md">
+                        <q-btn
+                            outline
+                            color="primary"
+                            size="lg"
+                            class="full-width"
+                            label="Registrate"
+                            @click="$router.push('/createaccount')"
+                        />
+                    </q-card-section>
+
+                    <q-card-section class="q-px-md">
                         <p class="text-grey-6">
                             Olvidaste tu contraseña?
                             <router-link class="text-grey-9" to="forgotpassword">Solicitala Aquí</router-link>
@@ -58,6 +66,7 @@
                         <p style="color: #111">Espacio exclusivo para locales comerciales.</p>
                         <router-link to="/" style="color: #27a3c3">Volver al inicio</router-link>
                     </q-card-section>
+
                 </q-card>
             </div>
         </div>

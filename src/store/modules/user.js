@@ -1,5 +1,3 @@
-//TODO: Tengo que cambiar como funciona lo del admin y hacer los tokens dentro del api
-
 export default {
     state: {
         user: '',

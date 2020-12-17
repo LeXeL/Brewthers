@@ -14,7 +14,12 @@
                     {{ props.row.name }}
                     <q-popup-edit
                         v-model="props.row.name"
-                        @save="validateInput({id:props.row.id,newName:props.row.name})"
+                        @save="
+                            validateInput({
+                                id: props.row.id,
+                                newName: props.row.name,
+                            })
+                        "
                         title="Actualizar nombre"
                         buttons
                         dark
@@ -31,19 +36,39 @@
                 </q-td>
                 <q-td key="status" :props="props">
                     <q-btn
-                        :color="props.row.status == 'inactive' ? 'secondary' : 'warning'"
+                        :color="
+                            props.row.status == 'inactive'
+                                ? 'secondary'
+                                : 'warning'
+                        "
                         size="xs"
-                        :label="props.row.status == 'inactive' ? 'Activar' : 'Desactivar'"
-                        @click="$emit('changestatus',{id:props.row.id,status:props.row.status})"
+                        :label="
+                            props.row.status == 'inactive'
+                                ? 'Activar'
+                                : 'Desactivar'
+                        "
+                        @click="
+                            $emit('changestatus', {
+                                id: props.row.id,
+                                status: props.row.status,
+                            })
+                        "
                     />
                 </q-td>
-
+                <q-td>
+                    <q-btn
+                        color="primary"
+                        size="xs"
+                        label="Editar"
+                        @click="editBrewingHouse(props.row)"
+                    />
+                </q-td>
                 <q-td>
                     <q-btn
                         color="red-7"
                         size="xs"
                         label="Eliminar"
-                        @click="$emit('delete',{id:props.row.id})"
+                        @click="$emit('delete', {id: props.row.id})"
                     />
                 </q-td>
             </q-tr>
@@ -84,7 +109,10 @@ export default {
                     field: 'status',
                     sortable: true,
                 },
-
+                {
+                    label: 'Editar',
+                    align: 'left',
+                },
                 {
                     label: 'Eliminar',
                     align: 'left',
@@ -97,6 +125,9 @@ export default {
             if (event.newName.length > 0) {
                 this.$emit('namechange', {id: event.id, newName: event.newName})
             }
+        },
+        editBrewingHouse(event) {
+            this.$emit('editBrewingHouse', event)
         },
     },
 }
