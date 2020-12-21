@@ -70,6 +70,11 @@
                             </div>
                         </div>
                     </q-card-section>
+                    <q-separator dark />
+                    <q-card-section>
+                        <div class="text-h6 q-mb-md">Notas de cliente</div>
+                        <q-input type="textarea" filled label="Notas" dark />
+                    </q-card-section>
                     <q-card-actions>
                         <q-space />
                         <q-btn flat color="primary" label="Guardar" />
