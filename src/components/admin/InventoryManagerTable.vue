@@ -44,6 +44,12 @@
                         title="Actualizar cantidad"
                         buttons
                         dark
+                        @save="
+                            validateInventoryChange({
+                                id: props.row.id,
+                                inventory: props.row.inventory,
+                            })
+                        "
                     >
                         <q-input
                             type="number"
@@ -182,6 +188,12 @@ export default {
             if (event.newName.length > 0) {
                 this.$emit('namechange', {id: event.id, newName: event.newName})
             }
+        },
+        validateInventoryChange(event) {
+            this.$emit('inventorychange', {
+                id: event.id,
+                inventory: event.inventory,
+            })
         },
     },
 }
