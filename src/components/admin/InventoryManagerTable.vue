@@ -37,9 +37,30 @@
                 <q-td key="type" :props="props">
                     {{ props.row.type }}
                 </q-td>
-                <q-td key="inventory" :props="props">{{
-                    props.row.inventory
-                }}</q-td>
+                <q-td key="inventory" :props="props">
+                    {{ props.row.inventory }}
+                    <q-popup-edit
+                        v-model="props.row.inventory"
+                        title="Actualizar cantidad"
+                        buttons
+                        dark
+                        @save="
+                            validateInventoryChange({
+                                id: props.row.id,
+                                inventory: props.row.inventory,
+                            })
+                        "
+                    >
+                        <q-input
+                            type="number"
+                            v-model="props.row.inventory"
+                            dense
+                            autofocus
+                            dark
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                    </q-popup-edit>
+                </q-td>
                 <q-td key="brewery" :props="props" v-if="brewerys">{{
                     returnBreweryName(props.row.brewery)
                 }}</q-td>
@@ -167,6 +188,12 @@ export default {
             if (event.newName.length > 0) {
                 this.$emit('namechange', {id: event.id, newName: event.newName})
             }
+        },
+        validateInventoryChange(event) {
+            this.$emit('inventorychange', {
+                id: event.id,
+                inventory: event.inventory,
+            })
         },
     },
 }

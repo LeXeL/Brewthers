@@ -7,7 +7,7 @@
                 :title="alertTitle"
                 :message="alertMessage"
                 :type="alertType"
-                @accept="displayAlert=false"
+                @accept="displayAlert = false"
             ></brewthers-alert>
             <q-card-section>
                 <div class="text-h6">Nuevo articulo</div>
@@ -44,9 +44,11 @@
                     filled
                     class="q-mb-md"
                     dark
-                    :options="brewerys.map(brewery=>{
-                    return brewery.name
-                })"
+                    :options="
+                        brewerys.map(brewery => {
+                            return brewery.name
+                        })
+                    "
                     label="Casa"
                     v-model="form.brewery"
                     :rules="[val => !!val || 'El campo es obligatorio']"
@@ -67,7 +69,6 @@
                     type="number"
                     class="q-mb-md"
                     v-model="form.ibu"
-                    :rules="[val => !!val || 'El campo es obligatorio']"
                 />
                 <q-input
                     filled
@@ -76,7 +77,6 @@
                     type="textarea"
                     class="q-mb-md"
                     v-model="form.description"
-                    :rules="[val => !!val || 'El campo es obligatorio']"
                 />
                 <q-file
                     filled
@@ -192,7 +192,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function (resolve, reject) {
+            return new Promise(function(resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -201,7 +201,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function (snapshot) {
+                    function(snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -214,17 +214,17 @@ export default {
                                 break
                         }
                     },
-                    function (error) {
+                    function(error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function () {
+                    function() {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function (downloadURL) {
+                            .then(function(downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })
