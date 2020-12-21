@@ -193,7 +193,7 @@ export default {
                 .then(() => {
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
-                    this.alertMessage = 'Se ha cambiado el estado con exito'
+                    this.alertMessage = 'Se ha cambiado el estado con exito.'
                     this.alertType = 'success'
                     this.displayAlert = true
                 })
@@ -217,7 +217,7 @@ export default {
                 .then(() => {
                     this.displayLoading = false
                     this.alertTitle = 'Exito!'
-                    this.alertMessage = 'Se ha cambiado el estado con exito'
+                    this.alertMessage = 'Se ha cambiado el estado con exito.'
                     this.alertType = 'success'
                     this.displayAlert = true
                 })
