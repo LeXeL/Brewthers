@@ -94,11 +94,11 @@ export default {
             searchType: this.$route.query.t ? this.$route.query.t : '',
             searchTypeOptions: [
                 {
-                    label: 'Todo',
+                    label: 'TODO',
                     value: '',
                 },
                 {
-                    label: 'Caja',
+                    label: 'CAJA',
                     value: 'Caja',
                 },
                 {
