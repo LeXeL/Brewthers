@@ -37,9 +37,24 @@
                 <q-td key="type" :props="props">
                     {{ props.row.type }}
                 </q-td>
-                <q-td key="inventory" :props="props">{{
-                    props.row.inventory
-                }}</q-td>
+                <q-td key="inventory" :props="props">
+                    {{ props.row.inventory }}
+                    <q-popup-edit
+                        v-model="props.row.inventory"
+                        title="Actualizar cantidad"
+                        buttons
+                        dark
+                    >
+                        <q-input
+                            type="number"
+                            v-model="props.row.inventory"
+                            dense
+                            autofocus
+                            dark
+                            :rules="[val => !!val || 'El campo es obligatorio']"
+                        />
+                    </q-popup-edit>
+                </q-td>
                 <q-td key="brewery" :props="props" v-if="brewerys">{{
                     returnBreweryName(props.row.brewery)
                 }}</q-td>
