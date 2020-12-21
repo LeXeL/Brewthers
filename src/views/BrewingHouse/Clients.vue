@@ -40,6 +40,14 @@
                                     "
                                 >
                                     {{ props.row.canBuy ? 'Si' : 'No' }}
+                                    <q-tooltip
+                                        content-class="bg-primary"
+                                        content-style="font-size: 14px; width: 200px;"
+                                        v-if="!props.row.canBuy"
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit.
+                                    </q-tooltip>
                                 </q-badge>
                             </q-td>
                             <q-td>
