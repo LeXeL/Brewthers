@@ -7,6 +7,7 @@
             :message="alertMessage"
             :type="alertType"
             @accept="displayAlert = false"
+            :redirect="redirect"
         ></brewthers-alert>
         <div>
             <div class="text-h5 q-mb-md text-white">Redactar blog</div>
@@ -165,6 +166,7 @@ export default {
             alertMessage: '',
             alertType: '',
             isEditing: false,
+            redirect: '',
         }
     },
     methods: {
@@ -175,6 +177,15 @@ export default {
             if (this.isEditing) {
                 blogInfo.title = this.title
                 blogInfo.body = this.body
+                if (this.bannerImage != null) {
+                    await this.uploadToFirebase(
+                        this.bannerImage,
+                        `blog/${this.bannerImage.name}`,
+                        this.bannerImage.name + 'T' + new Date()
+                    ).then(
+                        async filename => (blogInfo.bannerLocation = filename)
+                    )
+                }
                 api.updateBlog({
                     type: 'draft',
                     id: this.$route.params.id,
@@ -186,6 +197,7 @@ export default {
                         this.alertMessage =
                             'Se ha actualizado el blog en modo draft con exito'
                         this.alertType = 'success'
+                        this.redirect = '/blog-manager'
                         this.displayAlert = true
                     })
                     .catch(error => {
@@ -205,6 +217,7 @@ export default {
                 blogInfo.bannerLocation = filename
                 blogInfo.title = this.title
                 blogInfo.body = this.body
+
                 blogInfo.by = {name: this.user.name, email: this.user.email}
                 blogInfo.createdTime = new Date()
                 api.createDraftBlogInDataBase({blogInfo: blogInfo})
@@ -214,6 +227,7 @@ export default {
                         this.alertMessage =
                             'Se ha creado el blog en modo draft con exito'
                         this.alertType = 'success'
+                        this.redirect = '/blog-manager'
                         this.displayAlert = true
                     })
                     .catch(error => {
@@ -233,6 +247,15 @@ export default {
                 blogInfo.title = this.title
                 blogInfo.body = this.body
                 blogInfo.status = 'public'
+                if (this.bannerImage != null) {
+                    await this.uploadToFirebase(
+                        this.bannerImage,
+                        `blog/${this.bannerImage.name}`,
+                        this.bannerImage.name + 'T' + new Date()
+                    ).then(
+                        async filename => (blogInfo.bannerLocation = filename)
+                    )
+                }
                 api.updateBlog({
                     type: 'public',
                     id: this.$route.params.id,
@@ -244,6 +267,7 @@ export default {
                         this.alertMessage =
                             'Se ha actualizado el blog en modo publico con exito'
                         this.alertType = 'success'
+                        this.redirect = '/blog-manager'
                         this.displayAlert = true
                     })
                     .catch(error => {
@@ -272,6 +296,7 @@ export default {
                         this.alertMessage =
                             'Se ha creado el blog en modo public con exito'
                         this.alertType = 'success'
+                        this.redirect = '/blog-manager'
                         this.displayAlert = true
                     })
                     .catch(error => {
@@ -284,7 +309,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -293,7 +318,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function(snapshot) {
+                    function (snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -306,17 +331,17 @@ export default {
                                 break
                         }
                     },
-                    function(error) {
+                    function (error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function() {
+                    function () {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function(downloadURL) {
+                            .then(function (downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })
