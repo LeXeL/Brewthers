@@ -18,9 +18,6 @@
         <div class="text-h5 q-mb-md text-white q-px-md">
             Administrador de inventario
         </div>
-
-        <!-- *********************************************************************************************************** -->
-
         <div class="row">
             <div class="col-lg-2 col-md-2 col-xs-12 q-pa-md">
                 <q-select
@@ -56,9 +53,6 @@
                 />
             </div>
         </div>
-
-        <!-- *********************************************************************************************************** -->
-
         <div class="row">
             <div class="col-lg-8 col-md-8 col-xs-12 q-pa-md">
                 <inventory-manager-table
@@ -66,6 +60,7 @@
                     @changestatus="editStatus"
                     @delete="askForDeleteBrewery"
                     @namechange="updateNameChange"
+                    @inventorychange="updateInvetoryChange"
                 ></inventory-manager-table>
             </div>
             <div class="col-lg-4 col-md-4 col-xs-12 q-pa-md">
@@ -99,11 +94,11 @@ export default {
             searchType: this.$route.query.t ? this.$route.query.t : '',
             searchTypeOptions: [
                 {
-                    label: 'Todo',
+                    label: 'TODO',
                     value: '',
                 },
                 {
-                    label: 'Caja',
+                    label: 'CAJA',
                     value: 'Caja',
                 },
                 {
@@ -113,10 +108,51 @@ export default {
             ],
             searchHouse: this.$route.query.h ? this.$route.query.h : '',
             searchHouseOptions: [],
-            options2: ['Sun', 'Moon', 'Stars', 'Planets', 'Asteroids'],
         }
     },
+    computed: {
+        returnFilteredTable() {
+            let filteredData = []
+            this.data.forEach(item => {
+                if (
+                    item.name
+                        .toLowerCase()
+                        .includes(this.searchName.toLowerCase()) &&
+                    item.type.includes(this.searchType) &&
+                    item.brewery.includes(this.searchHouse)
+                )
+                    filteredData.push(item)
+            })
+            return filteredData
+        },
+        brewerys() {
+            return this.$store.getters.brewerys
+        },
+    },
     methods: {
+        updateInvetoryChange(event) {
+            this.displayLoading = true
+            this.displayAlert = false
+            api.updateProductInformation({
+                id: event.id,
+                product: {inventory: event.inventory},
+            })
+                .then(() => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha cambiado el inventario con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
         updateNameChange(event) {
             this.displayLoading = true
             this.displayAlert = false
@@ -216,15 +252,10 @@ export default {
             })
         },
         formatBreweriesSelect() {
-            let allBreweries = []
-            allBreweries.push({value: '', label: 'Todo'})
-            this.$store.getters.brewerys.forEach(item => {
-                let i = {}
-                i.label = item.name
-                i.value = item.id
-                allBreweries.push(i)
+            this.searchHouseOptions = this.brewerys.map(brewery => {
+                return {label: brewery.name, value: brewery.id}
             })
-            this.searchHouseOptions = allBreweries
+            this.searchHouseOptions.splice(0, 0, {label: 'TODOS', value: ''})
         },
         appendFilterParams() {
             window.history.replaceState(
@@ -232,22 +263,6 @@ export default {
                 null,
                 `?n=${this.searchName}&t=${this.searchType}&h=${this.searchHouse}`
             )
-        },
-    },
-    computed: {
-        returnFilteredTable() {
-            let filteredData = []
-            this.data.forEach(item => {
-                if (
-                    item.name
-                        .toLowerCase()
-                        .includes(this.searchName.toLowerCase()) &&
-                    item.type.includes(this.searchType) &&
-                    item.brewery.includes(this.searchHouse)
-                )
-                    filteredData.push(item)
-            })
-            return filteredData
         },
     },
     mounted() {
@@ -278,13 +293,13 @@ export default {
         this.formatBreweriesSelect()
     },
     watch: {
-        searchName: function() {
+        searchName: function () {
             this.appendFilterParams()
         },
-        searchType: function() {
+        searchType: function () {
             this.appendFilterParams()
         },
-        searchHouse: function() {
+        searchHouse: function () {
             this.appendFilterParams()
         },
     },
