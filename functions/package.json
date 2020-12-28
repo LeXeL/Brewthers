@@ -2,8 +2,11 @@
     "name": "functions",
     "description": "Cloud Functions for Firebase",
     "scripts": {
+        "serve": "firebase emulators:start --import=./emulators.backup",
         "serve-emulator": "firebase emulators:start",
-        "serve": "firebase serve --only functions",
+        "emulators-export": "firebase emulators:export ./emulators.backup",
+        "firestore-export": "firestore-export --accountCredentials credentials.json --backupFile output.json",
+        "firestore-import": "export FIRESTORE_EMULATOR_HOST=0.0.0.0:8081 && firestore-import --accountCredentials credentials.json --backupFile output.json",
         "shell": "firebase functions:shell",
         "start": "npm run shell",
         "deploy": "firebase deploy --only functions",
