@@ -308,6 +308,21 @@ exports.getProductInformationById = functions.https.onRequest(
         })
     }
 )
+exports.getAllProductsByBreweryId = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                let response = await product.returnProductByBreweryId(
+                    req.body.id
+                )
+                res.status(200).send({data: response})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
 
 //Handle ORDERS
 exports.createOrdersOnDatabase = functions.https.onRequest(async (req, res) => {

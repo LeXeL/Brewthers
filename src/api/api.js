@@ -99,6 +99,10 @@ export const getProductInformationById = data =>
     Request.post('/getProductInformationById', data, {
         'Content-Type': 'application/json',
     })
+export const getAllProductsByBreweryId = data =>
+    Request.post('/getAllProductsByBreweryId', data, {
+        'Content-Type': 'application/json',
+    })
 
 //ORDER
 export const createOrdersOnDatabase = data =>
