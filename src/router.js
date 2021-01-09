@@ -152,6 +152,11 @@ export default new Router({
                     component: MyInventory,
                 },
                 {
+                    path: '/brewery-admin/item-details/:id',
+                    name: 'brewery-item-details',
+                    component: ItemDetails,
+                },
+                {
                     path: '/clients',
                     name: 'clients',
                     component: Clients,
