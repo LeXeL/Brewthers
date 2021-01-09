@@ -5,6 +5,7 @@ import store from '@/store/store'
 import HomePage from './layouts/HomePage.vue'
 import LoginPage from './layouts/LoginPage.vue'
 import AdminPage from './layouts/AdminPage.vue'
+import AdminBreweryPage from './layouts/AdminBreweryPage.vue'
 import MovingBeerPage from './layouts/MovingBeerPage.vue'
 import BlogPage from './layouts/BlogPage'
 import TermsAndConditionsPage from './layouts/TermsAndConditionsPage'
@@ -20,6 +21,7 @@ import MovingBeerAccount from './views/movingbeer/MovingBeerAccount.vue'
 import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
 
 import AdminIndex from './views/admin/Index'
+import BreweryAdminIndex from './views/admin/BreweryIndex'
 import AccountsManager from './views/admin/AccountsManager'
 import AccountDetails from './views/admin/AccountDetails'
 import BrewingHouses from './views/admin/BrewingHouses'
@@ -49,6 +51,11 @@ const ifAuthenticated = (to, from, next) => {
 }
 const ifAuthenticatedAndAdmin = (to, from, next) => {
     if (store.getters.isAuthenticated && store.getters.role === 'admin') {
+        next()
+    } else next('/')
+}
+const ifAuthenticatedAndBrewery = (to, from, next) => {
+    if (store.getters.isAuthenticated && store.getters.role === 'brewery') {
         next()
     } else next('/')
 }
@@ -126,6 +133,18 @@ export default new Router({
                     path: '/exclusiveness-and-prices/:id',
                     name: 'exclusiveness-and-prices-details',
                     component: ExclusivenessAndPricesDetails,
+                },
+            ],
+        },
+        {
+            path: '/brewery-admin',
+            component: AdminBreweryPage,
+            beforeEnter: ifAuthenticatedAndBrewery,
+            children: [
+                {
+                    path: '',
+                    name: 'brewery-admin-index',
+                    component: BreweryAdminIndex,
                 },
                 {
                     path: '/my-inventory',
