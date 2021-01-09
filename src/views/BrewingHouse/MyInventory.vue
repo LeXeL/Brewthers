@@ -8,13 +8,6 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <confirm-dialog
-            :display="displayConfirm"
-            :title="alertTitle"
-            :message="alertMessage"
-            @accept="deleteBrewery"
-            @cancel="displayConfirm = false"
-        ></confirm-dialog>
         <div class="text-h5 q-mb-md text-white">Mi Inventario</div>
         <div class="row q-px-md">
             <div class="col">
@@ -38,12 +31,12 @@
                             <q-td key="inventoryAmount" :props="props">
                                 {{ props.row.inventory }}
                             </q-td>
-                            <q-td key="uid" :props="props">
+                            <q-td key="id" :props="props">
                                 <q-btn
                                     color="primary"
                                     label="Detalles"
                                     size="xs"
-                                    :to="`/item-details/${props.row.uid}`"
+                                    :to="`/brewery-admin/item-details/${props.row.id}`"
                                 />
                             </q-td>
                         </q-tr>
@@ -87,21 +80,18 @@ export default {
                     sortable: true,
                 },
                 {
-                    name: 'uid',
+                    name: 'id',
                     label: 'Detalles',
                     align: 'left',
-                    field: 'uid',
+                    field: 'id',
                 },
             ],
             data: [],
             displayLoading: false,
             displayAlert: false,
-            displayConfirm: false,
             alertTitle: '',
             alertMessage: '',
             alertType: '',
-            workingDeletedId: '',
-            selectedEditingBrewingHouse: '',
             initialPagination: {
                 sortBy: 'desc',
                 descending: false,
