@@ -1,5 +1,20 @@
 <template>
     <q-page class="q-pa-md">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="displayAlert = false"
+        ></brewthers-alert>
+        <confirm-dialog
+            :display="displayConfirm"
+            :title="alertTitle"
+            :message="alertMessage"
+            @accept="deleteBrewery"
+            @cancel="displayConfirm = false"
+        ></confirm-dialog>
         <div class="text-h5 q-mb-md text-white">Mi Inventario</div>
         <div class="row q-px-md">
             <div class="col">
@@ -10,6 +25,7 @@
                     row-key="name"
                     dark
                     binary-state-sort
+                    :pagination.sync="initialPagination"
                 >
                     <template v-slot:body="props">
                         <q-tr :props="props">
@@ -20,7 +36,7 @@
                                 {{ props.row.type }}
                             </q-td>
                             <q-td key="inventoryAmount" :props="props">
-                                {{ props.row.inventoryAmount }}
+                                {{ props.row.inventory }}
                             </q-td>
                             <q-td key="uid" :props="props">
                                 <q-btn
@@ -39,7 +55,13 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
     data() {
         return {
             columns: [
@@ -71,21 +93,32 @@ export default {
                     field: 'uid',
                 },
             ],
-            data: [
-                {
-                    name: 'My Beer 123',
-                    type: 'Caja',
-                    inventoryAmount: 3,
-                    uid: '02njNch8EBtTS9WUEzH8',
-                },
-                {
-                    name: 'My Beer 123',
-                    type: 'KEG',
-                    inventoryAmount: 3,
-                    uid: '02njNch8EBtTS9WUEzH8',
-                },
-            ],
+            data: [],
+            displayLoading: false,
+            displayAlert: false,
+            displayConfirm: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
+            workingDeletedId: '',
+            selectedEditingBrewingHouse: '',
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 0,
+                // rowsNumber: xx if getting data from a server
+            },
         }
+    },
+    mounted() {
+        this.displayLoading = true
+        api.getAllProductsByBreweryId({
+            id: this.user.breweryId,
+        }).then(response => {
+            this.data = response.data.data
+            this.displayLoading = false
+        })
     },
 }
 </script>
