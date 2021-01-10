@@ -1,13 +1,13 @@
 <template>
     <q-page class="q-pa-md">
         <div class="text-h5 q-mb-md text-white">
-            Exclusividad y precios - Restaurant Name
+            Exclusividad y precios - {{ restaurantInformation.restaurantName }}
         </div>
         <div class="row q-px-md">
             <div class="col-lg-6 q-pa-md">
                 <q-table
                     title="Casas cerveceras"
-                    :data="data"
+                    :data="filteredBrewerys"
                     :columns="columns"
                     row-key="name"
                     dark
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
     data() {
         return {
@@ -108,24 +109,7 @@ export default {
                     align: 'left',
                 },
             ],
-            data: [
-                {
-                    name: 'Casa Bruja',
-                    canBuy: true,
-                },
-                {
-                    name: 'Boquete Brewing Co.',
-                    canBuy: true,
-                },
-                {
-                    name: 'Cerveceria Central',
-                    canBuy: true,
-                },
-                {
-                    name: 'La Murga',
-                    canBuy: true,
-                },
-            ],
+            data: [],
             beers: [
                 {
                     name: 'Nombre de la cerveza',
@@ -144,7 +128,43 @@ export default {
                     basePrice: 15.5,
                 },
             ],
+            restaurantInformation: [],
+            filteredBrewerys: [],
         }
+    },
+    computed: {
+        brewerys() {
+            return this.$store.getters.brewerys
+        },
+    },
+    methods: {
+        returnFilteredBreweryData() {
+            this.filteredBrewerys = this.brewerys
+                .filter(brewery => brewery.status === 'active')
+                .map(brewery => {
+                    return {
+                        id: brewery.id,
+                        name: brewery.name,
+                        canBuy: true,
+                    }
+                })
+        },
+    },
+    async mounted() {
+        api.getuserinformationbyid({
+            uid: this.$route.params.id,
+        })
+            .then(response => (this.restaurantInformation = response.data.data))
+            .then(async () => {
+                if (this.brewerys != undefined) {
+                    this.returnFilteredBreweryData()
+                    return
+                }
+                api.returnAllBrewerys().then(response => {
+                    this.$store.dispatch('setBrewerys', response.data.data)
+                    this.returnFilteredBreweryData()
+                })
+            })
     },
 }
 </script>
