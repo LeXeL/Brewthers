@@ -46,7 +46,7 @@
                                     color="primary"
                                     label="Administrar"
                                     size="xs"
-                                    to="/exclusiveness-and-prices/1234"
+                                    :to="`/exclusiveness-and-prices/${props.row.id}`"
                                 />
                             </q-td>
                         </q-tr>
