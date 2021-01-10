@@ -1,5 +1,13 @@
 <template>
     <q-page class="q-pa-md">
+        <loading-alert :display="displayLoading"></loading-alert>
+        <brewthers-alert
+            :display="displayAlert"
+            :title="alertTitle"
+            :message="alertMessage"
+            :type="alertType"
+            @accept="displayAlert = false"
+        ></brewthers-alert>
         <div class="text-h5 q-mb-md text-white">
             Exclusividad y precios - {{ restaurantInformation.restaurantName }}
         </div>
@@ -12,6 +20,7 @@
                     row-key="name"
                     dark
                     binary-state-sort
+                    :pagination.sync="initialPagination"
                 >
                     <template v-slot:body="props">
                         <q-tr :props="props">
@@ -20,6 +29,7 @@
                             </q-td>
                             <q-td key="canBuy" :props="props">
                                 <q-toggle
+                                    @input="exclusivenessSelector(props.row)"
                                     v-model="props.row.canBuy"
                                     color="primary"
                                 />
@@ -29,7 +39,9 @@
                                     color="primary"
                                     label="Administrar"
                                     size="xs"
-                                    to="/exclusiveness-and-prices/1234"
+                                    @click="
+                                        selectedBreweryToShowBeers(props.row.id)
+                                    "
                                 />
                             </q-td>
                         </q-tr>
@@ -38,10 +50,15 @@
             </div>
             <div class="col-lg-6 q-pa-md">
                 <q-card class="full-width" dark>
-                    <q-card-section>
-                        <div class="text-h6">Cervezas - Beer House Name</div>
+                    <q-card-section v-if="beers.length > 0">
+                        <div class="text-h6">
+                            Cervezas - {{ selectedBrewery.name }}
+                        </div>
                     </q-card-section>
-                    <q-card-section>
+                    <q-card-section v-if="beers.length <= 0">
+                        <div class="text-h6">No hay Cervezas para Mostrar</div>
+                    </q-card-section>
+                    <q-card-section v-if="beers.length > 0">
                         <div
                             class="row q-mb-lg"
                             v-for="(beer, i) in beers"
@@ -49,12 +66,17 @@
                         >
                             <div class="col">
                                 <div class="text-subtitle1">
-                                    {{ beer.name }}
+                                    {{ beer.name.substring(0, 15) }}
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="text-subtitle1 text-center">
-                                    $ {{ beer.basePrice.toFixed(2) }}
+                                <div class="text-subtitle1">
+                                    {{ beer.type }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="text-subtitle1">
+                                    $ {{ beer.price.toFixed(2) }}
                                 </div>
                             </div>
                             <div class="col">
@@ -65,7 +87,7 @@
                                     type="number"
                                     color="primary"
                                     label="Precio especial"
-                                    :value="beer.basePrice.toFixed(2)"
+                                    :value="beer.price.toFixed(2)"
                                 />
                             </div>
                         </div>
@@ -90,6 +112,13 @@ import * as api from '@/api/api'
 export default {
     data() {
         return {
+            initialPagination: {
+                sortBy: 'desc',
+                descending: false,
+                page: 1,
+                rowsPerPage: 0,
+                // rowsNumber: xx if getting data from a server
+            },
             columns: [
                 {
                     name: 'name',
@@ -110,26 +139,19 @@ export default {
                 },
             ],
             data: [],
-            beers: [
-                {
-                    name: 'Nombre de la cerveza',
-                    basePrice: 15.5,
-                },
-                {
-                    name: 'Nombre de la cerveza',
-                    basePrice: 15.5,
-                },
-                {
-                    name: 'Nombre de la cerveza',
-                    basePrice: 15.5,
-                },
-                {
-                    name: 'Nombre de la cerveza',
-                    basePrice: 15.5,
-                },
-            ],
+            beers: [],
             restaurantInformation: [],
             filteredBrewerys: [],
+            haveExclusiveness: false,
+            exclusivenessBrewerys: [],
+            displayLoading: false,
+            displayAlert: false,
+            displayConfirm: false,
+            alertTitle: '',
+            alertMessage: '',
+            alertType: '',
+            products: [],
+            selectedBrewery: '',
         }
     },
     computed: {
@@ -138,6 +160,14 @@ export default {
         },
     },
     methods: {
+        selectedBreweryToShowBeers(id) {
+            this.selectedBrewery = this.brewerys.find(
+                brewery => brewery.id === id
+            )
+            this.beers = []
+            let data = this.products.filter(product => product.brewery === id)
+            if (data.length > 0) this.beers = data
+        },
         returnFilteredBreweryData() {
             this.filteredBrewerys = this.brewerys
                 .filter(brewery => brewery.status === 'active')
@@ -149,13 +179,24 @@ export default {
                     }
                 })
         },
+        exclusivenessSelector(data) {
+            this.haveExclusiveness = true
+            this.exclusivenessBrewerys = this.filteredBrewerys.filter(
+                brewery => brewery.canBuy === true
+            )
+        },
     },
     async mounted() {
+        this.displayLoading = true
+        api.returnAllProducts().then(
+            response => (this.products = response.data.data)
+        )
         api.getuserinformationbyid({
             uid: this.$route.params.id,
         })
             .then(response => (this.restaurantInformation = response.data.data))
             .then(async () => {
+                this.displayLoading = false
                 if (this.brewerys != undefined) {
                     this.returnFilteredBreweryData()
                     return
