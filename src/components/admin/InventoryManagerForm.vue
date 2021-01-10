@@ -94,9 +94,9 @@
                     filled
                     dark
                     label="Precio"
-                    type="number"
+                    type="text"
                     class="q-mb-md"
-                    v-model="form.price"
+                    v-model.number="form.price"
                     :rules="[val => !!val || 'El campo es obligatorio']"
                 />
             </q-card-section>
@@ -163,36 +163,37 @@ export default {
         async create() {
             this.displayLoading = true
             let db = firebase.firestore()
-            await this.uploadToFirebase(
-                this.file,
-                `products/${this.form.brewery}/${this.form.name}`,
-                this.form.name
-            ).then(async filename => {
-                this.form.photoLocation = filename
-                this.brewerys.forEach(brewery => {
-                    if (this.form.brewery === brewery.name)
-                        this.form.brewery = brewery.id
-                })
-                api.createProductOnDatabase({product: this.form})
-                    .then(response => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage = 'Se ha creado el producto con exito'
-                        this.alertType = 'success'
-                        this.displayAlert = true
-                        this.clear()
-                    })
-                    .catch(error => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Error'
-                        this.alertMessage = error
-                        this.alertType = 'error'
-                        this.displayAlert = true
-                    })
+            this.brewerys.forEach(brewery => {
+                if (this.form.brewery === brewery.name)
+                    this.form.brewery = brewery.id
             })
+            api.createProductOnDatabase({product: this.form})
+                .then(response => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage = 'Se ha creado el producto con exito'
+                    this.alertType = 'success'
+                    this.displayAlert = true
+                    this.clear()
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+            // await this.uploadToFirebase(
+            //     this.file,
+            //     `products/${this.form.brewery}/${this.form.name}`,
+            //     this.form.name
+            // ).then(async filename => {
+            //     this.form.photoLocation = filename
+
+            // })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -201,7 +202,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function(snapshot) {
+                    function (snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -214,17 +215,17 @@ export default {
                                 break
                         }
                     },
-                    function(error) {
+                    function (error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function() {
+                    function () {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function(downloadURL) {
+                            .then(function (downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })
