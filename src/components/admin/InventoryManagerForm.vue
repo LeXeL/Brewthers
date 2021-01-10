@@ -163,34 +163,33 @@ export default {
         async create() {
             this.displayLoading = true
             let db = firebase.firestore()
-            this.brewerys.forEach(brewery => {
-                if (this.form.brewery === brewery.name)
-                    this.form.brewery = brewery.id
+            await this.uploadToFirebase(
+                this.file,
+                `products/${this.form.brewery}/${this.form.name}`,
+                this.form.name
+            ).then(async filename => {
+                this.form.photoLocation = filename
+                this.brewerys.forEach(brewery => {
+                    if (this.form.brewery === brewery.name)
+                        this.form.brewery = brewery.id
+                })
+                api.createProductOnDatabase({product: this.form})
+                    .then(response => {
+                        this.displayLoading = false
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage = 'Se ha creado el producto con exito'
+                        this.alertType = 'success'
+                        this.displayAlert = true
+                        this.clear()
+                    })
+                    .catch(error => {
+                        this.displayLoading = false
+                        this.alertTitle = 'Error'
+                        this.alertMessage = error
+                        this.alertType = 'error'
+                        this.displayAlert = true
+                    })
             })
-            api.createProductOnDatabase({product: this.form})
-                .then(response => {
-                    this.displayLoading = false
-                    this.alertTitle = 'Exito!'
-                    this.alertMessage = 'Se ha creado el producto con exito'
-                    this.alertType = 'success'
-                    this.displayAlert = true
-                    this.clear()
-                })
-                .catch(error => {
-                    this.displayLoading = false
-                    this.alertTitle = 'Error'
-                    this.alertMessage = error
-                    this.alertType = 'error'
-                    this.displayAlert = true
-                })
-            // await this.uploadToFirebase(
-            //     this.file,
-            //     `products/${this.form.brewery}/${this.form.name}`,
-            //     this.form.name
-            // ).then(async filename => {
-            //     this.form.photoLocation = filename
-
-            // })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
             return new Promise(function (resolve, reject) {
