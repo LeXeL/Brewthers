@@ -29,9 +29,11 @@
                             </q-td>
                             <q-td key="canBuy" :props="props">
                                 <q-toggle
-                                    @input="exclusivenessSelector(props.row)"
                                     v-model="props.row.canBuy"
                                     color="primary"
+                                    @input="
+                                        addBreweryToExclusiveness(props.row)
+                                    "
                                 />
                             </q-td>
                             <q-td>
@@ -66,7 +68,7 @@
                         >
                             <div class="col">
                                 <div class="text-subtitle1">
-                                    {{ beer.name.substring(0, 15) }}
+                                    {{ beer.name.substring(0, 14) }}
                                 </div>
                             </div>
                             <div class="col">
@@ -87,6 +89,7 @@
                                     type="number"
                                     color="primary"
                                     label="Precio especial"
+                                    v-model.number="beer.newPrice"
                                     :value="beer.price.toFixed(2)"
                                 />
                             </div>
@@ -95,11 +98,22 @@
                     <q-separator dark />
                     <q-card-section>
                         <div class="text-h6 q-mb-md">Notas de cliente</div>
-                        <q-input type="textarea" filled label="Notas" dark />
+                        <q-input
+                            type="textarea"
+                            filled
+                            label="Notas"
+                            dark
+                            v-model="exclusivenessNotes"
+                        />
                     </q-card-section>
                     <q-card-actions>
                         <q-space />
-                        <q-btn flat color="primary" label="Guardar" />
+                        <q-btn
+                            flat
+                            color="primary"
+                            label="Guardar"
+                            @click="generateExclusivenessPrice()"
+                        />
                     </q-card-actions>
                 </q-card>
             </div>
@@ -129,7 +143,7 @@ export default {
                 },
                 {
                     name: 'canBuy',
-                    label: 'Puede vender',
+                    label: 'Exclusividad',
                     field: 'canBy',
                     align: 'left',
                 },
@@ -142,8 +156,6 @@ export default {
             beers: [],
             restaurantInformation: [],
             filteredBrewerys: [],
-            haveExclusiveness: false,
-            exclusivenessBrewerys: [],
             displayLoading: false,
             displayAlert: false,
             displayConfirm: false,
@@ -152,6 +164,7 @@ export default {
             alertType: '',
             products: [],
             selectedBrewery: '',
+            exclusivenessNotes: '',
         }
     },
     computed: {
@@ -159,13 +172,108 @@ export default {
             return this.$store.getters.brewerys
         },
     },
+    watch: {
+        restaurantInformation(newValue, oldValue) {
+            if (newValue.exclusiveness.notes != undefined) {
+                this.exclusivenessNotes = newValue.exclusiveness.notes
+            }
+        },
+    },
     methods: {
+        addBreweryToExclusiveness(brewery) {
+            let currentExclusiveness = {
+                ...this.restaurantInformation.exclusiveness,
+            }
+            //determinar si ya existe dentro del current
+            if (Object.keys(currentExclusiveness).includes(brewery.id)) {
+                //Si existe y brewery.canBuy es falso quiero quitarla
+                if (!brewery.canBuy) {
+                    delete currentExclusiveness[brewery.id]
+                }
+            } else {
+                if (brewery.canBuy) {
+                    currentExclusiveness[brewery.id] = {
+                        name: brewery.name,
+                        products: [],
+                    }
+                }
+            }
+            this.displayLoading = true
+            api.updateuserinformation({
+                uid: this.$route.params.id,
+                user: {exclusiveness: currentExclusiveness},
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        this.displayLoading = false
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage =
+                            'Actualización realizada correctamente.'
+                        this.alertType = 'success'
+                        this.displayAlert = true
+                    }
+                })
+                .then(() => {
+                    api.getuserinformationbyid({
+                        uid: this.$route.params.id,
+                    }).then(
+                        response =>
+                            (this.restaurantInformation = response.data.data)
+                    )
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage =
+                        'Hubo un error en la petición, intentelo mas tarde'
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+        },
+        isProductInExclusivenessDeal(product) {
+            let currentExclusiveness = {
+                ...this.restaurantInformation.exclusiveness,
+            }
+            let newPrice = 0
+            currentExclusiveness[product.brewery].products.forEach(
+                productExclusiveness => {
+                    if (productExclusiveness.id === product.id) {
+                        newPrice = productExclusiveness.newPrice
+                    }
+                }
+            )
+            return parseFloat(newPrice).toFixed(2)
+        },
         selectedBreweryToShowBeers(id) {
             this.selectedBrewery = this.brewerys.find(
                 brewery => brewery.id === id
             )
+            let currentExclusiveness = {
+                ...this.restaurantInformation.exclusiveness,
+            }
+            let breweryIdOnExclusiveness = Object.keys(
+                currentExclusiveness
+            ).find(exclusiveness => exclusiveness === this.selectedBrewery.id)
+            if (breweryIdOnExclusiveness === undefined) {
+                this.displayLoading = false
+                this.alertTitle = 'Error'
+                this.alertMessage =
+                    'Este restaurante no tiene exclusividad con esa casa cervezera por favor revise'
+                this.alertType = 'error'
+                this.displayAlert = true
+                return
+            }
             this.beers = []
-            let data = this.products.filter(product => product.brewery === id)
+            let data = this.products
+                .filter(product => product.brewery === id)
+                .map(product => {
+                    let el = {...product}
+                    let newPrice = this.isProductInExclusivenessDeal(el)
+                    el['newPrice'] =
+                        newPrice > 0 ? newPrice : el.price.toFixed(2)
+                    return el
+                })
             if (data.length > 0) this.beers = data
         },
         returnFilteredBreweryData() {
@@ -175,15 +283,71 @@ export default {
                     return {
                         id: brewery.id,
                         name: brewery.name,
-                        canBuy: true,
+                        canBuy: Object.keys(
+                            this.restaurantInformation.exclusiveness
+                        ).includes(brewery.id),
                     }
                 })
         },
-        exclusivenessSelector(data) {
-            this.haveExclusiveness = true
-            this.exclusivenessBrewerys = this.filteredBrewerys.filter(
-                brewery => brewery.canBuy === true
-            )
+        async generateExclusivenessPrice() {
+            let currentExclusiveness = {
+                ...this.restaurantInformation.exclusiveness,
+            }
+            let breweryIdOnExclusiveness = Object.keys(
+                currentExclusiveness
+            ).find(exclusiveness => exclusiveness === this.selectedBrewery.id)
+            // if (breweryIdOnExclusiveness === undefined) {
+            //     this.displayLoading = false
+            //     this.alertTitle = 'Error'
+            //     this.alertMessage =
+            //         'Este restaurante no tiene exclusividad con esa casa cervezera por favor revise'
+            //     this.alertType = 'error'
+            //     this.displayAlert = true
+            //     return
+            // }
+            for await (const beer of this.beers) {
+                if (
+                    parseFloat(beer.newPrice).toFixed(2) !=
+                    parseFloat(beer.price).toFixed(2)
+                ) {
+                    currentExclusiveness[
+                        breweryIdOnExclusiveness
+                    ].products.push(beer)
+                }
+            }
+            this.displayLoading = true
+            currentExclusiveness.notes = this.exclusivenessNotes
+            api.updateuserinformation({
+                uid: this.$route.params.id,
+                user: {exclusiveness: currentExclusiveness},
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        this.displayLoading = false
+                        this.alertTitle = 'Exito!'
+                        this.alertMessage =
+                            'Actualización realizada correctamente.'
+                        this.alertType = 'success'
+                        this.displayAlert = true
+                    }
+                })
+                .then(() => {
+                    api.getuserinformationbyid({
+                        uid: this.$route.params.id,
+                    }).then(
+                        response =>
+                            (this.restaurantInformation = response.data.data)
+                    )
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage =
+                        'Hubo un error en la petición, intentelo mas tarde'
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
         },
     },
     async mounted() {
