@@ -15,7 +15,7 @@ async function createProduct(product) {
             ibu: product.ibu,
             description: product.description,
             photoLocation: product.photoLocation,
-            price: product.price,
+            price: parseFloat(product.price),
             inventory: 0,
             status: 'active', //active, inactive
         })

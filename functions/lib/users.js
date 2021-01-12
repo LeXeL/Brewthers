@@ -36,6 +36,7 @@ async function updateDatabaseWithUserInfo(uid, obj) {
             logs: [],
             ruc: obj.ruc,
             cart: [],
+            exclusiveness: {},
         })
         .then(() => {
             console.log('Document successfully written!')
