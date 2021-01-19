@@ -21,7 +21,7 @@ import MovingBeerAccount from './views/movingbeer/MovingBeerAccount.vue'
 import MovingBeerHistory from './views/movingbeer/MovingBeerHistory.vue'
 
 import AdminIndex from './views/admin/Index'
-import BreweryAdminIndex from './views/admin/BreweryIndex'
+import BreweryAdminIndex from './views/BrewingHouse/BreweryIndex'
 import AccountsManager from './views/admin/AccountsManager'
 import AccountDetails from './views/admin/AccountDetails'
 import BrewingHouses from './views/admin/BrewingHouses'
