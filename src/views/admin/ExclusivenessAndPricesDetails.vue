@@ -14,7 +14,6 @@
         <div class="row q-px-md">
             <div class="col-lg-6 q-pa-md">
                 <q-table
-                    title="Casas cerveceras"
                     :data="filteredBrewerys"
                     :columns="columns"
                     row-key="name"
@@ -22,6 +21,15 @@
                     binary-state-sort
                     :pagination.sync="initialPagination"
                 >
+                    <template v-slot:top>
+                        <div class="text-h6">Casas cerveceras</div>
+                        <q-space />
+                        <q-btn
+                            color="secondary"
+                            label="Seleccionar todas"
+                            size="sm"
+                        />
+                    </template>
                     <template v-slot:body="props">
                         <q-tr :props="props">
                             <q-td key="name" :props="props">
