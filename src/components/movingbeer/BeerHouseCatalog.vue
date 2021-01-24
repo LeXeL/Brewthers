@@ -1,32 +1,5 @@
 <template>
     <q-page>
-        <!-- <div class="row justify-center q-mb-lg">
-            <div class="text-h4">Beer House Name</div>
-        </div>
-        <div class="row justify-center q-mb-lg">
-            <div class="col"></div>
-            <div class="col-lg-1 col-sm-3 col-xs-6">
-                <q-img
-                    class="rounded-borders"
-                    :src="require('@/assets/familia-brewthers/2-oceans.png')"
-                />
-            </div>
-            <div class="col"></div>
-        </div>
-        <div class="row justify-center q-mb-lg">
-            <div class="col"></div>
-            <div class="col-lg-2 col-sm-8 col-xs-10">
-                <q-select
-                    v-model="type"
-                    filled
-                    dark
-                    :options="['Keg', 'Caja']"
-                    label="Selecione un tipo"
-                    class="full-width"
-                />
-            </div>
-            <div class="col"></div>
-        </div>-->
         <q-card class="text-white full-width" style="background-color: #1f2120">
             <q-bar class="q-ma-md" style="background-color: #1f2120">
                 <q-space />
@@ -40,11 +13,7 @@
 
             <q-card-section>
                 <div class="text-h4 text-center">
-                    {{
-                        allBrewers.filter(brew => {
-                            if (brew.id === breweryId) return brew
-                        })[0].name
-                    }}
+                    {{ allBrewers.find(brew => brew.id === breweryId).name }}
                 </div>
             </q-card-section>
 
@@ -55,9 +24,8 @@
                         <q-img
                             class="rounded-borders"
                             :src="
-                                allBrewers.filter(brew => {
-                                    if (brew.id === breweryId) return brew
-                                })[0].photoLocation
+                                allBrewers.find(brew => brew.id === breweryId)
+                                    .photoLocation
                             "
                         />
                     </div>
@@ -86,7 +54,10 @@
                         v-for="(product, i) in productsInHouse"
                         :key="i"
                     >
-                        <beer-item-tile :product="product" />
+                        <beer-item-tile
+                            :product="product"
+                            :disableButton="ExclusivenessButton"
+                        />
                     </div>
                 </div>
                 <div
@@ -95,12 +66,14 @@
                     v-if="productsInHouse.length == 0"
                 >
                     <div class="col q-mb-xl">
-                        <i class="fas fa-beer" style="color: #5c5c5c; font-size: 100px;"></i>
-                        <p
-                            style="color: #5c5c5c; font-size: 18px;"
-                        >Lo sentimos, por el momento no tenemos inventario de esta presentación.</p>
-
-
+                        <i
+                            class="fas fa-beer"
+                            style="color: #5c5c5c; font-size: 100px"
+                        ></i>
+                        <p style="color: #5c5c5c; font-size: 18px">
+                            Lo sentimos, por el momento no tenemos inventario de
+                            esta presentación.
+                        </p>
                     </div>
                 </div>
             </q-card-section>
@@ -130,10 +103,16 @@ export default {
             default: '',
         },
     },
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
     data() {
         return {
             type: 'Keg',
             productsInHouse: [],
+            ExclusivenessButton: false,
         }
     },
     watch: {
@@ -142,6 +121,36 @@ export default {
         },
     },
     methods: {
+        findExclusiveness() {
+            delete this.user.exclusiveness.notes
+            let brewerysIdOnExclusiveness = Object.keys(this.user.exclusiveness)
+            if (brewerysIdOnExclusiveness.length > 0) {
+                // Existe almenos un contrato de exclusividad'
+                if (
+                    !!brewerysIdOnExclusiveness.find(
+                        ex => ex === this.breweryId
+                    )
+                ) {
+                    // `Existe un contrato de exclusividad y es el brewery selecionado`
+                    if (
+                        this.user.exclusiveness[this.breweryId].products
+                            .length > 0
+                    ) {
+                        // 'Existe un precio especial vamos a utilizarlo'
+                        this.user.exclusiveness[
+                            this.breweryId
+                        ].products.forEach(exProd => {
+                            this.allProducts.find(
+                                product => product.id === exProd.id
+                            ).price = exProd.newPrice
+                        })
+                    }
+                } else {
+                    // `Existe un contrato de exclusividad y no es el brewery selecionado`
+                    this.ExclusivenessButton = true
+                }
+            }
+        },
         filterProductsInHouse(type) {
             this.productsInHouse = []
             this.productsInHouse = this.allProducts.filter(product => {
@@ -157,6 +166,7 @@ export default {
     },
     mounted() {
         window.scrollTo(0, 0)
+        this.findExclusiveness()
         this.filterProductsInHouse(this.type)
     },
     components: {
