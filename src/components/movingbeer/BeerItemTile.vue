@@ -171,10 +171,11 @@ export default {
             } else {
                 await this.$store.commit('ADD_CART', workingProduct)
                 api.addToShoppingCart({uid: this.uid, product: workingProduct})
-                    .then(response => {
+                    .then(() => {
                         this.showAddedOverlay = true
                     })
                     .catch(error => {
+                        console.log(error)
                         this.alertTitle = 'Hey AWANTA!'
                         this.alertMessage =
                             'Hubo un error con tu peticion por favor intentalo mas tarde'
