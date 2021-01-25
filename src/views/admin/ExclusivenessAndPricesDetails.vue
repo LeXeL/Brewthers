@@ -14,7 +14,6 @@
         <div class="row q-px-md">
             <div class="col-lg-6 q-pa-md">
                 <q-table
-                    title="Casas cerveceras"
                     :data="filteredBrewerys"
                     :columns="columns"
                     row-key="name"
@@ -22,6 +21,24 @@
                     binary-state-sort
                     :pagination.sync="initialPagination"
                 >
+                    <template v-slot:top>
+                        <div class="text-h6">Casas cerveceras</div>
+                        <q-space />
+                        <q-btn
+                            @click="toggleAllStatus()"
+                            :color="
+                                determineIfAllAreActivated()
+                                    ? 'red-7'
+                                    : 'secondary'
+                            "
+                            :label="
+                                determineIfAllAreActivated()
+                                    ? 'Desactivar todas'
+                                    : 'Activar todas'
+                            "
+                            size="sm"
+                        />
+                    </template>
                     <template v-slot:body="props">
                         <q-tr :props="props">
                             <q-td key="name" :props="props">
@@ -180,28 +197,11 @@ export default {
         },
     },
     methods: {
-        addBreweryToExclusiveness(brewery) {
-            let currentExclusiveness = {
-                ...this.restaurantInformation.exclusiveness,
-            }
-            //determinar si ya existe dentro del current
-            if (Object.keys(currentExclusiveness).includes(brewery.id)) {
-                //Si existe y brewery.canBuy es falso quiero quitarla
-                if (!brewery.canBuy) {
-                    delete currentExclusiveness[brewery.id]
-                }
-            } else {
-                if (brewery.canBuy) {
-                    currentExclusiveness[brewery.id] = {
-                        name: brewery.name,
-                        products: [],
-                    }
-                }
-            }
+        updateExclusivenessOnServer(exclusivenessInfo) {
             this.displayLoading = true
             api.updateuserinformation({
                 uid: this.$route.params.id,
-                user: {exclusiveness: currentExclusiveness},
+                user: {exclusiveness: exclusivenessInfo},
             })
                 .then(response => {
                     if (response.status === 200) {
@@ -230,6 +230,57 @@ export default {
                     this.alertType = 'error'
                     this.displayAlert = true
                 })
+        },
+        determineIfAllAreActivated() {
+            let allActivated = true
+            this.filteredBrewerys.forEach(brewery => {
+                if (!brewery.canBuy) {
+                    allActivated = false
+                }
+            })
+            return allActivated
+        },
+        toggleAllStatus() {
+            let currentExclusiveness = {
+                ...this.restaurantInformation.exclusiveness,
+            }
+            if (this.determineIfAllAreActivated()) {
+                this.filteredBrewerys.forEach(brewery => {
+                    brewery.canBuy = false
+                })
+                this.updateExclusivenessOnServer({})
+            } else {
+                this.filteredBrewerys.forEach(brewery => {
+                    if (!brewery.canBuy) {
+                        brewery.canBuy = true
+                        currentExclusiveness[brewery.id] = {
+                            name: brewery.name,
+                            products: [],
+                        }
+                    }
+                })
+                this.updateExclusivenessOnServer(currentExclusiveness)
+            }
+        },
+        addBreweryToExclusiveness(brewery) {
+            let currentExclusiveness = {
+                ...this.restaurantInformation.exclusiveness,
+            }
+            //determinar si ya existe dentro del current
+            if (Object.keys(currentExclusiveness).includes(brewery.id)) {
+                //Si existe y brewery.canBuy es falso quiero quitarla
+                if (!brewery.canBuy) {
+                    delete currentExclusiveness[brewery.id]
+                }
+            } else {
+                if (brewery.canBuy) {
+                    currentExclusiveness[brewery.id] = {
+                        name: brewery.name,
+                        products: [],
+                    }
+                }
+            }
+            this.updateExclusivenessOnServer(currentExclusiveness)
         },
         isProductInExclusivenessDeal(product) {
             let currentExclusiveness = {
@@ -315,39 +366,8 @@ export default {
                     ].products.push(beer)
                 }
             }
-            this.displayLoading = true
             currentExclusiveness.notes = this.exclusivenessNotes
-            api.updateuserinformation({
-                uid: this.$route.params.id,
-                user: {exclusiveness: currentExclusiveness},
-            })
-                .then(response => {
-                    if (response.status === 200) {
-                        this.displayLoading = false
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage =
-                            'Actualización realizada correctamente.'
-                        this.alertType = 'success'
-                        this.displayAlert = true
-                    }
-                })
-                .then(() => {
-                    api.getuserinformationbyid({
-                        uid: this.$route.params.id,
-                    }).then(
-                        response =>
-                            (this.restaurantInformation = response.data.data)
-                    )
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.displayLoading = false
-                    this.alertTitle = 'Error'
-                    this.alertMessage =
-                        'Hubo un error en la petición, intentelo mas tarde'
-                    this.alertType = 'error'
-                    this.displayAlert = true
-                })
+            this.updateExclusivenessOnServer(currentExclusiveness)
         },
     },
     async mounted() {
