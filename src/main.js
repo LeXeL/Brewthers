@@ -10,6 +10,8 @@ import Confirm from '@/components/general/Confirm'
 //Librerias extras
 import './quasar'
 import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 import 'firebase/analytics'
 
 import vueSmoothScroll from 'vue2-smooth-scroll'
@@ -29,7 +31,7 @@ Vue.use(VueGoogleMaps, {
     },
 })
 
-const configOptions = {
+let configOptions = {
     apiKey: 'AIzaSyCrNwUC-Qae_iVNrkKHxPkQtmhFszGsnv8',
     authDomain: 'brewthers-91a52.firebaseapp.com',
     databaseURL: 'https://brewthers-91a52.firebaseio.com',
@@ -40,6 +42,11 @@ const configOptions = {
     measurementId: 'G-FSTF3WL646',
 }
 firebase.initializeApp(configOptions)
+if (process.env.NODE_ENV == 'development' || 'testing') {
+    // firebase.auth().useEmulator('http://localhost:9099/')
+    firebase.firestore().useEmulator('localhost', 8081)
+}
+
 firebase.analytics()
 firebase.auth().onAuthStateChanged(user => {
     // store.dispatch('fetchUser', user)

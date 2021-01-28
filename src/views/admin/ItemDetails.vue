@@ -111,6 +111,7 @@
                                 ]"
                             />
                             <q-btn
+                                v-if="user.role != 'brewery'"
                                 type="submit"
                                 color="info"
                                 :label="editInformation ? 'Guardar' : 'Editar'"
@@ -119,9 +120,18 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
-                    <q-img :src="data.photoLocation" />
+                    <q-img class="q-mb-md" :src="data.photoLocation" />
+                    <div
+                        class="text-h6 q-mb-md text-white"
+                        v-if="user.role === 'brewery'"
+                    >
+                        Cantidad en inventario: {{ data.inventory }}
+                    </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md">
+                <div
+                    class="col-lg-4 col-md-4 col-sm-6 col-xs-12 q-pa-md"
+                    v-if="user.role != 'brewery'"
+                >
                     <div class="text-h6 q-mb-md text-white">
                         Cantidad en inventario: {{ data.inventory }}
                     </div>
@@ -188,6 +198,9 @@ export default {
     computed: {
         brewerys() {
             return this.$store.getters.brewerys
+        },
+        user() {
+            return this.$store.getters.user
         },
     },
     data() {
@@ -360,7 +373,7 @@ export default {
                 })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -369,7 +382,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function(snapshot) {
+                    function (snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -382,17 +395,17 @@ export default {
                                 break
                         }
                     },
-                    function(error) {
+                    function (error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function() {
+                    function () {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function(downloadURL) {
+                            .then(function (downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })

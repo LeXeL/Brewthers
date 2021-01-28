@@ -15,7 +15,7 @@ async function createProduct(product) {
             ibu: product.ibu,
             description: product.description,
             photoLocation: product.photoLocation,
-            price: product.price,
+            price: parseFloat(product.price),
             inventory: 0,
             status: 'active', //active, inactive
         })
@@ -104,6 +104,27 @@ async function returnProductById(id) {
             return error
         })
 }
+async function returnProductByBreweryId(id) {
+    let products = []
+    console.log(id)
+    await db
+        .collection('product')
+        .where('brewery', '==', id)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.')
+                return
+            }
+            snapshot.forEach(doc => {
+                products.push({...doc.data(), id: doc.id})
+            })
+        })
+        .catch(function(error) {
+            console.log('Error getting documents: ', error)
+        })
+    return products
+}
 
 module.exports = {
     createProduct,
@@ -112,4 +133,5 @@ module.exports = {
     deleteProduct,
     returnAllProducts,
     returnProductById,
+    returnProductByBreweryId,
 }

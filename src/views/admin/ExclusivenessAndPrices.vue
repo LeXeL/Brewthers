@@ -3,17 +3,31 @@
         <div class="text-h5 q-mb-md text-white">Exclusividad y precios</div>
         <div class="row q-mb-md">
             <div class="col-lg-2 q-pa-md">
-                <q-input filled label="Nombre" color="primary" dark dense />
+                <q-input
+                    filled
+                    label="Nombre"
+                    color="primary"
+                    dark
+                    dense
+                    v-model="searchName"
+                />
             </div>
             <div class="col-lg-2 q-pa-md">
-                <q-input filled label="Correo" color="primary" dark dense />
+                <q-input
+                    filled
+                    label="Correo"
+                    color="primary"
+                    dark
+                    dense
+                    v-model="searchEmail"
+                />
             </div>
         </div>
         <div class="row q-px-md">
             <div class="col">
                 <q-table
                     title="Restaurantes"
-                    :data="data"
+                    :data="FilteredTable"
                     :columns="columns"
                     row-key="name"
                     dark
@@ -21,8 +35,8 @@
                 >
                     <template v-slot:body="props">
                         <q-tr :props="props">
-                            <q-td key="name" :props="props">
-                                {{ props.row.name }}
+                            <q-td key="restaurantName" :props="props">
+                                {{ props.row.restaurantName }}
                             </q-td>
                             <q-td key="email" :props="props">
                                 {{ props.row.email }}
@@ -32,7 +46,7 @@
                                     color="primary"
                                     label="Administrar"
                                     size="xs"
-                                    to="/exclusiveness-and-prices/1234"
+                                    :to="`/exclusiveness-and-prices/${props.row.id}`"
                                 />
                             </q-td>
                         </q-tr>
@@ -44,14 +58,15 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
     data() {
         return {
             columns: [
                 {
-                    name: 'name',
+                    name: 'restaurantName',
                     label: 'Nombre',
-                    field: 'name',
+                    field: 'restaurantName',
                     align: 'left',
                     sortable: true,
                 },
@@ -66,29 +81,30 @@ export default {
                     align: 'left',
                 },
             ],
-            data: [
-                {
-                    name: 'Frozen Yogurt',
-                    email: 'asdf@asdf.com',
-                },
-                {
-                    name: 'Frozen Yogurt',
-                    email: 'asdf@asdf.com',
-                },
-                {
-                    name: 'Frozen Yogurt',
-                    email: 'asdf@asdf.com',
-                },
-                {
-                    name: 'Frozen Yogurt',
-                    email: 'asdf@asdf.com',
-                },
-                {
-                    name: 'Frozen Yogurt',
-                    email: 'asdf@asdf.com',
-                },
-            ],
+            data: [],
+            searchName: '',
+            searchEmail: '',
         }
+    },
+    computed: {
+        FilteredTable() {
+            let filteredData = []
+            this.data.forEach(item => {
+                if (
+                    item.restaurantName
+                        .toLowerCase()
+                        .includes(this.searchName.toLowerCase()) &&
+                    item.email.includes(this.searchEmail.toLowerCase())
+                )
+                    filteredData.push(item)
+            })
+            return filteredData
+        },
+    },
+    mounted() {
+        api.returnApprovedUser().then(
+            response => (this.data = response.data.data)
+        )
     },
 }
 </script>

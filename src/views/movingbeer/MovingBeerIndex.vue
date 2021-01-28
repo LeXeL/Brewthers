@@ -95,13 +95,4 @@ export default {
         'beer-house-catalog': BeerHouseCatalog,
     },
 }
-// VIEWS NEEDED
-// Home
-// Login
-// Display Item
-// View / Edit profile
-// Shopping Cart
-// Checkout
-// Order placed
-// Orders history
 </script>

@@ -39,31 +39,33 @@
 
         <div class="text-h6 text-center q-mt-sm">{{ product.name }}</div>
         <div class="text-subtitle-2 text-center q-mb-sm">
-            $ {{ product.price }}
+            $ {{ product.price.toFixed(2) }}
         </div>
-        <q-btn-group class="q-mb-sm" v-if="user.status === 'approved'">
+        <template v-if="!disableButton">
+            <q-btn-group class="q-mb-sm" v-if="user.status === 'approved'">
+                <q-btn
+                    color="primary"
+                    :disable="amount == 0 ? true : false"
+                    size="sm"
+                    @click="subtractAmount"
+                >
+                    <i class="fas fa-minus"></i>
+                </q-btn>
+                <q-btn color="primary" size="sm" disable>{{ amount }}</q-btn>
+                <q-btn color="primary" size="sm" @click="addAmount">
+                    <i class="fas fa-plus"></i>
+                </q-btn>
+            </q-btn-group>
+            <br />
             <q-btn
                 color="primary"
-                :disable="amount == 0 ? true : false"
                 size="sm"
-                @click="subtractAmount"
+                @click="addToCart"
+                :disabled="!amount"
+                v-if="user.status === 'approved'"
+                >Agregar</q-btn
             >
-                <i class="fas fa-minus"></i>
-            </q-btn>
-            <q-btn color="primary" size="sm" disable>{{ amount }}</q-btn>
-            <q-btn color="primary" size="sm" @click="addAmount">
-                <i class="fas fa-plus"></i>
-            </q-btn>
-        </q-btn-group>
-        <br />
-        <q-btn
-            color="primary"
-            size="sm"
-            @click="addToCart"
-            :disabled="!amount"
-            v-if="user.status === 'approved'"
-            >Agregar</q-btn
-        >
+        </template>
     </div>
 </template>
 
@@ -76,6 +78,10 @@ export default {
             default: () => {
                 return {}
             },
+        },
+        disableButton: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {
@@ -165,10 +171,11 @@ export default {
             } else {
                 await this.$store.commit('ADD_CART', workingProduct)
                 api.addToShoppingCart({uid: this.uid, product: workingProduct})
-                    .then(response => {
+                    .then(() => {
                         this.showAddedOverlay = true
                     })
                     .catch(error => {
+                        console.log(error)
                         this.alertTitle = 'Hey AWANTA!'
                         this.alertMessage =
                             'Hubo un error con tu peticion por favor intentalo mas tarde'
