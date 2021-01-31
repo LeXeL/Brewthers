@@ -43,7 +43,7 @@ let configOptions = {
 }
 firebase.initializeApp(configOptions)
 if (process.env.NODE_ENV == 'development' || 'testing') {
-    // firebase.auth().useEmulator('http://localhost:9099/')
+    firebase.auth().useEmulator('http://localhost:9099/')
     firebase.firestore().useEmulator('localhost', 8081)
 }
 
