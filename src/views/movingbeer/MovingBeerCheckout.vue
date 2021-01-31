@@ -1,12 +1,15 @@
 <template>
-    <q-page class="q-pa-md pattern-bg" style="height: auto; background-repeat: repeat-y">
+    <q-page
+        class="q-pa-md pattern-bg"
+        style="height: auto; background-repeat: repeat-y"
+    >
         <loading-alert :display="displayLoading"></loading-alert>
         <brewthers-alert
             :display="displayAlert"
             :title="alertTitle"
             :message="alertMessage"
             :type="alertType"
-            @accept="displayAlert=false"
+            @accept="displayAlert = false"
         ></brewthers-alert>
         <div class="row q-pt-xl">
             <div class="col desktop-only"></div>
@@ -32,11 +35,16 @@
                     <div class="col-lg-4 col-sm-4 col-xs-12">
                         <div class="q-mb-xl">
                             <div class="text-h5 q-mb-md">Detalle de orden:</div>
-                            <div
-                                class="text-subitle-2"
-                            >Articulos ({{calculateTotalAmount()}}): $ {{calculatePrice()}}</div>
-                            <div class="text-subitle-2">ITBMS: $ {{ITBM}}</div>
-                            <div class="text-h6">Total: $ {{calculateTotal()}}</div>
+                            <div class="text-subitle-2">
+                                Articulos ({{ calculateTotalAmount() }}): $
+                                {{ calculatePrice() }}
+                            </div>
+                            <div class="text-subitle-2">
+                                ITBMS: $ {{ ITBM }}
+                            </div>
+                            <div class="text-h6">
+                                Total: $ {{ calculateTotal() }}
+                            </div>
                         </div>
                         <div class="row" v-if="orderStatus === 'open'">
                             <div class="text-h5 q-mb-md">Metodo de pago:</div>
@@ -47,17 +55,26 @@
                                 label="Notifications"
                                 type="radio"
                                 v-model="paymentMethod"
+                                dark
                             />
                         </div>
                         <div
                             class="row"
-                            v-if="proofRequired.includes(paymentMethod) && orderStatus === 'open'"
+                            v-if="
+                                proofRequired.includes(paymentMethod) &&
+                                    orderStatus === 'open'
+                            "
                         >
-                            <div class="text-h5 q-mb-md">Comprobante de pago:</div>
+                            <div class="text-h5 q-mb-md">
+                                Comprobante de pago:
+                            </div>
                         </div>
                         <div
                             class="row q-mb-lg"
-                            v-if="proofRequired.includes(paymentMethod) && orderStatus === 'open'"
+                            v-if="
+                                proofRequired.includes(paymentMethod) &&
+                                    orderStatus === 'open'
+                            "
                         >
                             <q-file
                                 outlined
@@ -97,9 +114,10 @@
                     <div class="text-h6">Enviado con exito</div>
                 </q-card-section>
 
-                <q-card-section
-                    class="q-pt-none"
-                >Tu orden ha sido enviada con exito. Pronto nos pondremos en contacto contigo.</q-card-section>
+                <q-card-section class="q-pt-none"
+                    >Tu orden ha sido enviada con exito. Pronto nos pondremos en
+                    contacto contigo.</q-card-section
+                >
 
                 <q-card-actions align="right">
                     <q-btn flat label="OK" color="primary" v-close-popup />
@@ -269,7 +287,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function (resolve, reject) {
+            return new Promise(function(resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -278,7 +296,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function (snapshot) {
+                    function(snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -291,17 +309,17 @@ export default {
                                 break
                         }
                     },
-                    function (error) {
+                    function(error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function () {
+                    function() {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function (downloadURL) {
+                            .then(function(downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })
@@ -326,7 +344,7 @@ export default {
                     console.log('No such document!')
                 }
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 console.log('Error getting document:', error)
             })
         this.displayLoading = false
