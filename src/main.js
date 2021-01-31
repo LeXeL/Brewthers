@@ -42,10 +42,13 @@ let configOptions = {
     measurementId: 'G-FSTF3WL646',
 }
 firebase.initializeApp(configOptions)
-console.log(process.env.NODE_ENV)
-if (process.env.NODE_ENV == 'development' || 'testing') {
-    // firebase.auth().useEmulator('http://localhost:9099/')
-    // firebase.firestore().useEmulator('localhost', 8081)
+
+if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NODE_ENV === 'testing'
+) {
+    firebase.auth().useEmulator('http://localhost:9099/')
+    firebase.firestore().useEmulator('localhost', 8081)
 }
 
 firebase.analytics()
