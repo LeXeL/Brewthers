@@ -67,7 +67,7 @@
                                 :restaurantId="this.data.restaurantId"
                                 :disableprop="
                                     this.data.status === 'cancel' ||
-                                    this.data.status === 'completed'
+                                        this.data.status === 'completed'
                                 "
                             />
                         </div>
@@ -95,7 +95,6 @@
                         <q-btn
                             :disable="data.status !== 'review'"
                             color="info"
-                            text-color="black"
                             label="Agregar articulos"
                             @click="openModal"
                         />
