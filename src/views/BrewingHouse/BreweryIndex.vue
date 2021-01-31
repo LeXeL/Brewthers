@@ -145,9 +145,19 @@
                                         returnRestaurantEmail(user)
                                     }}</q-item-label>
                                 </q-item-section>
-                                <q-item-section side style="font-size: 11px">{{
-                                    i + 1
-                                }}</q-item-section>
+                                <q-item-section avatar v-if="i < 3">
+                                    <q-img
+                                        :src="
+                                            require(`@/assets/ribbon${
+                                                i + 1
+                                            }.png`)
+                                        "
+                                        width="20px"
+                                    />
+                                </q-item-section>
+                                <q-item-section side v-else>
+                                    {{ i + 1 }}
+                                </q-item-section>
                             </q-item>
                         </q-list>
                     </q-card>
@@ -212,6 +222,13 @@ export default {
         },
     },
     methods: {
+        returnRibbonPlace(index) {
+            if (index > 3) {
+                //busca el ribbon
+                return
+            }
+            return index
+        },
         returnTopRestaurants() {
             let topRestaurants = []
             let RestaurantsAdded = []
