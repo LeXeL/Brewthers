@@ -9,9 +9,9 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div v-if="Object.keys(users).length !== 0 && restaurants.length > 0">
+        <div v-if="restaurants.length > 0">
             <div class="text-h5 q-mb-md text-white">
-                Bienvenido, {{ `${user.name} ${user.lastName}` }}
+                Bienvenido, {{ `${user.brewingHouseName}` }}
             </div>
             <div class="row q-mb-lg">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 q-pa-md">
@@ -25,7 +25,7 @@
 
                         <q-card-section class="q-pt-none">
                             <div class="text-h3">
-                                2
+                                {{ returnFilteredOrdersByBreweryId().length }}
                             </div>
                         </q-card-section>
                     </q-card>
@@ -41,7 +41,10 @@
 
                         <q-card-section class="q-pt-none">
                             <div class="text-h3">
-                                3
+                                {{
+                                    returnFilteredOrderCompletedInAMonth()
+                                        .length
+                                }}
                             </div>
                         </q-card-section>
                     </q-card>
@@ -59,7 +62,7 @@
 
                         <q-card-section class="q-pt-none">
                             <div class="text-h3">
-                                $ 25.36
+                                $ {{ returnTotalInOrderCompletedInAMonth() }}
                             </div>
                         </q-card-section>
                     </q-card>
@@ -75,7 +78,7 @@
 
                         <q-card-section class="q-pt-none">
                             <div class="text-h3">
-                                1
+                                {{ returnTotalAmountSoldInAMonth() }}
                             </div>
                         </q-card-section>
                     </q-card>
@@ -96,19 +99,23 @@
                             <q-item
                                 clickable
                                 v-ripple
-                                v-for="(order, i) in 5"
+                                v-for="(
+                                    order, i
+                                ) in returnFilteredOrdersByBreweryId()"
                                 :key="i"
                             >
                                 <q-item-section>
                                     <q-item-label>
-                                        Nombre del rest
+                                        {{ returnRestaurantName(order) }}
                                     </q-item-label>
                                     <q-item-label caption
-                                        >No. 1234</q-item-label
+                                        >No. {{ order.id }}</q-item-label
                                     >
                                 </q-item-section>
                                 <q-item-section side style="font-size: 11px">
-                                    5 mins atras</q-item-section
+                                    {{
+                                        returnTimeAgo(order.logs[0])
+                                    }}</q-item-section
                                 >
                             </q-item>
                         </q-list>
@@ -127,14 +134,16 @@
                             <q-item
                                 clickable
                                 v-ripple
-                                v-for="(user, i) in 5"
+                                v-for="(user, i) in returnTopRestaurants()"
                                 :key="i"
                             >
                                 <q-item-section>
-                                    <q-item-label>Restaurant name</q-item-label>
-                                    <q-item-label caption
-                                        >restaurantemail@gmail.com</q-item-label
-                                    >
+                                    <q-item-label>{{
+                                        returnRestaurantName(user)
+                                    }}</q-item-label>
+                                    <q-item-label caption>{{
+                                        returnRestaurantEmail(user)
+                                    }}</q-item-label>
                                 </q-item-section>
                                 <q-item-section side style="font-size: 11px">{{
                                     i + 1
@@ -156,15 +165,19 @@
                             <q-item
                                 clickable
                                 v-ripple
-                                v-for="(user, i) in 5"
+                                v-for="(prod, i) in returnTopProducts()"
                                 :key="i"
                             >
                                 <q-item-section>
-                                    <q-item-label>Beer name</q-item-label>
-                                    <q-item-label caption>KEG</q-item-label>
+                                    <q-item-label>{{
+                                        prod.productName
+                                    }}</q-item-label>
+                                    <q-item-label caption>{{
+                                        prod.type
+                                    }}</q-item-label>
                                 </q-item-section>
                                 <q-item-section side style="font-size: 11px">{{
-                                    i + 1
+                                    prod.amount
                                 }}</q-item-section>
                             </q-item>
                         </q-list>
@@ -199,11 +212,88 @@ export default {
         },
     },
     methods: {
+        returnTopRestaurants() {
+            let topRestaurants = []
+            let RestaurantsAdded = []
+            let allOrders = this.data.filter(order => order.status !== 'cancel')
+            let completeOrders = this.productsInOrders(allOrders)
+            completeOrders.forEach(order => {
+                if (!RestaurantsAdded.includes(order.restaurantId)) {
+                    topRestaurants.push({
+                        restaurantName: order.restaurantId,
+                        restaurantId: order.restaurantId,
+                        amount: 1,
+                    })
+                    RestaurantsAdded.push(order.restaurantId)
+                } else {
+                    let value = topRestaurants.find(
+                        rest => rest.restaurantName === order.restaurantId
+                    )
+                    value.amount += 1
+                }
+            })
+            return topRestaurants.sort((a, b) => b.amount - a.amount)
+        },
+        returnTopProducts() {
+            let topProducts = []
+            let ProductsAdded = []
+            let allOrders = this.data.filter(order => order.status !== 'cancel')
+            let completeOrders = this.productsInOrders(allOrders)
+            completeOrders.forEach(order => {
+                order.cart.forEach(product => {
+                    if (!ProductsAdded.includes(product.id)) {
+                        topProducts.push({
+                            productName: product.name,
+                            productId: product.id,
+                            type: product.type,
+                            amount: 1,
+                        })
+                        ProductsAdded.push(order.restaurantId)
+                    } else {
+                        let value = topProducts.find(
+                            prod => prod.productId === product.id
+                        )
+                        value.amount += 1
+                    }
+                })
+            })
+            return topProducts.sort((a, b) => b.amount - a.amount)
+        },
+        productsInOrders(allOrders) {
+            let completeOrders = []
+            let itemsAlreadyAdded = []
+            allOrders.forEach(order => {
+                order.cart.forEach(product => {
+                    if (
+                        product.brewery === this.user.breweryId &&
+                        !itemsAlreadyAdded.includes(order.id)
+                    ) {
+                        itemsAlreadyAdded.push(order.id)
+                        completeOrders.push(order)
+                    }
+                })
+            })
+            return completeOrders
+        },
+        returnTotalAmountSoldInAMonth() {
+            let orders = this.returnFilteredOrderCompletedInAMonth()
+            let total = 0
+            orders.forEach(order => {
+                order.cart.forEach(product => {
+                    if (product.brewery === this.user.breweryId)
+                        total += product.inventory
+                })
+            })
+            return parseInt(total)
+        },
         returnTotalInOrderCompletedInAMonth() {
             let orders = this.returnFilteredOrderCompletedInAMonth()
             let total = 0
             orders.forEach(order => {
-                total += parseFloat(order.total)
+                order.cart.forEach(product => {
+                    if (product.brewery === this.user.breweryId)
+                        total += product.price
+                })
             })
             return parseFloat(total).toFixed(2)
         },
@@ -211,33 +301,32 @@ export default {
             return moment(time).fromNow()
         },
         returnFilteredOrderCompletedInAMonth() {
-            return this.data.filter(order => {
-                if (
-                    order.status === 'completed' &&
-                    moment(order.logs[0]).isSame(new Date(), 'month')
-                ) {
-                    return order
-                }
-            })
+            let allOrders = this.data.filter(order => order.status !== 'cancel')
+            let completeOrders = this.productsInOrders(allOrders)
+            return completeOrders.filter(order =>
+                moment(order.logs[0]).isSame(new Date(), 'month')
+            )
         },
-        returnFilteredOrders() {
-            return this.data.filter(order => {
-                if (order.status !== 'cancel' && order.status !== 'completed') {
-                    return order
-                }
-            })
-        },
-        returnFilteredUsers() {
-            return this.users.filter(user => user.status === 'pending')
+        returnFilteredOrdersByBreweryId() {
+            let allOrders = this.data.filter(
+                order =>
+                    order.status !== 'cancel' && order.status !== 'completed'
+            )
+            return this.productsInOrders(allOrders)
         },
         returnRestaurantName(order) {
-            let value = this.restaurants.filter(res => {
-                if (res.id === order.restaurantId) return res
-            })
-
-            if (value.length > 0) return value[0].restaurantName
-            return 'NaN'
+            let value = this.restaurants.find(
+                res => res.id === order.restaurantId
+            )
+            return !!value ? value.restaurantName : 'Nan'
         },
+        returnRestaurantEmail(order) {
+            let value = this.restaurants.find(
+                res => res.id === order.restaurantId
+            )
+            return !!value ? value.email : 'Nan'
+        },
+
         addToData(id, data) {
             data.firebaseId = id
             this.data.push(data)
@@ -266,29 +355,6 @@ export default {
                 return parseInt(b.id) - parseInt(a.id)
             })
         },
-        addToUsers(id, data) {
-            let name = data.name + ' ' + data.lastName
-            data.name = name
-            data.id = id
-            this.users.push(data)
-        },
-        editInUsers(id, data) {
-            let name = data.name + ' ' + data.lastName
-            data.name = name
-            data.id = id
-            this.users.forEach((user, index) => {
-                if (user.id === id) {
-                    this.users.splice(index, 1, data)
-                }
-            })
-        },
-        removeInUsers(id) {
-            this.users.forEach((user, index) => {
-                if (user.id === id) {
-                    this.users.splice(index, 1)
-                }
-            })
-        },
     },
     async mounted() {
         this.displayLoading = true
@@ -304,24 +370,6 @@ export default {
                     }
                     if (change.type === 'removed') {
                         this.removeData(change.doc.id)
-                    }
-                })
-            },
-            error => {
-                console.log(error)
-            }
-        )
-        db.collection('users').onSnapshot(
-            snapshot => {
-                snapshot.docChanges().forEach(change => {
-                    if (change.type === 'added') {
-                        this.addToUsers(change.doc.id, change.doc.data())
-                    }
-                    if (change.type === 'modified') {
-                        this.editInUsers(change.doc.id, change.doc.data())
-                    }
-                    if (change.type === 'removed') {
-                        this.removeInUsers(change.doc.id)
                     }
                 })
             },
