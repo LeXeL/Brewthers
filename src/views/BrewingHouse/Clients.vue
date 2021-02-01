@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pa-md">
+    <q-page class="q-pa-md" v-if="data.length > 0">
         <div class="text-h5 q-mb-md text-white">Clientes Brewthers</div>
         <div class="row q-mb-md">
             <div class="col-lg-2 q-pa-md">
@@ -43,10 +43,12 @@
                                     <q-tooltip
                                         content-class="bg-primary"
                                         content-style="font-size: 14px; width: 200px;"
-                                        v-if="!props.row.canBuy"
+                                        v-if="
+                                            !props.row.canBuy &&
+                                            !!props.row.note
+                                        "
                                     >
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit.
+                                        {{ props.row.note }}
                                     </q-tooltip>
                                 </q-badge>
                             </q-td>
@@ -55,7 +57,7 @@
                                     color="primary"
                                     label="Ver"
                                     size="xs"
-                                    to="/clients/1234"
+                                    :to="`/clients/${props.row.id}`"
                                 />
                             </q-td>
                         </q-tr>
@@ -67,6 +69,7 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
     data() {
         return {
@@ -116,36 +119,43 @@ export default {
                     phone: '65436786',
                     canBuy: false,
                 },
-                {
-                    name: 'Restaurant Name',
-                    contact: 'John Doe',
-                    email: 'asdf@asdf.com',
-                    phone: '65436786',
-                    canBuy: true,
-                },
-                {
-                    name: 'Restaurant Name',
-                    contact: 'John Doe',
-                    email: 'asdf@asdf.com',
-                    phone: '65436786',
-                    canBuy: true,
-                },
-                {
-                    name: 'Restaurant Name',
-                    contact: 'John Doe',
-                    email: 'asdf@asdf.com',
-                    phone: '65436786',
-                    canBuy: true,
-                },
-                {
-                    name: 'Restaurant Name',
-                    contact: 'John Doe',
-                    email: 'asdf@asdf.com',
-                    phone: '65436786',
-                    canBuy: true,
-                },
             ],
         }
+    },
+    computed: {
+        user() {
+            return this.$store.getters.user
+        },
+    },
+    mounted() {
+        api.returnApprovedUser().then(response => {
+            if (response.status === 200) {
+                this.data = response.data.data
+                    .filter(rest => rest.role === 'user')
+                    .map(rest => {
+                        let obj = {}
+                        obj.id = rest.id
+                        obj.name = rest.restaurantName
+                        obj.contact = `${rest.name} ${rest.lastName}`
+                        obj.email = rest.email
+                        obj.phone = rest.contactPhone
+                        obj.canBuy = true
+                        obj.note = rest.exclusiveness.notes
+                        obj.products = !!rest.exclusiveness[this.user.breweryId]
+                            ? rest.exclusiveness[this.user.breweryId].products
+                            : []
+                        if (
+                            Object.keys(rest.exclusiveness).length > 0 &&
+                            !Object.keys(rest.exclusiveness).includes(
+                                this.user.breweryId
+                            )
+                        ) {
+                            obj.canBuy = false
+                        }
+                        return obj
+                    })
+            }
+        })
     },
 }
 </script>
