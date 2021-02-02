@@ -3,17 +3,21 @@
         <div class="text-h5 q-mb-md text-white">Clientes Brewthers</div>
         <div class="row q-mb-md">
             <div class="col-lg-2 q-pa-md">
-                <q-input filled label="Nombre" color="primary" dark dense />
-            </div>
-            <div class="col-lg-2 q-pa-md">
-                <q-input filled label="Correo" color="primary" dark dense />
+                <q-input
+                    filled
+                    label="Nombre"
+                    color="primary"
+                    v-model="inputName"
+                    dark
+                    dense
+                />
             </div>
         </div>
         <div class="row q-px-md">
             <div class="col">
                 <q-table
                     title="Restaurantes"
-                    :data="data"
+                    :data="filteredData"
                     :columns="columns"
                     row-key="name"
                     dark
@@ -23,15 +27,6 @@
                         <q-tr :props="props">
                             <q-td key="name" :props="props">
                                 {{ props.row.name }}
-                            </q-td>
-                            <q-td key="contact" :props="props">
-                                {{ props.row.contact }}
-                            </q-td>
-                            <q-td key="email" :props="props">
-                                {{ props.row.email }}
-                            </q-td>
-                            <q-td key="phone" :props="props">
-                                {{ props.row.phone }}
                             </q-td>
                             <q-td key="canBuy" :props="props">
                                 <q-badge
@@ -82,25 +77,6 @@ export default {
                     sortable: true,
                 },
                 {
-                    name: 'contact',
-                    label: 'Contacto',
-                    field: 'contact',
-                    align: 'left',
-                    sortable: true,
-                },
-                {
-                    name: 'email',
-                    label: 'Correo',
-                    align: 'left',
-                    field: 'email',
-                },
-                {
-                    name: 'phone',
-                    label: 'Telefono',
-                    align: 'left',
-                    field: 'phone',
-                },
-                {
                     name: 'canBuy',
                     label: 'Puede comprar',
                     align: 'left',
@@ -111,20 +87,18 @@ export default {
                     align: 'left',
                 },
             ],
-            data: [
-                {
-                    name: 'Restaurant Name',
-                    contact: 'John Doe',
-                    email: 'asdf@asdf.com',
-                    phone: '65436786',
-                    canBuy: false,
-                },
-            ],
+            data: [],
+            inputName: '',
         }
     },
     computed: {
         user() {
             return this.$store.getters.user
+        },
+        filteredData() {
+            return this.data.filter(rest =>
+                rest.name.toLowerCase().includes(this.inputName.toLowerCase())
+            )
         },
     },
     mounted() {
