@@ -174,70 +174,93 @@ export default {
             this.displayLoading = true
             let db = firebase.firestore()
             let blogInfo = {}
-            if (this.isEditing) {
-                blogInfo.title = this.title
-                blogInfo.body = this.body
-                if (this.bannerImage != null) {
-                    await this.uploadToFirebase(
-                        this.bannerImage,
-                        `blog/${this.bannerImage.name}`,
-                        this.bannerImage.name + 'T' + new Date()
-                    ).then(
-                        async filename => (blogInfo.bannerLocation = filename)
-                    )
-                }
-                api.updateBlog({
-                    type: 'draft',
-                    id: this.$route.params.id,
-                    blogInfo: blogInfo,
-                })
-                    .then(response => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage =
-                            'Se ha actualizado el blog en modo draft con exito'
-                        this.alertType = 'success'
-                        this.redirect = '/blog-manager'
-                        this.displayAlert = true
-                    })
-                    .catch(error => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Error'
-                        this.alertMessage = error
-                        this.alertType = 'error'
-                        this.displayAlert = true
-                    })
-                return
-            }
-            await this.uploadToFirebase(
-                this.bannerImage,
-                `blog/${this.bannerImage.name}`,
-                this.bannerImage.name + 'T' + new Date()
-            ).then(async filename => {
-                blogInfo.bannerLocation = filename
-                blogInfo.title = this.title
-                blogInfo.body = this.body
+            blogInfo.bannerLocation = 'filename'
+            blogInfo.title = this.title
+            blogInfo.body = this.body
 
-                blogInfo.by = {name: this.user.name, email: this.user.email}
-                blogInfo.createdTime = new Date()
-                api.createDraftBlogInDataBase({blogInfo: blogInfo})
-                    .then(response => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Exito!'
-                        this.alertMessage =
-                            'Se ha creado el blog en modo draft con exito'
-                        this.alertType = 'success'
-                        this.redirect = '/blog-manager'
-                        this.displayAlert = true
-                    })
-                    .catch(error => {
-                        this.displayLoading = false
-                        this.alertTitle = 'Error'
-                        this.alertMessage = error
-                        this.alertType = 'error'
-                        this.displayAlert = true
-                    })
-            })
+            blogInfo.by = {name: this.user.name, email: this.user.email}
+            blogInfo.createdTime = new Date()
+            api.createDraftBlogInDataBase({blogInfo: blogInfo})
+                .then(response => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Exito!'
+                    this.alertMessage =
+                        'Se ha creado el blog en modo draft con exito'
+                    this.alertType = 'success'
+                    this.redirect = '/blog-manager'
+                    this.displayAlert = true
+                })
+                .catch(error => {
+                    this.displayLoading = false
+                    this.alertTitle = 'Error'
+                    this.alertMessage = error
+                    this.alertType = 'error'
+                    this.displayAlert = true
+                })
+            // if (this.isEditing) {
+            //     blogInfo.title = this.title
+            //     blogInfo.body = this.body
+            //     if (this.bannerImage != null) {
+            //         await this.uploadToFirebase(
+            //             this.bannerImage,
+            //             `blog/${this.bannerImage.name}`,
+            //             this.bannerImage.name + 'T' + new Date()
+            //         ).then(
+            //             async filename => (blogInfo.bannerLocation = filename)
+            //         )
+            //     }
+            //     api.updateBlog({
+            //         type: 'draft',
+            //         id: this.$route.params.id,
+            //         blogInfo: blogInfo,
+            //     })
+            //         .then(response => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Exito!'
+            //             this.alertMessage =
+            //                 'Se ha actualizado el blog en modo draft con exito'
+            //             this.alertType = 'success'
+            //             this.redirect = '/blog-manager'
+            //             this.displayAlert = true
+            //         })
+            //         .catch(error => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Error'
+            //             this.alertMessage = error
+            //             this.alertType = 'error'
+            //             this.displayAlert = true
+            //         })
+            //     return
+            // }
+            // await this.uploadToFirebase(
+            //     this.bannerImage,
+            //     `blog/${this.bannerImage.name}`,
+            //     this.bannerImage.name + 'T' + new Date()
+            // ).then(async filename => {
+            //     blogInfo.bannerLocation = filename
+            //     blogInfo.title = this.title
+            //     blogInfo.body = this.body
+
+            //     blogInfo.by = {name: this.user.name, email: this.user.email}
+            //     blogInfo.createdTime = new Date()
+            //     api.createDraftBlogInDataBase({blogInfo: blogInfo})
+            //         .then(response => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Exito!'
+            //             this.alertMessage =
+            //                 'Se ha creado el blog en modo draft con exito'
+            //             this.alertType = 'success'
+            //             this.redirect = '/blog-manager'
+            //             this.displayAlert = true
+            //         })
+            //         .catch(error => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Error'
+            //             this.alertMessage = error
+            //             this.alertType = 'error'
+            //             this.displayAlert = true
+            //         })
+            // })
         },
         async saveAsPublic() {
             this.displayLoading = true
