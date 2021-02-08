@@ -41,6 +41,7 @@ import ClientPrices from '@/views/BrewingHouse/ClientPrices'
 
 import BlogIndex from './views/Blog/BlogIndex'
 import BlogView from './views/Blog/BlogView'
+import BlogUnsubscribe from '@/views/Blog/BlogUnsubscribe'
 
 Vue.use(Router)
 
