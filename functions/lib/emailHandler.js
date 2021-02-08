@@ -117,10 +117,13 @@ function templateOrder04(info) {
       </div>`
 }
 function templateBlog01(info) {
+    // console.log(info)
     return `<div class="email-content">
         <p>
         Tenemos un nuevo post en nuestro blog para que lo checkees
-        <a href="https://brewthersco.com/blog">Click aquí</a>
+
+        <h1>El titulo es: ${info.post.title}</h1>
+        <a href="https://brewthersco.com/blog/${info.id}">Click aquí</a>
 
         </p>
       </div>

@@ -91,7 +91,6 @@ async function updateDraftBlog(id, Obj) {
         })
 }
 async function updatePublicBlog(id, Obj) {
-    console.log({id, Obj})
     Obj.status = 'public'
     return db
         .collection('blog')
@@ -166,7 +165,7 @@ async function notifyNewsletterUsersAboutNewPublicPost(id, post) {
     post.publish = true
     await updatePublicBlog(id, post)
     users.forEach(async user => {
-        let body = await email.templateHandler('Blog-01', post)
+        let body = await email.templateHandler('Blog-01', {id, post})
         email.sendEmail(
             user.toString(),
             `Hey que xopa! Tenemos un nuevo post 🍻`,
