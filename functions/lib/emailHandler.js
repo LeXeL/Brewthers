@@ -116,6 +116,22 @@ function templateOrder04(info) {
         </p>
       </div>`
 }
+function templateBlog01(info) {
+    // console.log(info)
+    return `<div class="email-content">
+        <p>
+        Tenemos un nuevo post en nuestro blog para que lo checkees
+
+        <h1>El titulo es: ${info.post.title}</h1>
+        <a href="https://brewthersco.com/blog/${info.id}">Click aquí</a>
+
+        </p>
+      </div>
+      
+      <div>
+      Si no quieres recibir mas estos mensajes has click aquí!
+      </div>`
+}
 
 async function templateHandler(id, information) {
     if (id === 'User-01') {
@@ -138,6 +154,9 @@ async function templateHandler(id, information) {
     }
     if (id === 'Order-04') {
         return templateOrder04(information)
+    }
+    if (id === 'Blog-01') {
+        return templateBlog01(information)
     }
 }
 
@@ -191,6 +210,7 @@ async function sendEmail(to, subject, template) {
     })
 
     console.log('Message sent: %s', info.messageId)
+    console.log(info)
 }
 
 module.exports = {

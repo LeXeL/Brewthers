@@ -544,7 +544,37 @@ exports.addToNewsletter = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.newItemInBlog = functions.firestore
+    .document('blog/{id}')
+    .onCreate(async (snap, context) => {
+        const data = snap.data()
+        if (data.status === 'public') {
+            if (!data.publish) {
+                blog.notifyNewsletterUsersAboutNewPublicPost(
+                    context.params.id,
+                    {...data}
+                )
+                //send to email and convert publish to true
+            }
+        }
+    })
 
+exports.updateItemInBlog = functions.firestore
+    .document('blog/{id}')
+    .onUpdate(async (change, context) => {
+        const data = change.after.data()
+        if (data.status === 'public') {
+            if (!data.publish) {
+                blog.notifyNewsletterUsersAboutNewPublicPost(
+                    context.params.id,
+                    {...data}
+                )
+                //send to email and convert publish to true
+            }
+        }
+    })
+
+//SEEDS
 exports.populateAuthUsers = functions.https.onRequest(async (req, res) => {
     if (!process.env['FUNCTIONS_EMULATOR']) {
         return res

@@ -1,5 +1,6 @@
 const admin = require('firebase-admin')
 const db = admin.firestore()
+const email = require('../lib/emailHandler')
 
 async function addToNewsletter(userEmail) {
     return db
@@ -29,6 +30,7 @@ async function createDraftBlog(blogInfo) {
             body: blogInfo.body,
             createdTime: blogInfo.createdTime,
             by: blogInfo.by,
+            publish: false,
         })
         .then(() => {
             return 'Succesfull'
@@ -48,6 +50,7 @@ async function createPublictBlog(blogInfo) {
             body: blogInfo.body,
             createdTime: blogInfo.createdTime,
             by: blogInfo.by,
+            publish: false,
         })
         .then(() => {
             return 'Succesfull'
@@ -137,6 +140,39 @@ async function returnPublicBlogs() {
         })
     return blogs
 }
+async function returnActiveEmailsInNewsletter() {
+    let users = []
+    await db
+        .collection('general')
+        .doc('newsletter')
+        .get()
+        .then(doc => {
+            if (doc.exists) {
+                users = doc.data()
+            } else {
+                console.log('Document no existe')
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    return users.users
+        .filter(user => user.status === 'active')
+        .map(user => user.email)
+}
+async function notifyNewsletterUsersAboutNewPublicPost(id, post) {
+    const users = await returnActiveEmailsInNewsletter()
+    post.publish = true
+    await updatePublicBlog(id, post)
+    users.forEach(async user => {
+        let body = await email.templateHandler('Blog-01', {id, post})
+        email.sendEmail(
+            user.toString(),
+            `Hey que xopa! Tenemos un nuevo post 🍻`,
+            body
+        )
+    })
+}
 module.exports = {
     addToNewsletter,
     createDraftBlog,
@@ -146,4 +182,5 @@ module.exports = {
     updatePublicBlog,
     updateDeletedBlog,
     returnPublicBlogs,
+    notifyNewsletterUsersAboutNewPublicPost,
 }
