@@ -1,6 +1,8 @@
 <template>
     <q-page class="q-pa-md" v-if="data.length > 0">
-        <div class="text-h5 q-mb-md text-white">Clientes Brewthers</div>
+        <div class="text-h5 q-mb-md text-white">
+            Clientes Brewthers para {{ `${user.brewingHouseName}` }}
+        </div>
         <div class="row q-mb-md">
             <div class="col-lg-2 q-pa-md">
                 <q-input

@@ -8,7 +8,9 @@
             :type="alertType"
             @accept="displayAlert = false"
         ></brewthers-alert>
-        <div class="text-h5 q-mb-md text-white">Mi Inventario</div>
+        <div class="text-h5 q-mb-md text-white">
+            Mi Inventario, {{ `${user.brewingHouseName}` }}
+        </div>
         <div class="row q-px-md">
             <div class="col">
                 <q-table
