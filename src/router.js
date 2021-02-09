@@ -244,6 +244,11 @@ export default new Router({
                     name: 'blog-view',
                     component: BlogView,
                 },
+                {
+                    path: '/unsubscribe',
+                    name: 'unsubscribe',
+                    component: BlogUnsubscribe,
+                },
             ],
         },
         {
