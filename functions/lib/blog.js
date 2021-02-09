@@ -165,13 +165,46 @@ async function notifyNewsletterUsersAboutNewPublicPost(id, post) {
     post.publish = true
     await updatePublicBlog(id, post)
     users.forEach(async user => {
-        let body = await email.templateHandler('Blog-01', {id, post})
+        let body = await email.templateHandler('Blog-01', {
+            id,
+            post,
+            email: user.toString(),
+        })
         email.sendEmail(
             user.toString(),
             `Hey que xopa! Tenemos un nuevo post 🍻`,
             body
         )
     })
+}
+async function unsubscribeFromNewsletter(userEmail) {
+    let users = []
+    await db
+        .collection('general')
+        .doc('newsletter')
+        .get()
+        .then(doc => {
+            if (doc.exists) {
+                users = doc.data()
+            } else {
+                console.log('Document no existe')
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    let selectedUser = users.users.find(user => user.email === userEmail)
+    selectedUser.status = 'inactive'
+    return db
+        .collection('general')
+        .doc('newsletter')
+        .update(users)
+        .then(() => {
+            return 'Succesfull'
+        })
+        .catch(error => {
+            return error
+        })
 }
 module.exports = {
     addToNewsletter,
@@ -183,4 +216,5 @@ module.exports = {
     updateDeletedBlog,
     returnPublicBlogs,
     notifyNewsletterUsersAboutNewPublicPost,
+    unsubscribeFromNewsletter,
 }

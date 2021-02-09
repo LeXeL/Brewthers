@@ -171,3 +171,7 @@ export const addToNewsletter = data =>
     Request.post('/addToNewsletter', data, {
         'Content-Type': 'application/json',
     })
+export const unsubscribeFromNewsletter = data =>
+    Request.post('/unsubscribeFromNewsletter', data, {
+        'Content-Type': 'application/json',
+    })
