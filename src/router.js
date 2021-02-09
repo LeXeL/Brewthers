@@ -245,7 +245,7 @@ export default new Router({
                     component: BlogView,
                 },
                 {
-                    path: '/unsubscribe',
+                    path: '/unsubscribe/:email',
                     name: 'unsubscribe',
                     component: BlogUnsubscribe,
                 },

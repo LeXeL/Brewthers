@@ -17,7 +17,7 @@
                     label="Dar de baja"
                     push
                     color="primary"
-                    @click="completeUnsubscribe = true"
+                    @click="unsubscribe()"
                 />
             </div>
             <div class="col-lg-6 q-py-xl text-center" v-else>
@@ -35,12 +35,24 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
     data() {
         return {
             completeUnsubscribe: false,
             email: 'myemail@email.com',
         }
+    },
+    methods: {
+        unsubscribe() {
+            this.completeUnsubscribe = true
+            api.unsubscribeFromNewsletter({
+                userEmail: this.email,
+            }).then(response => console.log(response))
+        },
+    },
+    mounted() {
+        this.email = this.$route.params.email
     },
 }
 </script>

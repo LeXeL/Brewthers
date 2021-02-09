@@ -573,6 +573,19 @@ exports.updateItemInBlog = functions.firestore
             }
         }
     })
+exports.unsubscribeFromNewsletter = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await blog.unsubscribeFromNewsletter(req.body.userEmail)
+                res.status(200).send({status: 'removed'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
 
 //SEEDS
 exports.populateAuthUsers = functions.https.onRequest(async (req, res) => {
