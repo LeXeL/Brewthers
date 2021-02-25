@@ -544,3 +544,115 @@ exports.addToNewsletter = functions.https.onRequest(async (req, res) => {
         }
     })
 })
+exports.newItemInBlog = functions.firestore
+    .document('blog/{id}')
+    .onCreate(async (snap, context) => {
+        const data = snap.data()
+        if (data.status === 'public') {
+            if (!data.publish) {
+                blog.notifyNewsletterUsersAboutNewPublicPost(
+                    context.params.id,
+                    {...data}
+                )
+                //send to email and convert publish to true
+            }
+        }
+    })
+
+exports.updateItemInBlog = functions.firestore
+    .document('blog/{id}')
+    .onUpdate(async (change, context) => {
+        const data = change.after.data()
+        if (data.status === 'public') {
+            if (!data.publish) {
+                blog.notifyNewsletterUsersAboutNewPublicPost(
+                    context.params.id,
+                    {...data}
+                )
+                //send to email and convert publish to true
+            }
+        }
+    })
+exports.unsubscribeFromNewsletter = functions.https.onRequest(
+    async (req, res) => {
+        cors(req, res, async () => {
+            try {
+                await blog.unsubscribeFromNewsletter(req.body.userEmail)
+                res.status(200).send({status: 'removed'})
+            } catch (err) {
+                console.log(err)
+                res.status(400).send({err: err})
+            }
+        })
+    }
+)
+
+//SEEDS
+exports.populateAuthUsers = functions.https.onRequest(async (req, res) => {
+    if (!process.env['FUNCTIONS_EMULATOR']) {
+        return res
+            .status(403)
+            .send(
+                'ACCESS DENIED. This function is ONLY available via an emulator'
+            )
+    }
+    const users = [
+        //Admins
+        {
+            uid: 'jMlJOGMfCjbLfzSvvnOEg9MSsI22',
+            email: 'alejandromillan29@live.com',
+            password: 'Brewthers123!',
+        },
+        {
+            uid: 'sWMNXNNG6ZTOFAhTMRPzSJ6BajE2',
+            email: 'diego.r2892@gmail.com',
+            password: 'Brewthers123!',
+        },
+        //Casas Cervezeras
+        {
+            uid: 'cxSfrUoR5oTCZEmRY3INCjRB1FG2',
+            email: 'diego@lacasadediego.com',
+            password: 'Brewthers123!',
+        },
+        {
+            uid: 'sZtKjygXQuSmbp2sxuFNAhCd8Sk1',
+            email: 'pablop@gmail.com',
+            password: 'Brewthers123!',
+        },
+        //Restaurantes
+        {
+            uid: 'oXzRVhhJK3MMOgWu5AgwYGm7YYq1',
+            email: 'darkslave@live.com',
+            password: 'Brewthers123!',
+        },
+
+        {
+            uid: 'vvN94b6TuBYJcmP7YHy6jnYo51t2',
+            email: 'elrestaurantedediego@gmail.com',
+            password: 'Brewthers123!',
+        },
+        // put all test users you want populated here
+    ]
+
+    const results = []
+    const promises = []
+    for (let user of users) {
+        let promise = admin
+            .auth()
+            .createUser(user)
+            .then(result => {
+                return result
+            })
+            .catch(error => {
+                return error.message // continue on errors (eg duplicate users)
+            })
+
+        promises.push(promise)
+    }
+    await Promise.all(promises).then(result => {
+        results.push(result)
+        return
+    })
+    res.header('Content-type', 'application/json')
+    return res.status(200).send(JSON.stringify(results))
+})

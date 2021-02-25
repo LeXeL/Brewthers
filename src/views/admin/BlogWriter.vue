@@ -174,6 +174,58 @@ export default {
             this.displayLoading = true
             let db = firebase.firestore()
             let blogInfo = {}
+
+            // //+++ UNCOMENT FOR DEBUGING ONLY +++
+            // if (this.isEditing) {
+            //     blogInfo.title = this.title
+            //     blogInfo.body = this.body
+            //     api.updateBlog({
+            //         type: 'draft',
+            //         id: this.$route.params.id,
+            //         blogInfo: blogInfo,
+            //     })
+            //         .then(response => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Exito!'
+            //             this.alertMessage =
+            //                 'Se ha actualizado el blog en modo draft con exito'
+            //             this.alertType = 'success'
+            //             this.redirect = '/blog-manager'
+            //             this.displayAlert = true
+            //         })
+            //         .catch(error => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Error'
+            //             this.alertMessage = error
+            //             this.alertType = 'error'
+            //             this.displayAlert = true
+            //         })
+            //     return
+            // }
+            // blogInfo.bannerLocation = 'filename'
+            // blogInfo.title = this.title
+            // blogInfo.body = this.body
+            // blogInfo.by = {name: this.user.name, email: this.user.email}
+            // blogInfo.createdTime = new Date()
+            // api.createDraftBlogInDataBase({blogInfo: blogInfo})
+            //     .then(response => {
+            //         this.displayLoading = false
+            //         this.alertTitle = 'Exito!'
+            //         this.alertMessage =
+            //             'Se ha creado el blog en modo draft con exito'
+            //         this.alertType = 'success'
+            //         this.redirect = '/blog-manager'
+            //         this.displayAlert = true
+            //     })
+            //     .catch(error => {
+            //         this.displayLoading = false
+            //         this.alertTitle = 'Error'
+            //         this.alertMessage = error
+            //         this.alertType = 'error'
+            //         this.displayAlert = true
+            //     })
+            // // +++ UNCOMENT FOR DEBUGING ONLY +++
+
             if (this.isEditing) {
                 blogInfo.title = this.title
                 blogInfo.body = this.body
@@ -243,6 +295,58 @@ export default {
             this.displayLoading = true
             let db = firebase.firestore()
             let blogInfo = {}
+            // // +++ UNCOMENT FOR DEBUGING ONLY +++
+            // if (this.isEditing) {
+            //     blogInfo.title = this.title
+            //     blogInfo.body = this.body
+            //     blogInfo.status = 'public'
+            //     api.updateBlog({
+            //         type: 'public',
+            //         id: this.$route.params.id,
+            //         blogInfo: blogInfo,
+            //     })
+            //         .then(response => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Exito!'
+            //             this.alertMessage =
+            //                 'Se ha actualizado el blog en modo publico con exito'
+            //             this.alertType = 'success'
+            //             this.redirect = '/blog-manager'
+            //             this.displayAlert = true
+            //         })
+            //         .catch(error => {
+            //             this.displayLoading = false
+            //             this.alertTitle = 'Error'
+            //             this.alertMessage = error
+            //             this.alertType = 'error'
+            //             this.displayAlert = true
+            //         })
+            //     return
+            // }
+            // blogInfo.bannerLocation = 'filename'
+            // blogInfo.title = this.title
+            // blogInfo.body = this.body
+            // blogInfo.by = {name: this.user.name, email: this.user.email}
+            // blogInfo.createdTime = new Date()
+            // api.createPublicBlogInDataBase({blogInfo: blogInfo})
+            //     .then(response => {
+            //         this.displayLoading = false
+            //         this.alertTitle = 'Exito!'
+            //         this.alertMessage =
+            //             'Se ha creado el blog en modo public con exito'
+            //         this.alertType = 'success'
+            //         this.redirect = '/blog-manager'
+            //         this.displayAlert = true
+            //     })
+            //     .catch(error => {
+            //         this.displayLoading = false
+            //         this.alertTitle = 'Error'
+            //         this.alertMessage = error
+            //         this.alertType = 'error'
+            //         this.displayAlert = true
+            //     })
+            // // +++ UNCOMENT FOR DEBUGING ONLY +++
+
             if (this.isEditing) {
                 blogInfo.title = this.title
                 blogInfo.body = this.body

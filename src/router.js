@@ -41,6 +41,7 @@ import ClientPrices from '@/views/BrewingHouse/ClientPrices'
 
 import BlogIndex from './views/Blog/BlogIndex'
 import BlogView from './views/Blog/BlogView'
+import BlogUnsubscribe from '@/views/Blog/BlogUnsubscribe'
 
 Vue.use(Router)
 
@@ -242,6 +243,11 @@ export default new Router({
                     path: '/blog/:id',
                     name: 'blog-view',
                     component: BlogView,
+                },
+                {
+                    path: '/unsubscribe/:email',
+                    name: 'unsubscribe',
+                    component: BlogUnsubscribe,
                 },
             ],
         },

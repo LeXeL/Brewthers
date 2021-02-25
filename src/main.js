@@ -42,7 +42,6 @@ let configOptions = {
     measurementId: 'G-FSTF3WL646',
 }
 firebase.initializeApp(configOptions)
-
 if (
     process.env.NODE_ENV === 'development' ||
     process.env.NODE_ENV === 'testing'
