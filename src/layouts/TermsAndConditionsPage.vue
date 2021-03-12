@@ -340,13 +340,20 @@
                                     >brewthers3@gmail.com</a
                                 >
                             </div>
-                            <div class="text-body2">
+                            <div class="text-body2 q-mb-md">
                                 La opción de crédito será habilitada una vez el
                                 Comercio haya realizado por tres meses seguidos
                                 compras a través de este sitio web. Adicional,
                                 los créditos (para quienes apliquen) sera para
                                 compras por un monto superior a los $200
                                 dólares.
+                            </div>
+                            <div class="text-body2">
+                                Las condiciones de crédito que existieran
+                                previamente entre negocio (comercio) y casa
+                                cervecera se mantendrán vigentes a través de
+                                esta plataforma digital siempre y cuando así lo
+                                indique la casa cervecera.
                             </div>
                             <div class="text-h5 q-mb-sm q-mt-lg">
                                 12- PROPIEDAD INTELECTUAL
