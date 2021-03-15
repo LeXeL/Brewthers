@@ -115,7 +115,7 @@
                                     val.length > 0 || 'El campo es obligatorio',
                                 val =>
                                     strongPass.test(val) ||
-                                    'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.',
+                                    'Debe tener 8 caracteres e incluir mayuscula, minuscula y numero.',
                             ]"
                         />
                     </q-card-section>
@@ -293,7 +293,7 @@ export default {
             alertTitle: '',
             alertMessage: '',
             alertType: '',
-            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
             validEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             brewingHousesRegisterDialog: false,
             model: null,
