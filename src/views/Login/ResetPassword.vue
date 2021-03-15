@@ -3,7 +3,10 @@
         <div class="absolute-bottom"></div>
         <div class="absolute-center">
             <div class="row">
-                <q-img :src="require('@/assets/logo-horizontal.png')" class="q-mb-lg" />
+                <q-img
+                    :src="require('@/assets/logo-horizontal.png')"
+                    class="q-mb-lg"
+                />
                 <q-card dark square class="q-pa-lg shadow-1">
                     <q-card-section>
                         <q-form class="q-gutter-md">
@@ -15,9 +18,13 @@
                                 type="password"
                                 label="Nueva contraseña"
                                 :rules="[
-                                        val => val.length > 0 || 'El campo es obligatorio',
-                                        val => strongPass.test(val) || 'Debe tener 8 caracteres e incluir mayuscula, miniscula, numero, y caracter especial.'
-                                    ]"
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                    val =>
+                                        strongPass.test(val) ||
+                                        'Debe tener 8 caracteres e incluir mayuscula, minuscula y numero.',
+                                ]"
                             />
                             <q-input
                                 dark
@@ -27,9 +34,13 @@
                                 type="password"
                                 label="Repite contraseña"
                                 :rules="[
-                                        val => val.length > 0 || 'El campo es obligatorio',
-                                        val => val == form.password || 'Las contraseñas no coinciden'
-                                    ]"
+                                    val =>
+                                        val.length > 0 ||
+                                        'El campo es obligatorio',
+                                    val =>
+                                        val == form.password ||
+                                        'Las contraseñas no coinciden',
+                                ]"
                             ></q-input>
                         </q-form>
                     </q-card-section>
@@ -44,8 +55,12 @@
                         />
                     </q-card-actions>
                     <q-card-section v-if="dismissCountDown > 0">
-                        <q-banner inline-actions rounded class="bg-red text-white">
-                            {{errorMessage}}
+                        <q-banner
+                            inline-actions
+                            rounded
+                            class="bg-red text-white"
+                        >
+                            {{ errorMessage }}
                             <template v-slot:action>
                                 <q-btn flat @click="dismissCountDown = 0">
                                     <i class="fas fa-times"></i>
@@ -74,7 +89,7 @@ export default {
             dismissSecs: 15,
             dismissCountDown: 0,
             errorMessage: '',
-            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            strongPass: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
         }
     },
     methods: {
