@@ -218,23 +218,26 @@
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
 
-                <q-card-section class="q-pt-none">
+                <q-card-section>
                     Hemos recibido tu información satisfactoriamente. Uno de
                     nuestros administradores aprobará tu cuenta para que
                     empieces a realizar pedidos.
-                    <br />
-                    <br />
+                </q-card-section>
+                <q-card-section>
+                    <div class="text-subtitle2 text-red-7">
+                        Favor también verifica tu bandeja de correos no deseados
+                        (SPAM).
+                    </div>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <router-link to="/movingbeer">
-                        <q-btn
-                            flat
-                            label="Aceptar"
-                            color="primary"
-                            v-close-popup
-                        />
-                    </router-link>
+                    <q-btn
+                        flat
+                        label="Aceptar"
+                        color="primary"
+                        v-close-popup
+                        to="/movingbeer"
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
