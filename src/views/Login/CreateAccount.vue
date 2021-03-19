@@ -135,6 +135,7 @@
                             />
                             <GoogleMaps
                                 @markerPosition="setMarkerPosition"
+                                @newMarkerPosition="setNewMarkerPosition"
                                 :editable="true"
                                 :markers="markers"
                                 :mapCenter="center"
@@ -338,6 +339,10 @@ export default {
             )
         },
         setMarkerPosition(event) {
+            this.form.location = event
+        },
+        setNewMarkerPosition(event) {
+            this.markers = [{position: event}]
             this.form.location = event
         },
         createUser() {
