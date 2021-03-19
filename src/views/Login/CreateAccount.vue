@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="text-h6">
-                                        Informacion general:
+                                        Información general:
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col">
-                                    <div class="text-h6">Direccion:</div>
+                                    <div class="text-h6">Dirección:</div>
                                 </div>
                             </div>
                         </q-card-section>
@@ -125,7 +125,7 @@
                                 filled
                                 v-model="form.address"
                                 class="q-mb-md"
-                                label="Direccion"
+                                label="Dirección"
                                 dark
                                 :rules="[
                                     val =>
@@ -139,6 +139,10 @@
                                 :markers="markers"
                                 :mapCenter="center"
                             ></GoogleMaps>
+                            <div class="text-subtitle2 text-red-7 q-mt-sm">
+                                Recuerda seleccionar tu ubicación exacta en el
+                                mapa.
+                            </div>
                         </q-card-section>
                     </q-card>
                 </div>
@@ -185,7 +189,7 @@
                                 ]"
                             />
                             <q-checkbox dark v-model="terms"
-                                >Acepto los terminos y condiciones.</q-checkbox
+                                >Acepto los términos y condiciones.</q-checkbox
                             >
                             <a
                                 class="on-right text-primary"
@@ -214,23 +218,26 @@
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
 
-                <q-card-section class="q-pt-none">
+                <q-card-section>
                     Hemos recibido tu información satisfactoriamente. Uno de
                     nuestros administradores aprobará tu cuenta para que
                     empieces a realizar pedidos.
-                    <br />
-                    <br />
+                </q-card-section>
+                <q-card-section>
+                    <div class="text-subtitle2 text-red-7">
+                        Favor también verifica tu bandeja de correos no deseados
+                        (SPAM).
+                    </div>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <router-link to="/movingbeer">
-                        <q-btn
-                            flat
-                            label="Aceptar"
-                            color="primary"
-                            v-close-popup
-                        />
-                    </router-link>
+                    <q-btn
+                        flat
+                        label="Aceptar"
+                        color="primary"
+                        v-close-popup
+                        to="/movingbeer"
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -337,7 +344,7 @@ export default {
             if (!this.terms) {
                 this.alertTitle = 'Error'
                 this.alertMessage =
-                    'Debes llenar todos los campos y aceptar los terminos y condiciones.'
+                    'Debes llenar todos los campos y aceptar los términos y condiciones.'
                 this.alertType = 'error'
                 this.displayAlert = true
                 return
