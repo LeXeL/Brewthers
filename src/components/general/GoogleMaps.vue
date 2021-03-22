@@ -16,6 +16,7 @@
                 :ref="`marker${index}`"
                 @drag="setMarkerPosition"
                 :animation="editable ? 1 : 0"
+                :icon="{url: require('@/assets/MapMarker.png')}"
             ></gmap-marker>
         </gmap-map>
     </div>
