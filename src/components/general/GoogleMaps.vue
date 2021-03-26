@@ -5,7 +5,8 @@
             ref="mapRef"
             :options="mapStyle"
             :zoom="16"
-            style="width:100%;  height: 400px;"
+            style="width: 100%; height: 400px"
+            @click="clickEvent"
         >
             <gmap-marker
                 :key="index"
@@ -15,7 +16,7 @@
                 :ref="`marker${index}`"
                 @drag="setMarkerPosition"
                 :animation="editable ? 1 : 0"
-                :icon="{ url: require('@/assets/MapMarker.png')}"
+                :icon="{url: require('@/assets/MapMarker.png')}"
             ></gmap-marker>
         </gmap-map>
     </div>
@@ -144,6 +145,13 @@ export default {
     },
 
     methods: {
+        clickEvent(event) {
+            this.markerPosition = {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
+            }
+            this.$emit('newMarkerPosition', this.markerPosition)
+        },
         setMarkerPosition(location) {
             this.markerPosition = {
                 lat: location.latLng.lat(),

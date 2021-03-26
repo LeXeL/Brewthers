@@ -135,6 +135,7 @@
                             />
                             <GoogleMaps
                                 @markerPosition="setMarkerPosition"
+                                @newMarkerPosition="setNewMarkerPosition"
                                 :editable="true"
                                 :markers="markers"
                                 :mapCenter="center"
@@ -340,6 +341,10 @@ export default {
         setMarkerPosition(event) {
             this.form.location = event
         },
+        setNewMarkerPosition(event) {
+            this.markers = [{position: event}]
+            this.form.location = event
+        },
         createUser() {
             if (!this.terms) {
                 this.alertTitle = 'Error'
@@ -394,19 +399,46 @@ export default {
                         // Handle Errors here.
                         this.displayLoading = false
                         console.log(error)
-                        this.dismissCountDown = this.dismissSecs
+
                         this.errorCode = error.code
-                        if (error.code === 'auth/email-already-in-use') {
-                            this.errorMessage =
-                                'Este correo ya esta en uso registrado'
-                            return
+                        switch (error.code) {
+                            case 'auth/user-disabled':
+                                this.errorMessage =
+                                    'La cuenta esta deshabilitada por favor comunicarse con un administrador.'
+                                break
+                            case 'auth/user-not-found':
+                                this.errorMessage =
+                                    'No se ha encontrado ese correo en nuestra base de datos por favor crea una cuenta.'
+                                break
+                            case 'auth/wrong-password':
+                                this.errorMessage =
+                                    'El usuario o la contraseña está equivocado por favor revisar.'
+                                break
+                            case 'auth/invalid-email':
+                                this.errorMessage =
+                                    'El usuario o la contraseña está equivocado por favor revisar.'
+                                break
+                            case 'auth/email-already-in-use':
+                                this.errorMessage =
+                                    'Este correo ya esta en uso registrado'
+                                break
+                            default:
+                                this.errorMessage =
+                                    'Hubo un error con tu peticion por favor intentalo mas tarde'
+                                break
                         }
-                        this.errorMessage = error.message
-                        // ...
+
+                        this.alertTitle = 'Hey AWANTA!'
+                        this.alertMessage = this.errorMessage
+                        this.alertType = 'error'
+                        this.displayAlert = true
                     })
             } else {
-                this.dismissCountDown = this.dismissSecs
                 this.errorMessage = 'Las Contraseñas no son iguales'
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage = this.errorMessage
+                this.alertType = 'error'
+                this.displayAlert = true
             }
         },
     },
