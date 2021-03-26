@@ -104,6 +104,7 @@
                                 />
                                 <GoogleMaps
                                     @markerPosition="setMarkerPosition"
+                                    @newMarkerPosition="setNewMarkerPosition"
                                     :editable="editAddressInfo"
                                     :mapCenter="center"
                                     :markers="markers"
@@ -215,6 +216,10 @@ export default {
                 })
         },
         setMarkerPosition(event) {
+            this.userData.location = event
+        },
+        setNewMarkerPosition(event) {
+            this.markers = [{position: event}]
             this.userData.location = event
         },
         handleData(section) {

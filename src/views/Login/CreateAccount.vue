@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="text-h6">
-                                        Informacion general:
+                                        Información general:
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col">
-                                    <div class="text-h6">Direccion:</div>
+                                    <div class="text-h6">Dirección:</div>
                                 </div>
                             </div>
                         </q-card-section>
@@ -125,7 +125,7 @@
                                 filled
                                 v-model="form.address"
                                 class="q-mb-md"
-                                label="Direccion"
+                                label="Dirección"
                                 dark
                                 :rules="[
                                     val =>
@@ -135,10 +135,15 @@
                             />
                             <GoogleMaps
                                 @markerPosition="setMarkerPosition"
+                                @newMarkerPosition="setNewMarkerPosition"
                                 :editable="true"
                                 :markers="markers"
                                 :mapCenter="center"
                             ></GoogleMaps>
+                            <div class="text-subtitle2 text-red-7 q-mt-sm">
+                                Recuerda seleccionar tu ubicación exacta en el
+                                mapa.
+                            </div>
                         </q-card-section>
                     </q-card>
                 </div>
@@ -185,7 +190,7 @@
                                 ]"
                             />
                             <q-checkbox dark v-model="terms"
-                                >Acepto los terminos y condiciones.</q-checkbox
+                                >Acepto los términos y condiciones.</q-checkbox
                             >
                             <a
                                 class="on-right text-primary"
@@ -214,23 +219,26 @@
                     <div class="text-h6">¡Hemos recibido tu información!</div>
                 </q-card-section>
 
-                <q-card-section class="q-pt-none">
+                <q-card-section>
                     Hemos recibido tu información satisfactoriamente. Uno de
                     nuestros administradores aprobará tu cuenta para que
                     empieces a realizar pedidos.
-                    <br />
-                    <br />
+                </q-card-section>
+                <q-card-section>
+                    <div class="text-subtitle2 text-red-7">
+                        Favor también verifica tu bandeja de correos no deseados
+                        (SPAM).
+                    </div>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <router-link to="/movingbeer">
-                        <q-btn
-                            flat
-                            label="Aceptar"
-                            color="primary"
-                            v-close-popup
-                        />
-                    </router-link>
+                    <q-btn
+                        flat
+                        label="Aceptar"
+                        color="primary"
+                        v-close-popup
+                        to="/movingbeer"
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -333,11 +341,15 @@ export default {
         setMarkerPosition(event) {
             this.form.location = event
         },
+        setNewMarkerPosition(event) {
+            this.markers = [{position: event}]
+            this.form.location = event
+        },
         createUser() {
             if (!this.terms) {
                 this.alertTitle = 'Error'
                 this.alertMessage =
-                    'Debes llenar todos los campos y aceptar los terminos y condiciones.'
+                    'Debes llenar todos los campos y aceptar los términos y condiciones.'
                 this.alertType = 'error'
                 this.displayAlert = true
                 return
@@ -387,19 +399,46 @@ export default {
                         // Handle Errors here.
                         this.displayLoading = false
                         console.log(error)
-                        this.dismissCountDown = this.dismissSecs
+
                         this.errorCode = error.code
-                        if (error.code === 'auth/email-already-in-use') {
-                            this.errorMessage =
-                                'Este correo ya esta en uso registrado'
-                            return
+                        switch (error.code) {
+                            case 'auth/user-disabled':
+                                this.errorMessage =
+                                    'La cuenta esta deshabilitada por favor comunicarse con un administrador.'
+                                break
+                            case 'auth/user-not-found':
+                                this.errorMessage =
+                                    'No se ha encontrado ese correo en nuestra base de datos por favor crea una cuenta.'
+                                break
+                            case 'auth/wrong-password':
+                                this.errorMessage =
+                                    'El usuario o la contraseña está equivocado por favor revisar.'
+                                break
+                            case 'auth/invalid-email':
+                                this.errorMessage =
+                                    'El usuario o la contraseña está equivocado por favor revisar.'
+                                break
+                            case 'auth/email-already-in-use':
+                                this.errorMessage =
+                                    'Este correo ya esta en uso registrado'
+                                break
+                            default:
+                                this.errorMessage =
+                                    'Hubo un error con tu peticion por favor intentalo mas tarde'
+                                break
                         }
-                        this.errorMessage = error.message
-                        // ...
+
+                        this.alertTitle = 'Hey AWANTA!'
+                        this.alertMessage = this.errorMessage
+                        this.alertType = 'error'
+                        this.displayAlert = true
                     })
             } else {
-                this.dismissCountDown = this.dismissSecs
                 this.errorMessage = 'Las Contraseñas no son iguales'
+                this.alertTitle = 'Hey AWANTA!'
+                this.alertMessage = this.errorMessage
+                this.alertType = 'error'
+                this.displayAlert = true
             }
         },
     },
