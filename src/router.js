@@ -9,6 +9,7 @@ import AdminBreweryPage from './layouts/AdminBreweryPage.vue'
 import MovingBeerPage from './layouts/MovingBeerPage.vue'
 import BlogPage from './layouts/BlogPage'
 import TermsAndConditionsPage from './layouts/TermsAndConditionsPage'
+import PrivacyPoliciesPage from './layouts/PrivacyPoliciesPage'
 //Views
 import Login from './views/Login/Login.vue'
 import CreateAccount from './views/Login/CreateAccount.vue'
@@ -255,6 +256,11 @@ export default new Router({
             path: '/terminos-y-condiciones',
             component: TermsAndConditionsPage,
             name: 'terms-and-conditions',
+        },
+        {
+            path: '/politicas-de-privacidad',
+            component: PrivacyPoliciesPage,
+            name: 'privacy-policies',
         },
     ],
 })

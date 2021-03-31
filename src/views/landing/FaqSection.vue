@@ -60,7 +60,7 @@ export default {
                 {
                     q: '¿Cuál es su Política de Privacidad?',
                     a:
-                        'Para leer sobre nuestras politicas de privacidad, puede entrar <strong><a href="#" style="color: #27a3c3">aquí</a></strong>.',
+                        'Para leer sobre nuestras politicas de privacidad, puede entrar <strong><a href="/politicas-de-privacidad" style="color: #27a3c3">aquí</a></strong>.',
                     show: false,
                 },
                 {
