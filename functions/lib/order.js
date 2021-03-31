@@ -44,7 +44,7 @@ async function reCalculateTotalAndAmount(id) {
 async function createOrder(order) {
     let lastId = await getLastId()
     order.id = parseInt(lastId.lastId)
-
+    const restaurantInfo = await users.returnUserById(order.restaurantId)
     return db
         .collection('order')
         .doc()
@@ -62,17 +62,25 @@ async function createOrder(order) {
         })
         .then(async () => {
             addToLastId()
-            let restaurantInfo = await users.returnUserById(order.restaurantId)
             order.restaurantId = restaurantInfo
             let body = await email.templateHandler('Order-01', order)
-            email.sendEmail(
+            await email.sendEmail(
                 order.restaurantId.email,
                 'Hemos recibido tu orden 🍺',
                 body
             )
-            return 'Succesfull'
+        })
+        .then(async () => {
+            order.restaurantId = restaurantInfo
+            let body = await email.templateHandler('Order-05', order)
+            await email.sendEmail(
+                'brewthers3@gmail.com',
+                'Hay una nueva orden 🍺',
+                body
+            )
         })
         .catch(error => {
+            console.log(error)
             return error
         })
 }
