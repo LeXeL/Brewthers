@@ -116,6 +116,18 @@ function templateOrder04(info) {
         </p>
       </div>`
 }
+function templateOrder05(info) {
+    // let cart = ''
+    // info.cart.forEach(element => {
+    //     cart += `<li>${JSON.stringify(element)}</li>`
+    // })
+    return `<div class="email-content">
+    <p>
+    Se ha generado una nueva orden del Restaurante: ${info.restaurantId.restaurantName} con numero de orden: ${info.id}
+    El numero numero de telefono de contacto del restaurante es: ${info.restaurantId.contactPhone} y su correo es: ${info.restaurantId.email}
+    </p>
+  </div>`
+}
 function templateBlog01(info) {
     // console.log(info)
     return `<div class="email-content">
@@ -159,6 +171,9 @@ async function templateHandler(id, information) {
     }
     if (id === 'Order-04') {
         return templateOrder04(information)
+    }
+    if (id === 'Order-05') {
+        return templateOrder05(information)
     }
     if (id === 'Blog-01') {
         return templateBlog01(information)
