@@ -6,22 +6,25 @@
                 <div class="row">
                     <q-space />
                     <div class="col-lg-6 q-px-lg terms-copy">
-                        <div class="text-h4 text-center q-mt-xl">
+                        <div class="text-h4 text-center q-my-xl">
                             POLÍTICAS DE PRIVACIDAD
                         </div>
                         <div class="text-justify">
-                            <div class="text-body2 q-mb-sm q-mt-lg">
+                            <!-- <div class="text-body2 q-mb-sm q-mt-lg">
                                 Esta política de privacidad es válida para el
                                 sitio web
                                 <a href="http://www.brewthersco.com"
                                     >www.brewthersco.com</a
                                 >
-                            </div>
+                            </div> -->
                             <div class="text-body2 q-mt-md">1. GENERAL</div>
                             <div class="text-body2">
                                 Estamos comprometidos con la protección de la
                                 privacidad de todas aquellas personas que
-                                visiten la página web www.brewthersco.com
+                                visiten la página web
+                                <a href="http://www.brewthersco.com"
+                                    >www.brewthersco.com</a
+                                >
                                 ("BREWTHERS"). Por favor, lea las siguientes
                                 políticas de privacidad donde se explica cómo
                                 utilizamos y protegemos su información. Al
@@ -30,7 +33,7 @@
                                 requiera, consiente que los datos facilitados
                                 sean recabados, utilizados y transmitidos
                                 conforme a lo establecido en las presentes
-                                políticas de privacidad:
+                                políticas de privacidad.
                             </div>
                             <div class="text-body2 q-mt-md q-pl-md">
                                 1.1 Cuando visite BREWTHERS para realizar un
@@ -41,8 +44,8 @@
                                 recabar información sobre su uso de la Página
                                 Web y de nuestros Servicios, de los mensajes que
                                 deje en la Página Web y de los correos
-                                electrónicos, cartas o cualquier método de
-                                comunicación que nos remita.
+                                electrónicos, cartas o cualquier metodo de
+                                comunicacion que nos remita.
                             </div>
                             <div class="text-body2 q-mt-md q-pl-md">
                                 1.2 Al acceder a la información de BREWTHERS y/o
@@ -109,7 +112,6 @@
                                 <a href="mailto:brewthers3@gmail.com"
                                     >brewthers3@gmail.com</a
                                 >
-                                con su perfil convenientemente.
                             </div>
                             <div class="text-body2 q-mt-md q-pl-md">
                                 2.3 Por favor, tenga en cuenta que al realizar
@@ -131,24 +133,7 @@
                                 personal.
                             </div>
                             <div class="text-body2 q-mt-md q-pl-md">
-                                3.2 Si nuestro negocio participará en un
-                                proyecto corporativo con otra empresa, se
-                                comprara, fuera vendida a, o fusionada con, otra
-                                entidad mercantil, la información sobre usted
-                                podrá ser revelada o transmitida a la sociedad
-                                target y a nuestros nuevos socios comerciales o
-                                propietarios o a sus asesores.
-                            </div>
-                            <div class="text-body2 q-mt-md q-pl-md">
-                                3.3 Si usted hubiera consentido, podremos
-                                permitir que terceros cuidadosamente
-                                seleccionados, incluidos dentro de los sectores
-                                de marketing y publicidad, nuestros afiliados y
-                                asociados, utilicen nuestra base de datos para
-                                estadísticas y análisis de base de datos.
-                            </div>
-                            <div class="text-body2 q-mt-md q-pl-md">
-                                3.4 Podremos utilizar la información que usted
+                                3.2 Podremos utilizar la información que usted
                                 nos proporcione si tuviéramos el deber de
                                 revelar o compartir su información para cumplir
                                 con (y/o creamos tener la obligación de tener
@@ -227,7 +212,7 @@
                                 oposición al tratamiento de los mismos, por
                                 favor contacte con nosotros utilizando los datos
                                 de contacto que figuran en la sección
-                                “Contáctenos”.
+                                “CONTÁCTANOS”.
                             </div>
                             <div class="text-body2 q-mt-md q-pl-md">
                                 5.5 En todo caso, BREWTHERS conservará de forma
