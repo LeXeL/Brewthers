@@ -600,36 +600,36 @@ exports.populateAuthUsers = functions.https.onRequest(async (req, res) => {
         //Admins
         {
             uid: 'jMlJOGMfCjbLfzSvvnOEg9MSsI22',
-            email: 'alejandromillan29@live.com',
-            password: 'Brewthers123!',
+            email: 'alejandro@blueballoon.io',
+            password: 'BlueBalloon123!',
         },
         {
             uid: 'sWMNXNNG6ZTOFAhTMRPzSJ6BajE2',
-            email: 'diego.r2892@gmail.com',
-            password: 'Brewthers123!',
+            email: 'diego@blueballoon.io',
+            password: 'BlueBalloon123!',
         },
         //Casas Cervezeras
         {
             uid: 'cxSfrUoR5oTCZEmRY3INCjRB1FG2',
-            email: 'diego@lacasadediego.com',
-            password: 'Brewthers123!',
+            email: 'diego.r2892@gmail.com',
+            password: 'BlueBalloon123!',
         },
         {
             uid: 'sZtKjygXQuSmbp2sxuFNAhCd8Sk1',
-            email: 'pablop@gmail.com',
-            password: 'Brewthers123!',
+            email: 'alejandromillan29@live.com',
+            password: 'BlueBalloon123!',
         },
         //Restaurantes
         {
             uid: 'oXzRVhhJK3MMOgWu5AgwYGm7YYq1',
             email: 'darkslave@live.com',
-            password: 'Brewthers123!',
+            password: 'BlueBalloon123!',
         },
 
         {
             uid: 'vvN94b6TuBYJcmP7YHy6jnYo51t2',
-            email: 'elrestaurantedediego@gmail.com',
-            password: 'Brewthers123!',
+            email: 'lexelEZ@gmail.com',
+            password: 'BlueBalloon123!',
         },
         // put all test users you want populated here
     ]
