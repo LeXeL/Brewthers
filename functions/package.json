@@ -6,7 +6,7 @@
         "serve-emulator": "firebase emulators:start",
         "emulators-export": "firebase emulators:export ./emulators.backup",
         "firestore-export": "firestore-export --accountCredentials credentials.json --backupFile output.json",
-        "firestore-import": "export FIRESTORE_EMULATOR_HOST=0.0.0.0:8081 && firestore-import --accountCredentials credentials.json --backupFile output.json",
+        "firestore-import": "cross-env FIRESTORE_EMULATOR_HOST=0.0.0.0:8081 firestore-import --accountCredentials credentials.json --backupFile output.json",
         "shell": "firebase functions:shell",
         "start": "npm run shell",
         "deploy": "firebase deploy --only functions",
@@ -22,6 +22,7 @@
         "nodemailer": "^6.4.11"
     },
     "devDependencies": {
+        "cross-env": "^7.0.3",
         "firebase-functions-test": "^0.2.0"
     },
     "private": true
