@@ -122,8 +122,10 @@ export default {
     },
     methods: {
         findExclusiveness() {
-            delete this.user.exclusiveness.notes
-            let brewerysIdOnExclusiveness = Object.keys(this.user.exclusiveness)
+            this.user.exclusiveness ? delete this.user.exclusiveness.notes : ''
+            let brewerysIdOnExclusiveness = this.user.exclusiveness
+                ? Object.keys(this.user.exclusiveness)
+                : []
             if (brewerysIdOnExclusiveness.length > 0) {
                 // Existe almenos un contrato de exclusividad'
                 if (
@@ -153,21 +155,19 @@ export default {
         },
         filterProductsInHouse(type) {
             this.productsInHouse = []
-            this.productsInHouse = this.allProducts.filter(product => {
-                if (
+            this.productsInHouse = this.allProducts.filter(
+                product =>
                     product.brewery === this.breweryId &&
                     product.inventory > 0 &&
                     product.type.toLowerCase() === type.toLowerCase()
-                )
-                    return product
-            })
+            )
             return this.productsInHouse
         },
     },
-    mounted() {
+    async mounted() {
         window.scrollTo(0, 0)
-        this.findExclusiveness()
-        this.filterProductsInHouse(this.type)
+        await this.findExclusiveness()
+        await this.filterProductsInHouse(this.type)
     },
     components: {
         'beer-item-tile': BeerItemTile,

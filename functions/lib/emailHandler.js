@@ -146,7 +146,7 @@ function templateBlog01(info) {
       </div>
       
       <div>
-      Si no quieres recibir mas estos mensajes has <a href="https://brewthersco.com/unsubscribe/${info.email}">Click Aquí</a>!
+      Si no quieres recibir mas estos mensajes haz <a href="https://brewthersco.com/unsubscribe/${info.email}">Click Aquí</a>!
       </div>`
 }
 
