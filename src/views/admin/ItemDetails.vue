@@ -32,7 +32,7 @@
                                 dark
                                 label="Estilo"
                                 v-model="data.style"
-                                readonly
+                                :disable="!editInformation"
                             />
                             <q-input
                                 filled
@@ -54,9 +54,8 @@
                                 filled
                                 dark
                                 label="ABV"
-                                type="number"
                                 class="q-mb-md full-width"
-                                v-model="data.abv"
+                                v-model.number="data.abv"
                                 :disable="!editInformation"
                                 :rules="[
                                     val => !!val || 'El campo es obligatorio',
@@ -66,9 +65,8 @@
                                 filled
                                 dark
                                 label="IBU"
-                                type="number"
                                 class="q-mb-md full-width"
-                                v-model="data.ibu"
+                                v-model.number="data.ibu"
                                 :disable="!editInformation"
                                 :rules="[
                                     val => !!val || 'El campo es obligatorio',

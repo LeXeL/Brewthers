@@ -16,6 +16,7 @@ import 'firebase/analytics'
 
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import './quasar'
 Vue.config.productionTip = false
 
 Vue.component('brewthers-alert', BrewthersAlert)
