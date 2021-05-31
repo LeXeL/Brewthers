@@ -75,14 +75,11 @@
                             <q-input
                                 filled
                                 dark
-                                label="Descripcion"
+                                label="Descripción"
                                 type="textarea"
                                 class="q-mb-md full-width"
                                 v-model="data.description"
                                 :disable="!editInformation"
-                                :rules="[
-                                    val => !!val || 'El campo es obligatorio',
-                                ]"
                             />
                             <q-file
                                 filled
@@ -100,9 +97,8 @@
                                 filled
                                 dark
                                 label="Precio"
-                                type="number"
                                 class="q-mb-md full-width"
-                                v-model="data.price"
+                                v-model.number="data.price"
                                 :disable="!editInformation"
                                 :rules="[
                                     val => !!val || 'El campo es obligatorio',
