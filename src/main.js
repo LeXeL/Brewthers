@@ -13,6 +13,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 import 'firebase/analytics'
+import 'firebase/storage'
 
 import vueSmoothScroll from 'vue2-smooth-scroll'
 import * as VueGoogleMaps from 'vue2-google-maps'
@@ -49,6 +50,7 @@ if (
 ) {
     firebase.auth().useEmulator('http://localhost:9099/')
     firebase.firestore().useEmulator('localhost', 8081)
+    firebase.storage().useEmulator('localhost', 9199)
 }
 
 firebase.analytics()
