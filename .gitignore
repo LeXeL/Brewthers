@@ -21,4 +21,7 @@ yarn-error.log*
 *.sw?
 *.log
 *.cache
+
+#firebase config files
 .runtimeconfig.json
+*.rules

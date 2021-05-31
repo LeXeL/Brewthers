@@ -22,7 +22,11 @@
                 </div>
                 <div class="q-mb-sm">ABV: {{ product.abv }}%</div>
                 <div class="q-mb-sm">IBU: {{ product.ibu }}</div>
-                <div class="q-mb-sm" style="color: #27a3c3; cursor: pointer">
+                <div
+                    class="q-mb-sm"
+                    style="color: #27a3c3; cursor: pointer"
+                    v-if="product.description"
+                >
                     Descripción
                     <q-tooltip content-style="font-size: 16px; width: 250px;">
                         {{ product.description }}
