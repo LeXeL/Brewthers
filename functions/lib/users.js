@@ -84,6 +84,7 @@ async function createAdminUserInformation(obj) {
 }
 async function createBreweryUserInformation(obj) {
     //TODO: enviar correo de bienvenida
+    let breweryInformation = obj
     try {
         admin
             .auth()
@@ -109,7 +110,25 @@ async function createBreweryUserInformation(obj) {
                         status: obj.status,
                         logs: [],
                     })
-                    .then(() => {
+                    .then(async () => {
+                        let body = await email.templateHandler(
+                            'User-04',
+                            breweryInformation
+                        )
+                        email.sendEmail(
+                            breweryInformation.email,
+                            'Bienvenido a Brewthers 👋',
+                            body
+                        )
+                        let bodyAdmin = await email.templateHandler(
+                            'Admin-01',
+                            breweryInformation
+                        )
+                        email.sendEmail(
+                            'lexelEZ@gmail.com',
+                            'Nueva Solicitud de Casa Cervecera 👀',
+                            bodyAdmin
+                        )
                         console.log('Document successfully written!')
                         return 'Succesfull'
                     })
