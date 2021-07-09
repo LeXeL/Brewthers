@@ -61,6 +61,20 @@ function templateUser03(info) {
     </p>
   </div>`
 }
+function templateUser04(info) {
+    return `<div class="email-content">
+    <p>
+    Hola! te damos al bienvenida a la familia Brewthers!
+
+    Un administrador va a estar evaluando tu solicitud para unirte y pronto se pondrá en contacto contigo para 
+    aclarar cualquier cosa.
+
+    Atentamente,
+    
+    Equipo Brewthers
+    </p>
+  </div>`
+}
 async function templateOrder01(info) {
     let cart = ''
     info.cart.forEach(element => {
@@ -149,6 +163,21 @@ function templateBlog01(info) {
       Si no quieres recibir mas estos mensajes haz <a href="https://brewthersco.com/unsubscribe/${info.email}">Click Aquí</a>!
       </div>`
 }
+function templateAdmin01(info) {
+    return `<div class="email-content">
+    <p>
+    Tenemos una nueva solicitud de casa cervecera</br></br>
+
+    Nombre casa cervecera: ${info.brewingHouseName}</br>
+    Información de contacto: ${info.name} ${info.lastName}</br>
+    Teléfono: ${info.phone}</br>
+    RUC: ${info.ruc}</br>
+    email: ${info.email}</br></br>
+
+    Equipo Brewthers
+    </p>
+  </div>`
+}
 
 async function templateHandler(id, information) {
     if (id === 'User-01') {
@@ -159,6 +188,9 @@ async function templateHandler(id, information) {
     }
     if (id === 'User-03') {
         return templateUser03(information)
+    }
+    if (id === 'User-04') {
+        return templateUser04(information)
     }
     if (id === 'Order-01') {
         return templateOrder01(information)
@@ -177,6 +209,9 @@ async function templateHandler(id, information) {
     }
     if (id === 'Blog-01') {
         return templateBlog01(information)
+    }
+    if (id === 'Admin-01') {
+        return templateAdmin01(information)
     }
 }
 
