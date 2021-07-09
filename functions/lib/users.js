@@ -125,7 +125,7 @@ async function createBreweryUserInformation(obj) {
                             breweryInformation
                         )
                         email.sendEmail(
-                            'lexelEZ@gmail.com',
+                            'brewthers3@gmail.com',
                             'Nueva Solicitud de Casa Cervecera 👀',
                             bodyAdmin
                         )
