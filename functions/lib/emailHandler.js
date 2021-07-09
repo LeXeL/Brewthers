@@ -166,13 +166,13 @@ function templateBlog01(info) {
 function templateAdmin01(info) {
     return `<div class="email-content">
     <p>
-    Tenemos una nueva solicitud de casa cervecera
+    Tenemos una nueva solicitud de casa cervecera</br></br>
 
-    Nombre casa cervecera: ${info.brewingHouseName}
-    Información de contacto: ${info.name} ${info.lastName}
-    Teléfono: ${info.phone}
-    RUC: ${info.ruc}
-    email: ${info.email}
+    Nombre casa cervecera: ${info.brewingHouseName}</br>
+    Información de contacto: ${info.name} ${info.lastName}</br>
+    Teléfono: ${info.phone}</br>
+    RUC: ${info.ruc}</br>
+    email: ${info.email}</br></br>
 
     Equipo Brewthers
     </p>
