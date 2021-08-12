@@ -24,6 +24,7 @@ export default {
                 let token = await user.getIdToken()
                 commit('SET_UID', user.uid)
                 commit('SET_TOEKN', token)
+                commit('SET_USER', user)
                 localStorage.setItem('user-token', token)
                 localStorage.setItem('uid', user.uid)
             } catch (error) {
