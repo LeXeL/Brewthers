@@ -62,7 +62,7 @@
                             class="row"
                             v-if="
                                 proofRequired.includes(paymentMethod) &&
-                                    orderStatus === 'open'
+                                orderStatus === 'open'
                             "
                         >
                             <div class="text-h5 q-mb-md">
@@ -73,7 +73,7 @@
                             class="row q-mb-lg"
                             v-if="
                                 proofRequired.includes(paymentMethod) &&
-                                    orderStatus === 'open'
+                                orderStatus === 'open'
                             "
                         >
                             <q-file
@@ -144,7 +144,7 @@ export default {
             orderConfirmationDialog: false,
             paymentMethod: '',
             proofRequired: ['ach', 'yappy', 'nequi'],
-            ITBM: 10.51,
+            ITBM: 0,
             paymentOptions: [
                 {
                     label: 'ACH',
@@ -208,9 +208,11 @@ export default {
                     total +=
                         parseFloat(product.price) * parseFloat(product.amount)
                 })
+                this.ITBM = (total * 0.1).toFixed(2)
                 this.subTotal = total.toFixed(2)
                 return this.subTotal
             }
+            this.ITBM = (total * 0.1).toFixed(2)
             return '0'
         },
         calculateTotalAmount() {
@@ -287,7 +289,7 @@ export default {
             })
         },
         uploadToFirebase(imageFile, fullDirectory, filename) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 var storageRef = firebase
                     .storage()
                     .ref(fullDirectory + '/' + filename)
@@ -296,7 +298,7 @@ export default {
                 //Update progress bar
                 task.on(
                     'state_changed',
-                    function(snapshot) {
+                    function (snapshot) {
                         // Observe state change events such as progress, pause, and resume
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress =
@@ -309,17 +311,17 @@ export default {
                                 break
                         }
                     },
-                    function(error) {
+                    function (error) {
                         // Handle unsuccessful uploads
                         console.log(`Error in uploadToFirebase: ${error}`)
                         reject(error)
                     },
-                    function() {
+                    function () {
                         // Handle successful uploads on complete
                         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                         task.snapshot.ref
                             .getDownloadURL()
-                            .then(function(downloadURL) {
+                            .then(function (downloadURL) {
                                 console.log('File available at', downloadURL)
                                 resolve(downloadURL)
                             })
@@ -344,7 +346,7 @@ export default {
                     console.log('No such document!')
                 }
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log('Error getting document:', error)
             })
         this.displayLoading = false

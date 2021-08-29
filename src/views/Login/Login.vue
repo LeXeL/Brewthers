@@ -3,7 +3,10 @@
         <div class="absolute-bottom"></div>
         <div class="absolute-center">
             <div class="row">
-                <q-img :src="require('@/assets/logo-horizontal.png')" class="q-mb-lg" />
+                <q-img
+                    :src="require('@/assets/logo-horizontal.png')"
+                    class="q-mb-lg"
+                />
                 <q-card square bordered class="q-pa-lg shadow-1">
                     <q-card-section>
                         <q-form class="q-gutter-md">
@@ -37,7 +40,11 @@
                         />
                     </q-card-actions>
                     <q-card-section v-if="dismissCountDown > 0">
-                        <q-banner inline-actions rounded class="bg-red text-white">
+                        <q-banner
+                            inline-actions
+                            rounded
+                            class="bg-red text-white"
+                        >
                             {{ errorMessage }}
                             <template v-slot:action>
                                 <q-btn flat @click="dismissCountDown = 0">
@@ -61,12 +68,17 @@
                     <q-card-section class="q-px-md">
                         <p class="text-grey-6">
                             Olvidaste tu contraseña?
-                            <router-link class="text-grey-9" to="forgotpassword">Solicitala Aquí</router-link>
+                            <router-link class="text-grey-9" to="forgotpassword"
+                                >Solicitala Aquí</router-link
+                            >
                         </p>
-                        <p style="color: #111">Espacio exclusivo para locales comerciales.</p>
-                        <router-link to="/" style="color: #27a3c3">Volver al inicio</router-link>
+                        <p style="color: #111">
+                            Espacio exclusivo para locales comerciales.
+                        </p>
+                        <router-link to="/" style="color: #27a3c3"
+                            >Volver al inicio</router-link
+                        >
                     </q-card-section>
-
                 </q-card>
             </div>
         </div>
@@ -76,6 +88,7 @@
 <script>
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import * as api from '@/api/api'
 
 export default {
     name: 'Login',
@@ -101,7 +114,17 @@ export default {
                 .then(async () => {
                     let user = await firebase.auth().currentUser
                     await this.$store.dispatch('setCurrentUser', user)
-                    this.$router.push('/movingbeer')
+                    await api
+                        .getuserinformationbyid({
+                            uid: user.uid,
+                        })
+                        .then(async response => {
+                            await this.$store.commit(
+                                'SET_USER',
+                                response.data.data
+                            )
+                            this.$router.push('/movingbeer')
+                        })
                 })
                 .catch(error => {
                     this.dismissCountDown = this.dismissSecs
