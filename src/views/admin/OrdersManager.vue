@@ -172,6 +172,13 @@
                             </q-td>
                             <q-td>
                                 <q-btn
+                                    color="green-7"
+                                    size="xs"
+                                    label="Desglose"
+                                />
+                            </q-td>
+                            <q-td>
+                                <q-btn
                                     color="red-7"
                                     size="xs"
                                     label="Cancelar"
@@ -321,6 +328,10 @@ export default {
                 },
                 {
                     label: 'Detalles',
+                    align: 'left',
+                },
+                {
+                    label: 'Desglose',
                     align: 'left',
                 },
                 {
