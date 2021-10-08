@@ -59,7 +59,7 @@
                 Todo pedido de mercancia debe ser realizado a traves denuestro
                 numero de
                 <i class="fab fa-whatsapp"></i>&nbsp;
-                <a href="https://wa.me/50768585745" class="text-white"
+                <a href="https://wa.me/50764809969" class="text-white"
                     >Whatsapp</a
                 >
                 o <i class="fab fa-instagram"></i>&nbsp;
