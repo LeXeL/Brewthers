@@ -165,9 +165,15 @@
                                     color="info"
                                     size="xs"
                                     label="Detalles"
-                                    :to="
-                                        `/order-details/${props.row.firebaseId}`
-                                    "
+                                    :to="`/order-details/${props.row.firebaseId}`"
+                                />
+                            </q-td>
+                            <q-td>
+                                <q-btn
+                                    color="green-7"
+                                    size="xs"
+                                    label="Desglose"
+                                    @click="returnSellXlsxDetails(props.row)"
                                 />
                             </q-td>
                             <q-td>
@@ -178,7 +184,7 @@
                                     @click="asingWorkingorder(props.row)"
                                     :disable="
                                         props.row.status == 'cancel' ||
-                                            props.row.status === 'completed'
+                                        props.row.status === 'completed'
                                     "
                                 />
                             </q-td>
@@ -224,10 +230,14 @@ import * as api from '@/api/api'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import moment from 'moment'
+import xlsx from 'xlsx'
 export default {
     computed: {
         user() {
             return this.$store.getters.user
+        },
+        brewerys() {
+            return this.$store.getters.brewerys
         },
     },
     data() {
@@ -324,6 +334,10 @@ export default {
                     align: 'left',
                 },
                 {
+                    label: 'Desglose',
+                    align: 'left',
+                },
+                {
                     label: 'Cancelar',
                     align: 'left',
                 },
@@ -374,6 +388,50 @@ export default {
         }
     },
     methods: {
+        resolveBreweryId(id) {
+            return (
+                this.brewerys.find(brewery => brewery.id === id).name || 'N/A'
+            )
+        },
+        async returnSellXlsxDetails(order) {
+            let finalObject = []
+            let temp = []
+            let breweryAdded = {}
+            for await (const item of order.cart) {
+                if (!Object.keys(breweryAdded).includes(item.brewery)) {
+                    let breweryName = await this.resolveBreweryId(item.brewery)
+                    breweryAdded[item.brewery] = breweryName
+                    let obj = {}
+                    obj[`${breweryName}`] = parseFloat(item.price * item.amount)
+                    temp.push(obj)
+                    continue
+                }
+                temp[`${breweryAdded[item.brewery]}`] += parseFloat(
+                    item.price * item.amount
+                )
+            }
+            temp.forEach(brewery => {
+                let Venta = Object.values(brewery)[0]
+                let Itbms = Venta * 0.1
+                let Comision_Brewthers = Venta * 0.2
+                let Itbms_Brewthers = Comision_Brewthers * 0.07
+                let obj = {
+                    Nombre: Object.keys(brewery)[0],
+                    Venta,
+                    Itbms,
+                    Comision_Brewthers,
+                    Itbms_Brewthers,
+                    Entregar_a_casa:
+                        Venta + Itbms - Comision_Brewthers - Itbms_Brewthers,
+                    Entregar_a_brewthers: Comision_Brewthers + Itbms_Brewthers,
+                }
+                finalObject.push(obj)
+            })
+            let wb = xlsx.utils.book_new()
+            let ws = xlsx.utils.json_to_sheet(finalObject)
+            xlsx.utils.book_append_sheet(wb, ws, `${order.id}`)
+            xlsx.writeFile(wb, `Orden ${order.id}.xlsx`)
+        },
         returnRestaurantName(order) {
             let value = this.restaurants.filter(res => {
                 if (res.id === order.restaurantId) return res
