@@ -23,10 +23,10 @@
         "xlsx": "^0.17.2"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "~4.5.0",
-        "@vue/cli-plugin-router": "~4.5.0",
-        "@vue/cli-plugin-vuex": "~4.5.0",
-        "@vue/cli-service": "~4.5.0",
+        "@vue/cli-plugin-babel": "~5.0.8",
+        "@vue/cli-plugin-router": "~5.0.8",
+        "@vue/cli-plugin-vuex": "~5.0.8",
+        "@vue/cli-service": "~5.0.8",
         "node-sass": "^4.13.0",
         "sass-loader": "^8.0.0",
         "vue-cli-plugin-quasar": "~3.0.1",
